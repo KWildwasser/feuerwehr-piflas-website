@@ -37,6 +37,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 
 ## 2. Links (Stand 23.11.2026)
 
+- **Umsetzungsplan bis Weihnachten 2026 (online):** https://claude.ai/artifact/9NeFg4e1F4VJwP21Mp3VRe
 - **Lastenheft (online, mit Kommentarfunktion):** https://claude.ai/artifact/RHi6KHi8Bik2Xaj6imtwuy
 - **GitHub (alles, öffentlich):** https://github.com/KWildwasser/feuerwehr-piflas-website
 - **Demo öffentlich (GitHub Pages):** https://kwildwasser.github.io/feuerwehr-piflas-website/demo/
