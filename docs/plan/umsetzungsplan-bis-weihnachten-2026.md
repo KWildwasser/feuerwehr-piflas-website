@@ -4,7 +4,7 @@
 
 ## Auf einen Blick
 
-Bis zum 23.12.2026 ist die ganze Website nach Lastenheft 1.18 gebaut und auf der Testseite geprüft. Die öffentliche Seite mit Beiträgen geht am **Samstag, 19.12.** live. Das sind gut vier Wochen ab dem Pitch – mit Claude Code machbar, wenn Phase 0 in der ersten Woche gelingt.
+Bis zum 23.12.2026 ist die ganze Website nach Lastenheft 1.19 gebaut und auf der Testseite geprüft. Die öffentliche Seite mit Beiträgen geht am **Samstag, 19.12.** live. Das sind gut vier Wochen ab dem Pitch – mit Claude Code machbar, wenn Phase 0 in der ersten Woche gelingt.
 
 Der Code ist nicht der Engpass. Engpässe sind Zugänge (Hosting, DIVERA, Meta), Klärungen (Markt, Datenschutz) und die Zeit der Ehrenamtlichen für Prüfen und Inhalte. Deshalb wird alles fertig gebaut, aber drei Teile bekommen einen **Schalter im System-Bereich**. Sie gehen erst an, wenn ihre Klärung da ist:
 
@@ -21,7 +21,7 @@ Annahme: Eine Person aus dem Verein (Technik) steuert Claude Code mit etwa 10–
 
 Ohne diese sieben Punkte startet die Umsetzung nicht. Am besten am Ende des Treffens gemeinsam abhaken.
 
-- [ ] **Go oder kein Go** für die Umsetzung bis Weihnachten, auf Basis von Lastenheft 1.18 (danach eingefroren, Änderungen erst nach dem Go-live)
+- [ ] **Go oder kein Go** für die Umsetzung bis Weihnachten, auf Basis von Lastenheft 1.19 (danach eingefroren, Änderungen erst nach dem Go-live)
 - [ ] **Betreuung (4.3):** Variante A mit zwei namentlich benannten Admins oder Variante B mit Dienstleister
 - [ ] **Technik-Person**, die Claude Code steuert und 10–15 Std./Woche hat, plus eine Vertretung
 - [ ] **Erstbesetzung der Rollen:** 3 Kommandanten, 2 Admins, Redaktion (Namen)
@@ -71,11 +71,11 @@ Kurze Abstimmung jeden Samstag nach der Abnahme, 30 Minuten, auch per Videoanruf
 
 ## So arbeitet ihr mit Claude Code
 
-Claude Code schreibt den Code, der Verein prüft und entscheidet. Grundlage sind CLAUDE.md und der Start-Prompt aus dem Lastenheft (Abschnitt 7).
+Claude Code schreibt den Code, der Verein prüft und entscheidet. Grundlage sind CLAUDE.md, der Start-Prompt aus dem Lastenheft (Abschnitt 7) und die 10 Arbeitspakete in docs/start/ARBEITSPAKETE.md.
 
 1. **Ein Arbeitspaket je Sitzung:** z. B. „Phase 2b: B-09 bis B-12“. Claude Code stellt erst seinen Plan und offene Fragen vor, dann wird gebaut.
 2. **Eigener Branch und Pull Request** je Paket, mit der Liste der erfüllten IDs.
-3. **Automatische Prüfung** bei jedem Pull Request: PHP-Tests je Rolle, Code-Stil und die aus der Demo übertragenen Playwright-Prüfungen. Rot heißt: nicht zusammenführen.
+3. **Automatische Prüfung** bei jedem Pull Request: PHP-Tests je Rolle, Code-Stil und die aus der Demo übertragenen Playwright-Prüfungen (test_app.py und test_security.py; Zuordnung in ABDECKUNG.md). Rot heißt: nicht zusammenführen.
 4. **Automatisch auf die Testseite** nach dem Zusammenführen.
 5. **Abnahme am Handy** durch zwei Personen, gegen die Demo als Vorlage.
 6. **Änderungswünsche** während der vier Wochen nur als Liste sammeln. Umgesetzt werden sie erst nach dem Go-live, außer bei Fehlern und rechtlichen Punkten.

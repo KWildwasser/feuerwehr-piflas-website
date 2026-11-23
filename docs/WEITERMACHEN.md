@@ -42,6 +42,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 
 ## 2. Links (Stand 23.11.2026)
 
+- **Pitch-Leitfaden 26.11. (online):** https://claude.ai/artifact/LxYATS67T1qvUYUDhmofkL
 - **Umsetzungsplan bis Weihnachten 2026 (online):** https://claude.ai/artifact/9NeFg4e1F4VJwP21Mp3VRe
 - **Lastenheft (online, mit Kommentarfunktion):** https://claude.ai/artifact/RHi6KHi8Bik2Xaj6imtwuy
 - **GitHub (alles, öffentlich):** https://github.com/KWildwasser/feuerwehr-piflas-website
@@ -75,14 +76,14 @@ cd ../lastenheft
 python make_pdf.py       # PDF aus der neuesten lastenheft-vX.Y.md
 ```
 
-Reihenfolge bei jeder Änderung: **Lastenheft (ID) → Demo → Prüfung in test_app.py → Handbuch-Abschnitt → PDFs → Backup.**
+Reihenfolge bei jeder Änderung: **Lastenheft (ID) → Demo → Prüfung in test_app.py bzw. test_security.py → `python ../tools/abdeckung.py` (aus `docs/`) → Handbuch-Abschnitt → PDFs → Backup.**
 
 Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neutrale Formen zuerst, sonst beide Formen, keine Sternchen; Ausnahmen Kommandant, Admin und FwDV-Funktionen – N-13); jede Eingabe mit `esc()` ausgeben; keine externen Anfragen. Der Aufbau des Quelltexts steht als Kommentar am Anfang des Skripts in `app-src.html`.
 
 ## 4. Nächste Schritte (Reihenfolge)
 
 1. **Übergangsseite online stellen** – `uebergangsseite/LIESMICH.txt`. Vorher Joomla komplett sichern, Logfile-Dauer des Hosters in `datenschutz.html` eintragen.
-2. **Pitch** beim Kommandanten, im Gemeinderat und beim Bürgermeister mit der Projektseite und Demo v17 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Lernen, Störung simulieren).
+2. **Pitch am 26.11.** nach dem Pitch-Leitfaden (`pitch/`), danach Entscheidungen laut Umsetzungsplan (`plan/`), Start mit Arbeitspaket 1 (`start/ARBEITSPAKETE.md`). Weitere Vorstellungen beim Gemeinderat und Bürgermeister mit der Projektseite und Demo v17 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Lernen, Störung simulieren).
 3. **Betriebsvariante entscheiden** (Lastenheft 4.3): Wer betreut die Seite? Ohne zwei Admins → Wartung durch Dienstleister.
 4. **Offene Punkte** aus Lastenheft Abschnitt 5 einsammeln (Kommandant, Ortsteile, Pflege der Vereinsseite laut Satzung, Jubiläumstermine, Fahrzeugtypen, Namen der Fotografinnen und Fotografen, PDFs, Förderbeitrag …).
 5. **Phase 0** (Zugänge, Hosting-Prüfung, DIVERA-API, Instagram-Business-Konto), dann **Phase 1** mit Claude Code und dem Start-Prompt.
@@ -101,6 +102,11 @@ Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `laste
 - **WordPress** auf dem Vereins-Hosting, weil Mitglieder mit eigenen Konten pflegen. **Wartbarkeit** durch Ehrenamtliche ist Leitprinzip (A-01 bis A-12).
 - **Keine Spenden online** (Satzung), **keine Cookies, keine Drittanbieter** (N-01).
 - **Du-Form**, Frauen und Männer gleichermaßen ansprechen (N-13); Ausnahmen „Kommandant“, „Admin“ und FwDV-Funktionen.
+
+**Sicherheit und Tests**
+- Jede schreibende Aktion prüft die Rolle selbst, nicht nur den sichtbaren Knopf (B-03, N-05). Externe Links nur https://. Jedes Textfeld mit Höchstlänge, doppeltes Absenden erzeugt nichts doppelt (B-20).
+- Anmelde-Sperre nach 5 Fehlversuchen für 15 Minuten (Annahme), „Passwort vergessen“ ohne Konto-Verrat (B-05); Austritt deaktiviert statt löscht (B-08).
+- Jede ID hat in `demo/ABDECKUNG.md` eine Prüfung in der Demo oder eine festgelegte Prüfung für die echte Website.
 
 **Gestaltung**
 - Ruhig und hochwertig: weiße Karten mit weichem Schatten statt Rahmen, helle Filter-Knöpfe, dünne Kopflinie mit rotem Akzent, leichtere Platzhalter und Jubiläumsband (Demo v17). Rot #CD1719 und Roboto bleiben; Kontrast und 44-px-Tippziele werden in der Testsuite geprüft. Im Theme als zentrale Stil-Datei umsetzen, nicht je Seite.
