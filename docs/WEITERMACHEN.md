@@ -34,6 +34,8 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 ## 2. Links (Stand 23.11.2026)
 
 - **Lastenheft (online, mit Kommentarfunktion):** https://claude.ai/artifact/RHi6KHi8Bik2Xaj6imtwuy
+- **GitHub (alles, öffentlich):** https://github.com/KWildwasser/feuerwehr-piflas-website
+- **Demo öffentlich (GitHub Pages):** https://kwildwasser.github.io/feuerwehr-piflas-website/demo/
 - **Demo v5 (aktuell):** https://claude.ai/artifact/JDBEcotDJPXWSgDe7dBzhn
 - Ältere, öffentlich geteilte Stände: v4 https://claude.ai/artifact/3zpe9uaMATpMUXYjNNLvS4 · v3 https://claude.ai/artifact/PPtQ5Y7QVMb5PSzn52DTCA (nicht mehr aktuell)
 - Partnerfeuerwehren: https://www.ff-ergolding.de/ · https://oberglaim.feuerwehren.bayern/
