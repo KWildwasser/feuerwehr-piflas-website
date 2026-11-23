@@ -301,6 +301,24 @@ body.bk .toast{bottom:calc(140px + var(--sab))}
 table{width:100%;border-collapse:collapse;font-size:16px}
 th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--linie);vertical-align:top}
 th{background:var(--hell)}
+/* Mitgliederbereich: Inhalte, Editor, Verlauf, Seiten, Diagnose */
+.toast.act{pointer-events:auto;display:flex;align-items:center;gap:12px}
+.toast:not(.on){pointer-events:none}
+.toast .tb{background:none;border:0;color:#FFC9C9;font-weight:700;text-decoration:underline;min-height:44px;padding:0 6px;cursor:pointer;flex:none}
+.tb1{position:absolute;left:0;right:0;bottom:0;min-height:44px;border:0;background:rgba(14,18,32,.66);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0}
+.tb1.on{background:var(--rot)}
+.orow .dt small{display:block;font-weight:400;color:var(--g2);font-size:13px}
+.st-off{color:var(--rot-d)!important;font-weight:700}.st-wait,.st-plan{color:#8A5A00!important}
+.fsel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.vrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) 44px;gap:8px;align-items:end}
+fieldset.f{border:0;padding:0;margin:0;gap:8px;min-width:0}fieldset.f legend{font-weight:700;padding:0;margin-bottom:4px}
+fieldset.crow{border-top:1px solid var(--linie);padding-top:10px}
+.hist{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:12px}.hist li{display:flex;flex-direction:column;gap:2px;border-left:3px solid var(--linie);padding-left:10px}.hist .btn{align-self:flex-start;margin-top:4px}
+.chg del{color:var(--g2)}
+.dlog{white-space:pre-wrap;font-size:13px;background:#F4F3F0;padding:10px;border-radius:8px;overflow-wrap:anywhere;margin:6px 0 0}
+.steps2{margin:0;padding-left:20px}
+#f-post textarea[name=txt]{min-height:200px}
+.sgh{font-size:14px;margin:6px 0 -2px;color:var(--g2);text-transform:uppercase;letter-spacing:.05em}
 @media(prefers-reduced-motion:reduce){.drawer,.sheet,.push,.toast,.scrim,.fab{transition:none}.neu{animation:none}}
 </style>
 </head>
@@ -332,11 +350,14 @@ th{background:var(--hell)}
 <script>
 /* Referenz-Demo Website Feuerwehr Piflas – statisch, ohne Server und ohne Datenbank.
    Aufbau dieser Datei (Suchbegriffe):
-   1. Daten:      BASE_E (Einsätze), NEWS, TERMINE, JUB, FZ/GER, TIPS, IGF, fresh() = Startzustand S
-   2. Rollen:     ROLES, RL, canEdit/isAdm (Rechte für Bearbeiten, Ausblenden, Löschen – Lastenheft B-14 bis B-16)
+   1. Daten:      BASE_E (Einsätze), NEWS, ARCH (Archiv-Beispiele), TERMINE, JUB, FZ/GER, ACC (Konten), TIPS, IGF,
+                  fresh() = Startzustand S
+   2. Rollen:     ROLES, RL, canEdit/isAdm/isRed/isKdt (Rechte – Lastenheft B-01, B-14 bis B-16)
    3. Bausteine:  esc() für JEDE Benutzereingabe, f(), sec(), eRow/tRow/tile
-   4. Seiten:     V.<route> öffentlich (start, aktuelles …) und Mitgliederbereich (redaktion, beitraege …)
-   5. Ablauf:     render() je Hash-Route, click-Handler (data-act), submit-Handler (Formular-IDs f-…)
+   4. Seiten:     V.<route> öffentlich (start, aktuelles …) und Mitgliederbereich (redaktion, beitraege, editor, seiten …)
+   5. Verlauf:    KINDS, saveC(), hLog(), histHtml() (B-07), snapAll()/done()/undo() (B-17), rateOk() (N-05)
+   6. Schnittstellen: IFACE/ERR, diagHtml() (A-10 bis A-12)
+   7. Ablauf:     render() je Hash-Route, click-Handler (data-act), submit-Handler (Formular-IDs f-…)
    Regeln: Du-Form, N-13, keine externen Anfragen. Nach jeder Änderung build.py und test_app.py ausführen. */
 {
 const $ = s => document.querySelector(s);
@@ -399,13 +420,13 @@ const BASE_E = [
   {id:7,y:2025,d:'02.08.',typ:'unw',t:'Wasser im Keller, Ergolding',z:'23:15',fz:'LF 8/6, Mehrzweckanhänger',txt:'Nach Starkregen pumpten wir einen Keller aus.'}
 ];
 const NEWS = [
-  {id:'a1', by:'Max Mustermann', cat:'Übung', d:'Übung', t:'Technische Hilfeleistung: Befreiung aus dem Pkw', img:'thl', alt:'Übungsfahrzeug nach Entfernen von Türen und B-Säule, im Hintergrund Einsatzkräfte', txt:'Mit Rettungsschere und Spreizer üben wir, eingeklemmte Personen schonend aus einem Fahrzeug zu befreien.',
+  {id:'a1', y:2026, by:'Max Mustermann', cat:'Übung', d:'[Datum]', t:'Technische Hilfeleistung: Befreiung aus dem Pkw', img:'thl', alt:'Übungsfahrzeug nach Entfernen von Türen und B-Säule, im Hintergrund Einsatzkräfte', txt:'Mit Rettungsschere und Spreizer üben wir, eingeklemmte Personen schonend aus einem Fahrzeug zu befreien.',
    body:['Bei einem Verkehrsunfall zählt jede Minute – und jeder Handgriff muss sitzen. Deshalb üben wir die Technische Hilfeleistung regelmäßig an Altfahrzeugen.','Dabei werden Türen und Dachsäulen mit hydraulischem Rettungsgerät entfernt, damit Verletzte schonend und achsgerecht gerettet werden können. Das Fahrzeug wird vorher mit Holzklötzen gesichert.','Lust, selbst einmal mit anzupacken? Komm einfach zu einem Übungsabend vorbei.']},
-  {id:'a2', by:'Jonas Beispiel', cat:'Verein', d:'15.09.', t:'Dorffest 2026: Danke an alle Gäste!', ph:'Foto vom Dorffest folgt', txt:'Nach dem Gottesdienst feierten zahlreiche Gäste mit uns am Feuerwehrhaus.',
+  {id:'a2', y:2026, by:'Jonas Beispiel', cat:'Verein', d:'15.09.', t:'Dorffest 2026: Danke an alle Gäste!', ph:'Foto vom Dorffest folgt', txt:'Nach dem Gottesdienst feierten zahlreiche Gäste mit uns am Feuerwehrhaus.',
    body:['Am Sonntag, 13. September, feierten wir unser traditionelles Dorffest am Feuerwehrhaus Piflas. Nach dem Gottesdienst um 10:30 Uhr ging es ab 11:30 Uhr mit dem Fest weiter.','Ein herzliches Dankeschön an alle Gäste, Helferinnen und Helfer! [Weitere Details folgen]']},
-  {id:'a3', by:'Jonas Beispiel', cat:'Verein', d:'[Datum]', t:'Steckerlfisch-Grillen am Feuerwehrhaus', ph:'Foto vom Steckerlfisch-Grillen folgt', txt:'Frisch vom Grill: Unser Steckerlfisch-Grillen war wieder ein voller Erfolg.',
+  {id:'a3', y:2026, by:'Jonas Beispiel', cat:'Verein', d:'[Datum]', t:'Steckerlfisch-Grillen am Feuerwehrhaus', ph:'Foto vom Steckerlfisch-Grillen folgt', txt:'Frisch vom Grill: Unser Steckerlfisch-Grillen war wieder ein voller Erfolg.',
    body:['[Text zum Steckerlfisch-Grillen folgt: Datum, Anzahl Fische, Dank an das Grillteam und alle, die geholfen haben.]']},
-  {id:'a4', by:'Erika Musterfrau', cat:'Ausbildung', d:'02.09.', t:'Neue Atemschutzgeräteträger ausgebildet', ph:'Foto vom Lehrgang folgt', txt:'Drei Mitglieder unserer Wehr haben den Lehrgang erfolgreich abgeschlossen.', body:['Drei Mitglieder unserer Wehr haben den Atemschutz-Lehrgang erfolgreich abgeschlossen. Herzlichen Glückwunsch!']}
+  {id:'a4', y:2026, by:'Erika Musterfrau', cat:'Ausbildung', d:'02.09.', t:'Neue Atemschutzgeräteträger ausgebildet', ph:'Foto vom Lehrgang folgt', txt:'Drei Mitglieder unserer Wehr haben den Lehrgang erfolgreich abgeschlossen.', body:['Drei Mitglieder unserer Wehr haben den Atemschutz-Lehrgang erfolgreich abgeschlossen. Herzlichen Glückwunsch!']}
 ];
 const TERMINE = [
   {d:25,m:10,y:2026,t:'Übung Technische Hilfeleistung',o:'19:30 Uhr · Gerätehaus',k:'Übung',priv:false},
@@ -441,7 +462,7 @@ const daysTo = t => Math.max(0, Math.ceil((new Date(t.y, t.m, t.d) - new Date(to
 const dmy = t => `${String(t.d).padStart(2,'0')}.${String(t.m+1).padStart(2,'0')}.${t.y}`;
 const jubReports = () => JUB.events.filter(e => tDate(e) < today()).reverse().map(e => ({id:'r' + e.id, cat:'125 Jahre', d:`${String(e.d).padStart(2,'0')}.${String(e.m+1).padStart(2,'0')}.`, t:'Rückblick: ' + e.t, ph:'Fotos folgen nach der Veranstaltung', txt:'So war unser ' + e.t + ' im Jubiläumsjahr.', body:['[Bericht und Fotos werden nach der Veranstaltung ergänzt.]']}));
 const allNews = () => jubReports().concat(S.news.filter(n => !n.hid));
-const pubE = () => S.einsaetze.filter(e => !e.hid);
+const pubE = () => S.einsaetze.filter(e => !e.hid && !(e.ab && e.ab > Date.now()));
 const pubT = () => S.termine.filter(t => !t.priv && tDate(t) >= today() && (!t.jub || jubActive())).sort((a, b) => tKey(a) - tKey(b));
 const ALARME = [
   {typ:'thl',t:'Ölspur, Ergolding',fz:'LF 8/6'},
@@ -450,11 +471,12 @@ const ALARME = [
 ];
 
 const FZ = [
-  {img:'fz_wlf', n:'Wechselladerfahrzeug mit Kran (MAN)', d:'Florian Piflas 36/1 · [Fahrzeugtyp] · Ladekran und Abrollbehälter', alt:'Neues Wechselladerfahrzeug von MAN mit Ladekran, Aufschrift Piflas 36/1', neu:true},
-  {img:'fz_man', n:'Löschfahrzeug (MAN, Aufbau Ziegler)', d:'[Fahrzeugtyp und Funkrufname] · u. a. Hydraulik-Rettungsgerät und Tragkraftspritze', alt:'Rotes Löschfahrzeug von MAN mit Aufbau von Ziegler, Geräteraum geöffnet'},
-  {img:'fz_magirus', n:'Löschgruppenfahrzeug (Iveco Magirus)', d:'[Fahrzeugtyp und Funkrufname] · Heckpumpe, Stromerzeuger, Hitzeschutz', alt:'Rotes Löschgruppenfahrzeug von Iveco Magirus in der Seitenansicht'},
-  {img:'fz_561', n:'Florian Piflas 56/1 (Aufbau Ziegler)', d:'[Fahrzeugtyp] · Schlauchmaterial und Logistik', alt:'Heckansicht des Fahrzeugs 56/1 mit rot-weißer Warnmarkierung'},
-  {img:'fz_mtw', n:'Florian Piflas 11/1 (VW Crafter)', d:'[Fahrzeugtyp] · Mannschaftstransport', alt:'Roter VW Crafter mit Aufschrift Piflas 11/1'}
+  {img:'fz_wlf', hero:'wlf_hoch', n:'Wechselladerfahrzeug mit Kran (MAN)', kurz:'Wechsellader 36/1', d:'Florian Piflas 36/1 · [Fahrzeugtyp] · Ladekran und Abrollbehälter', lang:'Florian Piflas 36/1. Der Ladekran hebt schwere Lasten, etwa bei Unwettern oder Verkehrsunfällen; Abrollbehälter bringen Spezialausrüstung an die Einsatzstelle. [Fahrzeugtyp, Kranleistung und Abrollbehälter bitte ergänzen]', alt:'Neues Wechselladerfahrzeug von MAN mit Ladekran, Aufschrift Piflas 36/1', neu:true},
+  {img:'fz_man', n:'Löschfahrzeug (MAN, Aufbau Ziegler)', kurz:'Löschfahrzeug MAN', d:'[Fahrzeugtyp und Funkrufname] · u. a. Hydraulik-Rettungsgerät und Tragkraftspritze', alt:'Rotes Löschfahrzeug von MAN mit Aufbau von Ziegler, Geräteraum geöffnet'},
+  {img:'fz_magirus', n:'Löschgruppenfahrzeug (Iveco Magirus)', kurz:'Löschgruppenfahrzeug Magirus', d:'[Fahrzeugtyp und Funkrufname] · Heckpumpe, Stromerzeuger, Hitzeschutz', alt:'Rotes Löschgruppenfahrzeug von Iveco Magirus in der Seitenansicht'},
+  {img:'fz_561', n:'Florian Piflas 56/1 (Aufbau Ziegler)', kurz:'Fahrzeug 56/1', d:'[Fahrzeugtyp] · Schlauchmaterial und Logistik', alt:'Heckansicht des Fahrzeugs 56/1 mit rot-weißer Warnmarkierung'},
+  {img:'fz_mtw', n:'Florian Piflas 11/1 (VW Crafter)', kurz:'Fahrzeug 11/1', d:'[Fahrzeugtyp] · Mannschaftstransport', alt:'Roter VW Crafter mit Aufschrift Piflas 11/1'},
+  {img:null, id:'anh', n:'Anhänger', kurz:'Mehrzweckanhänger', d:'Verkehrssicherungsanhänger, Mehrzweckanhänger und weitere.', alt:''}
 ];
 const GER = [
   ['g_ultrapower','Hydraulik-Aggregat für Rettungsschere und Spreizer','Hydraulik-Aggregat im Geräteraum des MAN-Fahrzeugs'],
@@ -467,30 +489,76 @@ const GER = [
   ['g_schnellangriff','Schnellangriff','Geräteraum mit Schnellangriffsschlauch und Armaturen'],
   ['g_schlauchlager','Schlauchlager im Fahrzeug 56/1','Schlauchlager mit gelben Schläuchen im Fahrzeug 56/1']
 ];
+/* Ortsteile für Einsatzberichte (im Backend pflegbar; Liste vom Kommandanten bestätigen lassen) */
+const ORTE = ['Piflas', 'Ergolding', 'Oberglaim', '[weitere Ortsteile]'];
+/* Konten der Demo (fiktiv): 3 Kommandanten, 2 Admins, mehrere Redaktionsmitglieder. Jedes Konto hat genau EINE Rolle (B-01). */
+const ACC = [
+  {n:'Max Mustermann', m:'max@beispiel.de', r:'Freigeber'},
+  {n:'Thomas Muster', m:'thomas@beispiel.de', r:'Freigeber'},
+  {n:'Sabine Beispiel', m:'sabine@beispiel.de', r:'Freigeber'},
+  {n:'Erika Musterfrau', m:'erika@beispiel.de', r:'Administrator'},
+  {n:'Felix Probst', m:'felix@beispiel.de', r:'Administrator'},
+  {n:'Jonas Beispiel', m:'jonas@beispiel.de', r:'Autor'},
+  {n:'Mia Muster', m:'mia@beispiel.de', r:'Autor'},
+  {n:'Lukas Schreiber', m:'lukas@beispiel.de', r:'Autor'},
+  {n:'Lena Probe', m:'lena@beispiel.de', r:'Bereich Jugend', inv:true}
+];
+/* Archiv-Beispiele (fiktiv, mit festem Zufall): zeigen, dass Suche, Filter und Seitenweise-Laden auch bei
+   mehreren hundert Einträgen übersichtlich bleiben (B-18). Werden NICHT in die echte Website übernommen. */
+const ARCH = (() => {
+  let s = 7; const rnd = n => { s = (s * 1103515245 + 12345) % 2147483648; return s % n; };
+  const pd = dt => `${String(dt.getDate()).padStart(2,'0')}.${String(dt.getMonth()+1).padStart(2,'0')}.`;
+  const T = {thl:['Verkehrsunfall','Ölspur','Türöffnung für den Rettungsdienst','Unterstützung Rettungsdienst','Tierrettung'], brand:['Kaminbrand','Mülltonnenbrand','Flächenbrand','Rauchentwicklung'], bma:['Brandmeldeanlage'], unw:['Baum auf Fahrbahn','Wasser im Keller','Sturmschaden']};
+  const X = {thl:'Wir sicherten die Einsatzstelle ab und unterstützten die anderen Rettungskräfte.', brand:'Wir löschten den Brand und kontrollierten die Umgebung mit der Wärmebildkamera.', bma:'Kein Brand. Die Anlage wurde nach Erkundung an den Betreiber übergeben.', unw:'Wir beseitigten die Gefahr und räumten die Straße.'};
+  const typs = ['thl','thl','thl','brand','bma','unw','unw'], E = []; let id = 1000;
+  for (let y = 2024; y >= 2016; y--) {
+    const ds = []; for (let i = 30 + rnd(14); i > 0; i--) ds.push(1 + rnd(364)); ds.sort((a, b) => b - a);
+    ds.forEach(doy => { const typ = typs[rnd(typs.length)];
+      E.push({id: id++, y, d: pd(new Date(y, 0, doy)), typ, t: T[typ][rnd(T[typ].length)] + ', ' + ORTE[rnd(3)], z: String(rnd(24)).padStart(2,'0') + ':' + ['00','15','30','45'][rnd(4)], fz: 'LF 8/6', txt: X[typ], bsp: true}); });
+  }
+  const NT = [['Übung','Übungsabend: ', ['Technische Hilfeleistung','Löschangriff','Erste Hilfe','Absturzsicherung','Sprechfunk','Wasserförderung']], ['Ausbildung','Lehrgang ', ['Maschinist','Truppmann','Gruppenführer','Motorsäge']], ['Verein','', ['Jahreshauptversammlung','Christbaumversteigerung','Vereinsausflug','Ehrungen']], ['Jugendfeuerwehr','Jugendfeuerwehr: ', ['Wissenstest','Zeltlager','Leistungsabzeichen']]];
+  const by = ['Max Mustermann','Jonas Beispiel','Mia Muster','Thomas Muster','Erika Musterfrau','Lukas Schreiber'], N = []; let nid = 1;
+  for (let y = 2025; y >= 2019; y--) for (let i = 0; i < 9; i++) {
+    const [cat, pre, ws] = NT[rnd(NT.length)];
+    N.push({id: 'x' + nid++, y, by: by[rnd(by.length)], cat, d: pd(new Date(y, 11 - Math.floor(i * 4 / 3), 1 + rnd(27))), t: pre + ws[rnd(ws.length)] + ' ' + y, ph: 'Archivfoto', txt: '[Beispieltext aus dem Archiv]', body: ['[Beispieltext aus dem Archiv – zeigt, wie Suche und Filter bei vielen Beiträgen funktionieren.]'], bsp: true});
+  }
+  return {E, N};
+})();
 let S;
-const fresh = () => ({
-  einsaetze: BASE_E.map(e => ({...e})), news: NEWS.map(n => ({...n})), posts: [], termine: TERMINE.map(t => ({...t})).concat(JUB.events.map(e => ({...e, k:'Jubiläum', priv:false, jub:true}))), synced: false, today: null, settings: {sonderOn:false, sonderT:'Hohe Waldbrandgefahr', sonderX:'Kein Feuer im Freien, nicht rauchen im Wald und Zufahrten für die Feuerwehr freihalten.', sonderBis:'', warnOn:true, jubOn:true, jubEnd:'2027-12-31', pE:'https://www.ff-ergolding.de/', pO:'https://oberglaim.feuerwehren.bayern/'}, health: {ig:'warn'},
-  queue: [{kind:'news', id:'n1', t:'Leistungsprüfung erfolgreich abgelegt', txt:'Unsere Gruppe hat die Leistungsprüfung „Die Gruppe im Löscheinsatz“ bestanden. Herzlichen Glückwunsch!', von:'Jonas Beispiel (Redaktion)', by:'Jonas Beispiel', ig:true}],
-  user: null, pending2fa: null, next: null, draft: [], uid: 1, mdel: null, gone: {}, edit: null, eedit: null, cdel: null, trash: [], year: 2026, tf: 'Alle', detail: null, neu: null, alarmNr: 0, step: 1, nid: 100,
-  members: [
-    {n:'Erika Musterfrau', m:'erika@beispiel.de', r:'Administrator', s:'Aktiv · 2FA eingerichtet', inv:false},
-    {n:'Max Mustermann', m:'max@beispiel.de', r:'Freigeber', s:'Aktiv · 2FA eingerichtet', inv:false},
-    {n:'Jonas Beispiel', m:'jonas@beispiel.de', r:'Autor', s:'Aktiv', inv:false},
-    {n:'Lena Probe', m:'lena@beispiel.de', r:'Bereich Jugend', s:'Eingeladen · läuft in 31 Std. ab', inv:true}
+const fresh = () => { const t0 = Date.now() - 30 * 864e5; const st = {
+  einsaetze: BASE_E.map(e => ({...e, imgs: []})).concat(ARCH.E.map(e => ({...e, imgs: []}))),
+  news: NEWS.map(n => ({...n})).concat(ARCH.N.map(n => ({...n}))),
+  fz: FZ.map(z => ({id: z.id || z.img, ...z})), ger: GER.map(([img, n, alt]) => ({id: img, img, n, alt})),
+  verein: {id:'verein', intro:'Der Feuerwehr Piflas e.V. stellt die Einsatzkräfte der Ortsfeuerwehr und pflegt Kameradschaft und Dorfleben.', vorstand:[['1. Vorstand','Matthias Jeschke'], ['[Weitere Ämter laut Satzung]','[Name]']], chronik:[{y:String(JUB.founded), t:'Gründung der Freiwilligen Feuerwehr Piflas', x:''}, {y:'[Jahr]', t:'[Weitere Meilensteine folgen: Fahrzeuge, Gerätehaus, Jubiläen]', x:''}]},
+  posts: [], termine: TERMINE.map(t => ({...t})).concat(JUB.events.map(e => ({...e, k:'Jubiläum', priv:false, jub:true}))), synced: false, today: null, settings: {sonderOn:false, sonderT:'Hohe Waldbrandgefahr', sonderX:'Kein Feuer im Freien, nicht rauchen im Wald und Zufahrten für die Feuerwehr freihalten.', sonderBis:'', warnOn:true, jubOn:true, jubEnd:'2027-12-31', pE:'https://www.ff-ergolding.de/', pO:'https://oberglaim.feuerwehren.bayern/'},
+  /* Schnittstellen (A-10 bis A-12): st ok|warn|bad, code aus ERR, man = Notbetrieb */
+  iface: {div:{st:'ok', code:'', man:false}, ig:{st:'warn', code:'IG-EXP', man:false}},
+  /* Freigabe-Beispiele: neuer Beitrag, Jugendbericht, Fahrzeug-Änderung, Chronik-Ergänzung */
+  queue: [
+    {kind:'news', id:'n1', cat:'Übung', t:'Leistungsprüfung erfolgreich abgelegt', txt:'Unsere Gruppe hat die Leistungsprüfung „Die Gruppe im Löscheinsatz“ bestanden. Herzlichen Glückwunsch!', von:'Jonas Beispiel (Redaktion)', by:'Jonas Beispiel', ig:true, imgs:[]},
+    {kind:'news', id:'n2', cat:'Jugendfeuerwehr', t:'Jugendfeuerwehr beim Wissenstest', txt:'[Anzahl] Jugendliche haben den Wissenstest bestanden. Fotos nur mit Einwilligung der Eltern.', von:'Mia Muster (Redaktion)', by:'Mia Muster', ig:false, imgs:[]},
+    {kind:'change', id:'c1', k:'fz', tid:'fz_mtw', vals:{d:'[Fahrzeugtyp] · Mannschaftstransport für [Anzahl] Personen, auch für die Jugendfeuerwehr'}, note:'Einsatzzweck ergänzt', von:'Lukas Schreiber (Redaktion)', by:'Lukas Schreiber'},
+    {kind:'change', id:'c2', k:'v', tid:'verein', vals:{chronik:null}, note:'Meilenstein ergänzt', von:'Jonas Beispiel (Redaktion)', by:'Jonas Beispiel'}
   ],
+  dropped: [], hist: {}, seedH: true, rl: {}, t0,
+  user: null, pending2fa: null, next: null, draft: [], uid: 1, mdel: null, gone: {}, cdel: null, trash: [], year: 2026, etyp: 'alle', pe: 20, ncat: 'Alle', pn: 6, tf: 'Alle', detail: null, neu: null, alarmNr: 0, step: 1, nid: 100,
+  ed: null, flt: {q:'', typ:'alle', y:'alle', st:'alle', n:20}, sp: 'verein', sed: null, sdraft: undefined, tmp: {}, keyForm: null,
+  members: ACC.map(a => ({...a, s: a.inv ? 'Eingeladen · läuft in 31 Std. ab' : (a.r === 'Autor' ? 'Aktiv' : 'Aktiv · 2FA eingerichtet'), inv: !!a.inv})),
   plan: [
     {d:'29.11.', t:'Gerät im Fokus: Hydraulisches Rettungsgerät', w:'Jonas Beispiel', s:'In Arbeit'},
     {d:'06.12.', t:'Bürgertipp: Kerzen und Adventskranz', w:'Max Mustermann', s:'Idee'},
-    {d:'13.12.', t:'Jugendfeuerwehr: Jahresrückblick', w:'Lena Probe', s:'Idee'}
-  ]
-});
+    {d:'13.12.', t:'Jugendfeuerwehr: Jahresrückblick', w:'Mia Muster', s:'Idee'}
+  ]};
+  st.queue[3].vals.chronik = st.verein.chronik.slice(0, 1).concat([{y:'[Jahr]', t:'Einweihung des Gerätehauses in der Gartenstraße', x:'[Jahr und Details bitte ergänzen]'}], st.verein.chronik.slice(1));
+  return st; };
 S = fresh();
 const restoreImg = () => { Object.keys(IMG).forEach(k => { if (!(k in IMG0)) delete IMG[k]; }); Object.assign(IMG, IMG0); };
 
 const ROLES = {
-  'Freigeber': {label:'Kommandant · Freigabe', tabs:['redaktion','beitraege','planung']},
-  'Administrator': {label:'Admin', tabs:['redaktion','beitraege','planung','fotos','mitglieder','system']},
-  'Autor': {label:'Redaktion', tabs:['beitraege','planung']}
+  'Freigeber': {label:'Kommandant · Freigabe', tabs:['redaktion','beitraege','seiten','planung']},
+  'Administrator': {label:'Admin', tabs:['redaktion','beitraege','seiten','planung','mitglieder','system']},
+  'Autor': {label:'Redaktion', tabs:['beitraege','seiten','planung']},
+  'Bereich Jugend': {label:'Redaktion Jugend', tabs:['beitraege','seiten','planung']}
 };
 const RL = {Administrator:'Admin', Freigeber:'Kommandant · Freigabe', Autor:'Redaktion', 'Bereich Jugend':'Redaktion Jugend'};
 const PUB = [['start','Start'],['aktuelles','Aktuelles'],['einsaetze','Einsätze'],['termine','Termine'],['mitmachen','Mitmachen'],['foerdern','Fördermitglied werden'],['buerger','Bürgerinfos'],['fahrzeuge','Fahrzeuge & Technik'],['jugend','Jugendfeuerwehr'],['verein','Verein'],['partner','Partnerfeuerwehren']];
@@ -499,7 +567,10 @@ const MLAB = {mitmachen:'Aktiv mitmachen', verein:'Verein & Chronik'};
 const menuHtml = r => { const pl = Object.fromEntries(pubList()); const a = k => `<a href="#${k}"${r===k?' aria-current="page"':''}${k==='jubilaeum'?' class="jubnav"':''}>${MLAB[k] || pl[k]}</a>`;
   return a('start') + (jubActive() ? a('jubilaeum') : '') + MENU.map(([g, ks]) => `<h3 class="mg">${g}</h3>${ks.map(a).join('')}`).join(''); };
 const pubList = () => jubActive() ? [PUB[0], ['jubilaeum','125 Jahre'], ...PUB.slice(1)] : PUB;
-const BACK = {redaktion:['Freigabe',I.check], beitraege:['Beiträge',I.doc], planung:['Planung',I.cal], fotos:['Fotos',I.img], mitglieder:['Mitglieder',I.ppl], system:['System',I.gear]};
+const BACK = {redaktion:['Freigabe',I.check], beitraege:['Inhalte',I.doc], seiten:['Seiten',I.img], planung:['Planung',I.cal], mitglieder:['Mitglieder',I.ppl], system:['System',I.gear]};
+/* Unterseiten ohne eigenen Tab: werden dem Tab zugeordnet */
+const TABOF = {editor:'beitraege', fotos:'seiten'};
+const TITLE = {editor:'Bearbeiten', fotos:'Fotos'};
 
 /* ---------- Bausteine ---------- */
 const route = () => (location.hash || '#start').slice(1);
@@ -516,7 +587,7 @@ const pubFoot = () => `<footer class="foot"><div class="wrap"><span class="logo 
   <span class="mini">© 2026 Feuerwehr Piflas e.V. · Demo-Version mit Beispielinhalten · Fotos: Feuerwehr Piflas</span></div></footer>`;
 const backHead = () => `<header class="btop"><div class="wrap"><a href="#start" aria-label="Zur öffentlichen Website"><span class="logo w" role="img" aria-label="Feuerwehr Piflas"></span></a>
   <div class="tr"><small>Angemeldet als<br><b style="color:#fff">${esc(S.user.name)} · ${esc(ROLES[S.user.role].label)}</b></small><a class="hb" id="hb-link" href="handbuch.pdf" target="_blank" rel="noopener" aria-label="Handbuch (PDF) öffnen">${I.book}<span>Handbuch</span></a><button data-act="logout">Abmelden</button></div></div></header>`;
-const backTabs = r => `<nav class="btabs" aria-label="Redaktion">${ROLES[S.user.role].tabs.map(k => `<a href="#${k}"${r===k?' aria-current="page"':''}>${BACK[k][1]}${BACK[k][0]}${k==='redaktion' && S.queue.length ? `<span class="badge">${S.queue.length}</span>` : ''}</a>`).join('')}</nav>`;
+const backTabs = r => `<nav class="btabs" aria-label="Redaktion">${ROLES[S.user.role].tabs.map(k => `<a href="#${k}"${(TABOF[r] || r)===k?' aria-current="page"':''}>${BACK[k][1]}${BACK[k][0]}${k==='redaktion' && S.queue.length ? `<span class="badge">${S.queue.length}</span>` : ''}</a>`).join('')}</nav>`;
 const sec = (inner, cls='') => `<section class="band ${cls}"><div class="wrap stack">${inner}</div></section>`;
 
 /* ---------- Öffentliche Seiten ---------- */
@@ -538,7 +609,7 @@ const jubBand = () => { const n = jubNext(); return `<section class="band jub" i
   ${n ? `<div class="cd"><b class="big">${daysTo(n)}</b> Tage bis <b>${esc(n.t)}</b> am ${dmy(n)}</div>` : ''}
   <a class="btn" href="#jubilaeum" style="align-self:flex-start">Alle Veranstaltungen</a></div></div></section>`; };
 const nextUebung = () => pubT().find(t => t.k === 'Übung');
-const tile = n => `<button data-act="article" data-id="${n.id}" aria-label="Artikel lesen: ${esc(n.t)}">${n.img ? `<img src="${IMG[n.img]}" alt="${esc(n.alt)}">` : `<span class="phx">Foto folgt</span>`}<span class="ov"><span class="tag ${n.cat === '125 Jahre' ? 't-jub' : 't-news'}">${esc(n.cat || 'Verein')}</span><b>${esc(n.t)}</b></span></button>`;
+const tile = n => `<button data-act="article" data-id="${n.id}" aria-label="Artikel lesen: ${esc(n.t)}">${n.img ? `<img src="${IMG[n.img]}" alt="${esc(n.alt || n.t)}">` : `<span class="phx">Foto folgt</span>`}<span class="ov"><span class="tag ${n.cat === '125 Jahre' ? 't-jub' : 't-news'}">${esc(n.cat || 'Verein')}</span><b>${esc(n.t)}</b></span></button>`;
 V.start = () => {
   const u = nextUebung();
   return `
@@ -574,7 +645,7 @@ ${sec(`<div class="sh"><h2>Aus dem Vereinsleben</h2><a href="#aktuelles">Alle Be
   ${u ? `<div class="vorbei"><b>Oder komm einfach vorbei:</b> Nächster Übungsabend am ${String(u.d).padStart(2,'0')}. ${MON[u.m]}, ${esc(u.o)}, Gartenstraße 2.</div>` : ''}
 </div></section>
 ${(tp => sec(`<a class="tip${tp.sonder ? ' sonder' : ''}" id="tip" href="#buerger">${tp.sonder ? I.bell : I.bulb}<span><b style="display:block;font-size:15px">${esc(tp.t)}</b><span style="font-size:18px;font-weight:600" id="tip-text">${esc(tp.x)}</span><span style="display:block;margin-top:6px;font-weight:600;color:var(--rot-d)">Mehr Bürgerinfos</span></span></a>`))(tipNow())}
-${sec(`<div class="sh"><h2>Instagram</h2><a href="https://www.instagram.com/feuerwehrpiflas/">@feuerwehrpiflas</a></div><div class="ig">${S.posts.slice(0,9).map(p => `<div class="post">${esc(p)}<br>neu</div>`).join('')}${IGF.slice(0, Math.max(0,9-S.posts.length)).map(([k,a]) => `<div class="im"><img src="${IMG[k]}" alt="${esc(a)}"></div>`).join('')}</div><a class="btn o sm" href="https://www.instagram.com/feuerwehrpiflas/" style="align-self:flex-start">Auf Instagram folgen</a>`)}`;
+${S.iface.ig.st === 'bad' || S.iface.ig.man ? sec(`<div class="sh"><h2>Instagram</h2></div><p id="ig-fallback">Unsere neuesten Fotos und Geschichten findest du auf Instagram.</p><a class="btn o sm" href="https://www.instagram.com/feuerwehrpiflas/" style="align-self:flex-start">Zu @feuerwehrpiflas</a>`) : sec(`<div class="sh"><h2>Instagram</h2><a href="https://www.instagram.com/feuerwehrpiflas/">@feuerwehrpiflas</a></div><div class="ig">${S.posts.slice(0,9).map(p => `<div class="post">${esc(p)}<br>neu</div>`).join('')}${IGF.slice(0, Math.max(0,9-S.posts.length)).map(([k,a]) => `<div class="im"><img src="${IMG[k]}" alt="${esc(a)}"></div>`).join('')}</div><a class="btn o sm" href="https://www.instagram.com/feuerwehrpiflas/" style="align-self:flex-start">Auf Instagram folgen</a>`)}`;
 };
 
 V.jubilaeum = () => {
@@ -594,32 +665,41 @@ V.aktuelles = () => {
   if (pq) a = {...pq, d:'Entwurf', body:[pq.txt], img:(pq.imgs || [])[0], ph:'Foto folgt', preview:true};
   if (a) return sec(`<div class="row2"><button class="btn o sm" data-act="article-close" style="align-self:flex-start">← Alle Berichte</button>${S.user ? '<a class="btn o sm" href="#beitraege" style="color:var(--ink)">Zur Redaktion</a>' : ''}${S.user && !a.preview && S.news.includes(S.news.find(n => n.id === a.id)) && canEdit(a) ? `<button class="btn o sm" data-act="edit" data-id="${a.id}" style="color:var(--ink)">Bearbeiten</button>` : ''}</div>
     ${a.preview ? `<div class="stat" id="vorschau" style="font-size:16px"><b>Vorschau – noch nicht öffentlich.</b> ${a.of ? 'Deine Änderung wartet auf die Freigabe durch den Kommandanten. Bis dahin bleibt die bisherige Fassung online.' : 'Dein Beitrag wartet auf die Freigabe durch den Kommandanten.'}</div>` : ''}
-    ${a.img ? `<img class="pic" src="${IMG[a.img]}" alt="${esc(a.alt)}" style="aspect-ratio:16/9">` : `<div class="ph" style="background:#E9E7E2;color:var(--g2);border-color:#C9C6BF">${esc(a.ph || 'Foto folgt')}</div>`}
+    ${a.img ? `<img class="pic" src="${IMG[a.img]}" alt="${esc(a.alt || a.t)}" style="aspect-ratio:16/9">` : `<div class="ph" style="background:#E9E7E2;color:var(--g2);border-color:#C9C6BF">${esc(a.ph || 'Foto folgt')}</div>`}
     <div><span class="tag t-news">${esc(a.cat || 'Verein')}</span> <span class="mini">${esc(a.d)}</span></div><h1 style="font-size:40px">${esc(a.t)}</h1>
     ${(a.body || [a.txt]).map(p => `<p>${esc(p)}</p>`).join('')}
     ${(a.imgs || []).length > 1 ? `<div class="gal">${a.imgs.slice(1).map((k, i) => `<img src="${IMG[k]}" alt="${esc((a.alt || a.t) + ' – Foto ' + (i + 2))}">`).join('')}</div>` : ''}
     <div class="tip" style="background:#FBEAEA"><span><b style="display:block">Lust, dabei zu sein?</b>Wir freuen uns über jede helfende Hand. <a href="#mitmachen">Jetzt mitmachen</a></span></div>`);
-  return sec(`<h1>Aktuelles</h1><p>Berichte aus Übungen, Ausbildung und Vereinsleben.</p><div class="nk">${allNews().map(n => `<article class="${S.neu===n.t?'neu':''}">${n.img ? `<img src="${IMG[n.img]}" alt="${esc(n.alt)}">` : `<div class="ph" style="border-radius:0;aspect-ratio:16/9;min-height:0">${esc(n.ph || 'Foto folgt')}</div>`}<div class="b"><span><span class="tag t-news">${esc(n.cat || 'Verein')}</span> <span class="mini">${esc(n.d)}</span></span><h3>${esc(n.t)}</h3><p style="color:var(--grau)">${esc(n.txt)}</p><button class="btn o sm" data-act="article" data-id="${n.id}" style="align-self:flex-start;color:var(--ink)">Weiterlesen</button></div></article>`).join('')}</div>`);
+  const cats = ['Alle', ...new Set(allNews().map(n => n.cat || 'Verein'))];
+  const ls = allNews().filter(n => S.ncat === 'Alle' || (n.cat || 'Verein') === S.ncat), more = ls.length - S.pn;
+  return sec(`<h1>Aktuelles</h1><p>Berichte aus Übungen, Ausbildung und Vereinsleben.</p>
+    <div class="chips" role="group" aria-label="Kategorie">${cats.map(c => `<button class="chip" data-act="ncat" data-v="${esc(c)}" aria-pressed="${S.ncat === c}">${esc(c)}</button>`).join('')}</div>
+    <div class="nk">${ls.slice(0, S.pn).map(n => `<article class="${S.neu===n.t?'neu':''}">${n.img ? `<img src="${IMG[n.img]}" alt="${esc(n.alt || n.t)}">` : `<div class="ph" style="border-radius:0;aspect-ratio:16/9;min-height:0">${esc(n.ph || 'Foto folgt')}</div>`}<div class="b"><span><span class="tag t-news">${esc(n.cat || 'Verein')}</span> <span class="mini">${esc(n.d)}</span></span><h3>${esc(n.t)}</h3><p style="color:var(--grau)">${esc(n.txt)}</p><button class="btn o sm" data-act="article" data-id="${n.id}" style="align-self:flex-start;color:var(--ink)">Weiterlesen</button></div></article>`).join('')}</div>
+    ${more > 0 ? `<button class="btn o" data-act="nmore" id="nmore" style="align-self:center;color:var(--ink)">Weitere Berichte laden (noch ${more})</button>` : ''}`);
 };
 
 V.einsaetze = () => {
   if (S.detail) {
     const e = pubE().find(x => x.id === S.detail);
     if (e) return sec(`<button class="btn o sm" data-act="detail-close" style="align-self:flex-start">← Alle Einsätze</button>
-      ${e.typ === 'thl' ? `<figure style="margin:0"><img class="pic" src="${IMG.thl}" alt="Übungsfahrzeug nach Entfernen von Türen und B-Säule" style="aspect-ratio:16/9"><figcaption class="cap">Symbolfoto aus einer Übung</figcaption></figure>` : `<div class="ph" style="min-height:180px;background:#E9E7E2;color:var(--g2);border-color:#C9C6BF">Einsatzfoto (ohne Personen und Kennzeichen)</div>`}
+      ${(e.imgs || []).length ? `<img class="pic" src="${IMG[e.imgs[0]]}" alt="${esc('Einsatzfoto: ' + e.t)}" style="aspect-ratio:16/9">` : e.typ === 'thl' ? `<figure style="margin:0"><img class="pic" src="${IMG.thl}" alt="Übungsfahrzeug nach Entfernen von Türen und B-Säule" style="aspect-ratio:16/9"><figcaption class="cap">Symbolfoto aus einer Übung</figcaption></figure>` : `<div class="ph" style="min-height:180px;background:#E9E7E2;color:var(--g2);border-color:#C9C6BF">Einsatzfoto (ohne Personen und Kennzeichen)</div>`}
       <div>${tag(e.typ)}</div><h1 style="font-size:40px">${esc(e.t)}</h1>
       <div class="kv"><span>Datum</span><b>${e.d}${e.y}</b><span>Alarm</span><b>${e.z} Uhr (gerundet)</b><span>Einsatzart</span><b>${ART[e.typ][1]}</b><span>Fahrzeuge</span><b>${esc(e.fz)}</b></div>
-      <p>${esc(e.txt)}</p><span class="mini">Beispielinhalt</span>`);
+      <p>${esc(e.txt)}</p>${(e.imgs || []).length > 1 ? `<div class="gal">${e.imgs.slice(1).map((k, i) => `<img src="${IMG[k]}" alt="${esc('Einsatzfoto ' + (i + 2) + ': ' + e.t)}">`).join('')}</div>` : ''}<span class="mini">Beispielinhalt</span>`);
   }
-  const list = pubE().filter(e => e.y === S.year);
+  const yl = [...new Set(pubE().map(e => e.y))].sort((a, b) => b - a), recent = yl.slice(0, 3), older = yl.slice(3);
+  const list = pubE().filter(e => e.y === S.year), shown = list.filter(e => S.etyp === 'alle' || e.typ === S.etyp);
   const c = {thl:0,brand:0,bma:0,unw:0}; list.forEach(e => c[e.typ]++);
   const max = Math.max(1, ...Object.values(c));
   const col = {thl:'#1D4F8C',brand:'#CD1719',bma:'#6B7178',unw:'#1E6B35'};
   return sec(`<h1>Einsätze</h1>
-    <div class="chips" role="group" aria-label="Jahr wählen">${[2026,2025].map(y => `<button class="chip" data-act="year" data-y="${y}" aria-pressed="${S.year===y}">${y}</button>`).join('')}</div>
+    <div class="chips" role="group" aria-label="Jahr wählen">${recent.map(y => `<button class="chip" data-act="year" data-y="${y}" aria-pressed="${S.year===y}">${y}</button>`).join('')}</div>
+    ${older.length ? `<label class="f" style="max-width:260px">Ältere Jahre<select id="ey"><option value="">Jahr wählen …</option>${older.map(y => `<option value="${y}"${S.year===y?' selected':''}>${y}</option>`).join('')}</select></label>` : ''}
     <div class="stat"><div><span class="num">${list.length}</span> <b>Einsätze ${S.year}</b> <span class="mini">(Beispiel)</span></div>
       <div class="bars">${Object.keys(c).map(k => `<span>${ART[k][1].replace('Technische ','Techn. ')}</span><i style="background:${col[k]};width:${c[k]/max*100}%"></i><b>${c[k]}</b>`).join('')}</div></div>
-    <div class="list">${list.map(eRow).join('') || '<p class="leer">Keine Einsätze in diesem Jahr.</p>'}</div>
+    <div class="chips" role="group" aria-label="Einsatzart">${[['alle','Alle']].concat(Object.keys(ART).map(k => [k, ART[k][0]])).map(([k, l]) => `<button class="chip" data-act="etyp" data-v="${k}" aria-pressed="${S.etyp===k}">${l}</button>`).join('')}</div>
+    <div class="list">${shown.slice(0, S.pe).map(eRow).join('') || '<p class="leer">Keine Einsätze für diese Auswahl.</p>'}</div>
+    ${shown.length > S.pe ? `<button class="btn o" data-act="emore" id="emore" style="align-self:center;color:var(--ink)">Weitere Einsätze anzeigen (noch ${shown.length - S.pe})</button>` : ''}
     <span class="mini">Uhrzeit auf Viertelstunden gerundet, Ort nur als Ortsteil. Tippen für Details.</span>`);
 };
 
@@ -671,13 +751,14 @@ V.mitmachen = () => { const u = nextUebung(); return sec(`<h1>Mach mit!</h1>
   <div class="grid"><a class="card" href="#jugend" style="text-decoration:none;color:var(--ink)"><h3>Jugendfeuerwehr</h3><p style="color:var(--grau)">Technik, Teamgeist und Spaß für Jugendliche.</p></a><a class="card" href="#foerdern" style="text-decoration:none;color:var(--ink)"><h3>Fördermitglied</h3><p style="color:var(--grau)">Keine Zeit für den Einsatzdienst? Unterstütze uns als Fördermitglied.</p></a></div>
   <figure style="margin:0;max-width:760px"><img class="pic" src="${IMG.thl}" alt="Übung Technische Hilfeleistung: Pkw mit entfernten Türen" style="aspect-ratio:16/9"><figcaption class="cap">Technische Hilfeleistung – eine von vielen Übungen im Jahr</figcaption></figure>`); };
 
-V.fahrzeuge = () => sec(`<h1>Fahrzeuge & Technik</h1><p>Unsere Fahrzeuge und Anhänger bringen Mannschaft und Ausrüstung schnell zum Einsatzort. Jeden Mittwoch zeigen wir auf Instagram einen Geräteraum – hier eine Auswahl.</p>
-  <div class="feat"><img src="${IMG.wlf_hoch}" alt="Neues Wechselladerfahrzeug der Feuerwehr Piflas mit ausgefahrenem Ladekran in der Abenddämmerung"><div class="b"><span class="tag" style="background:var(--rot);color:#fff;align-self:flex-start">Neu im Fuhrpark</span><h2>Wechselladerfahrzeug mit Kran</h2><p style="color:#E3E4E6">Florian Piflas 36/1. Der Ladekran hebt schwere Lasten, etwa bei Unwettern oder Verkehrsunfällen; Abrollbehälter bringen Spezialausrüstung an die Einsatzstelle.</p><span class="mini">[Fahrzeugtyp, Kranleistung und Abrollbehälter bitte ergänzen]</span></div></div>
-  <div class="fz">${FZ.filter(f => !f.neu).map(f => `<div class="card"><img src="${IMG[f.img]}" alt="${esc(f.alt)}"><div class="b"><h3>${esc(f.n)}</h3><span>${esc(f.d)}</span>${f.cr ? `<span class="cap">${f.cr}</span>` : ''}</div></div>`).join('')}</div>
+V.fahrzeuge = () => { const ft = S.fz.find(f => f.neu && !f.hid), rest = S.fz.filter(f => f !== ft && !f.hid);
+  const pic = (k, alt) => k && IMG[k] ? `<img src="${IMG[k]}" alt="${esc(alt)}">` : `<div class="ph" style="border-radius:0;aspect-ratio:4/3;min-height:0">Foto folgt</div>`;
+  return sec(`<h1>Fahrzeuge & Technik</h1><p>Unsere Fahrzeuge und Anhänger bringen Mannschaft und Ausrüstung schnell zum Einsatzort. Jeden Mittwoch zeigen wir auf Instagram einen Geräteraum – hier eine Auswahl.</p>
+  ${ft ? `<div class="feat">${pic(ft.hero || ft.img, ft.alt)}<div class="b"><span class="tag" style="background:var(--rot);color:#fff;align-self:flex-start">Neu im Fuhrpark</span><h2>${esc(ft.n.replace(/ \(.*\)$/, ''))}</h2><p style="color:#E3E4E6">${esc(ft.lang || ft.d)}</p></div></div>` : ''}
+  <div class="fz">${rest.map(f => `<div class="card">${pic(f.img, f.alt)}<div class="b"><h3>${esc(f.n)}</h3><span>${esc(f.d)}</span></div></div>`).join('')}</div>
   <h2 style="margin-top:12px">Ausrüstung</h2>
-  <div class="gal">${GER.map(g => `<figure><img src="${IMG[g[0]]}" alt="${esc(g[2])}"><figcaption>${esc(g[1])}</figcaption></figure>`).join('')}</div>
-  <div class="card"><h3>Anhänger</h3><p>Verkehrssicherungsanhänger, Mehrzweckanhänger und weitere.</p></div>
-  <span class="mini">Fotos: Feuerwehr Piflas (Instagram, Name der Fotografin bzw. des Fotografen folgt). Fahrzeugtypen und Funkrufnamen in eckigen Klammern bitte prüfen.</span>`);
+  <div class="gal">${S.ger.filter(g => !g.hid).map(g => `<figure>${g.img && IMG[g.img] ? `<img src="${IMG[g.img]}" alt="${esc(g.alt)}">` : '<div class="ph" style="aspect-ratio:1;min-height:0">Foto folgt</div>'}<figcaption>${esc(g.n)}</figcaption></figure>`).join('')}</div>
+  <span class="mini">Fotos: Feuerwehr Piflas (Instagram, Name der Fotografin bzw. des Fotografen folgt). Fahrzeugtypen und Funkrufnamen in eckigen Klammern bitte prüfen.</span>`); };
 V.partner = () => sec(`<h1>Partnerfeuerwehren</h1><p>Gemeinsam für den Markt Ergolding: Bei Einsätzen, Übungen und Festen arbeiten wir eng mit unseren Nachbarwehren zusammen.</p>
   <div class="grid partner">${PARTNER().map(([n,u]) => `<div class="card"><h2 style="font-size:24px">${esc(n)}</h2><p>[Kurzbeschreibung, z. B. gemeinsame Übungen, Einsatzgebiet]</p>${u ? `<a class="btn o sm" href="${esc(u)}" rel="noopener" target="_blank" style="color:var(--ink);align-self:flex-start">Zur Website</a><small class="mini">${esc(u.replace(/^https?:\/\//,'').replace(/\/$/,''))} – öffnet eine externe Seite</small>` : '<p class="mini">Link folgt</p>'}</div>`).join('')}</div>
   <p>Gemeinsame Veranstaltungen findest du unter <a href="#termine">Termine</a>.</p>`);
@@ -686,16 +767,17 @@ V.verein = () => {
   const y27 = today() >= new Date(2027, 0, 1);
   const rueck = jubOver() ? `<li id="chronik-2027"><b class="y">${JUB.founded + 125}</b><b>125 Jahre Feuerwehr Piflas – das Festjahr</b><p>Mit einer einmaligen Veranstaltungsreihe feierten wir unser Jubiläum:</p><ul style="margin:6px 0 0;padding-left:18px">${JUB.events.map(e => `<li><button class="btn o sm" data-act="article" data-id="r${e.id}" style="color:var(--ink);margin:4px 0">${esc(e.t)} (${dmy(e)})</button></li>`).join('')}</ul></li>`
     : (y27 ? `<li><b class="y">${JUB.founded + 125}</b><b>125 Jahre Feuerwehr Piflas</b><p>Das Festjahr läuft. <a href="#jubilaeum">Zu allen Veranstaltungen</a></p></li>` : '');
-  return sec(`<h1>Verein</h1><p>Der Feuerwehr Piflas e.V. stellt die Einsatzkräfte der Ortsfeuerwehr und pflegt Kameradschaft und Dorfleben.</p><div class="grid"><div class="card"><h3>Vorstandschaft</h3><p>1. Vorstand: Matthias Jeschke<br>[weitere Ämter]</p></div><div class="card"><h3>Mitgliedschaft</h3><p>Aktiv, passiv oder fördernd – <a href="#foerdern">Fördermitglied werden</a>.</p></div></div>
+  const vr = S.verein;
+  return sec(`<h1>Verein</h1>${vr.intro.split(/\n\s*\n/).map(p => `<p>${esc(p)}</p>`).join('')}<div class="grid"><div class="card"><h3>Vorstandschaft</h3><p id="vorstand">${vr.vorstand.map(([a, n]) => `${esc(a)}${n ? ': ' + esc(n) : ''}`).join('<br>')}</p></div><div class="card"><h3>Mitgliedschaft</h3><p>Aktiv, passiv oder fördernd – <a href="#foerdern">Fördermitglied werden</a>.</p></div></div>
   <h2 id="chronik">Chronik</h2>${jubOver() ? '<p class="stat" style="font-size:16px">Das Jubiläumsjahr ist vorbei – danke an alle, die mit uns gefeiert haben! Hier der Rückblick.</p>' : ''}
-  <ol class="chron"><li><b class="y">${JUB.founded}</b><b>Gründung der Freiwilligen Feuerwehr Piflas</b></li><li><b class="y">[Jahr]</b><b>[Weitere Meilensteine folgen: Fahrzeuge, Gerätehaus, Jubiläen]</b></li>${rueck}</ol>
+  <ol class="chron" id="chronik-liste">${vr.chronik.map(c => `<li><b class="y">${esc(c.y)}</b><b>${esc(c.t)}</b>${c.x ? `<p>${esc(c.x)}</p>` : ''}</li>`).join('')}${rueck}</ol>
   <a class="card plink" href="#partner"><b>Unsere Partnerfeuerwehren</b><span>Ergolding und Oberglaim – gemeinsam für den Markt Ergolding</span></a>`);
 };
 V.impressum = () => sec(`<h1>Impressum</h1><p class="mini">Entwurf – vor Veröffentlichung rechtlich prüfen lassen</p>
   <h3>Angaben gemäß § 5 DDG</h3><p>Feuerwehr Piflas e.V.<br>Gartenstraße 2, 84030 Ergolding / Piflas<br>Telefon 0871 1433372 · info@feuerwehr-piflas.de</p>
   <h3>Vertreten durch</h3><p>1. Vorstand Matthias Jeschke</p>
   <h3>Registereintrag</h3><p>Vereinsregister Amtsgericht Landshut, VR 1115</p>
-  <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3><p>Stefan Windele, c/o Feuerwehr Piflas e.V., Anschrift wie oben</p>
+  <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3><p>[Name], c/o Feuerwehr Piflas e.V., Anschrift wie oben</p>
   <h3>Hinweis zur Feuerwehr</h3><p>Die Freiwillige Feuerwehr Piflas ist eine öffentliche Einrichtung des Marktes Ergolding (Art. 4 Abs. 1 Bayerisches Feuerwehrgesetz). Der Feuerwehr Piflas e.V. unterstützt sie personell (Art. 5 BayFwG) und betreibt diese Website. Einsatzberichte werden vom Kommandanten der Freiwilligen Feuerwehr Piflas ([Name]) freigegeben.</p>
   <h3>Bildnachweis</h3><p>Fotos: Feuerwehr Piflas, [Name der Fotografin bzw. des Fotografen]. Abgebildete Personen haben der Veröffentlichung zugestimmt bzw. wurden informiert.</p>
   <h3>Externe Links</h3><p>Für Inhalte verlinkter Seiten, etwa unserer Partnerfeuerwehren, sind deren Betreiber verantwortlich. Bei Kenntnis von Rechtsverstößen entfernen wir den Link umgehend.</p>`);
@@ -713,89 +795,289 @@ V.datenschutz = () => sec(`<h1>Datenschutz</h1><p class="mini">Entwurf – vor V
 V.login = () => {
   if (S.pending2fa) return sec(`<div class="login stack"><h1>Bestätigung</h1><p>Wir haben einen 6-stelligen Code an deine Authenticator-App geschickt.</p>
     <form class="card" id="f-2fa" novalidate>${f('Code', '<input name="code" class="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required pattern="[0-9]{6}">')}<p class="err" id="e-2fa"></p><button class="btn" type="submit">Bestätigen</button><span class="mini">Demo: beliebige 6 Ziffern.</span></form></div>`);
-  return sec(`<div class="login stack"><h1>Login für Mitglieder</h1><p>Nur für eingeladene Mitglieder des Feuerwehr Piflas e.V.</p>
+  return sec(`<div class="login stack"><h1>Login für Mitglieder</h1><p>Nur für eingeladene Mitglieder des Feuerwehr Piflas e.V. Deine Rolle ist in deinem Konto hinterlegt – du musst nichts auswählen.</p>
     <form class="card" id="f-login" novalidate>
-      ${f('E-Mail', '<input name="mail" type="email" required autocomplete="username">')}
+      ${f('E-Mail', '<input name="mail" type="email" required autocomplete="username" maxlength="120">')}
       ${f('Passwort', '<input name="pw" type="password" required autocomplete="current-password">')}
-      ${f('Demo: anmelden als', '<select name="role"><option value="Freigeber">Kommandant (Freigabe)</option><option value="Administrator">Admin</option><option value="Autor">Redaktion</option></select>')}
-      <p class="err" id="e-login"></p><button class="btn" type="submit">Anmelden</button></form>
-    <div class="card stack" id="quick"><b>Schnell-Login für die Demo</b><span class="mini">Ohne E-Mail und Code – einfach Rolle wählen:</span><div class="row2 ql"><button class="btn o sm" type="button" data-act="quick-login" data-role="Freigeber" style="color:var(--ink)">Kommandant</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Administrator" style="color:var(--ink)">Admin</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Autor" style="color:var(--ink)">Redaktion</button></div>
+      <p class="err" id="e-login"></p><button class="btn" type="submit">Anmelden</button>
+      <span class="mini" id="demo-konten">Demo-Konten, Passwort beliebig: max@beispiel.de (Kommandant), erika@beispiel.de (Admin), jonas@beispiel.de (Redaktion)</span></form>
+    <div class="card stack" id="quick"><b>Schnell-Login für die Demo</b><span class="mini">Ohne E-Mail und Code – einfach ein Beispielkonto wählen:</span><div class="row2 ql"><button class="btn o sm" type="button" data-act="quick-login" data-role="Freigeber" style="color:var(--ink)">Kommandant</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Administrator" style="color:var(--ink)">Admin</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Autor" style="color:var(--ink)">Redaktion</button></div>
     </div><span class="mini">Kein Konto? Konten werden nur per Einladung durch die Admins vergeben.</span></div>`);
 };
 
 /* ---------- Backend ---------- */
+/* Rechte (B-01: jedes Konto hat genau eine Rolle) */
+const isAdm = () => !!S.user && S.user.role === 'Administrator';
+const isKdt = () => !!S.user && S.user.role === 'Freigeber';
+const isRed = () => !!S.user && (S.user.role === 'Autor' || S.user.role === 'Bereich Jugend');
+const canEdit = n => !!S.user && (!isRed() || n.by === S.user.name);
+const nImgs = n => n.imgs && n.imgs.length ? n.imgs : (n.img ? [n.img] : []);
+const fmtTs = ts => { const d = new Date(ts); return `${p2(d.getDate())}.${p2(d.getMonth()+1)}.${d.getFullYear()}, ${p2(d.getHours())}:${p2(d.getMinutes())} Uhr`; };
+const who = () => S.user ? S.user.name : 'System';
+const von = () => S.user.name + ' (' + RL[S.user.role] + ')';
+
+/* ---------- Verlauf (B-07), Spam-Schutz (N-05) ----------
+   KINDS: welche Inhalte einen Verlauf haben und welche Felder eine Fassung bilden.
+   Regeln: Einträge werden nur angehängt (niemand kann sie ändern oder löschen), der Name kommt aus der Anmeldung,
+   Speichern ohne Änderung erzeugt keinen Eintrag, schnelle Folge-Änderungen derselben Person (10 Min.) werden
+   zusammengefasst, mehr als RL_MAX Änderungen in 10 Minuten werden abgewiesen. */
+const KINDS = {
+  n: {l:'Beitrag', list:() => S.news, f:['t','cat','d','body','txt','imgs','img','alt']},
+  e: {l:'Einsatzbericht', list:() => S.einsaetze, f:['t','typ','d','y','z','fz','txt','imgs']},
+  fz: {l:'Fahrzeug', list:() => S.fz, f:['n','kurz','d','lang','alt','img','neu']},
+  g: {l:'Gerät', list:() => S.ger, f:['n','alt','img']},
+  v: {l:'Seite „Verein & Chronik“', list:() => [S.verein], f:['intro','vorstand','chronik']}
+};
+const FLAB = {t:'Titel', cat:'Kategorie', d:'Datum/Beschreibung', body:'Text', txt:'Text', imgs:'Fotos', img:'Foto', alt:'Bildbeschreibung', typ:'Einsatzart', y:'Jahr', z:'Uhrzeit', fz:'Fahrzeuge', n:'Name', kurz:'Kurzname', lang:'Vorstellungstext', neu:'„Neu im Fuhrpark“', intro:'Einleitung', vorstand:'Vorstandschaft', chronik:'Chronik'};
+const getC = (k, id) => KINDS[k] && KINDS[k].list().find(x => String(x.id) === String(id));
+const findC = getC;
+/* leere Werte (undefined, '', [], false) gelten als gleich – so erzeugt „Speichern ohne Änderung“ keinen Eintrag */
+const nz = v => v === undefined || v === '' || v === false || (Array.isArray(v) && !v.length) ? null : v;
+const pick = (k, o) => Object.fromEntries(KINDS[k].f.map(x => [x, nz(o[x])]));
+const sj = (k, o) => JSON.stringify(pick(k, o));
+const hk = (k, id) => k + ':' + id;
+const MERGE_MS = 10 * 60e3, RL_MAX = 30, RL_MS = 10 * 60e3, H_MAX = 50;
+function hInit(k, o) {
+  const key = hk(k, o.id);
+  if (!S.hist[key]) S.hist[key] = [{ts: S.t0, by: o.by || (k === 'e' ? (o.hand || 'DIVERA (automatisch)') : 'Ausgangsfassung'), act: 'Ausgangsfassung', snap: sj(k, o), n: 1, note: '', ok: ''}];
+  return S.hist[key];
+}
+function hLog(k, o, act, x = {}) {
+  const h = hInit(k, o), last = h[h.length - 1], now = Date.now(), by = x.by || who();
+  if (act === 'Bearbeitet' && !x.ok && !x.note && last.act === 'Bearbeitet' && last.by === by && !last.ok && now - last.ts < MERGE_MS) { last.snap = sj(k, o); last.ts = now; last.n++; return; }
+  h.push({ts: now, by, act, snap: sj(k, o), n: 1, note: x.note || '', ok: x.ok || ''});
+  if (h.length > H_MAX) h.splice(1, h.length - H_MAX);
+}
+function rateOk() {
+  const now = Date.now(), u = who(), l = (S.rl[u] || []).filter(t => now - t < RL_MS);
+  S.rl[u] = l;
+  if (l.length >= RL_MAX) { toast('Zu viele Änderungen in kurzer Zeit. Bitte warte ein paar Minuten.'); return false; }
+  l.push(now); return true;
+}
+/* Speichert Änderungen an einem Inhalt mit Verlaufseintrag. false = nichts gespeichert. */
+function saveC(k, o, vals, x = {}) {
+  hInit(k, o);
+  if (sj(k, o) === sj(k, {...o, ...vals})) { toast('Keine Änderung – nichts gespeichert'); return false; }
+  if (!x.noRate && !rateOk()) return false;
+  Object.assign(o, vals); hLog(k, o, x.act || 'Bearbeitet', x); return true;
+}
+const hEv = (k, o, act) => { hInit(k, o); hLog(k, o, act); };
+const changed = (k, a, b) => KINDS[k].f.filter(x => JSON.stringify(nz(a[x])) !== JSON.stringify(nz(b[x]))).map(x => FLAB[x] || x).filter((v, i, l) => l.indexOf(v) === i);
+const histHtml = (k, o) => {
+  const h = hInit(k, o), cur = sj(k, o), red = isRed(), may = k === 'e' ? !red : k === 'n' ? canEdit(o) : true;
+  const li = h.map((x, i) => { const prev = i ? JSON.parse(h[i - 1].snap) : null, ch = prev ? changed(k, prev, JSON.parse(x.snap)) : [];
+    return `<li><b>${fmtTs(x.ts)}</b><span>${esc(x.act)}${x.n > 1 ? ` (${x.n} Änderungen zusammengefasst)` : ''} · ${esc(x.by)}${x.ok ? ' · freigegeben von ' + esc(x.ok) : ''}</span>${ch.length ? `<span class="mini">Geändert: ${esc(ch.join(', '))}</span>` : ''}${x.note ? `<span class="mini">Notiz: „${esc(x.note)}“</span>` : ''}${may && x.snap !== cur ? `<button class="btn o sm" data-act="h-restore" data-k="${k}" data-id="${esc(o.id)}" data-i="${i}" style="color:var(--ink)">${red ? 'Diese Fassung zur Freigabe einreichen' : 'Diese Fassung wiederherstellen'}</button>` : ''}</li>`; }).reverse().join('');
+  return `<details class="help vl" id="verlauf-${k}-${esc(o.id)}"${S.hOpen === hk(k, o.id) ? ' open' : ''}><summary>Verlauf (${h.length} ${h.length === 1 ? 'Eintrag' : 'Einträge'})</summary><p class="mini">Jede Änderung wird mit Name und Zeit gespeichert. Niemand kann Einträge ändern oder löschen.</p><ol class="hist">${li}</ol></details>`;
+};
+
+/* ---------- Rückgängig (B-17) ----------
+   Vor jeder Änderung wird der Stand gemerkt (snapAll); done() zeigt die Meldung mit „Rückgängig“. */
+const UK = ['einsaetze','news','queue','trash','dropped','fz','ger','verein','members','plan','settings','posts','iface'];
+let UNDO = null;
+const snapAll = () => ({j: JSON.stringify(UK.map(k => S[k])), img: {...IMG}, gone: {...S.gone}});
+const done = (msg, u, ref) => { UNDO = {u, ref}; toast(msg, true); };
+function undo() {
+  if (!UNDO) return; const {u, ref} = UNDO; UNDO = null;
+  JSON.parse(u.j).forEach((v, i) => { S[UK[i]] = v; });
+  Object.assign(IMG, u.img); S.gone = u.gone;
+  if (ref) { const o = getC(ref[0], ref[1]); if (o) hEv(ref[0], o, 'Rückgängig gemacht'); }
+  S.cdel = null; S.sdel = null;
+  if (S.ed && S.ed.id && !getC(S.ed.k, S.ed.id)) S.ed = null;
+  toast('Rückgängig gemacht'); render({keep:true});
+}
+
+/* ---------- Bausteine Mitgliederbereich ---------- */
+const thumbs = () => S.draft.map((k, i) => `<span class="th"><img src="${IMG[k]}" alt="Foto ${i + 1}${i === 0 ? ' (Titelbild)' : ''}">${i ? `<button type="button" class="tb1" data-act="draft-first" data-i="${i}" aria-label="Foto ${i + 1} als Titelbild">Titelbild</button>` : '<span class="tb1 on" aria-hidden="true">Titelbild</span>'}<button type="button" class="ib sm" data-act="draft-rm" data-i="${i}" aria-label="Foto ${i + 1} entfernen">×</button></span>`).join('');
+const qThumbs = q => (q.imgs || []).map((k, i) => `<span class="th"><img src="${IMG[k]}" alt="Einsatzfoto ${i + 1}"><button type="button" class="ib sm" data-act="q-img-rm" data-id="${q.id}" data-i="${i}" aria-label="Foto ${i + 1} entfernen">×</button></span>`).join('');
+const delBox = (k, id, what) => `<div class="stat" style="font-size:15px;padding:10px 12px" id="del-box"><b>${what} wirklich löschen?</b> Er verschwindet sofort von der Website. 30 Tage lang kannst du ihn im Papierkorb wiederherstellen. Ein Instagram-Post bleibt bestehen – den bitte in Instagram löschen.</div><div class="row2"><button class="btn sm" data-act="c-del-ok" data-k="${k}" data-id="${esc(id)}">Ja, löschen</button><button class="btn o sm" data-act="c-del-no" style="color:var(--ink)">Abbrechen</button></div>`;
+const pending = (k, o) => S.queue.some(q => (k === 'n' && q.of === o.id) || (q.kind === 'change' && q.k === k && String(q.tid) === String(o.id)));
+const stOf = (k, o) => o.hid ? ['Ausgeblendet', 'off'] : (o.ab && o.ab > Date.now()) ? ['Geplant · erscheint ' + fmtTs(o.ab), 'plan'] : pending(k, o) ? ['Online · Änderung wartet auf Freigabe', 'wait'] : ['Online', 'on'];
+const shortVal = (x, v) => v === null || v === undefined || v === '' ? '–' : x === 'vorstand' ? v.map(r => r.filter(Boolean).join(': ')).join(' · ') : x === 'chronik' ? v.map(c => c.y + ' ' + c.t).join(' · ') : x === 'neu' ? (v ? 'ja' : 'nein') : x === 'body' ? v.join(' ') : Array.isArray(v) ? v.length + ' Foto(s)' : String(v);
+const ivBanner = () => { const d = S.iface.div; if (d.st !== 'bad' && !d.man) return '';
+  return `<div class="tip" id="div-warn" style="background:#FBEAEA"><span><b style="display:block">${d.man ? 'Notbetrieb: DIVERA-Import ist angehalten' : 'DIVERA ist gestört (' + esc(d.code) + ')'}</b>Neue Einsätze kommen gerade nicht automatisch. Lege sie bei Bedarf von Hand an – die Website läuft normal weiter.<span class="row2" style="margin-top:8px"><button class="btn sm" data-act="new" data-k="e">Einsatz von Hand anlegen</button>${isAdm() ? '<a class="btn o sm" href="#system" style="color:var(--ink)">Zur Diagnose</a>' : ''}</span></span></div>`; };
+
+/* ---------- Freigabe ---------- */
 V.redaktion = () => {
-  const items = S.queue.map(q => q.kind === 'einsatz' ? `
-    <article class="card" data-q="${q.id}"><div class="row2"><span class="tag t-thl">Automatisch aus DIVERA</span><span class="tag t-news">Einsatzbericht</span></div>
+  const card = q => {
+    if (q.kind === 'einsatz') return `
+    <article class="card" data-q="${q.id}"><div class="row2"><span class="tag t-thl">${q.hand ? 'Von Hand angelegt' : 'Automatisch aus DIVERA'}</span><span class="tag t-news">Einsatzbericht</span></div>
       <h2 style="font-size:28px">${esc(q.t)}</h2>
-      <div class="kv"><span>Einsatzart</span><b>${ART[q.typ][1]}</b><span>Zeit</span><b>${q.d}${q.y}, ${q.z} Uhr</b><span>Ort</span><b>${esc(q.t.split(', ')[1])}</b><span>Fahrzeuge</span><b>${esc(q.fz)}</b></div>
-      ${f('Kurzbericht (optional)', `<textarea id="txt-${q.id}">${esc(q.txt)}</textarea>`)}
-      <div class="row2" style="align-items:center"><div style="width:72px;height:72px;border-radius:10px;background:#E9E7E2;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--g2)" id="foto-${q.id}">${q.foto ? 'Foto ✓' : 'kein Foto'}</div><button class="btn o sm" data-act="foto" data-id="${q.id}" style="color:var(--ink)">+ Foto</button></div>
+      <div class="kv"><span>Einsatzart</span><b>${ART[q.typ][1]}</b><span>Zeit</span><b>${q.d}${q.y}, ${q.z} Uhr</b><span>Ort</span><b>${esc(q.t.split(', ')[1] || '')}</b><span>Fahrzeuge</span><b>${esc(q.fz)}</b></div>
+      ${f('Kurzbericht (optional)', `<textarea id="txt-${q.id}" maxlength="3000">${esc(q.txt)}</textarea>`)}
+      <div class="f">Fotos (optional)<div class="thumbs" id="qthumbs-${q.id}">${qThumbs(q)}</div>
+        <label class="btn o sm upl" style="color:var(--ink)">${I.img}Fotos hinzufügen<input class="vh" type="file" accept="image/*" multiple data-up="q" data-id="${q.id}"></label></div>
       <span class="mini">Standortdaten werden aus Fotos automatisch entfernt. Keine erkennbaren Personen oder Kennzeichen.</span>
       <label class="chk"><input type="checkbox" id="ig-${q.id}" ${q.ig ? 'checked' : ''}><span class="ct">Auch auf Instagram posten</span></label>
       <div class="stat" style="padding:10px 12px;font-size:15px">Erscheint frühestens um ${q.ab} Uhr (2 Std. nach Alarm). In der Demo sofort.</div>
       ${q.typ === 'thl' ? `<div class="tip" style="background:#FBEAEA;padding:12px"><span style="font-size:15px"><b>Bei Verletzten oder Toten:</b> erst veröffentlichen, wenn Polizei und Angehörige informiert sind. Keine Details zu Personen.</span></div>` : ''}
       <label class="chk"><input type="checkbox" id="ok-${q.id}" ${q.ok ? 'checked' : ''}><span class="ct">Geprüft: keine erkennbaren Personen, Kennzeichen, Adressen oder vertraulichen Details (Verschwiegenheit, Datenschutz).</span></label>
       <p class="err" id="e-${q.id}"></p>
-      <div class="pb"><button class="btn" data-act="publish" data-id="${q.id}">Veröffentlichen</button><button class="btn o" data-act="drop" data-id="${q.id}" style="color:var(--ink)">Verwerfen</button></div></article>` : `
+      <div class="pb"><button class="btn" data-act="publish" data-id="${q.id}">Veröffentlichen</button><button class="btn o" data-act="drop" data-id="${q.id}" style="color:var(--ink)">Verwerfen</button></div></article>`;
+    const back = `${f('Hinweis an die Redaktion (optional, bei „Zurück“)', `<input id="note-${q.id}" maxlength="300" placeholder="z. B. Bitte noch Datum ergänzen">`)}`;
+    if (q.kind === 'change') { const o = getC(q.k, q.tid); if (!o) return '';
+      const ks = Object.keys(q.vals).filter(x => JSON.stringify(o[x]) !== JSON.stringify(q.vals[x]));
+      return `
+    <article class="card" data-q="${q.id}"><span class="tag t-news" style="align-self:flex-start">Änderung: ${esc(KINDS[q.k].l)} · eingereicht von ${esc(q.von)}</span><h2 style="font-size:26px">${esc(o.n || o.t || 'Verein & Chronik')}</h2>
+      ${q.note ? `<p class="mini" style="margin:0">Notiz: „${esc(q.note)}“</p>` : ''}
+      <div class="kv chg">${ks.map(x => `<span>${esc(FLAB[x] || x)}</span><b>${x === 'img' && q.vals.img && IMG[q.vals.img] ? `<img src="${IMG[q.vals.img]}" alt="Neues Foto" style="width:112px;border-radius:10px">` : `<del>${esc(shortVal(x, o[x]))}</del> → ${esc(shortVal(x, q.vals[x]))}`}</b>`).join('') || '<span>–</span><b>Keine Abweichung mehr</b>'}</div>
+      <label class="chk"><input type="checkbox" id="ok-${q.id}" ${q.ok ? 'checked' : ''}><span class="ct">Geprüft: Angaben stimmen, Bildrechte geklärt, keine vertraulichen Details.</span></label>
+      ${back}<p class="err" id="e-${q.id}"></p>
+      <div class="pb"><button class="btn" data-act="publish" data-id="${q.id}">Übernehmen</button><button class="btn o" data-act="drop" data-id="${q.id}" style="color:var(--ink)">Zurück zur Überarbeitung</button></div></article>`; }
+    return `
     <article class="card" data-q="${q.id}"><span class="tag t-news" style="align-self:flex-start">${q.of ? 'Änderung an bestehendem Beitrag' : 'News'} · eingereicht von ${esc(q.von)}</span><h2 style="font-size:26px">${esc(q.t)}</h2><p>${esc(q.txt)}</p>
       ${(q.imgs || []).length ? `<div class="thumbs">${q.imgs.map((k, i) => `<span class="th"><img src="${IMG[k]}" alt="Eingereichtes Foto ${i + 1}"></span>`).join('')}</div>` : ''}
       ${q.of ? '' : `<label class="chk"><input type="checkbox" id="ig-${q.id}" ${q.ig ? 'checked' : ''}><span class="ct">Auch auf Instagram posten</span></label>`}
       <label class="chk"><input type="checkbox" id="ok-${q.id}" ${q.ok ? 'checked' : ''}><span class="ct">Geprüft: Bildrechte geklärt, Abgebildete informiert bzw. einverstanden (bei Kindern die Eltern), keine vertraulichen Details.</span></label>
-      <p class="err" id="e-${q.id}"></p>
-      <div class="pb"><button class="btn" data-act="publish" data-id="${q.id}">Veröffentlichen</button><button class="btn o" data-act="drop" data-id="${q.id}" style="color:var(--ink)">Zurück zur Überarbeitung</button></div></article>`).join('');
-  return sec(`<h1 style="font-size:40px">Zur Freigabe${S.queue.length ? ` <span style="color:var(--rot)">${S.queue.length}</span>` : ''}</h1><p style="color:var(--grau)">Prüfen, ergänzen, veröffentlichen – alles am Handy.</p>${items || '<p class="leer">Nichts zur Freigabe.<br>Neue Einsätze aus DIVERA erscheinen hier automatisch.</p>'}`);
+      ${back}<p class="err" id="e-${q.id}"></p>
+      <div class="pb"><button class="btn" data-act="publish" data-id="${q.id}">Veröffentlichen</button><button class="btn o" data-act="drop" data-id="${q.id}" style="color:var(--ink)">Zurück zur Überarbeitung</button></div></article>`;
+  };
+  const dr = S.dropped.map((d, i) => `<div class="li" style="align-items:center"><span style="flex:1;min-width:0"><b>${esc(d.q.t || (getC(d.q.k, d.q.tid) || {}).n || KINDS[d.q.k || 'n'].l)}</b><span class="mini" style="display:block">${d.q.kind === 'einsatz' ? 'Einsatz-Entwurf verworfen' : 'Zurück an ' + esc(d.q.by)}${d.note ? ' · „' + esc(d.note) + '“' : ''} · ${esc(d.by)}, ${fmtTs(d.at)} · 30 Tage wiederherstellbar</span></span><button class="btn o sm" data-act="q-restore" data-i="${i}" style="color:var(--ink)">Wiederherstellen</button></div>`).join('');
+  return sec(`<h1 style="font-size:40px">Zur Freigabe${S.queue.length ? ` <span style="color:var(--rot)">${S.queue.length}</span>` : ''}</h1><p style="color:var(--grau)">Prüfen, ergänzen, veröffentlichen – alles am Handy.</p>
+    ${ivBanner()}${S.queue.map(card).join('') || '<p class="leer">Nichts zur Freigabe.<br>Neue Einsätze aus DIVERA erscheinen hier automatisch.</p>'}
+    <h2 style="font-size:24px" id="dropped-head">Verworfen und zurückgegeben</h2><div class="list" id="dropped">${dr || '<p class="leer">Nichts verworfen.</p>'}</div>`);
 };
-const thumbs = () => S.draft.map((k, i) => `<span class="th"><img src="${IMG[k]}" alt="Foto ${i + 1}${i === 0 ? ' (Titelbild)' : ''}"><button type="button" class="ib sm" data-act="draft-rm" data-i="${i}" aria-label="Foto ${i + 1} entfernen">×</button></span>`).join('');
-const isAdm = () => !!S.user && S.user.role === 'Administrator';
-const canEdit = n => !!S.user && (S.user.role !== 'Autor' || n.by === S.user.name);
-const findC = (k, id) => k === 'e' ? S.einsaetze.find(x => String(x.id) === String(id)) : S.news.find(x => x.id === id);
-const nImgs = n => n.imgs && n.imgs.length ? n.imgs : (n.img ? [n.img] : []);
-const delBox = (k, id, what) => `<div class="stat" style="font-size:15px;padding:10px 12px" id="del-box"><b>${what} wirklich löschen?</b> Er verschwindet sofort von der Website. 30 Tage lang kannst du ihn im Papierkorb wiederherstellen. Ein Instagram-Post bleibt bestehen – den bitte in Instagram löschen.</div><div class="row2"><button class="btn sm" data-act="c-del-ok" data-k="${k}" data-id="${id}">Ja, löschen</button><button class="btn o sm" data-act="c-del-no" style="color:var(--ink)">Abbrechen</button></div>`;
-const mRow = n => { const own = canEdit(n), pend = S.queue.some(q => q.of === n.id);
-  return `<div class="li mrow" data-n="${n.id}" style="flex-direction:column;gap:8px"><span style="display:flex;gap:14px;width:100%"><span class="dt">${esc(n.d)}</span><span style="flex:1;min-width:0">${n.hid ? `<b>${esc(n.t)}</b>` : `<button class="lnk" data-act="article" data-id="${n.id}">${esc(n.t)}</button>`}<span class="mini" style="display:block">${n.hid ? '<b style="color:var(--rot-d)">Ausgeblendet</b>' : 'Online'}${pend ? ' · Änderung wartet auf Freigabe' : ''}${n.by ? ' · von ' + esc(n.by) : ''}</span></span></span>
-  ${S.cdel === 'n' + n.id ? delBox('n', n.id, 'Beitrag') : (own || isAdm()) ? `<div class="row2">${own ? `<button class="btn o sm" data-act="edit" data-id="${n.id}" style="color:var(--ink)">Bearbeiten</button><button class="btn o sm" data-act="hide" data-k="n" data-id="${n.id}" style="color:var(--ink)">${n.hid ? 'Wieder einblenden' : 'Ausblenden'}</button>` : ''}${isAdm() ? `<button class="btn o sm" data-act="c-del" data-k="n" data-id="${n.id}" style="color:var(--rot-d)">Löschen</button>` : ''}</div>` : ''}</div>`; };
-const eMRow = e => `<div class="li mrow" data-e="${e.id}" style="flex-direction:column;gap:8px"><span style="display:flex;gap:14px;width:100%"><span class="dt">${e.d}${String(e.y).slice(2)}</span><span style="flex:1;min-width:0">${tag(e.typ)}<b>${esc(e.t)}</b><span class="mini" style="display:block">${e.hid ? '<b style="color:var(--rot-d)">Ausgeblendet</b>' : 'Online'}</span></span></span>
-  ${S.eedit === e.id ? `${f('Kurzbericht', `<textarea id="etxt-${e.id}">${esc(e.txt)}</textarea>`)}<span class="mini">Keine Namen, Adressen oder Kennzeichen (W-04).</span><div class="row2"><button class="btn sm" data-act="e-save" data-id="${e.id}">Speichern</button><button class="btn o sm" data-act="e-cancel" style="color:var(--ink)">Abbrechen</button></div>`
-  : S.cdel === 'e' + e.id ? delBox('e', e.id, 'Einsatzbericht') : `<div class="row2"><button class="btn o sm" data-act="e-edit" data-id="${e.id}" style="color:var(--ink)">Bearbeiten</button><button class="btn o sm" data-act="hide" data-k="e" data-id="${e.id}" style="color:var(--ink)">${e.hid ? 'Wieder einblenden' : 'Ausblenden'}</button>${isAdm() ? `<button class="btn o sm" data-act="c-del" data-k="e" data-id="${e.id}" style="color:var(--rot-d)">Löschen</button>` : ''}</div>`}</div>`;
+
+/* ---------- Inhalte: Übersicht mit Suche, Filtern und Seitenweise-Laden (B-18) ---------- */
+const pdd = s => { const m = /^(\d\d)\.(\d\d)\./.exec(s || ''); return m ? +m[2] * 100 + +m[1] : 0; };
+const rowsAll = () => {
+  const ns = S.news.filter(canEdit).map((n, i) => ({k:'n', o:n, y:n.y || 2026, key:(n.y || 2026) * 1e4 + (pdd(n.d) || 1300 - i), typ: n.cat === 'Übung' ? 'uebung' : 'bericht', lab: n.cat || 'Verein'}));
+  const es = isRed() ? [] : S.einsaetze.map(e => ({k:'e', o:e, y:e.y, key:e.y * 1e4 + pdd(e.d), typ:'e', lab:'Einsatz · ' + ART[e.typ][0]}));
+  return ns.concat(es).sort((a, b) => b.key - a.key);
+};
+const rowMatch = r => { const F = S.flt, o = r.o, q = F.q.trim().toLowerCase();
+  if (F.typ !== 'alle' && r.typ !== F.typ) return false;
+  if (F.y !== 'alle' && String(r.y) !== F.y) return false;
+  if (F.st !== 'alle' && stOf(r.k, o)[1] !== F.st) return false;
+  return !q || [o.t, o.txt, (o.body || []).join(' '), o.by, o.cat, o.fz, o.d, r.y].join(' ').toLowerCase().includes(q); };
+const oRow = r => { const o = r.o, [st, sc] = stOf(r.k, o), ni = r.k === 'n' ? nImgs(o).length : (o.imgs || []).length;
+  return `<button class="li orow" data-act="open" data-k="${r.k}" data-id="${esc(o.id)}" data-key="${r.k}:${esc(o.id)}"><span class="dt">${esc(o.d)}<small>${r.y}</small></span><span style="flex:1;min-width:0"><span class="mini">${esc(r.lab)}</span><b>${esc(o.t)}</b><span class="mini st-${sc}" style="display:block">${esc(st)}${o.by ? ' · von ' + esc(o.by) : ''}${r.k === 'e' && o.hand ? ' · von Hand' : ''}${ni ? ' · ' + ni + ' Foto' + (ni > 1 ? 's' : '') : ''}</span></span></button>`; };
+const resHtml = () => { const hit = rowsAll().filter(rowMatch), n = S.flt.n;
+  return `<p class="mini" id="icount" aria-live="polite" style="margin:0"><b>${hit.length}</b> ${hit.length === 1 ? 'Treffer' : 'Treffer'}${hit.length > n ? ` · ${n} angezeigt` : ''}</p>
+    <div class="list" id="ilist">${hit.slice(0, n).map(oRow).join('') || '<p class="leer">Nichts gefunden. <button class="lnk" data-act="flt-reset">Filter zurücksetzen</button></p>'}</div>
+    ${hit.length > n ? `<button class="btn o" data-act="flt-more" id="flt-more" style="align-self:center;color:var(--ink)">Weitere 20 anzeigen (noch ${hit.length - n})</button>` : ''}`; };
 V.beitraege = () => {
-  const autor = S.user.role === 'Autor';
-  const ed = S.edit && S.news.find(n => n.id === S.edit);
-  if (S.edit && !ed) S.edit = null;
-  const cats = ['Verein','Übung','Jugendfeuerwehr','Bürgertipp']; if (ed && !cats.includes(ed.cat)) cats.unshift(ed.cat);
-  const btn = ed ? (autor ? 'Änderung zur Freigabe einreichen' : 'Änderungen speichern') : (autor ? 'Zur Freigabe einreichen' : 'Veröffentlichen');
-  const hint = ed ? (autor ? 'Der Kommandant gibt deine Änderung frei. Bis dahin bleibt die bisherige Fassung online.' : 'Deine Änderungen sind sofort online. Instagram wird nicht erneut gepostet.') : (autor ? 'Du reichst Beiträge ein; der Kommandant gibt sie frei.' : 'Du darfst freigeben und veröffentlichst direkt.');
-  const mine = autor ? S.news.filter(canEdit) : S.news;
-  const jump = [['f-post', ed ? 'Bearbeiten' : 'Neuer Beitrag'], ['verwalten', autor ? 'Deine Beiträge' : 'Verwalten']].concat(autor ? [] : [['e-head', 'Einsätze']]).concat(isAdm() ? [['p-head', 'Papierkorb' + (S.trash.length ? ' (' + S.trash.length + ')' : '')]] : []);
-  return sec(`<h1 style="font-size:40px">Beiträge</h1>
-    <div class="chips" id="jump" role="group" aria-label="Springen zu">${jump.map(([id, l]) => `<button class="chip" data-act="jump" data-to="${id}">${l}</button>`).join('')}</div>
-    <form class="card${ed ? ' editing' : ''}" id="f-post" novalidate><h2 style="font-size:26px">${ed ? 'Beitrag bearbeiten' : 'Neuer Beitrag'}</h2>
-      <input type="hidden" name="of" value="${ed ? ed.id : ''}">
-      ${f('Titel', `<input name="t" required value="${ed ? esc(ed.t) : ''}">`)}
-      ${f('Kategorie', `<select name="k">${cats.map(c => `<option${ed && ed.cat === c ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>`)}
-      ${f('Text', `<textarea name="txt" required>${ed ? esc((ed.body || [ed.txt]).join('\n\n')) : ''}</textarea>`)}
-      <div class="f">Fotos (optional)<div class="thumbs" id="thumbs-post">${thumbs()}</div>
-        <label class="btn o sm upl" style="color:var(--ink)">${I.img}Fotos hinzufügen<input class="vh" type="file" accept="image/*" multiple data-up="post"></label>
-        <span class="mini">Das erste Foto wird das Titelbild. Fotos werden verkleinert, Standortdaten automatisch entfernt.</span></div>
-      ${f('Bildbeschreibung (für blinde Menschen, optional)', `<input name="alt" placeholder="z. B. Gruppe bei der Leistungsprüfung vor dem Gerätehaus" value="${ed && ed.alt && ed.alt !== ed.t ? esc(ed.alt) : ''}">`)}
-      ${ed ? '' : '<label class="chk"><input type="checkbox" name="ig" checked><span class="ct">Auch auf Instagram posten</span></label>'}
+  const red = isRed(), F = S.flt, all = rowsAll(), years = [...new Set(all.map(r => r.y))].sort((a, b) => b - a);
+  const types = [['alle','Alle']].concat(red ? [] : [['e','Einsätze']]).concat([['uebung','Übungen'], ['bericht','Berichte']]);
+  const ret = S.dropped.map((d, i) => [d, i]).filter(([d]) => d.q.by === S.user.name && d.q.kind !== 'einsatz');
+  const trash = S.trash.filter(x => x.k === 'n' || x.k === 'e');
+  return sec(`<h1 style="font-size:40px">Inhalte</h1>
+    <div class="row2"><button class="btn" data-act="new" data-k="n">+ Neuer Beitrag</button>${red ? '' : '<button class="btn o" data-act="new" data-k="e" style="color:var(--ink)">+ Einsatz von Hand</button>'}</div>
+    ${red ? '' : ivBanner()}
+    ${ret.length ? `<div class="card" id="returned" style="border-color:#E3A008"><h2 style="font-size:22px">Zurück an dich</h2>${ret.map(([d, i]) => `<div class="li" style="flex-direction:column;gap:6px"><b>${esc(d.q.t || KINDS[d.q.k || 'n'].l)}</b><span class="mini">${d.note ? 'Hinweis von ' + esc(d.by) + ': „' + esc(d.note) + '“' : 'Zurückgegeben von ' + esc(d.by)}</span>${d.q.kind === 'news' ? `<button class="btn o sm" data-act="re-edit" data-i="${i}" style="color:var(--ink);align-self:flex-start">Überarbeiten und neu einreichen</button>` : `<a class="btn o sm" href="#seiten" style="color:var(--ink);align-self:flex-start">Unter „Seiten“ neu bearbeiten</a>`}</div>`).join('')}</div>` : ''}
+    <div class="card" id="filter" role="search" style="gap:12px">
+      <label class="f">Suchen<input type="search" id="q" value="${esc(F.q)}" placeholder="Titel, Text, Ort, Fahrzeug oder Name" autocomplete="off" maxlength="80"></label>
+      <div class="chips" role="group" aria-label="Art">${types.map(([k, l]) => `<button class="chip" data-act="flt" data-f="typ" data-v="${k}" aria-pressed="${F.typ === k}">${l}</button>`).join('')}</div>
+      <div class="fsel"><label class="f">Jahr<select id="fy"><option value="alle">Alle Jahre</option>${years.map(y => `<option${F.y === String(y) ? ' selected' : ''}>${y}</option>`).join('')}</select></label>
+      <label class="f">Status<select id="fs">${[['alle','Alle'],['on','Online'],['off','Ausgeblendet'],['wait','Änderung wartet'],['plan','Geplant']].map(([k, l]) => `<option value="${k}"${F.st === k ? ' selected' : ''}>${l}</option>`).join('')}</select></label></div>
+      ${F.q || F.typ !== 'alle' || F.y !== 'alle' || F.st !== 'alle' ? '<button class="lnk" data-act="flt-reset" style="align-self:flex-start">Filter zurücksetzen</button>' : ''}
+    </div>
+    <div class="stack" id="ires" style="gap:10px">${resHtml()}</div>
+    <p class="mini" style="margin:0">${red ? 'Du siehst deine eigenen Beiträge. Tippe auf einen Eintrag zum Bearbeiten.' : isAdm() ? 'Tippe auf einen Eintrag: bearbeiten, ausblenden, Verlauf ansehen oder nach Nachfrage löschen.' : 'Tippe auf einen Eintrag: bearbeiten, ausblenden oder Verlauf ansehen. Löschen können nur die Admins.'}</p>
+    ${isAdm() ? `<h2 style="font-size:26px" id="p-head" tabindex="-1">Papierkorb</h2><div class="list" id="trash">${trash.map(x => `<div class="li" style="align-items:center"><span style="flex:1;min-width:0"><b>${esc(x.item.t)}</b><span class="mini" style="display:block">${x.k === 'e' ? 'Einsatzbericht' : 'Beitrag'} · wird nach 30 Tagen endgültig gelöscht</span></span><button class="btn o sm" data-act="restore" data-id="${x.k}${esc(x.item.id)}" style="color:var(--ink)">Wiederherstellen</button></div>`).join('') || '<p class="leer">Der Papierkorb ist leer.</p>'}</div>` : ''}`);
+};
+
+/* ---------- Editor für Beiträge und Einsatzberichte (B-19, D-09) ---------- */
+const actBox = (k, o) => { const may = k === 'n' ? canEdit(o) : !isRed();
+  return `<div class="card" id="aktionen"><h2 style="font-size:22px">Weitere Aktionen</h2>
+    ${S.cdel === k + o.id ? delBox(k, o.id, k === 'e' ? 'Einsatzbericht' : 'Beitrag') : `<div class="row2">${o.hid ? '' : `<button class="btn o sm" data-act="${k === 'e' ? 'detail' : 'article'}" data-id="${esc(o.id)}" style="color:var(--ink)">Auf der Website ansehen</button>`}${may ? `<button class="btn o sm" data-act="hide" data-k="${k}" data-id="${esc(o.id)}" style="color:var(--ink)">${o.hid ? 'Wieder einblenden' : 'Ausblenden'}</button>` : ''}${isAdm() ? `<button class="btn o sm" data-act="c-del" data-k="${k}" data-id="${esc(o.id)}" style="color:var(--rot-d)">Löschen</button>` : ''}</div>`}
+    <span class="mini">Ausgeblendet = nicht mehr öffentlich, bleibt aber erhalten. Jede Aktion lässt sich rückgängig machen.</span></div>
+    ${histHtml(k, o)}`; };
+const photoBox = () => `<div class="f">Fotos (optional)<div class="thumbs" id="thumbs-post">${thumbs()}</div>
+    <label class="btn o sm upl" style="color:var(--ink)">${I.img}Fotos hinzufügen<input class="vh" type="file" accept="image/*" multiple data-up="post"></label>
+    <span class="mini">Das erste Foto ist das Titelbild – „Titelbild“ tippen, um ein anderes nach vorn zu holen. Fotos werden verkleinert, Standortdaten automatisch entfernt.</span></div>`;
+const newsForm = (ed, pre) => { const red = isRed(), src = ed || pre;
+  const cats = ['Verein','Übung','Ausbildung','Jugendfeuerwehr','Bürgertipp']; if (src && src.cat && !cats.includes(src.cat)) cats.unshift(src.cat);
+  const btn = ed ? (red ? 'Änderung zur Freigabe einreichen' : 'Änderungen speichern') : (red ? 'Zur Freigabe einreichen' : 'Veröffentlichen');
+  const hint = ed ? (red ? 'Der Kommandant gibt deine Änderung frei. Bis dahin bleibt die bisherige Fassung online.' : 'Deine Änderungen sind sofort online. Instagram wird nicht erneut gepostet.') : (red ? 'Du reichst Beiträge ein; der Kommandant gibt sie frei.' : 'Du darfst freigeben und veröffentlichst direkt.');
+  return `<form class="card${ed ? ' editing' : ''}" id="f-post" novalidate><h1 style="font-size:30px">${ed ? 'Beitrag bearbeiten' : pre ? 'Beitrag überarbeiten' : 'Neuer Beitrag'}</h1>
+      <input type="hidden" name="of" value="${ed ? esc(ed.id) : ''}">
+      ${f('Titel', `<input name="t" required maxlength="120" value="${src ? esc(src.t) : ''}">`)}
+      ${f('Kategorie', `<select name="k">${cats.map(c => `<option${src && src.cat === c ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>`)}
+      ${f('Text', `<textarea name="txt" required maxlength="8000">${src ? esc((src.body || [src.txt]).join('\n\n')) : ''}</textarea>`)}
+      ${photoBox()}
+      ${f('Bildbeschreibung (für blinde Menschen, optional)', `<input name="alt" maxlength="200" placeholder="z. B. Gruppe bei der Leistungsprüfung vor dem Gerätehaus" value="${src && src.alt && src.alt !== src.t ? esc(src.alt) : ''}">`)}
+      ${ed ? f('Was hast du geändert? (optional, erscheint im Verlauf)', '<input name="note" maxlength="200" placeholder="z. B. Tippfehler korrigiert">') : '<label class="chk"><input type="checkbox" name="ig" checked><span class="ct">Auch auf Instagram posten</span></label>'}
       <label class="chk"><input type="checkbox" name="ok" required><span class="ct">Geprüft: Bildrechte geklärt, Abgebildete informiert bzw. einverstanden (bei Kindern die Eltern).</span></label>
       <p class="err" id="e-post"></p>
       <button class="btn" type="submit">${btn}</button>
-      ${ed ? '<button class="btn o" type="button" data-act="edit-cancel" style="color:var(--ink)">Abbrechen</button>' : ''}
-      <span class="mini">${hint}</span></form>
-    <h2 style="font-size:26px" id="verwalten" tabindex="-1">${autor ? 'Deine Beiträge' : 'Beiträge verwalten'}</h2>
-    <p class="mini" style="margin:0">${autor ? 'Du kannst deine eigenen Beiträge bearbeiten und ausblenden.' : isAdm() ? 'Du kannst alle Beiträge bearbeiten, ausblenden und nach Nachfrage löschen.' : 'Du kannst alle Beiträge bearbeiten und ausblenden. Löschen können nur die Admins.'} Ausgeblendete Beiträge sind nicht mehr öffentlich, bleiben aber erhalten.</p>
-    <div class="list" id="plist">${mine.map(mRow).join('') || '<p class="leer">Noch keine eigenen Beiträge.</p>'}</div>
-    ${autor ? '' : `<h2 style="font-size:26px" id="e-head" tabindex="-1">Einsätze verwalten</h2><div class="list" id="elist">${S.einsaetze.map(eMRow).join('')}</div>`}
-    ${isAdm() ? `<h2 style="font-size:26px" id="p-head" tabindex="-1">Papierkorb</h2><div class="list" id="trash">${S.trash.map(x => `<div class="li" style="align-items:center"><span style="flex:1;min-width:0"><b>${esc(x.item.t)}</b><span class="mini" style="display:block">${x.k === 'e' ? 'Einsatzbericht' : 'Beitrag'} · wird nach 30 Tagen endgültig gelöscht</span></span><button class="btn o sm" data-act="restore" data-id="${x.k}${x.item.id}" style="color:var(--ink)">Wiederherstellen</button></div>`).join('') || '<p class="leer">Der Papierkorb ist leer.</p>'}</div>` : ''}`);
-};
+      <button class="btn o" type="button" data-act="edit-cancel" style="color:var(--ink)">Abbrechen</button>
+      <span class="mini">${hint}</span></form>`; };
+const isoOf = e => e ? `${e.y}-${e.d.slice(3, 5)}-${e.d.slice(0, 2)}` : '';
+const einsatzForm = ed => { const sw = ed ? ed.t.split(', ')[0] : '', ort = ed ? ed.t.split(', ').slice(1).join(', ') : '';
+  const fzs = [...new Set(S.fz.filter(z => !z.hid).map(z => z.kurz || z.n).concat(ed ? ed.fz.split(', ').filter(Boolean) : []))], on = ed ? ed.fz.split(', ') : [];
+  const orte = ORTE.filter(o => !o.startsWith('[')).concat(ort && !ORTE.includes(ort) ? [ort] : []);
+  return `<form class="card${ed ? ' editing' : ''}" id="f-einsatz" novalidate><h1 style="font-size:30px">${ed ? 'Einsatzbericht bearbeiten' : 'Einsatz von Hand anlegen'}</h1>
+    ${ed ? `<span class="mini">Quelle: ${ed.hand ? 'von Hand angelegt (' + esc(ed.hand) + ')' : 'DIVERA 24/7 (automatisch)'}</span>` : '<span class="mini">Für Einsätze, die nicht aus DIVERA kommen – etwa bei einer Störung. Nur datensparsame Angaben (D-03).</span>'}
+    ${f('Stichwort', `<input name="sw" required maxlength="60" list="sw-list" value="${esc(sw)}" placeholder="z. B. Verkehrsunfall"><datalist id="sw-list">${['Verkehrsunfall','Ölspur','Kaminbrand','Mülltonnenbrand','Brandmeldeanlage','Baum auf Fahrbahn','Wasser im Keller','Unterstützung Rettungsdienst'].map(x => `<option value="${x}">`).join('')}</datalist>`)}
+    ${f('Einsatzart', `<select name="typ">${Object.keys(ART).map(k => `<option value="${k}"${ed && ed.typ === k ? ' selected' : ''}>${ART[k][1]}</option>`).join('')}</select>`)}
+    ${f('Ortsteil (keine Straße, keine Hausnummer)', `<select name="ort" required>${orte.map(o => `<option${o === ort ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`)}
+    <div class="fsel">${f('Datum', `<input name="dt" type="date" required value="${ed ? isoOf(ed) : `${today().getFullYear()}-${p2(today().getMonth() + 1)}-${p2(today().getDate())}`}">`)}${f('Alarm (wird auf 15 Min. gerundet)', `<input name="zt" type="time" required value="${ed ? ed.z : ''}">`)}</div>
+    <fieldset class="f fzset"><legend>Fahrzeuge</legend>${fzs.map(z => `<label class="chk"><input type="checkbox" name="fz" value="${esc(z)}"${on.includes(z) ? ' checked' : ''}><span class="ct">${esc(z)}</span></label>`).join('')}</fieldset>
+    ${f('Kurzbericht (optional)', `<textarea name="txt" maxlength="3000">${ed ? esc(ed.txt) : ''}</textarea>`)}
+    ${photoBox()}
+    ${ed ? f('Was hast du geändert? (optional, erscheint im Verlauf)', '<input name="note" maxlength="200">') : '<label class="chk"><input type="checkbox" name="ig"><span class="ct">Auch auf Instagram posten</span></label>'}
+    <label class="chk"><input type="checkbox" name="ok" required><span class="ct">Geprüft: keine erkennbaren Personen, Kennzeichen, Adressen oder vertraulichen Details (Verschwiegenheit, Datenschutz).</span></label>
+    <p class="err" id="e-einsatz"></p>
+    <button class="btn" type="submit">${ed ? 'Änderungen speichern' : 'Speichern und veröffentlichen'}</button>
+    <button class="btn o" type="button" data-act="edit-cancel" style="color:var(--ink)">Abbrechen</button>
+    <span class="mini">${ed ? 'Änderungen sind sofort online.' : 'Erscheint frühestens 2 Stunden nach der Alarmzeit (D-04) – liegt der Alarm kürzer zurück, wird der Bericht automatisch später veröffentlicht.'}</span></form>`; };
+V.editor = () => { const E = S.ed, o = E.id ? getC(E.k, E.id) : null, pre = E.re !== undefined && S.dropped[E.re] ? S.dropped[E.re].q : null;
+  return sec(`<button class="btn o sm" data-act="edit-cancel" style="align-self:flex-start;color:var(--ink)">← Zur Übersicht</button>
+    ${E.k === 'e' ? einsatzForm(o) : newsForm(o, pre)}${o ? actBox(E.k, o) : ''}`); };
+
+/* ---------- Seiten: Verein, Chronik, Fahrzeuge, Ausrüstung (C-…, F-05, F-08) ---------- */
+const SP = [['verein','Verein'], ['chronik','Chronik'], ['fz','Fahrzeuge'], ['g','Ausrüstung']];
+const rowsOf = (fid, base) => S.tmp[fid] || base;
+const sBtn = () => isRed() ? 'Zur Freigabe einreichen' : 'Speichern';
+const sHint = () => isRed() ? 'Der Kommandant gibt deine Änderung frei. Bis dahin bleibt die bisherige Fassung online.' : 'Änderungen sind sofort online und lassen sich rückgängig machen.';
+const itemForm = (k, o) => { const nw = !o, x = o || {}, img = S.sdraft !== undefined ? S.sdraft : x.img;
+  return `<form class="card editing" id="f-item" data-k="${k}" data-id="${nw ? '' : esc(x.id)}" novalidate><h3>${nw ? (k === 'fz' ? 'Neues Fahrzeug' : 'Neues Gerät') : 'Bearbeiten: ' + esc(x.n)}</h3>
+    ${f('Name', `<input name="n" required maxlength="80" value="${esc(x.n || '')}">`)}
+    ${k === 'fz' ? f('Kurzname für Einsatzberichte', `<input name="kurz" maxlength="40" value="${esc(x.kurz || '')}" placeholder="z. B. Fahrzeug 56/1">`) + f('Beschreibung', `<textarea name="d" maxlength="400">${esc(x.d || '')}</textarea>`) : ''}
+    <div class="f">Foto<div class="thumbs">${img && IMG[img] ? `<span class="th"><img src="${IMG[img]}" alt="Aktuelles Foto"><button type="button" class="ib sm" data-act="s-img-rm" aria-label="Foto entfernen">×</button></span>` : ''}</div>
+      <label class="btn o sm upl" style="color:var(--ink)">${I.img}${img ? 'Foto ersetzen' : 'Foto hinzufügen'}<input class="vh" type="file" accept="image/*" data-up="sfoto"></label></div>
+    ${f('Bildbeschreibung (für blinde Menschen)', `<input name="alt" maxlength="200" value="${esc(x.alt || '')}">`)}
+    ${k === 'fz' && !isRed() ? `<label class="chk"><input type="checkbox" name="neu"${x.neu ? ' checked' : ''}><span class="ct">Als „Neu im Fuhrpark“ groß oben zeigen (nur ein Fahrzeug)</span></label>${f('Vorstellungstext (für „Neu im Fuhrpark“)', `<textarea name="lang" maxlength="800">${esc(x.lang || '')}</textarea>`)}` : ''}
+    ${f('Was hast du geändert? (optional, erscheint im Verlauf)', '<input name="note" maxlength="200">')}
+    <label class="chk"><input type="checkbox" name="ok" required><span class="ct">Geprüft: Bildrechte geklärt, keine Kennzeichen oder erkennbaren Personen ohne Einverständnis.</span></label>
+    <p class="err" id="e-item"></p><button class="btn" type="submit">${sBtn()}</button><button class="btn o" type="button" data-act="s-cancel" style="color:var(--ink)">Abbrechen</button><span class="mini">${sHint()}</span></form>`; };
+const itemCard = (k, o) => { const key = hk(k, o.id), may = !isRed();
+  if (S.sed === key) return itemForm(k, o);
+  return `<div class="card sitem" data-key="${esc(key)}"><div style="display:flex;gap:12px;align-items:center">${o.img && IMG[o.img] ? `<img src="${IMG[o.img]}" alt="" style="width:72px;height:72px;object-fit:cover;border-radius:10px;flex:none">` : '<span class="ph" style="width:72px;height:72px;min-height:0;flex:none;font-size:12px;padding:4px">Foto folgt</span>'}<span style="min-width:0"><b>${esc(o.n)}</b>${o.neu ? ' <span class="tag" style="background:var(--rot);color:#fff">Neu</span>' : ''}<span class="mini" style="display:block">${esc(k === 'fz' ? (o.kurz || '') : o.alt || '')}${pending(k, o) ? ' · Änderung wartet auf Freigabe' : ''}</span></span></div>
+    ${S.sdel === key ? `<div class="stat" style="font-size:15px;padding:10px 12px" id="sdel-box"><b>„${esc(o.n)}“ entfernen?</b> Verschwindet sofort von der Website. 30 Tage lang kannst du es unten wiederherstellen.</div><div class="row2"><button class="btn sm" data-act="s-del-ok" data-key="${esc(key)}">Ja, entfernen</button><button class="btn o sm" data-act="s-del-no" style="color:var(--ink)">Abbrechen</button></div>`
+      : `<div class="row2"><button class="btn o sm" data-act="s-edit" data-key="${esc(key)}" style="color:var(--ink)">Bearbeiten</button>${may ? `<button class="btn o sm" data-act="s-del" data-key="${esc(key)}" style="color:var(--rot-d)">Entfernen</button>` : ''}</div>`}
+    ${histHtml(k, o)}</div>`; };
+const vereinForm = () => { const v = S.verein, rows = rowsOf('f-verein', v.vorstand), intro = S.tmp.intro !== undefined ? S.tmp.intro : v.intro;
+  return `<form class="card" id="f-verein" novalidate><h2 style="font-size:24px">Verein</h2>
+    ${f('Einleitung', `<textarea name="intro" required maxlength="1500">${esc(intro)}</textarea>`)}
+    <fieldset class="f rows"><legend>Vorstandschaft</legend>${rows.map(([a, n], i) => `<div class="vrow">${f('Amt', `<input name="ra" maxlength="60" value="${esc(a)}">`)}${f('Name', `<input name="rn" maxlength="60" value="${esc(n)}">`)}<button type="button" class="ib" data-act="row-rm" data-f="f-verein" data-i="${i}" aria-label="Zeile ${i + 1} entfernen">×</button></div>`).join('')}
+    <button type="button" class="btn o sm" data-act="row-add" data-f="f-verein" style="color:var(--ink);align-self:flex-start">+ Zeile</button></fieldset>
+    ${f('Was hast du geändert? (optional)', '<input name="note" maxlength="200">')}
+    <p class="err" id="e-verein"></p><button class="btn" type="submit">${sBtn()}</button><span class="mini">${sHint()}</span></form>`; };
+const chronikForm = () => { const rows = rowsOf('f-chronik', S.verein.chronik);
+  return `<form class="card" id="f-chronik" novalidate><h2 style="font-size:24px">Chronik</h2><span class="mini">Wird nach Jahr sortiert. Der Rückblick auf das Jubiläum wird automatisch ergänzt.</span>
+    ${rows.map((c, i) => `<fieldset class="f crow"><legend>Eintrag ${i + 1}</legend><div class="vrow">${f('Jahr', `<input name="cy" maxlength="8" value="${esc(c.y)}" inputmode="numeric">`)}${f('Titel', `<input name="ct" maxlength="120" value="${esc(c.t)}">`)}<button type="button" class="ib" data-act="row-rm" data-f="f-chronik" data-i="${i}" aria-label="Eintrag ${i + 1} entfernen">×</button></div>${f('Text (optional)', `<textarea name="cx" maxlength="1000">${esc(c.x || '')}</textarea>`)}</fieldset>`).join('')}
+    <button type="button" class="btn o sm" data-act="row-add" data-f="f-chronik" style="color:var(--ink);align-self:flex-start">+ Eintrag</button>
+    ${f('Was hast du geändert? (optional)', '<input name="note" maxlength="200">')}
+    <p class="err" id="e-chronik"></p><button class="btn" type="submit">${sBtn()}</button><span class="mini">${sHint()}</span></form>`; };
+V.seiten = () => { const sp = S.sp, red = isRed();
+  const tr = S.trash.filter(x => x.k === sp);
+  const body = sp === 'verein' ? vereinForm() + histHtml('v', S.verein)
+    : sp === 'chronik' ? chronikForm() + histHtml('v', S.verein)
+    : `${red ? '' : `<button class="btn" data-act="s-new" data-k="${sp}" style="align-self:flex-start">+ ${sp === 'fz' ? 'Fahrzeug' : 'Gerät'} hinzufügen</button>`}
+      ${S.sed === sp + ':new' ? itemForm(sp, null) : ''}
+      <div class="stack" id="slist">${(sp === 'fz' ? S.fz : S.ger).map(o => itemCard(sp, o)).join('')}</div>
+      ${red ? '' : `<h2 style="font-size:22px" id="s-trash-head">Entfernt (30 Tage wiederherstellbar)</h2><div class="list" id="s-trash">${tr.map(x => `<div class="li" style="align-items:center"><span style="flex:1;min-width:0"><b>${esc(x.item.n)}</b></span><button class="btn o sm" data-act="restore" data-id="${x.k}${esc(x.item.id)}" style="color:var(--ink)">Wiederherstellen</button></div>`).join('') || '<p class="leer">Nichts entfernt.</p>'}</div>`}`;
+  return sec(`<h1 style="font-size:40px">Seiten</h1><p style="color:var(--grau)">Texte, Chronik, Fahrzeuge und Ausrüstung pflegen – ohne Programmieren.${red ? ' Deine Änderungen gehen zur Freigabe an den Kommandanten.' : ''}</p>
+    <div class="chips" id="spchips" role="group" aria-label="Bereich">${SP.map(([k, l]) => `<button class="chip" data-act="sp" data-v="${k}" aria-pressed="${sp === k}">${l}</button>`).join('')}</div>
+    ${body}
+    ${isAdm() ? '<a class="card plink" href="#fotos"><b>Alle Fotos der Website</b><span>Fotos zentral ersetzen oder entfernen</span></a>' : ''}`); };
 const mediaGroups = () => {
   const g = [['Beiträge', []], ['Seiten', []], ['Fahrzeuge & Technik', []], ['Instagram-Vorschau', []]], seen = {};
   const add = (i, k, w) => { if (!k || !(k in IMG)) return; if (seen[k]) { seen[k].w.push(w); return; } seen[k] = {k, w:[w]}; g[i][1].push(seen[k]); };
   S.news.forEach(n => (n.imgs && n.imgs.length ? n.imgs : [n.img]).forEach(k => add(0, k, 'Beitrag: ' + n.t)));
   add(1, 'halle', 'Startseite: Titelbild'); add(1, 'thl', 'Mitmachen-Seite'); add(1, 'thl', 'Einsätze: Symbolfoto');
-  add(2, 'wlf_hoch', 'Fahrzeuge: Titelbild'); FZ.forEach(z => add(2, z.img, 'Fahrzeug: ' + z.n)); GER.forEach(x => add(2, x[0], 'Gerät: ' + x[1]));
+  S.fz.forEach(z => { add(2, z.hero, 'Fahrzeuge: Titelbild'); add(2, z.img, 'Fahrzeug: ' + z.n); }); S.ger.forEach(x => add(2, x.img, 'Gerät: ' + x.n)); S.einsaetze.forEach(e => (e.imgs || []).forEach(k => add(0, k, 'Einsatz: ' + e.t)));
   IGF.forEach(([k, al]) => add(3, k, 'Instagram: ' + al));
   return g.filter(x => x[1].length);
 };
@@ -808,24 +1090,50 @@ V.fotos = () => sec(`<h1 style="font-size:40px">Fotos</h1><p style="color:var(--
 V.planung = () => sec(`<h1 style="font-size:40px">Redaktionsplan</h1><div class="stat" style="font-size:15px"><b>Ziel: 1 Beitrag pro Woche.</b> Erinnerung geht 3 Tage vor dem Termin an die zuständige Person.</div>
   <div class="list">${S.plan.map(p => `<div class="li"><span class="dt">${p.d}</span><span><b>${esc(p.t)}</b><span class="mini" style="font-size:15px">${esc(p.w)} · ${esc(p.s)}</span></span></div>`).join('')}</div>
   <form class="card" id="f-plan" novalidate><h2 style="font-size:24px">Thema einplanen</h2>${f('Thema', '<input name="t" required>')}${f('Datum', '<input name="d" type="date" required>')}${f('Zuständig', `<select name="w">${S.members.filter(m => !m.inv).map(m => `<option>${esc(m.n)}</option>`).join('')}</select>`)}<p class="err" id="e-plan"></p><button class="btn" type="submit">Einplanen</button></form>`);
+/* ---------- System: Zustand, Schnittstellen-Diagnose (A-10 bis A-12), Einstellungen ---------- */
+/* Fehlerkatalog: Code → [Stufe, Klartext, Ursache, Schritte ohne IT-Kenntnisse, Hinweis für die Technik].
+   Dieselben Codes stehen im Protokoll der echten Website und in docs/betrieb/schnittstellen.md. */
+const ERR = {
+  'DIV-401': ['bad', 'DIVERA lehnt den Zugangsschlüssel ab', 'Der API-Schlüssel ist abgelaufen oder wurde in DIVERA neu erzeugt.', ['In DIVERA 24/7 (Web) mit einem Konto mit Verwaltungsrechten anmelden und den API-Schlüssel der Einheit kopieren [genauer Menüpfad: siehe DIVERA-Hilfe].', 'Hier „Schlüssel neu eintragen“ tippen, einfügen, speichern.', '„Verbindung testen“ – der Punkt wird grün.'], 'HTTP 401/403 vom DIVERA-Endpunkt.'],
+  'DIV-NET': ['warn', 'DIVERA ist gerade nicht erreichbar', 'Meist eine kurze Störung bei DIVERA oder beim Webhoster.', ['Nichts tun: Die Website versucht es alle 5 Minuten erneut.', 'Hält es länger als einen Tag an: Notbetrieb einschalten und die technische Ansprechperson informieren.'], 'Zeitüberschreitung, DNS oder HTTP 5xx; Wiederholung mit wachsender Pause.'],
+  'DIV-FMT': ['bad', 'Die Antwort von DIVERA hat sich geändert', 'DIVERA hat seine Schnittstelle verändert. Zur Sicherheit übernimmt die Website nichts, statt falsche oder zu viele Daten zu zeigen.', ['Notbetrieb einschalten und Einsätze von Hand anlegen – die Website läuft normal weiter.', '„Diagnosebericht kopieren“ und an die technische Ansprechperson schicken.', 'Technik: Anleitung „Schnittstellen reparieren“, Abschnitt „Antwort hat sich geändert“.'], 'Vertragsprüfung fehlgeschlagen: Pflichtfeld fehlt oder hat einen anderen Typ.'],
+  'IG-EXP': ['warn', 'Instagram-Verbindung läuft in 12 Tagen ab', 'Instagram verlangt regelmäßig eine neue Anmeldung.', ['„Neu verbinden“ tippen und mit dem Instagram-Konto des Vereins anmelden.'], 'Token-Ablauf in < 14 Tagen; automatische Verlängerung fehlgeschlagen.'],
+  'IG-190': ['bad', 'Instagram-Verbindung ist abgelaufen', 'Die Anmeldung ist abgelaufen oder das Instagram-Passwort wurde geändert.', ['„Neu verbinden“ tippen und mit dem Instagram-Konto des Vereins anmelden.', 'Bis dahin zeigt die Website statt der Vorschau nur einen Link zum Profil – Besucherinnen und Besucher sehen keinen Fehler.'], 'Instagram-Fehler 190 (ungültiges Token).'],
+  'IG-FMT': ['bad', 'Die Antwort von Instagram hat sich geändert', 'Instagram hat seine Schnittstelle verändert.', ['Nichts tun: Die Website zeigt statt der Vorschau einen Link zum Profil.', '„Diagnosebericht kopieren“ und an die technische Ansprechperson schicken.'], 'Vertragsprüfung fehlgeschlagen.']
+};
+const IFN = {div:['DIVERA 24/7', 'Einsätze und Termine', 'alle 5 Minuten', 'src/Divera/'], ig:['Instagram', 'Vorschau auf der Startseite, Posten freigegebener Berichte', 'stündlich', 'src/Instagram/']};
+const report = s => { const x = S.iface[s], e = ERR[x.code];
+  return [`Diagnosebericht Website Feuerwehr Piflas – ${fmtTs(Date.now())}`, `Schnittstelle: ${IFN[s][0]} · Adapter: ff-piflas-connect/${IFN[s][3]}`, `Status: ${x.st}${x.code ? ' · Code ' + x.code + ' – ' + e[1] : ''} · Notbetrieb: ${x.man ? 'an' : 'aus'}`, `Technik: ${e ? e[4] : 'keine Auffälligkeiten'}`, `Letzter erfolgreicher Abruf: ${x.st === 'ok' ? 'vor 4 Minuten' : '[Zeitpunkt aus dem Protokoll]'}`, 'Zugangsdaten werden nie in diesen Bericht geschrieben.', 'Anleitung: docs/betrieb/schnittstellen.md'].join('\n'); };
+const diagHtml = s => { const x = S.iface[s], e = ERR[x.code], [nm, what, every] = IFN[s];
+  return `<div class="card diag" id="diag-${s}"><div class="sh"><h3>${nm}</h3><span class="dot2 ${x.st}" role="img" aria-label="${x.st === 'ok' ? 'in Ordnung' : x.st === 'warn' ? 'Achtung' : 'Störung'}"></span></div>
+    <span class="mini">Liefert: ${what} · Abruf ${every}</span>
+    ${e ? `<p style="margin:0"><b>${esc(e[1])}</b> <span class="mini">(Code ${x.code})</span><br>${esc(e[2])}</p><b>So behebst du es:</b><ol class="steps2">${e[3].map(t => `<li>${esc(t)}</li>`).join('')}</ol>` : '<p style="margin:0"><b>Läuft.</b> Letzter erfolgreicher Abruf vor 4 Minuten.</p>'}
+    ${x.man ? `<p class="stat" style="font-size:15px;padding:10px 12px;margin:0"><b>Notbetrieb ist an.</b> ${s === 'div' ? 'Der automatische Import ist angehalten. Einsätze und Termine bitte von Hand eintragen.' : 'Die Instagram-Vorschau ist ausgeblendet; die Website zeigt nur einen Link zum Profil.'}</p>` : ''}
+    <div class="row2"><button class="btn o sm" data-act="if-test" data-s="${s}" style="color:var(--ink)">Verbindung testen</button>${s === 'ig' && x.st !== 'ok' ? '<button class="btn sm" data-act="ig-reconnect">Neu verbinden</button>' : ''}${s === 'div' ? '<button class="btn o sm" data-act="if-key" style="color:var(--ink)">Schlüssel neu eintragen</button>' : ''}<button class="btn o sm" data-act="if-man" data-s="${s}" style="color:var(--ink)">${x.man ? 'Notbetrieb beenden' : 'Notbetrieb einschalten'}</button><button class="btn o sm" data-act="if-copy" data-s="${s}" style="color:var(--ink)">Diagnosebericht kopieren</button></div>
+    ${S.keyForm === s ? `<form class="stack" id="f-key" novalidate>${f('Neuer API-Schlüssel aus DIVERA', '<input name="key" type="password" required minlength="8" autocomplete="off">')}<span class="mini">Wird verschlüsselt gespeichert und danach nie wieder angezeigt. In der Demo wird nichts gespeichert.</span><p class="err" id="e-key"></p><button class="btn sm" type="submit" style="align-self:flex-start">Speichern und testen</button></form>` : ''}
+    <details class="help"><summary>Technische Details</summary><pre class="dlog" id="report-${s}">${esc(report(s))}</pre></details></div>`; };
 V.system = () => {
+  const iv = s => { const x = S.iface[s], e = ERR[x.code]; return e ? `${e[1]} (${x.code})` : (s === 'div' ? 'Letzter Abruf vor 4 Minuten' : 'Verbunden – erneuert sich automatisch'); };
   const H = [
     ['ok','Website erreichbar','Seit 30 Tagen ohne Ausfall (Beispiel)', ''],
     ['ok','Updates','Automatisch eingespielt – zuletzt heute Nacht', ''],
     ['ok','Datensicherung','Täglich 3 Uhr, extern gespeichert – letzte: heute', ''],
-    ['ok','DIVERA-Verbindung','Letzter Abruf vor 4 Minuten', ''],
-    [S.health.ig, 'Instagram-Verbindung', S.health.ig === 'ok' ? 'Verbunden – erneuert sich automatisch' : 'Läuft in 12 Tagen ab', S.health.ig === 'ok' ? '' : '<button class="btn sm" data-act="ig-reconnect">Neu verbinden</button>'],
+    [S.iface.div.st, 'DIVERA-Verbindung', iv('div') + (S.iface.div.man ? ' · Notbetrieb' : ''), S.iface.div.st === 'ok' ? '' : '<button class="btn sm" data-act="jump" data-to="diag-div">Diagnose</button>'],
+    [S.iface.ig.st, 'Instagram-Verbindung', iv('ig'), S.iface.ig.st === 'ok' ? '' : '<button class="btn sm" data-act="ig-reconnect">Neu verbinden</button>'],
     ['ok','Sicherheitszertifikat (https)','Erneuert sich automatisch', '']
   ];
   const warn = H.filter(h => h[0] !== 'ok').length;
   return sec(`<h1 style="font-size:40px">System</h1>
-  <p style="color:var(--grau)">Alles Wichtige auf einen Blick – ohne IT-Kenntnisse. ${warn ? `<b style="color:#8A5A00">${warn} Punkt braucht Aufmerksamkeit.</b>` : '<b style="color:#1E6B35">Alles in Ordnung.</b>'}</p>
-  <div class="amp" id="ampel">${H.map(([st,t,d,a]) => `<div><span class="dot2 ${st}" role="img" aria-label="${st === 'ok' ? 'in Ordnung' : 'Achtung'}"></span><span><b>${t}</b><small>${d}</small></span>${a}</div>`).join('')}</div>
+  <p style="color:var(--grau)">Alles Wichtige auf einen Blick – ohne IT-Kenntnisse. ${warn ? `<b style="color:#8A5A00">${warn === 1 ? '1 Punkt braucht' : warn + ' Punkte brauchen'} Aufmerksamkeit.</b>` : '<b style="color:#1E6B35">Alles in Ordnung.</b>'}</p>
+  <div class="amp" id="ampel">${H.map(([st,t,d,a]) => `<div><span class="dot2 ${st}" role="img" aria-label="${st === 'ok' ? 'in Ordnung' : 'Achtung'}"></span><span><b>${t}</b><small>${esc(d)}</small></span>${a}</div>`).join('')}</div>
+  <h2 style="font-size:26px" id="diag-head">Schnittstellen</h2>
+  <p class="mini" style="margin:0">Fällt eine Schnittstelle aus, läuft die Website weiter. Die Ampel zeigt, was zu tun ist; der Diagnosebericht hilft der Technik (ohne Zugangsdaten).</p>
+  ${diagHtml('div')}${diagHtml('ig')}
   <form class="card" id="f-settings" novalidate><h2 style="font-size:26px">Inhalte ändern – ohne Programmieren</h2>
     <div class="f">Bürgertipp<span class="mini">Wechselt automatisch mit der Jahreszeit. Jetzt angezeigt: <b id="tip-auto">${esc(tipNow().t)}</b></span></div>
     <label class="chk"><input type="checkbox" name="sonderOn" ${S.settings.sonderOn ? 'checked' : ''}><span class="ct">Aktuellen Sonderhinweis zeigen (z. B. Waldbrandgefahr, Unwetter, Hochwasser)</span></label>
-    ${f('Sonderhinweis: Überschrift', `<input name="sonderT" value="${esc(S.settings.sonderT)}">`)}
-    ${f('Sonderhinweis: Text', `<textarea name="sonderX">${esc(S.settings.sonderX)}</textarea>`)}
+    ${f('Sonderhinweis: Überschrift', `<input name="sonderT" maxlength="80" value="${esc(S.settings.sonderT)}">`)}
+    ${f('Sonderhinweis: Text', `<textarea name="sonderX" maxlength="400">${esc(S.settings.sonderX)}</textarea>`)}
     ${f('Sonderhinweis endet automatisch am (optional)', `<input name="sonderBis" type="date" value="${S.settings.sonderBis}">`)}
     <label class="chk"><input type="checkbox" name="warnOn" ${S.settings.warnOn !== false ? 'checked' : ''}><span class="ct">Hinweis auf Warntag und Probealarm 14 Tage vorher auf der Startseite</span></label>
     <label class="chk"><input type="checkbox" name="jubOn" ${S.settings.jubOn ? 'checked' : ''}><span class="ct">Jubiläum „125 Jahre“ auf der Website anzeigen</span></label>
@@ -833,30 +1141,38 @@ V.system = () => {
     ${f('Link Partnerfeuerwehr Ergolding', `<input name="pE" type="url" placeholder="https://…" value="${esc(S.settings.pE)}">`)}
     ${f('Link Partnerfeuerwehr Oberglaim', `<input name="pO" type="url" placeholder="https://…" value="${esc(S.settings.pO)}">`)}
     <p class="err" id="e-settings"></p><button class="btn" type="submit">Speichern</button>
-    <span class="mini">Änderungen sind sofort online. Seitentexte, Fotos, Menü, Kontaktdaten und PDFs pflegst du genauso – Layout und Farben bleiben dabei geschützt.</span></form>
+    <span class="mini">Änderungen sind sofort online. Texte von Verein, Chronik, Fahrzeugen und Ausrüstung pflegst du unter „Seiten“ – Layout und Farben bleiben dabei geschützt.</span></form>
   <h2 style="font-size:26px">Hilfe</h2>
   <details class="help" open><summary>Handbuch und Erklärvideos</summary><ul><li><a href="handbuch.pdf" target="_blank" rel="noopener">Handbuch Mitgliederbereich (PDF, bebildert)</a> – für alle Rollen; auch oben über „Handbuch“ erreichbar</li><li>Kurzvideos: Beitrag schreiben · Einsatz freigeben · Mitglied einladen · Foto tauschen</li><li>Jede Seite im Backend hat ein „?“ mit Erklärung</li></ul></details>
-  <details class="help"><summary>Checkliste: Admin-Wechsel</summary><ol><li>Neue Person als Admin einladen, bisherige erst nach Übergabe entfernen</li><li>Passwort-Tresor des Vereins übergeben (Hosting, Domain, DIVERA, Instagram)</li><li>2-Faktor-Anmeldung bei der neuen Person einrichten</li><li>Gemeinsam eine Wiederherstellung aus der Datensicherung testen</li><li>Kontakte im Impressum und hier unter „Notfall“ aktualisieren</li></ol></details>
-  <details class="help"><summary>Monatlich und jährlich zu tun</summary><ul><li><b>Monatlich (10 Min.):</b> Monatsbericht lesen, gelbe und rote Punkte abarbeiten</li><li><b>Jährlich:</b> Rechtstexte, Bürgerinfos und Konten prüfen, alte Fotos aussortieren</li></ul></details>
-  <details class="help"><summary>Notfall: Wen anrufen?</summary><ul><li>Webhoster-Support: [Telefon]</li><li>Technische Ansprechperson: [Name, Telefon]</li><li>Zweite Person als Admin: [Name]</li></ul></details>`);
+  <details class="help"><summary>Checkliste: Admin-Wechsel</summary><ol><li>Neue Person als Admin einladen, bisherige erst nach Übergabe entfernen (immer mindestens zwei Admins)</li><li>Passwort-Tresor des Vereins übergeben (Hosting, Domain, DIVERA, Instagram)</li><li>2-Faktor-Anmeldung bei der neuen Person einrichten</li><li>Gemeinsam eine Wiederherstellung aus der Datensicherung testen</li><li>Kontakte im Impressum und hier unter „Notfall“ aktualisieren</li></ol></details>
+  <details class="help"><summary>Monatlich und jährlich zu tun</summary><ul><li><b>Monatlich (10 Min.):</b> Monatsbericht lesen, gelbe und rote Punkte abarbeiten</li><li><b>Jährlich:</b> Rechtstexte, Bürgerinfos und Konten prüfen, alte Fotos aussortieren, einmal „Verbindung testen“ bei beiden Schnittstellen</li></ul></details>
+  <details class="help"><summary>Notfall: Wen anrufen?</summary><ul><li>Webhoster-Support: [Telefon]</li><li>Technische Ansprechperson: [Name, Telefon]</li><li>Zweite Person als Admin: [Name]</li><li>Code der Website: öffentliches Archiv auf GitHub, Anleitung „Schnittstellen reparieren“</li></ul></details>`);
 };
+const cntR = r => S.members.filter(m => m.r === r && !m.inv).length;
 V.mitglieder = () => sec(`<h1 style="font-size:40px">Mitglieder</h1>
+  <div class="stat" style="font-size:15px" id="rollen"><b>Jedes Konto hat genau eine Rolle.</b> Aktiv: ${cntR('Freigeber')} Kommandanten · ${cntR('Administrator')} Admins · ${cntR('Autor') + cntR('Bereich Jugend')} Redaktion. Es gibt immer mindestens zwei Admins.</div>
   <form class="card" id="f-invite" novalidate><h2 style="font-size:26px">Neues Mitglied einladen</h2>
-    ${f('Name', '<input name="n" required autocomplete="off">')}${f('E-Mail', '<input name="m" type="email" required autocomplete="off">')}
+    ${f('Name', '<input name="n" required autocomplete="off" maxlength="80">')}${f('E-Mail', '<input name="m" type="email" required autocomplete="off" maxlength="120">')}
     ${f('Rolle', '<select name="r"><option value="Autor">Redaktion</option><option value="Freigeber">Kommandant · Freigabe</option><option value="Bereich Jugend">Redaktion Jugend</option><option value="Administrator">Admin</option></select>')}
     <p class="err" id="e-invite"></p><button class="btn" type="submit">Einladung senden</button><span class="mini">Link 48 Std. gültig; das Mitglied legt sein Passwort selbst fest.</span></form>
   <h2 style="font-size:26px">Alle Konten <span class="mini">(Beispiel)</span></h2>
   <div class="stack" id="mlist">${S.members.map((m, i) => `<div class="card" style="gap:6px${m.inv ? ';border-style:dashed' : ''}"><div class="sh"><b>${esc(m.n)}</b><span class="tag t-bma">${esc(RL[m.r] || m.r)}</span></div><span class="${m.inv ? 'st-wait' : 'st-ok'}" style="font-size:15px">${esc(m.s)}</span>${m.inv ? `<div class="row2"><button class="btn o sm" data-act="resend" data-i="${i}" style="color:var(--ink)">Erneut senden</button><button class="btn o sm" data-act="revoke" data-i="${i}" style="color:var(--ink)">Zurückziehen</button></div>` : ''}</div>`).join('')}</div>`);
 
 /* ---------- Rendering ---------- */
-const BACKR = ['redaktion','beitraege','planung','fotos','mitglieder','system'];
+const BACKR = ['redaktion','beitraege','editor','seiten','fotos','planung','mitglieder','system'];
+const mayRoute = r => ROLES[S.user.role].tabs.includes(TABOF[r] || r) && (r !== 'fotos' || isAdm()) && (r !== 'editor' || !!S.ed);
+/* Beispiel-Verlauf für „Dorffest“ (erste Fassung von Jonas, vom Kommandanten freigegeben) */
+function seedHist() { const a2 = getC('n', 'a2'); if (!a2) return; const b = pick('n', a2);
+  S.hist['n:a2'] = [{ts:S.t0, by:'Jonas Beispiel', act:'Erstellt', n:1, note:'', ok:'Max Mustermann', snap:JSON.stringify({...b, t:'Dorffest 2026', body:a2.body.slice(0, 1)})},
+    {ts:S.t0 + 864e5, by:'Jonas Beispiel', act:'Bearbeitet', n:2, note:'Dank ergänzt', ok:'Max Mustermann', snap:JSON.stringify(b)}]; }
 let lastRoute = null;
 function render(opts = {}) {
+  if (S.seedH) { S.seedH = false; seedHist(); }
   let r = route();
   if (!V[r]) r = 'start';
   if (BACKR.includes(r)) {
     if (!S.user) { S.next = r; location.replace('#login'); return; }
-    if (!ROLES[S.user.role].tabs.includes(r)) { location.replace('#' + ROLES[S.user.role].tabs[0]); return; }
+    if (!mayRoute(r)) { location.replace('#' + (r === 'editor' && ROLES[S.user.role].tabs.includes('beitraege') ? 'beitraege' : ROLES[S.user.role].tabs[0])); return; }
   }
   if (r === 'login' && S.user) { location.replace('#' + ROLES[S.user.role].tabs[0]); return; }
   if (r === 'jubilaeum' && !jubActive()) { S.toChronik = jubOver(); location.replace(jubOver() ? '#verein' : '#start'); return; }
@@ -869,28 +1185,38 @@ function render(opts = {}) {
   $('#main').innerHTML = V[r]() + (bk ? backTabs(r) : '');
   $('#footer').innerHTML = bk ? '' : pubFoot();
   $('#mnav').innerHTML = menuHtml(r);
-  document.title = (r === 'start' ? '' : (pubList().find(p => p[0]===r)?.[1] || BACK[r]?.[0] || r.charAt(0).toUpperCase()+r.slice(1)) + ' – ') + 'Feuerwehr Piflas';
+  document.title = (r === 'start' ? '' : (pubList().find(p => p[0]===r)?.[1] || TITLE[r] || BACK[r]?.[0] || r.charAt(0).toUpperCase()+r.slice(1)) + ' – ') + 'Feuerwehr Piflas';
   if (!opts.keep && lastRoute !== r) window.scrollTo(0, 0);
   if (opts.focusMain && lastRoute !== r) $('#main').focus({preventScroll:true});
   lastRoute = r;
   if (S.toChronik && r === 'verein') { S.toChronik = false; setTimeout(() => { const c = document.getElementById('chronik'); if (c) c.scrollIntoView({block:'start'}); }, 30); }
   renderSteps();
 }
+/* Demo-Steuerung: Szenarien für die Vorführung (gehören nicht zur echten Website) */
 function renderSteps() {
   const s = S.step;
   const st = (n, title, txt, btn) => `<div class="step${s===n?' on':''}${s>n?' ok':''}"><span class="n">${s>n?'✓':n}</span><b>${title}</b><p>${txt}</p>${btn}</div>`;
-  const hasE = S.queue.some(q => q.kind === 'einsatz');
-  $('#steps').innerHTML =
+  const box = (n, title, txt, btn) => `<div class="step"><span class="n" aria-hidden="true">${n}</span><b>${title}</b><p>${txt}</p>${btn}</div>`;
+  const hasE = S.queue.some(q => q.kind === 'einsatz'), cur = !S.today ? 'now' : (S.today.getFullYear() === 2028 ? '2028' : S.today.getMonth() === 2 ? '2027-03' : '2027');
+  const fail = S.iface.div.code || (S.iface.ig.st === 'bad' ? S.iface.ig.code : '') || 'ok';
+  $('#steps').innerHTML = '<h3 class="sgh">Einsatz aus DIVERA</h3>' +
     st(1, 'Alarm kommt aus DIVERA', 'Erzeugt einen anonymisierten Entwurf – nur Einsatzart, Ortsteil, gerundete Uhrzeit.', `<button class="btn sm" data-act="alarm"${hasE?' disabled':''}>Alarm simulieren</button>`) +
-    st(2, 'Kommandant gibt frei', 'Der Entwurf wartet unter „Freigabe“. Text oder Foto ergänzen, dann veröffentlichen.', `<button class="btn sm" data-act="demo-publish"${hasE?'':' disabled'}>Jetzt freigeben</button>`) +
+    st(2, 'Kommandant gibt frei', 'Der Entwurf wartet unter „Freigabe“. Text oder Fotos ergänzen, dann veröffentlichen.', `<button class="btn sm" data-act="demo-publish"${hasE?'':' disabled'}>Jetzt freigeben</button>`) +
     st(3, 'Alle sind informiert', 'Der Bericht steht auf der Startseite, die Statistik zählt mit, Instagram ist gepostet.', `<button class="btn o sm" data-act="demo-result" style="color:var(--ink)"${s<3?' disabled':''}>Ergebnis ansehen</button>`) +
-    `<div class="step"><span class="n" aria-hidden="true">T</span><b>Termine aus DIVERA</b><p>Neue Termine werden automatisch übernommen und stehen auf der Startseite – private Termine nicht.</p><button class="btn dk sm" data-act="sync">Termin-Sync simulieren</button></div>`;
-  const cur = !S.today ? 'now' : (S.today.getFullYear() === 2027 ? '2027' : '2028');
-  $('#steps').innerHTML += `<div class="step"><span class="n" aria-hidden="true">J</span><b>Datum simulieren</b><p>Zeigt Jubiläum, Jahreszeiten-Tipps und Warntag-Hinweise zu verschiedenen Zeitpunkten.</p><div class="chips" role="group" aria-label="Datum simulieren">${[['now','Heute'],['2027-03','März 2027'],['2027','Juli 2027'],['2028','Februar 2028']].map(([k,l]) => `<button class="chip" data-act="date" data-v="${k}" aria-pressed="${cur===k}">${l}</button>`).join('')}</div></div>`;
+    '<h3 class="sgh">Weitere Szenarien</h3>' +
+    box('A', 'Anmelden als …', 'Jedes Konto hat genau eine Rolle. Wechsle die Sicht:', `<div class="chips" role="group" aria-label="Anmelden als">${[['Freigeber','Kommandant'],['Administrator','Admin'],['Autor','Redaktion']].map(([r, l]) => `<button class="chip" data-act="quick-login" data-role="${r}" aria-pressed="${!!S.user && S.user.role === r}">${l}</button>`).join('')}</div>`) +
+    box('F', 'Freigabe-Beispiele', `In der Freigabe ${S.queue.length === 1 ? 'wartet 1 Einreichung' : 'warten ' + S.queue.length + ' Einreichungen'} – Beiträge, eine Fahrzeug-Änderung und ein Chronik-Eintrag.`, '<button class="btn sm" data-act="demo-freigabe">Freigabe öffnen</button>') +
+    box('R', 'Redaktion reicht ein', 'Mia Muster (Redaktion) reicht einen Beitrag ein. Danach prüfst du ihn als Kommandant.', '<button class="btn sm" data-act="demo-submit">Beitrag einreichen</button>') +
+    box('H', 'Einsatz von Hand anlegen', 'Für Einsätze, die nicht aus DIVERA kommen – etwa bei einer Störung.', '<button class="btn sm" data-act="demo-manual">Formular öffnen</button>') +
+    box('V', 'Verlauf und Rückgängig', 'Jede Änderung ist mit Name und Zeit nachvollziehbar und lässt sich rückgängig machen.', '<button class="btn sm" data-act="demo-verlauf">Verlauf ansehen</button>') +
+    box('S', 'Störung simulieren', 'Zeigt Diagnose und Notbetrieb – und was Besucherinnen und Besucher sehen.', `<div class="chips" role="group" aria-label="Störung simulieren">${[['DIV-401','DIVERA: Schlüssel'],['DIV-FMT','DIVERA: Format'],['IG-190','Instagram'],['ok','Alles behoben']].map(([k, l]) => `<button class="chip" data-act="fail" data-v="${k}" aria-pressed="${fail === k}">${l}</button>`).join('')}</div>`) +
+    box('T', 'Termine aus DIVERA', 'Neue Termine werden automatisch übernommen und stehen auf der Startseite – private Termine nicht.', '<button class="btn dk sm" data-act="sync">Termin-Sync simulieren</button>') +
+    box('J', 'Datum simulieren', 'Zeigt Jubiläum, Jahreszeiten-Tipps und Warntag-Hinweise zu verschiedenen Zeitpunkten.', `<div class="chips" role="group" aria-label="Datum simulieren">${[['now','Heute'],['2027-03','März 2027'],['2027','Juli 2027'],['2028','Februar 2028']].map(([k,l]) => `<button class="chip" data-act="date" data-v="${k}" aria-pressed="${cur===k}">${l}</button>`).join('')}</div>`);
 }
 
 let tT, pT;
-const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('on'), 3000); };
+/* Meldung unten; mit u = true zusätzlich der Knopf „Rückgängig“ (B-17) */
+const toast = (m, u) => { const t = $('#toast'); t.innerHTML = '<span>' + esc(m) + '</span>' + (u ? '<button type="button" class="tb" data-act="undo">Rückgängig</button>' : ''); t.classList.toggle('act', !!u); t.classList.add('on'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('on'), u ? 8000 : 3000); };
 const push = m => { $('#pushtxt').textContent = m; const p = $('#push'); p.classList.add('on'); clearTimeout(pT); pT = setTimeout(() => p.classList.remove('on'), 4500); };
 const setOpen = (cls, el, open) => {
   document.body.classList.toggle(cls, open);
@@ -905,19 +1231,24 @@ const closeAll = () => { if (document.body.classList.contains('mopen')) menu(fal
 const roundNow = () => { const d = new Date(); d.setMinutes(Math.round(d.getMinutes()/15)*15, 0, 0); return d; };
 const p2 = n => String(n).padStart(2,'0');
 const go = h => { if (location.hash === '#' + h) render(); else location.hash = h; };
+const loginAs = r => { const m = S.members.find(x => x.r === r && !x.inv); S.user = {name: m.n, role: r}; };
+const ekey = e => e.y * 1e8 + pdd(e.d) * 1e4 + +String(e.z).replace(':', '');
+const sortE = () => S.einsaetze.sort((a, b) => ekey(b) - ekey(a));
 
 function alarm() {
   if (S.queue.some(q => q.kind === 'einsatz')) return;
+  if (!S.user || isRed()) loginAs('Freigeber');
+  if (S.iface.div.st === 'bad' || S.iface.div.man) { toast('DIVERA ist gestört – es kommt kein Entwurf. Lege den Einsatz bei Bedarf von Hand an.'); go('redaktion'); return; }
   const a = ALARME[S.alarmNr % ALARME.length]; S.alarmNr++;
   const t = roundNow(), ab = new Date(t.getTime() + 7200e3);
-  S.queue.unshift({kind:'einsatz', id:'e' + (S.nid++), typ:a.typ, t:a.t, fz:a.fz, d:`${p2(t.getDate())}.${p2(t.getMonth()+1)}.`, y:t.getFullYear(), z:`${p2(t.getHours())}:${p2(t.getMinutes())}`, ab:`${p2(ab.getHours())}:${p2(ab.getMinutes())}`, txt:`Wir waren mit ${a.fz.split(',')[0]} vor Ort.`, ig:true, foto:false});
+  S.queue.unshift({kind:'einsatz', id:'e' + (S.nid++), typ:a.typ, t:a.t, fz:a.fz, d:`${p2(t.getDate())}.${p2(t.getMonth()+1)}.`, y:t.getFullYear(), z:`${p2(t.getHours())}:${p2(t.getMinutes())}`, ab:`${p2(ab.getHours())}:${p2(ab.getMinutes())}`, txt:`Wir waren mit ${a.fz.split(',')[0]} vor Ort.`, ig:true, imgs:[]});
   S.step = 2;
-  if (!S.user || S.user.role === 'Autor') S.user = {name:'Max Mustermann', role:'Freigeber'};
   push('Neuer Einsatzbericht wartet auf Freigabe');
   go('redaktion');
 }
 function termSync() {
   sheet(false);
+  if (S.iface.div.st === 'bad' || S.iface.div.man) { toast('DIVERA ist gestört – Termine bitte von Hand eintragen'); go('start'); return; }
   if (S.synced) { toast('Keine neuen Termine in DIVERA'); go('start'); return; }
   SYNC.forEach(t => S.termine.push({...t})); S.synced = true; S.neu = 'termin';
   toast('1 Termin übernommen, 1 privater Termin ignoriert');
@@ -925,32 +1256,67 @@ function termSync() {
   setTimeout(() => { const el = document.querySelector('.li.neu'); if (el) el.scrollIntoView({block:'center'}); }, 80);
   setTimeout(() => { S.neu = null; }, 2600);
 }
-function applyEdit(n, v) {
-  const paras = v.txt.split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
-  Object.assign(n, {t:v.t, cat:v.cat, body:paras, txt:paras[0] || v.txt, imgs:(v.imgs || []).slice(), img:(v.imgs || [])[0] || null, alt:v.alt || v.t});
-}
-function publish(id, force, quiet) {
+/* Werte aus dem Beitragsformular → Felder eines Beitrags. Der Teaser bleibt, solange der Text gleich bleibt. */
+const editVals = (v, o) => { const paras = v.txt.split(/\n\s*\n/).map(x => x.trim()).filter(Boolean), im = (v.imgs || []).slice();
+  return {t:v.t, cat:v.cat, body:paras, txt: o && JSON.stringify(o.body || [o.txt]) === JSON.stringify(paras) ? o.txt : (paras[0] || v.txt), imgs:im, img:im[0] || null, alt:v.alt || (o && o.alt) || null}; };
+const hNew = (k, o, act, x = {}) => { S.hist[hk(k, o.id)] = [{ts:Date.now(), by:x.by || who(), act, snap:sj(k, o), n:1, note:'', ok:x.ok || ''}]; };
+const syncQ = () => S.queue.forEach(q => { const t = $('#txt-' + q.id), g = $('#ig-' + q.id), o = $('#ok-' + q.id); if (t) q.txt = t.value; if (g) q.ig = g.checked; if (o) q.ok = o.checked; });
+function publish(id, force, quiet, u0) {
   const q = S.queue.find(x => x.id === id); if (!q) return;
   const okEl = $('#ok-' + id);
   if (!force && !(okEl ? okEl.checked : q.ok)) { const e = $('#e-' + id); if (e) e.textContent = 'Bitte zuerst die rechtliche Prüfung bestätigen.'; if (okEl) okEl.focus(); return; }
-  const txtEl = $('#txt-' + id), igEl = $('#ig-' + id);
-  const ig = igEl ? igEl.checked : q.ig;
-  S.queue = S.queue.filter(x => x.id !== id);
-  if (q.kind === 'einsatz') {
-    const e = {id:S.nid++, y:q.y, d:q.d, typ:q.typ, t:q.t, z:q.z, fz:q.fz, txt: txtEl ? txtEl.value : q.txt};
-    S.einsaetze.unshift(e); S.year = q.y; S.neu = e.id; S.step = 3;
-    if (ig) S.posts.unshift(ART[q.typ][0]);
-  } else if (q.of) {
-    const n = S.news.find(x => x.id === q.of);
-    if (n) applyEdit(n, q);
-    toast('Änderung freigegeben – jetzt online'); if (!quiet) render({keep:true}); return;
-  } else {
-    const d = new Date(); const im = (q.imgs || []).slice(); S.news.unshift({id:q.id, by:q.by, cat:q.cat || 'Verein', t:q.t, d:`${p2(d.getDate())}.${p2(d.getMonth()+1)}.`, txt:q.txt, body:[q.txt], ph:'Foto folgt', img: im[0] || null, imgs: im, alt: q.alt || q.t}); S.neu = q.t;
-    if (ig) S.posts.unshift('News');
+  const u = u0 || snapAll();
+  syncQ();
+  const ig = q.ig, me = who();
+  if (q.kind === 'change') {
+    const o = getC(q.k, q.tid); S.queue = S.queue.filter(x => x !== q);
+    if (o) { if (q.k === 'fz' && q.vals.neu && !o.neu) S.fz.forEach(z => { z.neu = false; }); saveC(q.k, o, q.vals, {by:q.by, ok:me, note:q.note, noRate:true}); }
+    done('Änderung übernommen – jetzt online', u, o ? [q.k, q.tid] : null); if (!quiet) render({keep:true}); return;
   }
-  toast(ig ? 'Veröffentlicht und auf Instagram gepostet' : 'Veröffentlicht');
+  S.queue = S.queue.filter(x => x !== q);
+  if (q.kind === 'einsatz') {
+    const e = {id:S.nid++, y:q.y, d:q.d, typ:q.typ, t:q.t, z:q.z, fz:q.fz, txt:q.txt, imgs:(q.imgs || []).slice()};
+    if (q.hand) e.hand = q.hand;
+    S.einsaetze.unshift(e); sortE(); hNew('e', e, 'Aus DIVERA übernommen und freigegeben', {by:'DIVERA (automatisch)', ok:me}); S.year = q.y; S.neu = e.id; S.step = 3;
+    if (ig) S.posts.unshift(ART[q.typ][0]);
+    done(ig ? 'Veröffentlicht und auf Instagram gepostet' : 'Veröffentlicht', u, ['e', e.id]);
+  } else if (q.of) {
+    const n = getC('n', q.of);
+    if (n) saveC('n', n, editVals(q, n), {by:q.by, ok:me, note:q.note, noRate:true});
+    done('Änderung freigegeben – jetzt online', u, n ? ['n', n.id] : null); if (!quiet) render({keep:true}); return;
+  } else {
+    const d = new Date(), v = editVals(q);
+    const n = {id:q.id, y:d.getFullYear(), by:q.by, cat:q.cat || 'Verein', d:`${p2(d.getDate())}.${p2(d.getMonth()+1)}.`, ph:'Foto folgt', ...v};
+    S.news.unshift(n); hNew('n', n, 'Erstellt', {by:q.by, ok: q.by !== me ? me : ''}); S.neu = q.t;
+    if (ig) S.posts.unshift('News');
+    done(ig ? 'Veröffentlicht und auf Instagram gepostet' : 'Veröffentlicht', u, ['n', n.id]);
+  }
   if (!quiet) render({keep:true});
   setTimeout(() => { S.neu = null; }, 2600);
+}
+const openEd = (k, id, re) => { const o = id ? getC(k, id) : null;
+  if ((id && !o) || (k === 'e' && isRed()) || (k === 'n' && o && !canEdit(o))) return;
+  S.ed = {k, id: id || null}; if (re !== undefined) S.ed.re = re; S.cdel = null;
+  S.draft = o ? (k === 'n' ? nImgs(o) : (o.imgs || [])).slice() : (re !== undefined ? (S.dropped[re].q.imgs || []).slice() : []);
+  go('editor'); window.scrollTo(0, 0); };
+const updRes = () => { const r = $('#ires'); if (r) r.innerHTML = resHtml(); };
+const formRows = fm => fm.id === 'f-verein'
+  ? [...fm.querySelectorAll('[name=ra]')].map((x, i) => [x.value.trim(), fm.querySelectorAll('[name=rn]')[i].value.trim()])
+  : [...fm.querySelectorAll('[name=cy]')].map((x, i) => ({y: x.value.trim(), t: fm.querySelectorAll('[name=ct]')[i].value.trim(), x: fm.querySelectorAll('[name=cx]')[i].value.trim()}));
+const sThumb = () => { const w = $('#f-item .thumbs'); if (w) w.innerHTML = S.sdraft && IMG[S.sdraft] ? `<span class="th"><img src="${IMG[S.sdraft]}" alt="Neues Foto"><button type="button" class="ib sm" data-act="s-img-rm" aria-label="Foto entfernen">×</button></span>` : ''; };
+/* Änderung an Seite/Fahrzeug/Gerät speichern (Kommandant, Admin) oder zur Freigabe einreichen (Redaktion) */
+function saveOrSubmit(k, o, vals, note) {
+  if (isRed()) {
+    if (sj(k, o) === sj(k, {...o, ...vals})) { toast('Keine Änderung – nichts gespeichert'); return false; }
+    if (!rateOk()) return false; const u = snapAll();
+    S.queue = S.queue.filter(q => !(q.kind === 'change' && q.k === k && String(q.tid) === String(o.id) && q.by === S.user.name));
+    S.queue.push({kind:'change', id:'c' + (S.nid++), k, tid:o.id, vals, note, von:von(), by:S.user.name});
+    done('Änderung zur Freigabe eingereicht', u); return true;
+  }
+  const u = snapAll();
+  if (k === 'fz' && vals.neu && !o.neu) S.fz.forEach(z => { z.neu = false; });
+  if (!saveC(k, o, vals, {note})) { S.fz = JSON.parse(u.j)[UK.indexOf('fz')]; return false; }
+  done('Gespeichert – sofort online', u, [k, o.id]); return true;
 }
 
 document.addEventListener('click', e => {
@@ -961,6 +1327,7 @@ document.addEventListener('click', e => {
   const act = b.dataset.act, id = b.dataset.id;
   if (b.tagName === 'A' && act !== 'sheet-close') e.preventDefault();
   switch (act) {
+    /* öffentliche Website */
     case 'menu-open': menu(true); break;
     case 'menu-close': menu(false); break;
     case 'sheet-open': if (document.body.classList.contains('mopen')) menu(false); sheet(true); break;
@@ -969,51 +1336,119 @@ document.addEventListener('click', e => {
     case 'detail-close': S.detail = null; render(); break;
     case 'article': S.article = id; if (route() !== 'aktuelles') { go('aktuelles'); } else { render(); window.scrollTo(0,0); } break;
     case 'article-close': S.article = null; render(); break;
-    case 'draft-rm': S.draft.splice(+b.dataset.i, 1); $('#thumbs-post').innerHTML = thumbs(); break;
-    case 'm-del': S.mdel = b.dataset.k; render({keep:true}); break;
-    case 'm-del-no': S.mdel = null; render({keep:true}); break;
-    case 'm-del-ok': { const k = b.dataset.k; S.mdel = null;
-      const nw = S.news.filter(n => n.img === k || (n.imgs || []).includes(k));
-      if (nw.length) nw.forEach(n => { n.imgs = (n.imgs || [n.img]).filter(x => x !== k); n.img = n.imgs[0] || null; });
-      else { IMG[k] = PH_DEL; S.gone[k] = true; }
-      toast('Foto entfernt'); render({keep:true}); break; }
-    case 'year': S.year = +b.dataset.y; render({keep:true}); break;
+    case 'year': S.year = +b.dataset.y; S.pe = 20; render({keep:true}); break;
+    case 'etyp': S.etyp = b.dataset.v; S.pe = 20; render({keep:true}); break;
+    case 'emore': S.pe += 20; render({keep:true}); break;
+    case 'ncat': S.ncat = b.dataset.v; S.pn = 6; render({keep:true}); break;
+    case 'nmore': S.pn += 6; render({keep:true}); break;
     case 'tf': S.tf = b.dataset.k; render({keep:true}); break;
     case 'ical': toast('Kalender-Link kopiert (Demo)'); break;
     case 'pdf': toast((b.dataset.doc || 'Dokument') + ' (PDF) öffnet sich – Datei folgt vom Verein'); break;
     case 'sync': termSync(); break;
-    case 'ig-reconnect': S.health.ig = 'ok'; toast('Instagram neu verbunden (Demo)'); render({keep:true}); break;
     case 'to-mitmach': { const m = document.getElementById('mitmach'); if (m) m.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'}); setTimeout(() => { const n = document.querySelector('#f-quick input'); if (n) n.focus({preventScroll:true}); }, 500); break; }
     case 'vormerken': toast('„' + b.dataset.t + '“ im Kalender gespeichert (Demo)'); break;
     case 'date': { const v = b.dataset.v; S.today = v === 'now' ? null : v === '2027-03' ? new Date(2027, 2, 3, 12) : (v === '2027' ? new Date(2027, 6, 1, 12) : new Date(2028, 1, 1, 12)); sheet(false); toast(v === 'now' ? 'Datum: heute' : v === '2027-03' ? 'Datum simuliert: 3. März 2027 (vor dem Probealarm)' : (v === '2027' ? 'Datum simuliert: 1. Juli 2027 (Festjahr, Sommer)' : 'Datum simuliert: 1. Februar 2028 (nach dem Jubiläum)')); if (v === '2028' && route() === 'jubilaeum') { S.toChronik = true; go('verein'); } else render(); break; }
-    case 'quick-login': { const r = b.dataset.role || 'Freigeber'; S.user = {name:{Freigeber:'Max Mustermann', Administrator:'Erika Musterfrau', Autor:'Jonas Beispiel'}[r], role:r}; toast('Angemeldet als ' + ROLES[r].label + ' (Demo)');
-      const nx = S.next && ROLES[r].tabs.includes(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break; }
-    case 'logout': S.user = null; S.draft = []; S.edit = null; S.eedit = null; S.cdel = null; toast('Abgemeldet'); go('start'); break;
+    /* Anmelden */
+    case 'quick-login': { const r = b.dataset.role || 'Freigeber'; loginAs(r); S.ed = null; toast('Angemeldet als ' + S.user.name + ' · ' + ROLES[r].label + ' (Demo)'); sheet(false);
+      const nx = S.next && mayRoute(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break; }
+    case 'logout': S.user = null; S.draft = []; S.ed = null; S.cdel = null; S.sed = null; S.sdel = null; S.keyForm = null; toast('Abgemeldet'); go('start'); break;
+    case 'undo': undo(); break;
+    /* Freigabe */
     case 'publish': publish(id); break;
-    case 'edit': { const n = S.news.find(x => x.id === id); if (!n || !canEdit(n)) break; S.edit = id; S.draft = nImgs(n).slice(); if (route() !== 'beitraege') go('beitraege'); else render(); window.scrollTo(0, 0); setTimeout(() => { const t = $('#f-post [name=t]'); if (t) t.focus(); }, 30); break; }
-    case 'jump': { const t = $('#' + b.dataset.to); if (t) { t.scrollIntoView({block:'start'}); window.scrollBy(0, -70); if (t.tabIndex < 0 && t.tagName !== 'FORM') t.focus({preventScroll:true}); } break; }
-    case 'edit-cancel': S.edit = null; S.draft = []; render({keep:true}); break;
-    case 'hide': { const k = b.dataset.k, c = findC(k, id); if (!c || (k === 'n' ? !canEdit(c) : S.user.role === 'Autor')) break; c.hid = !c.hid; toast(c.hid ? 'Ausgeblendet – nicht mehr öffentlich sichtbar' : 'Wieder eingeblendet – jetzt öffentlich'); render({keep:true}); break; }
-    case 'e-edit': if (!S.user || S.user.role === 'Autor') break; S.eedit = +id; render({keep:true}); break;
-    case 'e-cancel': S.eedit = null; render({keep:true}); break;
-    case 'e-save': { const c = findC('e', id), t = $('#etxt-' + id); if (c && t) c.txt = t.value.trim(); S.eedit = null; toast('Einsatzbericht gespeichert'); render({keep:true}); break; }
+    case 'drop': { syncQ(); const q = S.queue.find(x => x.id === id); if (!q) break; const nt = $('#note-' + id), u = snapAll();
+      S.queue = S.queue.filter(x => x !== q); S.dropped.unshift({q, at:Date.now(), by:who(), note: nt ? nt.value.trim() : ''});
+      if (q.kind === 'einsatz') S.step = 1;
+      done(q.kind === 'einsatz' ? 'Entwurf verworfen – nichts veröffentlicht' : 'Zur Überarbeitung zurückgeschickt', u); render({keep:true}); break; }
+    case 'q-restore': { const i = +b.dataset.i, d = S.dropped[i]; if (!d) break; const u = snapAll(); S.dropped.splice(i, 1);
+      if (d.q.kind === 'einsatz') { S.queue.unshift(d.q); S.step = 2; } else S.queue.push(d.q);
+      done('Wiederhergestellt – wartet wieder auf Freigabe', u); render({keep:true}); break; }
+    case 'q-img-rm': { syncQ(); const q = S.queue.find(x => x.id === id); if (q) q.imgs.splice(+b.dataset.i, 1); render({keep:true}); break; }
+    /* Inhalte: Übersicht und Editor */
+    case 'open': openEd(b.dataset.k, id); break;
+    case 'edit': openEd('n', id); break;
+    case 'new': if (b.dataset.k === 'e' && isRed()) break; openEd(b.dataset.k, null); setTimeout(() => { const t = $('#main form input:not([type=hidden])'); if (t) t.focus({preventScroll:true}); }, 30); break;
+    case 're-edit': openEd('n', null, +b.dataset.i); break;
+    case 'edit-cancel': S.ed = null; S.draft = []; S.cdel = null; go('beitraege'); break;
+    case 'flt': S.flt[b.dataset.f] = b.dataset.v; S.flt.n = 20; render({keep:true}); break;
+    case 'flt-more': S.flt.n += 20; updRes(); break;
+    case 'flt-reset': S.flt = {q:'', typ:'alle', y:'alle', st:'alle', n:20}; render({keep:true}); break;
+    case 'draft-rm': S.draft.splice(+b.dataset.i, 1); $('#thumbs-post').innerHTML = thumbs(); break;
+    case 'draft-first': { const k = S.draft.splice(+b.dataset.i, 1)[0]; S.draft.unshift(k); $('#thumbs-post').innerHTML = thumbs(); toast('Neues Titelbild gewählt'); break; }
+    case 'hide': { const k = b.dataset.k, c = getC(k, id); if (!c || (k === 'n' ? !canEdit(c) : isRed())) break; const u = snapAll();
+      c.hid = !c.hid; hEv(k, c, c.hid ? 'Ausgeblendet' : 'Wieder eingeblendet');
+      done(c.hid ? 'Ausgeblendet – nicht mehr öffentlich sichtbar' : 'Wieder eingeblendet – jetzt öffentlich', u, [k, c.id]); render({keep:true}); break; }
     case 'c-del': if (!isAdm()) break; S.cdel = b.dataset.k + id; render({keep:true}); break;
     case 'c-del-no': S.cdel = null; render({keep:true}); break;
-    case 'c-del-ok': { if (!isAdm()) break; const k = b.dataset.k, c = findC(k, id); S.cdel = null; if (!c) break;
+    case 'c-del-ok': { if (!isAdm()) break; const k = b.dataset.k, c = getC(k, id); S.cdel = null; if (!c) break; const u = snapAll();
       const i = (k === 'e' ? S.einsaetze : S.news).indexOf(c);
-      if (k === 'e') S.einsaetze = S.einsaetze.filter(x => x !== c); else { S.news = S.news.filter(x => x !== c); S.queue = S.queue.filter(q => q.of !== c.id); if (S.edit === c.id) { S.edit = null; S.draft = []; } }
-      S.trash.unshift({k, item:c, i}); toast('Gelöscht – 30 Tage im Papierkorb'); render({keep:true}); break; }
-    case 'restore': { if (!isAdm()) break; const x = S.trash.find(t => t.k + t.item.id === id); if (!x) break; S.trash = S.trash.filter(t => t !== x);
-      (x.k === 'e' ? S.einsaetze : S.news).splice(x.i, 0, x.item);
-      toast('Wiederhergestellt'); render({keep:true}); break; }
-    case 'drop': { const q = S.queue.find(x => x.id === id); S.queue = S.queue.filter(x => x.id !== id); if (q && q.kind === 'einsatz') S.step = 1; toast(q && q.kind === 'einsatz' ? 'Entwurf verworfen – nichts veröffentlicht' : 'Zur Überarbeitung zurückgeschickt'); render({keep:true}); break; }
-    case 'foto': { const q = S.queue.find(x => x.id === id); if (q) { q.foto = true; const t = $('#txt-' + id); if (t) q.txt = t.value; const g = $('#ig-' + id); if (g) q.ig = g.checked; const o = $('#ok-' + id); if (o) q.ok = o.checked; } toast('Foto hinzugefügt, Standortdaten entfernt (Demo)'); render({keep:true}); break; }
+      hEv(k, c, 'Gelöscht (Papierkorb, 30 Tage)');
+      if (k === 'e') S.einsaetze = S.einsaetze.filter(x => x !== c); else { S.news = S.news.filter(x => x !== c); S.queue = S.queue.filter(q => q.of !== c.id); }
+      S.trash.unshift({k, item:c, i}); S.ed = null; S.draft = [];
+      done('Gelöscht – 30 Tage im Papierkorb', u, [k, c.id]); go('beitraege'); break; }
+    case 'restore': { const x = S.trash.find(t => t.k + t.item.id === id); if (!x || !(isAdm() || (isKdt() && (x.k === 'fz' || x.k === 'g')))) break; const u = snapAll();
+      S.trash = S.trash.filter(t => t !== x);
+      const L = {e:S.einsaetze, n:S.news, fz:S.fz, g:S.ger}[x.k]; L.splice(Math.min(x.i, L.length), 0, x.item); hEv(x.k, x.item, 'Wiederhergestellt');
+      done('Wiederhergestellt', u, [x.k, x.item.id]); render({keep:true}); break; }
+    case 'h-restore': { const k = b.dataset.k, o = getC(k, id), hh = S.hist[hk(k, id)], x = hh && hh[+b.dataset.i]; if (!o || !x) break;
+      const vals = JSON.parse(x.snap); S.hOpen = hk(k, id);
+      if (k === 'e' && isRed()) break;
+      if (isRed()) { if (!rateOk()) break; const u = snapAll(); S.queue = S.queue.filter(q => !(q.kind === 'change' && q.k === k && String(q.tid) === String(o.id) && q.by === S.user.name)); S.queue.push({kind:'change', id:'c' + (S.nid++), k, tid:o.id, vals, note:'Fassung vom ' + fmtTs(x.ts) + ' wiederherstellen', von:von(), by:S.user.name}); done('Zur Freigabe eingereicht', u); render({keep:true}); break; }
+      const u = snapAll(); if (!saveC(k, o, vals, {act:'Fassung vom ' + fmtTs(x.ts) + ' wiederhergestellt'})) break;
+      if (S.ed && S.ed.id === o.id) S.draft = (k === 'n' ? nImgs(o) : (o.imgs || [])).slice();
+      done('Fassung wiederhergestellt – jetzt online', u, [k, o.id]); render({keep:true}); break; }
+    /* Seiten: Verein, Chronik, Fahrzeuge, Ausrüstung */
+    case 'sp': S.sp = b.dataset.v; S.sed = null; S.sdel = null; S.sdraft = undefined; S.tmp = {}; render({keep:true}); break;
+    case 's-new': if (isRed()) break; S.sed = b.dataset.k + ':new'; S.sdraft = undefined; render({keep:true}); setTimeout(() => { const t = $('#f-item [name=n]'); if (t) t.focus(); }, 30); break;
+    case 's-edit': S.sed = b.dataset.key; S.sdraft = undefined; render({keep:true}); setTimeout(() => { const t = $('#f-item'); if (t) { t.scrollIntoView({block:'start'}); window.scrollBy(0, -70); } }, 30); break;
+    case 's-cancel': S.sed = null; S.sdraft = undefined; render({keep:true}); break;
+    case 's-img-rm': S.sdraft = null; sThumb(); break;
+    case 's-del': if (isRed()) break; S.sdel = b.dataset.key; render({keep:true}); break;
+    case 's-del-no': S.sdel = null; render({keep:true}); break;
+    case 's-del-ok': { if (isRed()) break; const [k, oid] = b.dataset.key.split(':'), c = getC(k, oid); S.sdel = null; if (!c) break; const u = snapAll();
+      const L = k === 'fz' ? S.fz : S.ger, i = L.indexOf(c); L.splice(i, 1); hEv(k, c, 'Entfernt (30 Tage wiederherstellbar)'); S.trash.unshift({k, item:c, i});
+      done('„' + c.n + '“ entfernt – 30 Tage wiederherstellbar', u, [k, c.id]); render({keep:true}); break; }
+    case 'row-add': case 'row-rm': { const fm = $('#' + b.dataset.f); if (!fm) break; const rows = formRows(fm);
+      if (fm.id === 'f-verein') S.tmp.intro = fm.elements.intro.value;
+      if (act === 'row-add') rows.push(fm.id === 'f-verein' ? ['', ''] : {y:'', t:'', x:''}); else rows.splice(+b.dataset.i, 1);
+      S.tmp[fm.id] = rows; render({keep:true}); break; }
+    /* Fotos (Admin) */
+    case 'm-del': S.mdel = b.dataset.k; render({keep:true}); break;
+    case 'm-del-no': S.mdel = null; render({keep:true}); break;
+    case 'm-del-ok': { const k = b.dataset.k, u = snapAll(); S.mdel = null;
+      const nw = S.news.filter(n => n.img === k || (n.imgs || []).includes(k));
+      if (nw.length) nw.forEach(n => { n.imgs = (n.imgs || [n.img]).filter(x => x !== k); n.img = n.imgs[0] || null; });
+      else { IMG[k] = PH_DEL; S.gone[k] = true; }
+      done('Foto entfernt', u); render({keep:true}); break; }
+    /* Mitglieder */
     case 'resend': S.members[+b.dataset.i].s = 'Eingeladen · Link 48 Std. gültig'; toast('Einladung erneut gesendet (Demo)'); render({keep:true}); break;
-    case 'revoke': { const m = S.members.splice(+b.dataset.i, 1)[0]; toast('Einladung an ' + m.n + ' zurückgezogen'); render({keep:true}); break; }
+    case 'revoke': { const u = snapAll(), m = S.members.splice(+b.dataset.i, 1)[0]; done('Einladung an ' + m.n + ' zurückgezogen', u); render({keep:true}); break; }
+    /* Schnittstellen (A-10 bis A-12) */
+    case 'jump': { const t = $('#' + b.dataset.to); if (t) { t.scrollIntoView({block:'start'}); window.scrollBy(0, -70); } break; }
+    case 'ig-reconnect': S.iface.ig = {st:'ok', code:'', man:false}; toast('Instagram neu verbunden (Demo)'); render({keep:true}); break;
+    case 'if-test': { const s = b.dataset.s, x = S.iface[s];
+      if (x.code === 'DIV-NET') { S.iface[s] = {st:'ok', code:'', man:x.man}; toast('Verbindung wieder in Ordnung'); }
+      else if (x.st === 'bad') toast('Test fehlgeschlagen: ' + ERR[x.code][1] + ' (' + x.code + ')');
+      else toast(x.code ? 'Verbindung funktioniert – ' + ERR[x.code][1] : 'Verbindung in Ordnung');
+      render({keep:true}); break; }
+    case 'if-key': S.keyForm = S.keyForm === 'div' ? null : 'div'; render({keep:true}); setTimeout(() => { const k = $('#f-key input'); if (k) k.focus(); }, 30); break;
+    case 'if-man': { const s = b.dataset.s, u = snapAll(); S.iface[s].man = !S.iface[s].man; done(S.iface[s].man ? 'Notbetrieb eingeschaltet' : 'Notbetrieb beendet', u); render({keep:true}); break; }
+    case 'if-copy': { const t = report(b.dataset.s); try { navigator.clipboard.writeText(t).catch(() => {}); } catch (_) {} toast('Diagnosebericht kopiert – ohne Zugangsdaten'); break; }
+    /* Demo-Steuerung */
     case 'alarm': sheet(false); alarm(); break;
     case 'demo-publish': { sheet(false); const q = S.queue.find(x => x.kind === 'einsatz'); if (q) { if (route() !== 'redaktion') go('redaktion'); setTimeout(() => { q.ok = true; publish(q.id, true); go('start'); }, 50); } break; }
     case 'demo-result': sheet(false); go('start'); setTimeout(() => { const el = document.querySelector('.li.neu') || document.querySelector('.list'); if (el) el.scrollIntoView({block:'center'}); }, 60); break;
-    case 'reset': { const u = null; restoreImg(); S = fresh(); S.user = u; sheet(false); toast('Demo zurückgesetzt'); go('start'); break; }
+    case 'demo-freigabe': sheet(false); if (!S.user || isRed()) loginAs('Freigeber'); go(isAdm() || isKdt() ? 'redaktion' : 'beitraege'); break;
+    case 'demo-submit': { sheet(false); const mia = S.members.find(m => m.n === 'Mia Muster');
+      S.queue.push({kind:'news', id:'n' + (S.nid++), cat:'Übung', t:'Übungsabend: Löschangriff aus dem Hydranten', txt:'[Bericht folgt: Wer war dabei, was wurde geübt?]', von:mia.n + ' (Redaktion)', by:mia.n, ig:true, imgs:[]});
+      loginAs('Freigeber'); push('Neuer Beitrag von Mia Muster wartet auf Freigabe'); go('redaktion'); break; }
+    case 'demo-manual': sheet(false); if (!S.user || isRed()) loginAs('Freigeber'); openEd('e', null); break;
+    case 'demo-verlauf': sheet(false); if (!S.user || isRed()) loginAs('Freigeber'); openEd('n', 'a2'); S.hOpen = 'n:a2'; render(); setTimeout(() => { const v = document.querySelector('.vl'); if (v) { v.open = true; v.scrollIntoView({block:'start'}); } }, 60); break;
+    case 'fail': { sheet(false); const v = b.dataset.v;
+      if (v === 'ok') { S.iface = {div:{st:'ok', code:'', man:false}, ig:{st:'ok', code:'', man:false}}; toast('Alle Schnittstellen wieder in Ordnung'); render(); break; }
+      const s = v.startsWith('DIV') ? 'div' : 'ig'; S.iface[s] = {st:ERR[v][0], code:v, man:false};
+      if (s === 'ig') { toast('Instagram gestört – auf der Startseite steht jetzt nur ein Link zum Profil'); go('start'); setTimeout(() => { const x = $('#ig-fallback'); if (x) x.scrollIntoView({block:'center'}); }, 60); break; }
+      loginAs('Administrator'); toast('DIVERA gestört (' + v + ') – so sieht es im System-Bereich aus'); go('system'); setTimeout(() => { const x = $('#diag-div'); if (x) { x.scrollIntoView({block:'start'}); window.scrollBy(0, -70); } }, 60); break; }
+    case 'reset': { restoreImg(); S = fresh(); UNDO = null; sheet(false); toast('Demo zurückgesetzt'); go('start'); break; }
   }
 });
 
@@ -1023,7 +1458,7 @@ const check = (form, errId) => {
   const err = $('#' + errId);
   if (bad.length) {
     const lab = el => { const l = el.closest('label'); if (!l) return el.name; if (el.type === 'checkbox') { const t = l.innerText.trim(); return t.length > 48 ? t.split(':')[0].slice(0, 48) : t.replace(/\.$/, ''); } return [...l.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim() || el.name; };
-    err.textContent = 'Bitte prüfen: ' + bad.map(lab).join(', ');
+    err.textContent = 'Bitte prüfen: ' + [...new Set(bad.map(lab))].join(', ');
     bad[0].focus(); return false;
   }
   err.textContent = ''; return true;
@@ -1032,40 +1467,98 @@ document.addEventListener('submit', e => {
   e.preventDefault();
   const fm = e.target;
   switch (fm.id) {
-    case 'f-login': if (!check(fm, 'e-login')) return; S.pending2fa = {role: val(fm,'role'), mail: val(fm,'mail')}; render(); setTimeout(() => { const c = document.querySelector('#f-2fa input'); if (c) c.focus(); }, 30); break;
+    case 'f-login': { if (!check(fm, 'e-login')) return; const m = S.members.find(x => x.m.toLowerCase() === val(fm, 'mail').toLowerCase() && !x.inv);
+      if (!m || !ROLES[m.r]) { $('#e-login').textContent = 'E-Mail oder Passwort stimmt nicht. Demo: Nutze eine der Beispiel-Adressen unten.'; return; }
+      S.pending2fa = {name: m.n, role: m.r}; render(); setTimeout(() => { const c = document.querySelector('#f-2fa input'); if (c) c.focus(); }, 30); break; }
     case 'f-2fa': {
       if (!check(fm, 'e-2fa')) return;
-      const r = S.pending2fa.role; const name = {Freigeber:'Max Mustermann', Administrator:'Erika Musterfrau', Autor:'Jonas Beispiel'}[r];
-      S.user = {name, role:r}; S.pending2fa = null; toast('Angemeldet als ' + ROLES[r].label);
-      const nx = S.next && ROLES[r].tabs.includes(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break;
+      const {name, role: r} = S.pending2fa;
+      S.user = {name, role:r}; S.pending2fa = null; toast('Angemeldet als ' + name + ' · ' + ROLES[r].label);
+      const nx = S.next && mayRoute(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break;
     }
     case 'f-kontakt': if (!check(fm, 'e-kontakt')) return; fm.reset(); toast('Danke! Wir melden uns bei dir (Demo)'); break;
     case 'f-quick': if (!check(fm, 'e-quick')) return; fm.reset(); toast('Super! Wir melden uns in den nächsten Tagen bei dir (Demo)'); break;
     case 'f-post': {
       if (!check(fm, 'e-post')) return;
-      const of = val(fm,'of');
+      const of = val(fm,'of'), note = val(fm, 'note');
+      const v = {cat: val(fm,'k'), t: val(fm,'t'), txt: fm.elements.txt.value.trim(), imgs: S.draft.slice(), alt: val(fm,'alt')};
       if (of) {
-        const n = S.news.find(x => x.id === of); if (!n || !canEdit(n)) return;
-        const v = {cat: val(fm,'k'), t: val(fm,'t'), txt: fm.elements.txt.value.trim(), imgs: S.draft.slice(), alt: val(fm,'alt')};
-        S.draft = []; S.edit = null;
-        if (S.user.role === 'Autor') {
-          const item = {kind:'news', id:'n' + (S.nid++), of, ...v, von: S.user.name + ' (' + RL[S.user.role] + ')', by: S.user.name, ig:false};
+        const n = getC('n', of); if (!n || !canEdit(n)) return;
+        if (sj('n', n) === sj('n', {...n, ...editVals(v, n)})) { toast('Keine Änderung – nichts gespeichert'); return; }
+        if (!rateOk()) return;
+        const u = snapAll();
+        if (isRed()) {
+          const item = {kind:'news', id:'n' + (S.nid++), of, ...v, note, von: von(), by: S.user.name, ig:false};
           S.queue = S.queue.filter(q => q.of !== of); S.queue.push(item);
-          toast('Änderung zur Freigabe eingereicht'); S.article = item.id;
-        } else { applyEdit(n, v); toast('Änderungen gespeichert – sofort online'); S.article = n.hid ? null : n.id; }
-        go(S.article ? 'aktuelles' : 'beitraege'); window.scrollTo(0, 0); break;
+          S.article = item.id; done('Änderung zur Freigabe eingereicht', u);
+        } else { saveC('n', n, editVals(v, n), {note, noRate:true}); S.article = n.hid ? null : n.id; done('Änderungen gespeichert – sofort online', u, ['n', n.id]); }
+        S.draft = []; S.ed = null; go(S.article ? 'aktuelles' : 'beitraege'); window.scrollTo(0, 0); break;
       }
-      const item = {kind:'news', id:'n' + (S.nid++), cat: val(fm,'k'), t: val(fm,'t'), txt: val(fm,'txt'), von: S.user.name + ' (' + S.user.role + ')', by: S.user.name, ig: fm.elements.ig.checked, imgs: S.draft.slice(), alt: val(fm,'alt')};
-      S.draft = []; S.queue.push(item);
-      if (S.user.role === 'Autor') toast('Zur Freigabe eingereicht – hier die Vorschau');
-      else { item.ok = true; publish(item.id, true, true); }
+      if (!rateOk()) return;
+      const u = snapAll();
+      const item = {kind:'news', id:'n' + (S.nid++), cat: v.cat, t: v.t, txt: v.txt, von: von(), by: S.user.name, ig: fm.elements.ig.checked, imgs: v.imgs, alt: v.alt};
+      if (S.ed && S.ed.re !== undefined && S.dropped[S.ed.re]) S.dropped.splice(S.ed.re, 1);
+      S.draft = []; S.ed = null; S.queue.push(item);
+      if (isRed()) done('Zur Freigabe eingereicht – hier die Vorschau', u);
+      else { item.ok = true; publish(item.id, true, true, u); }
       S.article = item.id; go('aktuelles'); window.scrollTo(0, 0);
       break;
     }
+    case 'f-einsatz': {
+      if (isRed() || !check(fm, 'e-einsatz')) return;
+      const err = $('#e-einsatz'), dt = val(fm, 'dt'), [hh, mm] = val(fm, 'zt').split(':').map(Number);
+      const mins = Math.min(23 * 60 + 45, Math.round((hh * 60 + mm) / 15) * 15), z = p2(Math.floor(mins / 60)) + ':' + p2(mins % 60);
+      const al = new Date(dt + 'T' + z + ':00');
+      if (isNaN(al) || al.getTime() > Date.now() + 15 * 60e3) { err.textContent = 'Die Alarmzeit liegt in der Zukunft. Bitte Datum und Uhrzeit prüfen.'; return; }
+      const fzv = [...fm.querySelectorAll('[name=fz]:checked')].map(x => x.value).join(', ');
+      if (!fzv) { err.textContent = 'Bitte mindestens ein Fahrzeug wählen.'; return; }
+      const vals = {t: val(fm, 'sw') + ', ' + val(fm, 'ort'), typ: val(fm, 'typ'), d: `${dt.slice(8, 10)}.${dt.slice(5, 7)}.`, y: +dt.slice(0, 4), z, fz: fzv, txt: val(fm, 'txt'), imgs: S.draft.slice()};
+      const o = S.ed && S.ed.id ? getC('e', S.ed.id) : null, u = snapAll();
+      if (o) { if (!saveC('e', o, vals, {note: val(fm, 'note')})) return; sortE(); S.ed = null; S.draft = []; done('Einsatzbericht gespeichert – sofort online', u, ['e', o.id]);
+        if (o.hid || o.ab) go('beitraege'); else { S.year = o.y; S.detail = o.id; go('einsaetze'); } break; }
+      if (!rateOk()) return;
+      const ne = {id: S.nid++, ...vals, hand: S.user.name}, ab = al.getTime() + 7200e3;
+      if (ab > Date.now()) ne.ab = ab;
+      S.einsaetze.unshift(ne); sortE(); hNew('e', ne, 'Von Hand angelegt');
+      if (fm.elements.ig.checked && !ne.ab) S.posts.unshift(ART[ne.typ][0]);
+      S.ed = null; S.draft = []; S.year = ne.y;
+      done(ne.ab ? 'Gespeichert – erscheint automatisch ' + fmtTs(ne.ab) + ' (2 Std. nach Alarm)' : 'Einsatzbericht veröffentlicht', u, ['e', ne.id]);
+      if (ne.ab) go('beitraege'); else { S.detail = ne.id; go('einsaetze'); } break;
+    }
+    case 'f-item': {
+      if (!check(fm, 'e-item')) return;
+      const k = fm.dataset.k, o = fm.dataset.id ? getC(k, fm.dataset.id) : null, note = val(fm, 'note');
+      const vals = {n: val(fm, 'n'), alt: val(fm, 'alt'), img: S.sdraft !== undefined ? S.sdraft : (o ? o.img : null)};
+      if (k === 'fz') { vals.kurz = val(fm, 'kurz'); vals.d = val(fm, 'd'); if (fm.elements.neu) { vals.neu = fm.elements.neu.checked; vals.lang = val(fm, 'lang'); } }
+      if (!o) { if (isRed() || !rateOk()) return; const u = snapAll(), it = {id: k + (S.nid++), ...vals};
+        if (it.neu) S.fz.forEach(z => { z.neu = false; }); (k === 'fz' ? S.fz : S.ger).push(it); hNew(k, it, 'Hinzugefügt');
+        S.sed = null; S.sdraft = undefined; done('„' + it.n + '“ hinzugefügt – jetzt online', u, [k, it.id]); render({keep:true}); break; }
+      if (!saveOrSubmit(k, o, vals, note)) return;
+      S.sed = null; S.sdraft = undefined; render({keep:true}); break;
+    }
+    case 'f-verein': {
+      if (!check(fm, 'e-verein')) return;
+      const vals = {intro: fm.elements.intro.value.trim(), vorstand: formRows(fm).filter(r => r[0] || r[1])};
+      if (!saveOrSubmit('v', S.verein, vals, val(fm, 'note'))) return;
+      delete S.tmp['f-verein']; delete S.tmp.intro; render({keep:true}); break;
+    }
+    case 'f-chronik': {
+      if (!check(fm, 'e-chronik')) return;
+      const num = y => /^\d{4}$/.test(y) ? +y : 1e5;
+      const vals = {chronik: formRows(fm).filter(c => c.y || c.t).sort((a, b) => num(a.y) - num(b.y))};
+      if (!saveOrSubmit('v', S.verein, vals, val(fm, 'note'))) return;
+      delete S.tmp['f-chronik']; render({keep:true}); break;
+    }
+    case 'f-key': {
+      if (!check(fm, 'e-key')) return; fm.reset(); S.keyForm = null;
+      if (S.iface.div.code === 'DIV-401') { S.iface.div = {st:'ok', code:'', man:S.iface.div.man}; toast('Schlüssel gespeichert – Verbindung in Ordnung'); }
+      else toast('Schlüssel gespeichert' + (S.iface.div.st === 'bad' ? ' – die Störung hat aber eine andere Ursache' : ''));
+      render({keep:true}); break;
+    }
     case 'f-settings': {
-      if (!check(fm, 'e-settings')) return;
+      if (!check(fm, 'e-settings')) return; const u = snapAll();
       S.settings = {sonderOn: fm.elements.sonderOn.checked, sonderT: val(fm,'sonderT'), sonderX: val(fm,'sonderX'), sonderBis: val(fm,'sonderBis'), warnOn: fm.elements.warnOn.checked, jubOn: fm.elements.jubOn.checked, jubEnd: val(fm,'jubEnd'), pE: val(fm,'pE'), pO: val(fm,'pO')};
-      toast('Gespeichert – sofort online'); render({keep:true}); break;
+      done('Gespeichert – sofort online', u); render({keep:true}); break;
     }
     case 'f-plan': {
       if (!check(fm, 'e-plan')) return;
@@ -1073,9 +1566,9 @@ document.addEventListener('submit', e => {
       toast('Eingeplant – Erinnerung 3 Tage vorher'); render({keep:true}); break;
     }
     case 'f-invite': {
-      if (!check(fm, 'e-invite')) return;
+      if (!check(fm, 'e-invite')) return; const u = snapAll();
       S.members.push({n: val(fm,'n'), m: val(fm,'m'), r: val(fm,'r'), s:'Eingeladen · Link 48 Std. gültig', inv:true});
-      toast('Einladung an ' + val(fm,'m') + ' gesendet (Demo)'); render({keep:true}); break;
+      done('Einladung an ' + val(fm,'m') + ' gesendet (Demo)', u); render({keep:true}); break;
     }
   }
 });
@@ -1083,20 +1576,34 @@ let lastY = 0;
 window.addEventListener('scroll', () => { const y = window.scrollY; if (Math.abs(y - lastY) < 8) return; document.body.classList.toggle('fabhide', y > lastY && y > 120); lastY = y; }, {passive:true});
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
 $('#scrim').addEventListener('click', closeAll);
+/* Suche in „Inhalte“: filtert sofort beim Tippen, ohne die Seite neu aufzubauen */
+document.addEventListener('input', e => { if (e.target.id === 'q') { S.flt.q = e.target.value; S.flt.n = 20; updRes(); } });
 document.addEventListener('change', async e => {
+  const id = e.target.id;
+  if (id === 'fy' || id === 'fs') { S.flt[id === 'fy' ? 'y' : 'st'] = e.target.value; S.flt.n = 20; render({keep:true}); const el = $('#' + id); if (el) el.focus({preventScroll:true}); return; }
+  if (id === 'ey') { if (e.target.value) { S.year = +e.target.value; S.pe = 20; render({keep:true}); } return; }
   const inp = e.target.closest('input[data-up]'); if (!inp || !inp.files || !inp.files.length) return;
   const files = [...inp.files]; inp.value = '';
   let bad = 0; const urls = [];
   for (const fl of files) { try { urls.push(await loadImg(fl)); } catch (_) { bad++; } }
-  if (inp.dataset.up === 'post') {
-    urls.forEach(u => { const k = 'u' + (S.uid++); IMG[k] = u; S.draft.push(k); });
+  const add = u => { const k = 'u' + (S.uid++); IMG[k] = u; return k; };
+  const up = inp.dataset.up;
+  if (up === 'post') {
+    urls.forEach(u => S.draft.push(add(u)));
     const th = $('#thumbs-post'); if (th) th.innerHTML = thumbs();
     if (urls.length) toast(urls.length === 1 ? 'Foto hinzugefügt' : urls.length + ' Fotos hinzugefügt');
-  } else if (inp.dataset.up === 'rep' && urls[0]) {
-    IMG[inp.dataset.k] = urls[0]; delete S.gone[inp.dataset.k]; toast('Foto ersetzt – überall aktualisiert'); render({keep:true});
+  } else if (up === 'q') {
+    syncQ(); const q = S.queue.find(x => x.id === inp.dataset.id);
+    if (q && urls.length) { q.imgs = (q.imgs || []).concat(urls.map(add)); toast(urls.length === 1 ? 'Foto hinzugefügt, Standortdaten entfernt' : urls.length + ' Fotos hinzugefügt, Standortdaten entfernt'); render({keep:true}); }
+  } else if (up === 'sfoto' && urls[0]) {
+    S.sdraft = add(urls[0]); sThumb(); toast('Foto ausgewählt – mit „Speichern“ übernehmen');
+  } else if (up === 'rep' && urls[0]) {
+    const u = snapAll(); IMG[inp.dataset.k] = urls[0]; delete S.gone[inp.dataset.k]; done('Foto ersetzt – überall aktualisiert', u); render({keep:true});
   }
   if (bad) toast('Diese Datei ist kein lesbares Foto');
 });
+/* Nur für die automatischen Tests (test_app.py): Lesezugriff auf den Zustand */
+window.__demo = { state: () => S, render: () => render({keep:true}) };
 window.addEventListener('hashchange', () => { closeAll(); if (route() !== 'redaktion') $('#push').classList.remove('on'); render({focusMain:true}); });
 render();
 }

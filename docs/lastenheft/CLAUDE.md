@@ -17,6 +17,10 @@ Handbuch: docs/handbuch/ (A-06).
   Einstellung im Backend (A-01).
 - Rollen nur in src/Roles.php, DIVERA-Daten nur über src/Divera/Anonymizer.php,
   jeweils mit Tests.
+- Schnittstellen nur in src/Divera/ und src/Instagram/ (Client, Mapping,
+  Contract, README) mit Vertragstests gegen tests/fixtures/ (A-10 bis A-12).
+  Bei jeder Änderung docs/betrieb/schnittstellen.md mitpflegen.
+- Jede Änderung an Inhalten über den Verlauf-Dienst (B-07), nur anhängen.
 - Veröffentlichen nur mit Pflicht-Bestätigung, serverseitig geprüft (W-04).
 - Löschen nur durch Admins, nach Nachfrage, über den Papierkorb (B-16).
 - Fotos: verkleinern, EXIF/GPS auch im Original entfernen (B-11).
