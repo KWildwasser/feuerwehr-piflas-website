@@ -4,7 +4,7 @@
 
 ## Auf einen Blick
 
-Bis zum 23.12.2026 ist die ganze Website nach Lastenheft 1.19 gebaut und auf der Testseite geprüft. Die öffentliche Seite mit Beiträgen geht am **Samstag, 19.12.** live. Das sind gut vier Wochen ab dem Pitch – mit Claude Code machbar, wenn Phase 0 in der ersten Woche gelingt.
+Bis zum 23.12.2026 ist die ganze Website nach Lastenheft 1.20 gebaut und auf der Testseite geprüft. Die öffentliche Seite mit Beiträgen geht am **Samstag, 19.12.** live. Das sind gut vier Wochen ab dem Pitch – mit Claude Code machbar, wenn Phase 0 in der ersten Woche gelingt.
 
 Der Code ist nicht der Engpass. Engpässe sind Zugänge (Hosting, DIVERA, Meta), Klärungen (Markt, Datenschutz) und die Zeit der Ehrenamtlichen für Prüfen und Inhalte. Deshalb wird alles fertig gebaut, aber drei Teile bekommen einen **Schalter im System-Bereich**. Sie gehen erst an, wenn ihre Klärung da ist:
 
@@ -21,7 +21,7 @@ Annahme: Eine Person aus dem Verein (Technik) steuert Claude Code mit etwa 10–
 
 Ohne diese sieben Punkte startet die Umsetzung nicht. Am besten am Ende des Treffens gemeinsam abhaken.
 
-- [ ] **Go oder kein Go** für die Umsetzung bis Weihnachten, auf Basis von Lastenheft 1.19 (danach eingefroren, Änderungen erst nach dem Go-live)
+- [ ] **Go oder kein Go** für die Umsetzung bis Weihnachten, auf Basis von Lastenheft 1.20 (danach eingefroren, Änderungen erst nach dem Go-live)
 - [ ] **Betreuung (4.3):** Variante A mit zwei namentlich benannten Admins oder Variante B mit Dienstleister
 - [ ] **Technik-Person**, die Claude Code steuert und 10–15 Std./Woche hat, plus eine Vertretung
 - [ ] **Erstbesetzung der Rollen:** 3 Kommandanten, 2 Admins, Redaktion (Namen)

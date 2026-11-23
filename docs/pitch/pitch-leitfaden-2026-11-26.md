@@ -31,7 +31,7 @@ Fünf Sätze, die hängen bleiben sollen:
 
 Alle scannen den QR-Code auf der Projektseite und klicken mit. Der Knopf „Demo“ unten rechts führt durch die Szenarien. Neu laden setzt alles zurück.
 
-1. **Startseite als Besucher (3 Min.):** Notruf 112, Jubiläum mit Countdown, nächste Termine, letzte Einsätze, „Mitmachen“ mit Formular in 30 Sekunden. Menü öffnen: „Login“ ganz oben.
+1. **Startseite als Besucher (3 Min.):** Notruf 112, Jubiläum mit Countdown, nächste Termine, letzte Einsätze, „Mitmachen“ mit Formular in 30 Sekunden. Menü öffnen: „Anmelden“ ganz oben.
 2. **Alarm aus DIVERA (4 Min.):** Demo → „Alarm simulieren“. Der Push-Hinweis kommt, der Entwurf steht in der Freigabe – ohne Adresse, Uhrzeit gerundet. Foto dazu, Pflicht-Häkchen, „Jetzt freigeben“. Zeigen: Bericht auf der Startseite, Statistik zählt mit.
 3. **Redaktion reicht ein (3 Min.):** Demo → „Beitrag einreichen“, dann „Freigabe öffnen“. Der Kommandant sieht Änderungen rot und grün markiert. Dazu „Postfach öffnen“: Die E-Mail nennt nur Art und Person, keine Inhalte.
 4. **Fehler passieren (2 Min.):** etwas veröffentlichen, dann „Rückgängig“. „Verlauf ansehen“: wer, wann, was.
@@ -62,7 +62,7 @@ Kurze, ehrliche Antworten. Wo etwas offen ist, sagen wir das.
 
 Gemeinsam abhaken und ins Protokoll übernehmen. Details stehen im Umsetzungsplan.
 
-- [ ] Go oder kein Go für die Umsetzung bis Weihnachten auf Basis von Lastenheft 1.19
+- [ ] Go oder kein Go für die Umsetzung bis Weihnachten auf Basis von Lastenheft 1.20
 - [ ] Betreuung: zwei Admins (Namen) oder Dienstleister
 - [ ] Technik-Person mit 10–15 Std./Woche und Vertretung (Namen)
 - [ ] Erstbesetzung: 3 Kommandanten, 2 Admins, Redaktion (Namen)
@@ -76,7 +76,7 @@ Danach bis So 29.11.: Hosting-Zugang, GitHub-Organisation, Tresor, DIVERA-Anfrag
 
 - [ ] Projektseite mit QR-Code auf Beamer oder Fernseher: https://kwildwasser.github.io/feuerwehr-piflas-website/
 - [ ] Demo vorher einmal am eigenen Handy durchspielen (WLAN im Gerätehaus prüfen; die Demo läuft nach dem Laden auch offline)
-- [ ] Ausdrucke: Umsetzungsplan (6 Seiten) für alle, Lastenheft 1.19 als Nachschlagewerk für den Kommandanten
+- [ ] Ausdrucke: Umsetzungsplan (6 Seiten) für alle, Lastenheft 1.20 als Nachschlagewerk für den Kommandanten
 - [ ] Liste der offenen Inhalte (Lastenheft Abschnitt 5) zum Verteilen
 - [ ] Jemand führt Protokoll; die Entscheidungen danach ins Claude-Projekt legen
 

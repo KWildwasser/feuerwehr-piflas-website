@@ -1,6 +1,6 @@
 # Testabdeckung: Lastenheft-IDs → Prüfungen
 
-Stand 23.11.2026 · Lastenheft 1.19 · Demo v17 · `test_app.py` (700 Prüfungen) und `test_security.py` (68 Prüfungen)
+Stand 23.11.2026 · Lastenheft 1.20 · Demo v17 · `test_app.py` (700 Prüfungen) und `test_security.py` (68 Prüfungen)
 
 So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testname oder Bereich der Testsuite). „Echte Website“ sagt, wie sie in WordPress zusätzlich geprüft wird. „–“ heißt: in der Demo nicht prüfbar (Server, Mail, Menschen, Verträge). Diese Liste ist die Abnahmeliste für Claude Code: Jede Zeile braucht vor dem Go-live einen grünen Test oder eine abgehakte Abnahme.
 
@@ -30,7 +30,7 @@ So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testnam
 | B-10 | Muss | Nach dem Speichern oder Veröffentlichen bleibt man angemeldet in der b… | 4× direkt, z. B. „B-10: nach dem Veröffentlichen bleibt man in „Inhalte“,“ | PHPUnit je Rolle: Capabilities, Nonces, Escaping; Playwright: Ablauf |
 | B-11 | Muss | Fotos (alle Rollen): mehrere aus Kamera oder Galerie, vor dem Absenden… | Bereich „Beiträge und Fotos“ | PHPUnit je Rolle: Capabilities, Nonces, Escaping; Playwright: Ablauf |
 | B-12 | Muss | Fotoverwaltung (nur Admins): alle Fotos an einem Ort, jeweils mit Anga… | Bereich „Fotoverwaltung“ | PHPUnit je Rolle: Capabilities, Nonces, Escaping; Playwright: Ablauf |
-| B-13 | Muss | Handbuch: Das PDF „Handbuch Mitgliederbereich“ ist nach dem Login im K… | Bereich „System“ | PHPUnit je Rolle: Capabilities, Nonces, Escaping; Playwright: Ablauf |
+| B-13 | Muss | Handbuch: Das PDF „Handbuch Mitgliederbereich“ ist nach dem Anmelden i… | Bereich „System“ | PHPUnit je Rolle: Capabilities, Nonces, Escaping; Playwright: Ablauf |
 | B-14 | Muss | Bearbeiten im Editor (B-19): Beiträge (Titel, Kategorie, Text, Fotos, … | Bereich „Bearbeiten, Ausblenden, Löschen“ | PHPUnit je Rolle: Capabilities, Nonces, Escaping; Playwright: Ablauf |
 | B-15 | Muss | Ausblenden: Mit denselben Rechten wie bei B-14, aber ohne Freigabe, lä… | Bereich „Bearbeiten, Ausblenden, Löschen“ | PHPUnit je Rolle: Capabilities, Nonces, Escaping; Playwright: Ablauf |
 | B-16 | Muss | Löschen: nur Admins, für Beiträge und Einsätze, immer erst nach einer … | Bereich „Bearbeiten, Ausblenden, Löschen“ | PHPUnit je Rolle: Capabilities, Nonces, Escaping; Playwright: Ablauf |
@@ -71,7 +71,7 @@ So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testnam
 | E-12 | Muss | Hinweise: Auf „Lernen“ ein aufklappbarer Hinweis „Wer sieht meine Erge… | 3× direkt, z. B. „E-11/E-12: Hinweis zu Freiwilligkeit, Sichtbarkeit, Lös“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-13 | Soll | E-Mail am Monatsersten an alle Konten der Einsatzabteilung: nur Titel … | – (Mail) | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-14 | Muss | Barrierefrei nach N-02: Tastatur und Vorlesesoftware, ab 360 px ohne s… | Bereich „Lernen“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
-| E-15 | Muss | Messbare Ziele: vom Login bis zum ersten Lerninhalt höchstens 2 Tipps;… | Bereich „Gern und leicht lernen“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
+| E-15 | Muss | Messbare Ziele: vom Anmelden bis zum ersten Lerninhalt höchstens 2 Tip… | Bereich „Gern und leicht lernen“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-16 | Muss | Startseite „Lernen“: persönliche Begrüßung („Servus, Anna!“) und ein S… | 3× direkt, z. B. „E-16: persönliche Begrüßung, Dauer des Themas genannt“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-17 | Muss | Lernen in Schritten: je Abschnitt eine Seite, dann „Das Wichtigste“ mi… | 7× direkt, z. B. „E-16/E-17: „Los geht’s“ auf der Karte führt direkt zur “ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-18 | Muss | Test: eine Frage pro Bildschirm mit großen Antwortflächen. Nach „Antwo… | 3× direkt, z. B. „E-18: eine Frage pro Bildschirm“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
@@ -81,7 +81,7 @@ So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testnam
 | E-22 | Muss | Nachholen: offene frühere Themen stehen oben als Karten „Zum Nachholen… | Bereich „Gern und leicht lernen“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-23 | Muss | Jedes Thema hat ein Symbol mit Farbe (Auswahl: Verkehr, Erste Hilfe, G… | 2× direkt, z. B. „E-16/E-23: Thema des Monats als große Karte mit Symbol,“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-24 | Soll | Erinnern ohne zu nerven: höchstens eine freundliche Erinnerung zur Mon… | Bereich „Gern und leicht lernen“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
-| E-25 | Soll | Leichter Zugang: Der Link in der Mail führt nach dem Login direkt zum … | Bereich „Gern und leicht lernen“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
+| E-25 | Soll | Leichter Zugang: Der Link in der Mail führt nach dem Anmelden direkt z… | Bereich „Gern und leicht lernen“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-26 | Muss | Themenplan für Kommandanten: 12 Monate auf einen Blick (2 zurück, 9 vo… | 5× direkt, z. B. „E-26: Themenplan zeigt 12 Monate, der aktuelle hervorge“ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-27 | Muss | Hilfen beim Anlegen: Themenideen zum Antippen (setzen Titel und Symbol… | 3× direkt, z. B. „E-27: Themenideen und Hinweis „Was fehlt noch?““ | PHPUnit: Rechteprüfung „Lernstand sehen“, Löschfrist per Cron; Playwright: Ablauf |
 | E-28 | Muss | Abnahme mit Laien (wie A-09): Drei Mitglieder ohne Einweisung schaffen… | – (Laientest) | Laientest mit drei Mitgliedern und einem Kommandanten |

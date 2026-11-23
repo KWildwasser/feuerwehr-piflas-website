@@ -4,7 +4,7 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 
 [![Demo-Tests](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml/badge.svg)](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml)
 
-### ▶ [Demo ausprobieren](https://kwildwasser.github.io/feuerwehr-piflas-website/demo/) · [Projektseite](https://kwildwasser.github.io/feuerwehr-piflas-website/) · [Lastenheft (PDF)](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.19.pdf) · [Handbuch (PDF)](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf)
+### ▶ [Demo ausprobieren](https://kwildwasser.github.io/feuerwehr-piflas-website/demo/) · [Projektseite](https://kwildwasser.github.io/feuerwehr-piflas-website/) · [Lastenheft (PDF)](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.20.pdf) · [Handbuch (PDF)](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf)
 
 <p>
 <img src="docs/assets/screens/start.jpg" width="180" alt="Startseite">
@@ -27,9 +27,9 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 | Ordner | Was |
 |---|---|
 | [`docs/demo/`](docs/demo/) | Referenz-Demo (eine HTML-Datei, statisch) mit Testsuite – [README](docs/demo/README.md) |
-| [`docs/lastenheft/`](docs/lastenheft/) | Lastenheft v1.19 als [Text](docs/lastenheft/lastenheft-v1.19.md) und [PDF](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.19.pdf), Vorlagen für Claude Code |
+| [`docs/lastenheft/`](docs/lastenheft/) | Lastenheft v1.20 als [Text](docs/lastenheft/lastenheft-v1.20.md) und [PDF](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.20.pdf), Vorlagen für Claude Code |
 | [`docs/plan/`](docs/plan/) | [Umsetzungsplan bis Weihnachten 2026](docs/plan/Umsetzungsplan-bis-Weihnachten-2026.pdf) (PDF und Text) |
-| [`docs/handbuch/`](docs/handbuch/) | [Handbuch Mitgliederbereich 1.18](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf) mit Quellen |
+| [`docs/handbuch/`](docs/handbuch/) | [Handbuch Mitgliederbereich 1.19](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf) mit Quellen |
 | [`docs/design/`](docs/design/) | [Corporate Design](docs/design/corporate-design.md), frühe Entwürfe |
 | [`docs/assets/`](docs/assets/) | Logo, Schrift (Roboto, OFL), Fotos, Briefpapier |
 | [`docs/uebergangsseite/`](docs/uebergangsseite/) | Übergangsseite zum Hochladen |

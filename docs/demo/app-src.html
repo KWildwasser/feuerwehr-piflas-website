@@ -72,7 +72,7 @@ button{cursor:pointer}
 body.mopen .scrim{opacity:1;pointer-events:auto}
 body.mopen .drawer{transform:none}
 .drawer .dh{display:flex;justify-content:space-between;align-items:center;padding:0 16px 8px}
-/* Menü (F-11): Login ganz oben, Gruppen mit dunkler Überschrift auf hellem Band, Seiten eingerückt mit Linie */
+/* Menü (F-11): „Anmelden“ ganz oben, Gruppen mit dunkler Überschrift auf hellem Band, Seiten eingerückt mit Linie */
 .drawer .dlogin{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--linie)}.drawer .dlogin .btn{width:100%;min-height:52px;font-size:18px;background:#3A3F45;color:#fff;box-shadow:0 1px 2px rgba(31,35,40,.2)}.drawer .dlogin .btn:hover{background:var(--ink);color:#fff}.drawer .dlogin svg{width:20px;height:20px}
 .drawer nav a{display:flex;align-items:center;min-height:50px;padding:0 22px;color:var(--ink);text-decoration:none;font-weight:600;font-size:19px}
 .drawer nav .mtop a{font-weight:800;border-bottom:1px solid var(--linie)}
@@ -502,7 +502,7 @@ h3{letter-spacing:-.005em}
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Menü" aria-hidden="true" inert>
   <div class="dh"><span class="logo" style="width:130px;height:36px" role="img" aria-label="Feuerwehr Piflas"></span><button class="ib" data-act="menu-close" aria-label="Menü schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-  <div class="dlogin"><a class="btn" id="dr-login" href="#login"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Login</span></a></div>
+  <div class="dlogin"><a class="btn" id="dr-login" href="#login"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Anmelden</span></a></div>
   <nav id="mnav" aria-label="Hauptmenü"></nav>
 </aside>
 
@@ -822,11 +822,11 @@ const eRow = (e, i) => `<button class="li${S.neu === e.id ? ' neu' : ''}" data-a
 const tRow = (t, vm) => `<div class="li${t.neu && S.neu === 'termin' ? ' neu' : ''}${t.jub ? ' jubrow' : ''}"><span class="cal"><b>${String(t.d).padStart(2,'0')}</b><span>${MON[t.m]}</span></span><span style="flex:1">${t.jub ? '<span class="tag t-jub">125 Jahre</span> ' : ''}<b>${esc(t.t)}</b><span class="mini" style="font-size:15px">${esc(t.o)}</span></span>${vm ? `<button class="ib" data-act="vormerken" data-t="${esc(t.t)}" aria-label="${esc(t.t)} vormerken (Kalenderdatei)" title="Vormerken">${I.cal}</button>` : ''}</div>`;
 const f = (label, inner) => `<label class="f">${label}${inner}</label>`;
 const pubHead = r => `<header class="top"><div class="wrap"><a href="#start" aria-label="Feuerwehr Piflas – Startseite"><span class="logo" role="img" aria-label="Feuerwehr Piflas"></span></a>
-  <nav class="dnav" aria-label="Hauptmenü">${pubList().slice(1,6).map(([k,l]) => `<a href="#${k}"${r===k?' aria-current="page"':''}${k==='jubilaeum'?' class="jubnav"':''}>${l}</a>`).join('')}<a href="#login">Login</a></nav>
+  <nav class="dnav" aria-label="Hauptmenü">${pubList().slice(1,6).map(([k,l]) => `<a href="#${k}"${r===k?' aria-current="page"':''}${k==='jubilaeum'?' class="jubnav"':''}>${l}</a>`).join('')}<a href="#login">Anmelden</a></nav>
   <div class="tr"><button class="ib menu" data-act="menu-open" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer">${I.menu}</button></div></div></header>`;
 const pubFoot = () => `<footer class="foot"><div class="wrap"><span class="logo w" role="img" aria-label="Feuerwehr Piflas"></span>
   <span>Feuerwehr Piflas e.V.<br>Gartenstraße 2, 84030 Ergolding / Piflas<br>info@feuerwehr-piflas.de · 0871 1433372 (nicht ständig besetzt)</span>
-  <nav aria-label="Fußzeile"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a><a href="https://www.instagram.com/feuerwehrpiflas/">Instagram</a><a href="https://www.facebook.com/feuerwehrpiflas">Facebook</a><a href="#partner">Partnerfeuerwehren</a><a href="#login">Login für Mitglieder</a></nav>
+  <nav aria-label="Fußzeile"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a><a href="https://www.instagram.com/feuerwehrpiflas/">Instagram</a><a href="https://www.facebook.com/feuerwehrpiflas">Facebook</a><a href="#partner">Partnerfeuerwehren</a><a href="#login">Anmelden für Mitglieder</a></nav>
   <span class="mini">© 2026 Feuerwehr Piflas e.V. · Demo-Version mit Beispielinhalten · Fotos: Feuerwehr Piflas</span></div></footer>`;
 const backHead = () => `<header class="btop"><div class="wrap"><a href="#start" aria-label="Zur öffentlichen Website"><span class="logo w" role="img" aria-label="Feuerwehr Piflas"></span></a>
   <div class="tr"><button class="ib hbm" data-act="menu-open" aria-label="Öffentliche Seiten: Menü öffnen" aria-expanded="false" aria-controls="drawer">${I.menu}</button><a class="hb" id="hb-link" href="handbuch.pdf" target="_blank" rel="noopener" aria-label="Handbuch (PDF) öffnen">${I.book}<span>Handbuch</span></a><button data-act="logout">Abmelden</button></div></div>
@@ -1050,7 +1050,7 @@ V.datenschutz = () => sec(`<h1>Datenschutz</h1><p class="mini">Entwurf – vor V
 V.login = () => {
   if (S.pending2fa) return sec(`<div class="login stack"><h1>Bestätigung</h1><p>Wir haben einen 6-stelligen Code an deine Authenticator-App geschickt.</p>
     <form class="card" id="f-2fa" novalidate>${f('Code', '<input name="code" class="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required pattern="[0-9]{6}">')}<p class="err" id="e-2fa"></p><button class="btn" type="submit">Bestätigen</button><span class="mini">Demo: beliebige 6 Ziffern.</span></form></div>`);
-  return sec(`<div class="login stack"><h1>Login für Mitglieder</h1><p>Nur für eingeladene Mitglieder des Feuerwehr Piflas e.V. Deine Rolle ist in deinem Konto hinterlegt – du musst nichts auswählen.</p>
+  return sec(`<div class="login stack"><h1>Anmelden für Mitglieder</h1><p>Nur für eingeladene Mitglieder des Feuerwehr Piflas e.V. Deine Rolle ist in deinem Konto hinterlegt – du musst nichts auswählen.</p>
     <form class="card" id="f-login" novalidate>
       ${f('E-Mail', '<input name="mail" type="email" required autocomplete="username" maxlength="120">')}
       ${f('Passwort', '<input name="pw" type="password" required autocomplete="current-password" maxlength="200">')}
@@ -1059,7 +1059,7 @@ V.login = () => {
       <button type="button" class="lnk" data-act="pw-forgot" aria-expanded="${!!S.pwf}">Passwort vergessen?</button>
       <span class="mini" id="demo-konten">Demo-Konten, Passwort beliebig: max@beispiel.de (Kommandant), erika@beispiel.de (Admin), jonas@beispiel.de (Redaktion), anna@beispiel.de (Mitglied)</span></form>
     ${S.pwf ? `<form class="card" id="f-pw" novalidate><b>Passwort zurücksetzen</b>${f('Deine E-Mail', '<input name="m" type="email" required autocomplete="username" maxlength="120">')}<p class="err" id="e-pw"></p><button class="btn" type="submit">Link schicken</button><span class="mini">Der Link gilt einmalig 1 Stunde. Danach legst du ein neues Passwort fest.</span></form>` : ''}
-    <div class="card stack" id="quick"><b>Schnell-Login für die Demo</b><span class="mini">Ohne E-Mail und Code – einfach ein Beispielkonto wählen:</span><div class="row2 ql"><button class="btn o sm" type="button" data-act="quick-login" data-role="Freigeber" style="color:var(--ink)">Kommandant</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Administrator" style="color:var(--ink)">Admin</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Autor" style="color:var(--ink)">Redaktion</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Mitglied" style="color:var(--ink)">Mitglied</button></div>
+    <div class="card stack" id="quick"><b>Schnell-Anmeldung für die Demo</b><span class="mini">Ohne E-Mail und Code – einfach ein Beispielkonto wählen:</span><div class="row2 ql"><button class="btn o sm" type="button" data-act="quick-login" data-role="Freigeber" style="color:var(--ink)">Kommandant</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Administrator" style="color:var(--ink)">Admin</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Autor" style="color:var(--ink)">Redaktion</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Mitglied" style="color:var(--ink)">Mitglied</button></div>
     </div><span class="mini">Kein Konto? Konten werden nur per Einladung durch die Admins vergeben.</span></div>`);
 };
 
@@ -1792,7 +1792,7 @@ function render(opts = {}) {
   $('#chrome').innerHTML = S.user ? backHead() : pubHead(r);
   $('#main').className = bk ? 'bm' : '';
   $('#main').innerHTML = undoBar() + V[r]() + (S.user ? backTabs(r) : '');
-  const dl = $('#dr-login'); if (dl) { dl.querySelector('span').textContent = S.user ? 'Zum Mitgliederbereich' : 'Login'; dl.setAttribute('href', S.user ? '#' + ROLES[S.user.role].tabs[0] : '#login'); }
+  const dl = $('#dr-login'); if (dl) { dl.querySelector('span').textContent = S.user ? 'Zum Mitgliederbereich' : 'Anmelden'; dl.setAttribute('href', S.user ? '#' + ROLES[S.user.role].tabs[0] : '#login'); }
   $('#footer').innerHTML = bk ? '' : pubFoot();
   $('#mnav').innerHTML = menuHtml(r);
   document.title = (r === 'start' ? '' : (pubList().find(p => p[0]===r)?.[1] || TITLE[r] || BACK[r]?.[0] || r.charAt(0).toUpperCase()+r.slice(1)) + ' – ') + 'Feuerwehr Piflas';
@@ -2278,7 +2278,7 @@ document.addEventListener('submit', e => {
       if (m.r === 'Administrator' && r !== 'Administrator' && cntR('Administrator') <= 2) { $('#e-role').textContent = 'Es muss immer mindestens zwei Admins geben. Lade zuerst eine weitere Person als Admin ein.'; return; }
       if (r === m.r && akt === (m.akt !== false)) { S.rch = null; render({keep:true}); break; }
       const u = snapAll(), was = RL[m.r]; m.r = r; m.akt = akt; const d = today();
-      m.s = 'Aktiv · Rolle geändert am ' + p2(d.getDate()) + '.' + p2(d.getMonth() + 1) + '.' + d.getFullYear() + ' von ' + S.user.name + (r === 'Administrator' || r === 'Freigeber' ? ' · 2FA beim nächsten Login Pflicht' : '');
+      m.s = 'Aktiv · Rolle geändert am ' + p2(d.getDate()) + '.' + p2(d.getMonth() + 1) + '.' + d.getFullYear() + ' von ' + S.user.name + (r === 'Administrator' || r === 'Freigeber' ? ' · 2FA beim nächsten Anmelden Pflicht' : '');
       S.rch = null; done(was === RL[r] ? 'Einsatzabteilung für ' + m.n + ' geändert' : 'Rolle von ' + m.n + ': ' + was + ' → ' + RL[r], u); render({keep:true}); break; }
     case 'f-invite': {
       if (!check(fm, 'e-invite')) return; S.rch = null; const u = snapAll();

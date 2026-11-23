@@ -295,7 +295,7 @@ async def main():
         await go('jugend'); t = await pg.inner_text('main')
         rec('Schnuppern' in t and 'Einwilligung der Eltern' in t, 'F-07/L-11: Jugendfeuerwehr mit „Schnuppern“, Fotos nur mit Einwilligung der Eltern')
         ft = await pg.inner_text('footer')
-        rec(all(x in ft for x in ['Impressum', 'Datenschutz', 'Instagram', 'Partner', 'Login', 'Fotos: Feuerwehr Piflas']), 'F-12/N-10: Fußzeile mit Rechtstexten, Instagram, Partnern, Login und Bildnachweis', ft[:120])
+        rec(all(x in ft for x in ['Impressum', 'Datenschutz', 'Instagram', 'Partner', 'Anmelden', 'Fotos: Feuerwehr Piflas']), 'F-12/N-10: Fußzeile mit Rechtstexten, Instagram, Partnern, Anmelden und Bildnachweis', ft[:120])
         rec('nicht ständig besetzt' in ft, 'F-12: Telefon mit Hinweis „nicht ständig besetzt“')
         await go('buerger'); t = await pg.inner_text('main')
         rec(all(x in t for x in ['112', 'Wo', 'Rettungsgasse']), 'C-01: Notruf (W-Fragen) und Rettungsgasse')

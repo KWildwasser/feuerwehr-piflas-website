@@ -1,6 +1,6 @@
 # Arbeitspakete für Claude Code
 
-Stand 23.11.2026 · Lastenheft 1.19 · passt zum Umsetzungsplan bis Weihnachten 2026 (`../plan/`)
+Stand 23.11.2026 · Lastenheft 1.20 · passt zum Umsetzungsplan bis Weihnachten 2026 (`../plan/`)
 
 Je Paket eine Sitzung mit Claude Code, ein Branch und ein Pull Request mit der Liste der erfüllten IDs. Ein Paket gilt als fertig, wenn alle Tests grün sind und zwei Personen es auf der Testseite am Handy abgenommen haben (Spalte „Abnahme“). Vorlage für Aussehen und Abläufe ist immer die Demo (`docs/referenz-demo/`). Welche ID wie geprüft wird, steht in `ABDECKUNG.md`.
 
