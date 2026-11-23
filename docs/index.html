@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website Feuerwehr Piflas – Planung und Demo</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face{font-family:FwText;src:url(assets/fonts/roboto-sub.woff) format("woff");font-weight:100 900}
+:root{--rot:#CD1719;--rot-d:#A51214;--ink:#1F2328;--grau:#4A4F55;--hell:#F4F3F0;--linie:#E4E2DD}
+*{box-sizing:border-box}
+body{margin:0;font:17px/1.55 FwText,system-ui,sans-serif;color:var(--ink);background:var(--hell);overflow-wrap:anywhere}
+header{background:var(--rot);padding:20px}
+header img{height:48px;display:block}
+main{max-width:720px;margin:0 auto;padding:28px 20px 48px}
+h1{font-size:32px;line-height:1.15;margin:0 0 8px}
+p{margin:0 0 16px;color:var(--grau)}
+.card{display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid var(--linie);border-radius:14px;padding:18px 20px;margin:14px 0;text-decoration:none;color:var(--ink);min-height:44px}
+.card b{font-size:20px}
+.card span{color:var(--grau)}
+.card.main{border:2px solid var(--rot)}
+.card.main b{color:var(--rot-d)}
+.card:hover,.card:focus-visible{border-color:var(--rot);outline:none}
+small{display:block;margin-top:28px;color:var(--grau);font-size:14px}
+</style>
+</head>
+<body>
+<header><img src="assets/logo-weiss.svg" alt="Feuerwehr Piflas"></header>
+<main>
+<h1>Neue Website der Feuerwehr Piflas</h1>
+<p>Planung, klickbare Demo und Dokumentation für www.feuerwehr-piflas.de. Die Demo zeigt Beispielinhalte und läuft komplett im Browser – ohne Server, ohne Cookies, ohne Datenübertragung.</p>
+<a class="card main" href="demo/"><b>Demo öffnen →</b><span>Öffentliche Website und Mitgliederbereich zum Ausprobieren. Unten rechts „Demo“ für die Vorführung, auf der Login-Seite Schnell-Login je Rolle.</span></a>
+<a class="card" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.6.pdf"><b>Lastenheft (PDF)</b><span>Was gebaut wird – Anforderungen, Recht, Infrastruktur, Umsetzungsplan. Version 1.6</span></a>
+<a class="card" href="handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf"><b>Handbuch Mitgliederbereich (PDF)</b><span>Anleitung für Admins, Kommandant und Redaktion. Version 1.4</span></a>
+<a class="card" href="uebergangsseite/"><b>Übergangsseite</b><span>Vorläufige Startseite bis zum Start der neuen Website</span></a>
+<small>Feuerwehr Piflas e.V. · Stand 23.11.2026 · Demo mit Beispielinhalten, Fotos: Feuerwehr Piflas</small>
+</main>
+</body>
+</html>

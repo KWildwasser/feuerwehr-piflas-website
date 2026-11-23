@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Einsätze</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#A51214}a:hover{color:#7E0E10}
+</style>
+</helmet>
+<div style="width: 390px; height: 1520px; box-sizing: border-box; background: #FFFFFF; font-family: Barlow, system-ui, sans-serif; color: #1F2328; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 4px solid #CD1719">
+    <a href="Main.dc.html" aria-label="Zur Startseite" style="display: block"><img src="/_blob/88ebf520d913f4dcc85436434b431371" alt="Feuerwehr Piflas" style="width: 150px; height: 41px; display: block"></a>
+    <a href="tel:112" style="background: #CD1719; color: #FFFFFF; text-decoration: none; font-weight: 700; padding: 10px 14px; border-radius: 999px; font-size: 15px; min-height: 44px; box-sizing: border-box; display: flex; align-items: center">Notruf 112</a>
+  </header>
+
+  <section style="padding: 20px 20px 8px; display: flex; flex-direction: column; gap: 14px">
+    <a href="Main.dc.html" style="font-weight: 600; font-size: 15px">← Startseite</a>
+    <h1 style="margin: 0; font-family: 'Barlow Condensed', Barlow, sans-serif; font-weight: 700; font-size: 40px; line-height: 1.05">Einsätze</h1>
+    <div role="group" aria-label="Jahr wählen" style="display: flex; gap: 8px; flex-wrap: wrap">
+      <button style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 2px solid #1F2328; background: #1F2328; color: #FFFFFF; font: 700 15px Barlow, sans-serif">2026</button>
+      <button style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 2px solid #D9D7D2; background: #FFFFFF; color: #1F2328; font: 600 15px Barlow, sans-serif">2025</button>
+      <button style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 2px solid #D9D7D2; background: #FFFFFF; color: #1F2328; font: 600 15px Barlow, sans-serif">2024</button>
+      <button style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 2px solid #D9D7D2; background: #FFFFFF; color: #1F2328; font: 600 15px Barlow, sans-serif">Archiv</button>
+    </div>
+  </section>
+
+  <section style="padding: 12px 20px 8px">
+    <div style="background: #F4F3F0; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; align-items: baseline; gap: 10px"><span style="font-family: 'Barlow Condensed', Barlow, sans-serif; font-weight: 700; font-size: 44px; line-height: 1">[Anzahl]</span><span style="font-weight: 600">Einsätze im Jahr 2026</span></div>
+      <div style="display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 6px 10px; align-items: center; font-size: 15px">
+        <span>Techn. Hilfe</span><div style="height: 10px; border-radius: 5px; background: #1D4F8C; width: 100%"></div>
+        <span>Brand</span><div style="height: 10px; border-radius: 5px; background: #CD1719; width: 55%"></div>
+        <span>Brandmelder</span><div style="height: 10px; border-radius: 5px; background: #6B7178; width: 40%"></div>
+        <span>Sonstige</span><div style="height: 10px; border-radius: 5px; background: #B8B5AE; width: 20%"></div>
+      </div>
+      <span style="font-size: 13px; color: #5B6168">Statistik berechnet sich automatisch; Balken hier nur beispielhaft.</span>
+    </div>
+  </section>
+
+  <section style="padding: 16px 20px 8px">
+    <article style="border: 1px solid #E4E2DD; border-radius: 14px; overflow: hidden">
+      <div style="height: 170px; background: #E9E7E2; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #5B6168; text-align: center; padding: 12px; box-sizing: border-box">Einsatzfoto (ohne Personen und Kennzeichen)</div>
+      <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px">
+        <span style="align-self: flex-start; background: #E7F0FB; color: #1D4F8C; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">Technische Hilfeleistung</span>
+        <h2 style="margin: 0; font-family: 'Barlow Condensed', Barlow, sans-serif; font-size: 28px; line-height: 1.1">Verkehrsunfall, Ergolding</h2>
+        <span style="font-size: 15px; color: #5B6168">12.11.2026 · 17:45 Uhr · LF 8/6</span>
+        <p style="margin: 0">Wir sicherten die Unfallstelle ab, unterstützten den Rettungsdienst und banden auslaufende Betriebsstoffe.</p>
+      </div>
+    </article>
+  </section>
+
+  <section style="padding: 16px 20px 24px; display: flex; flex-direction: column">
+    <h2 style="margin: 0 0 6px; font-family: 'Barlow Condensed', Barlow, sans-serif; font-size: 26px">Weitere Einsätze</h2>
+    <a href="#" style="display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid #E4E2DD; text-decoration: none; color: #1F2328"><span style="width: 52px; flex: none; font-weight: 700; font-size: 15px">03.11.</span><span style="display: flex; flex-direction: column; gap: 4px"><span style="align-self: flex-start; background: #FBEAEA; color: #A51214; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">Brand</span><span style="font-weight: 600">Kaminbrand, Piflas</span></span></a>
+    <a href="#" style="display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid #E4E2DD; text-decoration: none; color: #1F2328"><span style="width: 52px; flex: none; font-weight: 700; font-size: 15px">28.10.</span><span style="display: flex; flex-direction: column; gap: 4px"><span style="align-self: flex-start; background: #EFEEEB; color: #4A4F55; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">BMA</span><span style="font-weight: 600">Brandmeldeanlage, Industriestraße</span></span></a>
+    <a href="#" style="display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid #E4E2DD; text-decoration: none; color: #1F2328"><span style="width: 52px; flex: none; font-weight: 700; font-size: 15px">19.10.</span><span style="display: flex; flex-direction: column; gap: 4px"><span style="align-self: flex-start; background: #E7F0FB; color: #1D4F8C; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">THL</span><span style="font-weight: 600">Baum auf Fahrbahn, Piflas</span></span></a>
+    <a href="#" style="display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid #E4E2DD; text-decoration: none; color: #1F2328"><span style="width: 52px; flex: none; font-weight: 700; font-size: 15px">07.10.</span><span style="display: flex; flex-direction: column; gap: 4px"><span style="align-self: flex-start; background: #E7F0FB; color: #1D4F8C; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">THL</span><span style="font-weight: 600">Türöffnung für Rettungsdienst, Ergolding</span></span></a>
+    <p style="margin: 10px 0 0; font-size: 13px; color: #5B6168">Beispielinhalte. Uhrzeit auf Viertelstunden gerundet, Ort nur als Ortsteil.</p>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1520}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

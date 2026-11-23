@@ -1,0 +1,31 @@
+# Baut die Referenz-Demo neu und führt die Testsuite aus (Lastenheft N-11).
+# Schlägt fehl, wenn eine Prüfung nicht besteht oder die eingecheckte index.html nicht zum Quelltext passt.
+name: Demo-Tests
+on:
+  push:
+    paths: ['docs/demo/**', 'docs/assets/**', '.github/workflows/demo-tests.yml']
+  pull_request:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Abhängigkeiten
+        run: |
+          pip install playwright pillow
+          python -m playwright install --with-deps chromium
+      - name: Demo bauen
+        working-directory: docs/demo
+        run: python build.py
+      - name: index.html aktuell?
+        run: git diff --stat --exit-code docs/demo/index.html || (echo "::error::index.html ist nicht aktuell – bitte build.py ausführen und einchecken"; exit 1)
+      - name: Testsuite
+        working-directory: docs/demo
+        run: python test_app.py
+      - name: Bildschirmfotos aufheben
+        if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: demo-screenshots, path: docs/demo/shots/ }

@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+docs/demo/shots/
+docs/demo/test_results.json
+docs/handbuch/cover.html
+docs/handbuch/cover.pdf
+docs/handbuch/body.html
+docs/handbuch/body.pdf
+.DS_Store

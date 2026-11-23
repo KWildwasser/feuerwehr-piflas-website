@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#CD1719">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Feuerwehr Piflas</title>
+<style>
+/* VOICE: die echte Vereinsseite – freundlich, klar, durchgehend Du-Form; Backend knapp wie eine App
+   IDEA: das Gerätehaus-Tor – rote Kante, dunkle Halle, helle Zettelwand
+   PICTURE: großes Bild-Feld in der Bühne, 112-Karte, Einsatzliste mit farbigen Einsatzarten
+   COLOUR and TYPE: Feuerwehrrot #CD1719 (Logo), Anthrazit #1F2328, Weiß, Papiergrau; Roboto (selbst gehostet, schmal für Überschriften)
+   LAYOUT: Kopf mit Logo, 112 und Menü; Seiten als Bänder; Backend mit Tab-Leiste unten; Demo-Knopf schwebt */
+/*FONTFACE*/
+:root{color-scheme:light;--rot:#CD1719;--rot-d:#A51214;--ink:#1F2328;--grau:#4A4F55;--g2:#5B6168;--hell:#F4F3F0;--linie:#E4E2DD;--sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom)}
+:root[data-theme=dark],:root[data-theme=light]{color-scheme:light}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+body{margin:0;background:#fff;color:var(--ink);font:17px/1.55 FwText,system-ui,-apple-system,sans-serif;overflow-x:clip}
+/* Lange Wörter und Adressen umbrechen statt die Seite zu verbreitern */
+main,.foot,.top{overflow-wrap:anywhere}h1,h2,h3{hyphens:auto}
+h1,h2,h3{font-family:FwCond,FwText,sans-serif;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(38px,8vw,64px)}
+h2{font-size:clamp(28px,5vw,40px)}
+h3{font-size:22px;line-height:1.15}
+p{margin:0}
+a{color:var(--rot-d)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.logo{background:var(--logo) no-repeat left center/contain;display:block}
+.logo.w{filter:brightness(0) invert(1)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left))}
+.band{padding:28px 0}
+.band.g{background:var(--hell)}
+.band.d{background:var(--ink);color:#fff}
+.stack{display:flex;flex-direction:column;gap:14px}
+.mini{font-size:13px;color:var(--g2)}
+.d .mini{color:#C9CBCE}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;border:0;background:var(--rot);color:#fff;font-weight:700;text-decoration:none;text-align:center}
+.btn:hover{background:var(--rot-d);color:#fff}
+.btn.o{background:transparent;border:2px solid currentColor;color:inherit}
+.btn.o:hover{background:rgba(127,127,127,.12)}
+.btn.wt{background:#fff;color:var(--ink)}
+.btn.dk{background:var(--ink);color:#fff}
+.btn.sm{min-height:44px;padding:0 16px;font-size:15px}
+.btn.full{width:100%}
+.btn[disabled]{background:#B8B5AE;color:#fff;cursor:not-allowed}
+.btn.o[disabled]{background:none;color:var(--ink);opacity:.4}
+.row2{display:flex;flex-wrap:wrap;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+
+/* Kopf */
+.top{position:sticky;top:0;z-index:40;background:#fff;border-bottom:4px solid var(--rot);padding-top:var(--sat)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:64px}
+.top .logo{width:150px;height:41px}
+.tr{display:flex;align-items:center;gap:8px}
+.n112p{background:var(--rot);color:#fff;font-weight:700;text-decoration:none;border-radius:999px;padding:0 14px;min-height:44px;display:flex;align-items:center;font-size:15px;white-space:nowrap}
+.n112p:hover{color:#fff;background:var(--rot-d)}
+.ib{width:44px;height:44px;border:1px solid #D9D7D2;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:0}
+.ib svg{width:22px;height:22px}
+.dnav{display:none;gap:4px 18px;font-weight:600;font-size:15px}
+.dnav a{color:var(--ink);text-decoration:none;padding:8px 0}
+.dnav a[aria-current=page]{color:var(--rot)}
+@media(min-width:960px){.dnav{display:flex}}
+
+/* Menü */
+.scrim{position:fixed;inset:0;background:rgba(20,23,26,.5);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);background:#fff;z-index:61;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;padding:calc(12px + var(--sat)) 0 calc(16px + var(--sab));overflow-y:auto}
+body.mopen .scrim{opacity:1;pointer-events:auto}
+body.mopen .drawer{transform:none}
+.drawer .dh{display:flex;justify-content:space-between;align-items:center;padding:0 16px 8px}
+.drawer nav a{display:flex;align-items:center;min-height:52px;padding:0 22px;color:var(--ink);text-decoration:none;font-weight:600;font-size:19px;border-bottom:1px solid var(--linie)}
+.drawer nav .mg{margin:0;padding:18px 22px 6px;font:700 14px/1 FwText,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--grau)}
+.drawer nav .mg+a{border-top:1px solid var(--linie)}
+.drawer nav a[aria-current=page]{color:var(--rot);box-shadow:inset 4px 0 0 var(--rot)}
+.drawer .foot{padding:18px 22px 0;display:flex;flex-direction:column;gap:10px}
+
+/* Bühne */
+.hero{background:var(--ink);color:#fff;padding:24px 0 30px}
+.hero .wrap{display:grid;gap:18px}
+@media(min-width:860px){.hero .wrap{grid-template-columns:1.1fr 1fr;align-items:center}.hero .ph{order:2}}
+.ph{border-radius:16px;background:#33383E;border:1px dashed #6B7178;color:#C9CBCE;min-height:200px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-size:15px}
+.hero .k{color:#C9CBCE;font-weight:500;font-size:15px}
+.hero p.l{color:#E3E4E6;font-size:18px}
+.pic{display:block;width:100%;border-radius:16px;object-fit:cover;background:#2B3036}
+.hero .pic{aspect-ratio:16/10;object-position:70% 55%}
+.cap{font-size:13px;color:var(--g2);margin-top:6px}
+.warnb{display:flex;gap:14px;align-items:flex-start;background:#FFF1D6;border:2px solid #E9B44C;border-radius:14px;padding:16px;color:var(--ink);text-decoration:none}
+.warnb .wi{flex:none;width:30px;height:30px}.warnb .wi svg{width:30px;height:30px;color:#8A5A00}.warnb b{display:block;font-size:19px;line-height:1.25;margin-bottom:4px}.warnb .more{display:block;margin-top:8px;font-weight:700;color:var(--rot-d)}
+.tip>span>b{color:#6B4500}.tip.sonder>span>b{color:var(--rot-d)}
+.tip.sonder{background:#FBEAEA;border:2px solid #F1C4C4}.tip.sonder svg{color:var(--rot-d)}
+.ql{flex-direction:column;gap:8px}.ql .btn{width:100%;justify-content:center}
+.vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.upl{position:relative;cursor:pointer;align-self:flex-start;gap:8px}.upl svg{width:20px;height:20px}
+.upl:focus-within{outline:3px solid var(--rot);outline-offset:2px}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px}.thumbs:empty{display:none}
+.th{position:relative;width:112px;height:112px;border-radius:10px;overflow:hidden;background:#E9E7E2}.th img{width:100%;height:100%;object-fit:cover;display:block}
+.th .ib{position:absolute;top:0;right:0;width:44px;height:44px;min-height:44px;border:0;background:none;color:#fff;font-size:20px;line-height:1;padding:0;display:flex;align-items:center;justify-content:center}.th .ib::before{content:'';position:absolute;inset:8px;border-radius:50%;background:rgba(0,0,0,.65);z-index:-1}.th .ib{z-index:1;isolation:isolate}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.card.mi{padding:0;overflow:hidden;display:flex;flex-direction:column;gap:0}.mi img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.mi .b{padding:10px;display:flex;flex-direction:column;gap:8px;flex:1}.mi small{color:var(--grau);font-size:13px;line-height:1.35;flex:1}.mi .row2{flex-direction:column;gap:6px}.mi .row2>*{width:100%;justify-content:center}
+.lnk{background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--ink);text-align:left;text-decoration:underline;cursor:pointer;min-height:44px}
+.hero .cap{color:#A9ADB2}
+.fz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.fz .card{padding:0;overflow:hidden;gap:0}
+.fz .card img{width:100%;display:block;aspect-ratio:2.7/1;object-fit:cover}
+.fz .card .b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(46%,200px),1fr));gap:10px}
+.gal figure{margin:0;display:flex;flex-direction:column;gap:6px}
+.gal img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;display:block}
+.gal figcaption{font-size:14px;font-weight:600;line-height:1.3}
+.strip{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.strip a{flex:0 0 min(78%,320px);scroll-snap-align:start;text-decoration:none;color:var(--ink)}
+.strip img{width:100%;aspect-ratio:2.7/1;object-fit:cover;border-radius:12px;display:block}
+.strip b{display:block;margin-top:6px}
+.ig div{position:relative;overflow:hidden}
+.ig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:8px;display:block}
+.ig div.im{padding:0;background:none}
+.nk{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.nk article{border:1px solid var(--linie);border-radius:16px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.nk article img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.nk article .b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
+.feat{display:grid;gap:16px;align-items:center;background:var(--ink);color:#fff;border-radius:18px;overflow:hidden}
+.feat img{width:100%;height:100%;max-height:520px;object-fit:cover;display:block}
+.feat .b{padding:4px 20px 22px;display:flex;flex-direction:column;gap:10px}
+@media(min-width:760px){.feat{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}.feat .b{padding:24px}}
+.mosaic{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.mosaic button{position:relative;border:0;padding:0;border-radius:16px;overflow:hidden;background:#2B3036;color:#fff;text-align:left;aspect-ratio:1;display:block}
+.mosaic button:first-child{grid-column:1/-1;aspect-ratio:16/10}
+@media(min-width:760px){.mosaic{grid-template-columns:2fr 1fr 1fr}.mosaic button,.mosaic button:first-child{grid-column:auto;aspect-ratio:auto;height:320px}}
+.mosaic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mosaic .phx{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;text-align:center;padding:16px 12px;color:#C9CBCE;font-size:13px;border:1px dashed #6B7178;border-radius:16px;background:linear-gradient(160deg,#3A3530,#22262B)}
+.mosaic .ov{position:absolute;left:0;right:0;bottom:0;padding:40px 14px 14px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.78));display:flex;flex-direction:column;gap:4px}
+.mosaic .ov b{font:700 20px/1.1 FwCond,sans-serif}
+.mosaic button:first-child .ov b{font-size:28px}
+.mosaic .tag{align-self:flex-start}
+.mit{background:var(--rot);color:#fff}
+.mit .opts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.mit .opts a{display:flex;flex-direction:column;gap:2px;background:#fff;color:var(--ink);border-radius:14px;padding:14px 16px;text-decoration:none;min-height:44px}
+.mit .opts a b{font-size:18px}
+.mit .opts a span{color:var(--grau);font-size:15px}
+.mit form{background:#fff;color:var(--ink)}
+.mit .vorbei{background:rgba(0,0,0,.18);border-radius:14px;padding:14px 16px}
+.t-jub{background:#F6E7C1;color:#6B4A00}
+.jubrow .cal{background:#F6E7C1}
+.seal{width:112px;height:112px;flex:none;border-radius:50%;background:var(--rot);color:#fff;border:5px solid #C99A2E;box-shadow:0 0 0 3px #fff inset;display:flex;flex-direction:column;align-items:center;justify-content:center;font:700 44px/0.9 FwCond,sans-serif}
+.seal small{font:600 14px/1.2 FwText,sans-serif;letter-spacing:.02em}
+.jub{background:#FFF4E0;border-top:4px solid #C99A2E;border-bottom:4px solid #C99A2E}
+.jubg{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.jubg .stack{flex:1 1 280px}
+.cd{background:#fff;border:1px solid #EAD9AE;border-radius:14px;padding:12px 14px;font-size:17px}
+.cd b.big{font:700 40px/1 FwCond,sans-serif;color:var(--rot);margin-right:6px}
+.jubchip{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:#C99A2E;color:#1F2328;font-weight:700;border-radius:999px;padding:6px 14px;text-decoration:none;font-size:15px}
+.jubchip:hover{color:#1F2328;background:#E0B54A}
+a.jubnav{color:#8A6100!important;font-weight:700}
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.tl li{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;background:#fff;border:1px solid var(--linie);border-radius:16px;padding:14px}
+.tl li.past{opacity:.75;background:var(--hell)}
+.tl li.nx{border:2px solid #C99A2E}
+.tl .cal{width:64px;height:64px;background:#F6E7C1}
+.chron{list-style:none;margin:0;padding:0 0 0 18px;border-left:3px solid var(--rot);display:flex;flex-direction:column;gap:14px}
+.chron>li{position:relative}
+.partner .card{display:flex;flex-direction:column;gap:10px}
+.plink{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:inherit;margin-top:8px}
+.plink b{font-size:20px;color:var(--rot-d)}
+.chron ul{list-style:none;padding:0!important;display:flex;flex-direction:column;gap:6px}
+.chron>li::before{content:'';position:absolute;left:-26px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--rot);border:3px solid #fff}
+.chron b.y{font:700 24px/1 FwCond,sans-serif;display:block}
+.amp{display:flex;flex-direction:column;gap:8px}
+.amp>div{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;background:#fff;border:1px solid var(--linie);border-radius:14px;padding:12px 14px}
+.dot2{width:16px;height:16px;border-radius:50%;justify-self:center}
+.dot2.ok{background:#1E8E3E}.dot2.warn{background:#E3A008}.dot2.bad{background:#C5221F}
+.amp small{display:block;color:var(--g2);font-size:14px}
+details.help{background:#fff;border:1px solid var(--linie);border-radius:14px;padding:0 14px}
+details.help summary{min-height:52px;display:flex;align-items:center;font-weight:700;cursor:pointer}
+details.help ol,details.help ul{margin:0 0 14px;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.vhero{position:relative;color:#fff;background:#0E1220}
+.vhero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.vhero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,18,32,.6),rgba(14,18,32,.88))}
+.vhero .wrap{position:relative;z-index:1;padding-top:40px;padding-bottom:40px}
+.k112{border:2px solid var(--rot);border-radius:16px;padding:16px 18px;display:flex;gap:16px;align-items:center;background:#fff}
+.k112>a{flex:none;font:700 56px/1 FwCond,sans-serif;color:var(--rot);text-decoration:none}
+
+/* Listen */
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sh a{font-weight:600;font-size:16px}
+.list{border-top:1px solid var(--linie)}
+.li{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--linie);color:var(--ink);text-decoration:none;align-items:flex-start;width:100%;background:none;border-left:0;border-right:0;border-top:0;text-align:left}
+.li:hover{background:#FAFAF8}
+.li .dt{width:56px;flex:none;font-weight:700}
+.li b{display:block}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:6px}
+.t-thl{background:#E7F0FB;color:#1D4F8C}.t-brand{background:#FBEAEA;color:#A51214}.t-bma{background:#EFEEEB;color:#4A4F55}.t-unw{background:#E6F2EA;color:#1E6B35}.t-news{background:#FFF1D6;color:#6B4500}
+.neu{animation:glow 2.6s ease-out 1}
+@keyframes glow{0%{background:#FFE3E1}100%{background:transparent}}
+.cal{width:56px;height:56px;flex:none;border-radius:12px;background:var(--hell);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.cal b{font-size:20px}.cal span{font-size:13px;color:var(--g2)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{min-height:44px;padding:0 16px;border-radius:999px;border:2px solid #D9D7D2;background:#fff;font-weight:600;font-size:15px}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.tip{display:flex;gap:14px;background:#FFF6DB;border-radius:16px;padding:18px;color:var(--ink);text-decoration:none}
+.tip svg{flex:none;width:32px;height:32px;color:#8A5A00}
+.spend{background:var(--ink);color:#fff;border-radius:18px;padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+.bar{height:12px;border-radius:6px;background:#3D4248}.bar i{display:block;height:12px;border-radius:6px;background:var(--rot)}
+.lt .bar{background:#DEDBD5}
+.ig{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.ig div{aspect-ratio:1;border-radius:8px;background:#E9E7E2;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--g2);text-align:center;padding:6px}
+.ig div:nth-child(even){background:#DEDBD5}
+.ig div.post{background:var(--rot);color:#fff;font-weight:700}
+.card{border:1px solid var(--linie);border-radius:16px;padding:18px;background:#fff;display:flex;flex-direction:column;gap:10px}
+.kv{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 10px;font-size:16px}
+.kv>span{color:var(--g2)}
+.stat{background:var(--hell);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.stat .num{font:700 48px/1 FwCond,sans-serif}
+.bars{display:grid;grid-template-columns:110px minmax(0,1fr) 28px;gap:8px 10px;align-items:center;font-size:15px}
+.bars i{display:block;height:10px;border-radius:5px}
+.bars b{text-align:right}
+.alert{background:var(--rot);color:#fff;border-radius:16px;padding:18px}
+.alert ol{margin:8px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:4px}
+
+/* Formulare */
+.f{display:flex;flex-direction:column;gap:5px;font-weight:600;font-size:15px}
+.f input,.f select,.f textarea{font:16px FwText,sans-serif;font-weight:400;border:1px solid #9C9992;border-radius:10px;padding:10px 12px;min-height:48px;background:#fff;width:100%}
+.f textarea{resize:vertical;min-height:96px}
+.f input:user-invalid{border-color:var(--rot)}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:15px;min-height:44px;padding-top:4px}
+.chk input{width:22px;height:22px;margin:1px 0 0;flex:none;accent-color:var(--rot)}
+.chk .ct{flex:1;min-width:0}
+.err{color:var(--rot-d);font-weight:600;font-size:15px}
+.err:empty{display:none}
+
+/* Fuß */
+.foot{background:var(--ink);color:#C9CBCE;padding:28px 0 calc(96px + var(--sab));font-size:15px}
+.foot .wrap{display:flex;flex-direction:column;gap:14px}
+.foot .logo{width:140px;height:38px}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+.foot a{color:#fff}
+.foot .mini{color:#A9ADB2}
+
+/* Backend */
+body.bk{background:var(--hell)}
+.btop{position:sticky;top:0;z-index:40;background:var(--ink);color:#fff;padding-top:var(--sat)}
+.btop .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:60px}
+.btop .logo{width:118px;height:32px}
+.btop small{color:#C9CBCE;font-size:13px;text-align:right;line-height:1.25}
+.btop button{background:none;border:1px solid #555B62;color:#fff;border-radius:999px;min-height:40px;padding:0 12px;font-size:14px;font-weight:600}
+.btop .hb{display:inline-flex;align-items:center;gap:6px;border:1px solid #555B62;color:#fff;border-radius:999px;min-height:44px;min-width:44px;justify-content:center;padding:0 12px;font-size:14px;font-weight:600;text-decoration:none}.btop .hb svg{width:20px;height:20px}
+.btop .tr{display:flex;align-items:center;gap:8px}
+@media (max-width:480px){.btop .hb span{display:none}.btop .hb{padding:0}.btop .logo{width:92px;height:26px;flex:none}.btop small{font-size:12px}.btop .tr{gap:6px}.btop button{padding:0 10px}}
+.btabs{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#fff;border-top:1px solid var(--linie);display:flex;justify-content:center;padding-bottom:var(--sab)}
+.btabs a{flex:1;max-width:160px;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--grau);font-size:12px;font-weight:600;position:relative}
+.btabs a[aria-current=page]{color:var(--rot)}
+.btabs svg{width:22px;height:22px}
+.badge{position:absolute;top:6px;left:calc(50% + 6px);background:var(--rot);color:#fff;border-radius:999px;font-size:11px;min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+main.bm{padding-bottom:calc(150px + var(--sab))}
+.leer{color:var(--g2);text-align:center;padding:32px 12px;border:2px dashed #D6D3CC;border-radius:16px}
+.pb{display:flex;gap:10px;flex-wrap:wrap}
+.pb .btn{flex:1 1 140px}
+.st-ok{color:#1E6B35}.st-wait{color:#6B4500}
+.login{max-width:420px;margin:0 auto}
+.otp{letter-spacing:.4em;font-size:24px!important;text-align:center}
+
+/* Demo */
+.fab{position:fixed;right:16px;bottom:calc(16px + var(--sab));z-index:50;background:var(--ink);color:#fff;border:3px solid #fff;border-radius:999px;min-height:52px;padding:0 18px;font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px -8px rgba(0,0,0,.5)}
+body.bk .fab{bottom:calc(76px + var(--sab))}
+.fab{transition:transform .2s ease}
+body.fabhide .fab{transform:translateY(calc(100% + 100px))}
+.fab .dot{width:10px;height:10px;border-radius:50%;background:#FF5A55}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:71;background:#fff;border-radius:22px 22px 0 0;max-height:88vh;overflow-y:auto;transform:translateY(105%);transition:transform .25s ease;padding:10px 20px calc(20px + var(--sab));box-shadow:0 -10px 30px rgba(0,0,0,.2)}
+@media(min-width:700px){.sheet{left:auto;right:20px;bottom:20px;width:420px;border-radius:22px}}
+body.sopen .sheet{transform:none;visibility:visible}
+.sheet,.drawer{visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s}
+body.sopen .sheet,body.mopen .drawer{visibility:visible;transition:transform .25s ease,visibility 0s}
+body.sopen .scrim{opacity:1;pointer-events:auto}
+.grab{width:44px;height:5px;border-radius:3px;background:#D6D3CC;margin:0 auto 12px}
+.steps{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.step{display:grid;grid-template-columns:40px minmax(0,1fr);gap:2px 12px;border:2px solid var(--linie);border-radius:14px;padding:12px}
+.step .n{grid-row:span 3;width:40px;height:40px;border-radius:50%;background:var(--hell);display:flex;align-items:center;justify-content:center;font-weight:700}
+.step.on{border-color:var(--rot)}.step.on .n{background:var(--rot);color:#fff}
+.step.ok .n{background:#1E6B35;color:#fff}
+.step p{font-size:15px;color:var(--grau)}
+.step .btn{justify-self:start;margin-top:6px}
+.push{position:fixed;left:12px;right:12px;top:calc(10px + var(--sat));z-index:80;background:#fff;border-radius:16px;box-shadow:0 12px 32px -8px rgba(0,0,0,.35);padding:12px 14px;display:flex;gap:12px;align-items:center;transform:translateY(-140%);transition:transform .3s ease;text-decoration:none;color:var(--ink);max-width:520px;margin:0 auto}
+.push{visibility:hidden}
+.push.on{transform:none;visibility:visible}
+.push .ic{width:40px;height:40px;border-radius:10px;background:var(--rot);flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.toast{position:fixed;left:50%;bottom:calc(84px + var(--sab));transform:translate(-50%,20px);z-index:90;background:var(--ink);color:#fff;border-radius:12px;padding:12px 16px;font-size:15px;opacity:0;transition:.25s;pointer-events:none;width:max-content;max-width:calc(100vw - 32px)}
+body.bk .toast{bottom:calc(140px + var(--sab))}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.vg h3{margin-bottom:6px}
+.vg p{color:var(--grau)}
+.chk2{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.chk2 li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px}
+.chk2 svg{width:24px;height:24px;color:#7EE0A0}
+table{width:100%;border-collapse:collapse;font-size:16px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--linie);vertical-align:top}
+th{background:var(--hell)}
+@media(prefers-reduced-motion:reduce){.drawer,.sheet,.push,.toast,.scrim,.fab{transition:none}.neu{animation:none}}
+</style>
+</head>
+<body>
+<a class="sr" href="#main" id="skip">Zum Inhalt</a>
+<div id="chrome"></div>
+<main id="main" tabindex="-1"></main>
+<div id="footer"></div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Menü" aria-hidden="true" inert>
+  <div class="dh"><span class="logo" style="width:130px;height:36px" role="img" aria-label="Feuerwehr Piflas"></span><button class="ib" data-act="menu-close" aria-label="Menü schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <nav id="mnav" aria-label="Hauptmenü"></nav>
+  <div class="foot" style="background:none;color:var(--ink);padding-bottom:0"><a class="btn o" href="#login" style="color:var(--ink)">Login für Mitglieder</a></div>
+</aside>
+
+<button class="fab" id="fab" data-act="sheet-open" aria-haspopup="dialog"><span class="dot" aria-hidden="true"></span>Demo</button>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-t" aria-hidden="true" inert>
+  <div class="grab" aria-hidden="true"></div>
+  <div class="sh"><h2 id="sheet-t" style="font-size:28px">Demo-Steuerung</h2><button class="ib" data-act="sheet-close" aria-label="Demo-Steuerung schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <p class="mini" style="margin-top:4px">Nur für die Vorführung – gehört nicht zur echten Website. Alle Inhalte sind Beispiele.</p>
+  <div class="steps" id="steps"></div>
+  <div class="row2"><button class="btn o sm" data-act="reset">Zurücksetzen</button></div>
+</section>
+
+<a class="push" id="push" href="#redaktion"><span class="ic" aria-hidden="true">D</span><span><b style="display:block;font-size:15px">DIVERA 24/7 · Website</b><span style="font-size:14px" id="pushtxt">Neuer Einsatzbericht wartet auf Freigabe</span></span></a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* Referenz-Demo Website Feuerwehr Piflas – statisch, ohne Server und ohne Datenbank.
+   Aufbau dieser Datei (Suchbegriffe):
+   1. Daten:      BASE_E (Einsätze), NEWS, TERMINE, JUB, FZ/GER, TIPS, IGF, fresh() = Startzustand S
+   2. Rollen:     ROLES, RL, canEdit/isAdm (Rechte für Bearbeiten, Ausblenden, Löschen – Lastenheft B-14 bis B-16)
+   3. Bausteine:  esc() für JEDE Benutzereingabe, f(), sec(), eRow/tRow/tile
+   4. Seiten:     V.<route> öffentlich (start, aktuelles …) und Mitgliederbereich (redaktion, beitraege …)
+   5. Ablauf:     render() je Hash-Route, click-Handler (data-act), submit-Handler (Formular-IDs f-…)
+   Regeln: Du-Form, N-13, keine externen Anfragen. Nach jeder Änderung build.py und test_app.py ausführen. */
+{
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const I = {
+  menu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  img:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 8"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v16H6.5A2.5 2.5 0 0 0 4 21.5"/><path d="M20 19v3H6.5"/></svg>',
+  ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+  bulb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+  doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4zM8 9h8M8 13h8M8 17h5"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M9 3v5M15 3v5"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+  ppl:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>'
+};
+/*IMGDATA*/
+const IMG0 = {...IMG};
+const PH_DEL = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="#E9E7E2"/><text x="200" y="158" font-family="sans-serif" font-size="22" fill="#6B6E73" text-anchor="middle">Foto entfernt</text></svg>');
+const loadImg = file => new Promise((res, rej) => {
+  if (!file || !/^image\//.test(file.type)) return rej(new Error('kein Bild'));
+  const url = URL.createObjectURL(file), im = new Image();
+  im.onload = () => { const k = Math.min(1, 1600 / Math.max(im.naturalWidth, im.naturalHeight)); const c = document.createElement('canvas');
+    c.width = Math.round(im.naturalWidth * k); c.height = Math.round(im.naturalHeight * k); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', 0.82)); };
+  im.onerror = () => { URL.revokeObjectURL(url); rej(new Error('nicht lesbar')); }; im.src = url; });
+const TIPS = [
+  {m:[11], t:'Bürgertipp im Dezember', x:'Adventskranz nie unbeaufsichtigt brennen lassen – trockenes Reisig brennt in Sekunden.'},
+  {m:[0], t:'Bürgertipp im Januar', x:'Asche aus Kamin und Ofen erst vollständig abgekühlt in einem Metalleimer entsorgen – nie in die Mülltonne.'},
+  {m:[1], t:'Bürgertipp im Februar', x:'Rauchmelder testen: Einmal im Jahr den Prüfknopf drücken und die Batterie kontrollieren.'},
+  {m:[2,3], t:'Bürgertipp im Frühjahr', x:'Grillsaison startet: Grill standsicher aufstellen, nie mit Spiritus anzünden und Kinder fernhalten.'},
+  {m:[4,5], t:'Bürgertipp: Gewitter und Unwetter', x:'Bei Unwetterwarnung Gartenmöbel sichern, Keller und Tiefgarage meiden und Warn-Apps wie NINA einschalten.'},
+  {m:[6,7], t:'Bürgertipp: Trockenheit und Waldbrandgefahr', x:'Bei Trockenheit kein offenes Feuer im Freien, keine Zigaretten wegwerfen und Autos nicht auf trockenem Gras abstellen.'},
+  {m:[8,9], t:'Bürgertipp: Herbststürme', x:'Bei Sturm Wälder und Alleen meiden, lose Gegenstände sichern und auf herabfallende Äste achten.'},
+  {m:[10], t:'Bürgertipp im November', x:'Die Heizsaison läuft: Abstand zwischen Heizgeräten und Vorhängen, Möbeln oder Wäsche halten.'}];
+const tipNow = () => { const st = S.settings; if (st.sonderOn && st.sonderT && (!st.sonderBis || today() <= new Date(st.sonderBis + 'T23:59:59'))) return {t: st.sonderT, x: st.sonderX, sonder: true};
+  const m = today().getMonth(); const t = TIPS.find(z => z.m.includes(m)); return {t: t.t, x: t.x}; };
+const nthThu = (y, mo, n) => { const d = new Date(y, mo, 1, 11); const off = (4 - d.getDay() + 7) % 7; d.setDate(1 + off + 7 * (n - 1)); return d; };
+const WARNTAGE = () => { const y = today().getFullYear(); const L = [];
+  [y, y + 1].forEach(j => { L.push({d: nthThu(j, 2, 2), t:'Landesweiter Probealarm in Bayern', k:'Probealarm'}); L.push({d: nthThu(j, 8, 2), t:'Bundesweiter Warntag', k:'Warntag'}); });
+  const now = today(); return L.filter(w => new Date(w.d.getFullYear(), w.d.getMonth(), w.d.getDate(), 23, 59) >= now).sort((a, b) => a.d - b.d); };
+const WT = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+const MONL = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const dLang = d => `${WT[d.getDay()]}, ${d.getDate()}. ${MONL[d.getMonth()]} ${d.getFullYear()}`;
+const warnBand = () => { if (S.settings.warnOn === false) return ''; const w = WARNTAGE()[0]; if (!w) return '';
+  const days = Math.ceil((new Date(w.d.getFullYear(), w.d.getMonth(), w.d.getDate()) - new Date(today().getFullYear(), today().getMonth(), today().getDate())) / 864e5);
+  if (days > 14 || days < 0) return '';
+  return sec(`<a class="warnb" id="warn-band" href="#buerger"><span class="wi" aria-hidden="true">${I.bell}</span><span><b>${days === 0 ? 'Heute' : days === 1 ? 'Morgen' : dLang(w.d)}, 11 Uhr: ${w.t}</b><span>Sirenen, Warn-Apps und Handys schlagen Alarm – es ist nur ein Test, kein Grund zur Sorge. Gegen 11:45 Uhr folgt die Entwarnung.</span><span class="more">Was die Signale bedeuten</span></span></a>`); };
+const MON = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+const ART = {thl:['THL','Technische Hilfeleistung'], brand:['Brand','Brand'], bma:['BMA','Brandmeldeanlage'], unw:['Unwetter','Unwetter']};
+
+const BASE_E = [
+  {id:1,y:2026,d:'12.11.',typ:'thl',t:'Verkehrsunfall, Ergolding',z:'17:45',fz:'LF 8/6',txt:'Wir sicherten die Unfallstelle ab, unterstützten den Rettungsdienst und banden auslaufende Betriebsstoffe.'},
+  {id:2,y:2026,d:'03.11.',typ:'brand',t:'Kaminbrand, Piflas',z:'20:15',fz:'LF 8/6',txt:'Gemeinsam mit dem Kaminkehrer kontrollierten wir den Kamin und überwachten die Brandstelle.'},
+  {id:3,y:2026,d:'28.10.',typ:'bma',t:'Brandmeldeanlage, Ergolding',z:'06:30',fz:'LF 8/6',txt:'Kein Brand. Die Anlage wurde nach Erkundung an den Betreiber übergeben.'},
+  {id:4,y:2026,d:'19.10.',typ:'unw',t:'Baum auf Fahrbahn, Piflas',z:'22:00',fz:'LF 8/6, Mehrzweckanhänger',txt:'Ein umgestürzter Baum wurde mit der Motorsäge zerkleinert und die Straße geräumt.'},
+  {id:5,y:2026,d:'07.10.',typ:'thl',t:'Unterstützung Rettungsdienst, Ergolding',z:'14:30',fz:'LF 8/6',txt:'Wir unterstützten den Rettungsdienst.'},
+  {id:6,y:2025,d:'21.12.',typ:'brand',t:'Adventskranz in Brand, Piflas',z:'18:45',fz:'LF 8/6',txt:'Der Brand war beim Eintreffen bereits gelöscht. Wir führten Nachlöscharbeiten durch.'},
+  {id:7,y:2025,d:'02.08.',typ:'unw',t:'Wasser im Keller, Ergolding',z:'23:15',fz:'LF 8/6, Mehrzweckanhänger',txt:'Nach Starkregen pumpten wir einen Keller aus.'}
+];
+const NEWS = [
+  {id:'a1', by:'Max Mustermann', cat:'Übung', d:'Übung', t:'Technische Hilfeleistung: Befreiung aus dem Pkw', img:'thl', alt:'Übungsfahrzeug nach Entfernen von Türen und B-Säule, im Hintergrund Einsatzkräfte', txt:'Mit Rettungsschere und Spreizer üben wir, eingeklemmte Personen schonend aus einem Fahrzeug zu befreien.',
+   body:['Bei einem Verkehrsunfall zählt jede Minute – und jeder Handgriff muss sitzen. Deshalb üben wir die Technische Hilfeleistung regelmäßig an Altfahrzeugen.','Dabei werden Türen und Dachsäulen mit hydraulischem Rettungsgerät entfernt, damit Verletzte schonend und achsgerecht gerettet werden können. Das Fahrzeug wird vorher mit Holzklötzen gesichert.','Lust, selbst einmal mit anzupacken? Komm einfach zu einem Übungsabend vorbei.']},
+  {id:'a2', by:'Jonas Beispiel', cat:'Verein', d:'15.09.', t:'Dorffest 2026: Danke an alle Gäste!', ph:'Foto vom Dorffest folgt', txt:'Nach dem Gottesdienst feierten zahlreiche Gäste mit uns am Feuerwehrhaus.',
+   body:['Am Sonntag, 13. September, feierten wir unser traditionelles Dorffest am Feuerwehrhaus Piflas. Nach dem Gottesdienst um 10:30 Uhr ging es ab 11:30 Uhr mit dem Fest weiter.','Ein herzliches Dankeschön an alle Gäste, Helferinnen und Helfer! [Weitere Details folgen]']},
+  {id:'a3', by:'Jonas Beispiel', cat:'Verein', d:'[Datum]', t:'Steckerlfisch-Grillen am Feuerwehrhaus', ph:'Foto vom Steckerlfisch-Grillen folgt', txt:'Frisch vom Grill: Unser Steckerlfisch-Grillen war wieder ein voller Erfolg.',
+   body:['[Text zum Steckerlfisch-Grillen folgt: Datum, Anzahl Fische, Dank an das Grillteam und alle, die geholfen haben.]']},
+  {id:'a4', by:'Erika Musterfrau', cat:'Ausbildung', d:'02.09.', t:'Neue Atemschutzgeräteträger ausgebildet', ph:'Foto vom Lehrgang folgt', txt:'Drei Mitglieder unserer Wehr haben den Lehrgang erfolgreich abgeschlossen.', body:['Drei Mitglieder unserer Wehr haben den Atemschutz-Lehrgang erfolgreich abgeschlossen. Herzlichen Glückwunsch!']}
+];
+const TERMINE = [
+  {d:25,m:10,y:2026,t:'Übung Technische Hilfeleistung',o:'19:30 Uhr · Gerätehaus',k:'Übung',priv:false},
+  {d:27,m:10,y:2026,t:'Besprechung Führungskräfte',o:'19:00 Uhr',k:'Intern',priv:true},
+  {d:28,m:10,y:2026,t:'Jugendfeuerwehr: Gruppenstunde',o:'18:00 Uhr · Gerätehaus',k:'Jugend',priv:false},
+  {d:6,m:11,y:2026,t:'Christbaumversteigerung',o:'Uhrzeit folgt · Gerätehaus',k:'Verein',priv:false},
+  {d:9,m:11,y:2026,t:'Übung Atemschutz',o:'19:30 Uhr · Gerätehaus',k:'Übung',priv:false},
+  {d:17,m:0,y:2027,t:'Jahreshauptversammlung',o:'Ort und Uhrzeit folgen',k:'Verein',priv:false}
+];
+const SYNC = [
+  {d:29,m:10,y:2026,t:'Glühweinstand zum 1. Advent',o:'ab 16:00 Uhr · Gerätehaus',k:'Verein',priv:false,neu:true},
+  {d:15,m:11,y:2026,t:'Dienstplan-Abstimmung Maschinisten',o:'20:00 Uhr',k:'Intern',priv:true}
+];
+const tKey = t => t.y * 10000 + t.m * 100 + t.d;
+const JUB = {
+  founded: 1902, start: new Date(2026, 9, 1), end: new Date(2027, 11, 31, 23, 59, 59),
+  events: [
+    {id:'j1', d:17, m:3, y:2027, t:'Jubiläums-Steckerlfisch-Grillen', o:'Uhrzeit folgt · Gerätehaus', txt:'Auftakt ins Festjahr – mit Steckerlfisch frisch vom Grill.'},
+    {id:'j2', d:12, m:5, y:2027, t:'Kuppelcup', o:'Uhrzeit folgt · Gerätehaus', txt:'Mannschaften aus der Region treten gegeneinander an. Details folgen.'},
+    {id:'j3', d:18, m:6, y:2027, t:'Tag der offenen Tür', o:'Uhrzeit folgt · Gerätehaus', txt:'Fahrzeuge, Technik und Vorführungen zum Anfassen – für die ganze Familie.'},
+    {id:'j4', d:12, m:8, y:2027, t:'Jubiläums-Dorffest', o:'Gottesdienst und Fest · Gerätehaus', txt:'Höhepunkt des Festjahres am Feuerwehrhaus.'}
+  ]
+};
+const tDate = t => new Date(t.y, t.m, t.d, 23, 59);
+const today = () => S.today || new Date();
+const jubEnd = () => (S.settings && S.settings.jubEnd) ? new Date(S.settings.jubEnd + 'T23:59:59') : JUB.end;
+const jubActive = () => (!S.settings || S.settings.jubOn) && today() >= JUB.start && today() <= jubEnd();
+const jubOver = () => today() > jubEnd();
+const PARTNER = () => [['Freiwillige Feuerwehr Ergolding', S.settings.pE], ['Freiwillige Feuerwehr Oberglaim', S.settings.pO]];
+const pLink = ([n,u], cls) => u ? `<a class="${cls||''}" href="${esc(u)}" rel="noopener" target="_blank">${esc(n)}</a>` : `<span class="${cls||''}">${esc(n)} <small>(Link folgt)</small></span>`;
+const jubNext = () => JUB.events.find(e => tDate(e) >= today());
+const daysTo = t => Math.max(0, Math.ceil((new Date(t.y, t.m, t.d) - new Date(today().getFullYear(), today().getMonth(), today().getDate())) / 864e5));
+const dmy = t => `${String(t.d).padStart(2,'0')}.${String(t.m+1).padStart(2,'0')}.${t.y}`;
+const jubReports = () => JUB.events.filter(e => tDate(e) < today()).reverse().map(e => ({id:'r' + e.id, cat:'125 Jahre', d:`${String(e.d).padStart(2,'0')}.${String(e.m+1).padStart(2,'0')}.`, t:'Rückblick: ' + e.t, ph:'Fotos folgen nach der Veranstaltung', txt:'So war unser ' + e.t + ' im Jubiläumsjahr.', body:['[Bericht und Fotos werden nach der Veranstaltung ergänzt.]']}));
+const allNews = () => jubReports().concat(S.news.filter(n => !n.hid));
+const pubE = () => S.einsaetze.filter(e => !e.hid);
+const pubT = () => S.termine.filter(t => !t.priv && tDate(t) >= today() && (!t.jub || jubActive())).sort((a, b) => tKey(a) - tKey(b));
+const ALARME = [
+  {typ:'thl',t:'Ölspur, Ergolding',fz:'LF 8/6'},
+  {typ:'unw',t:'Wasser im Keller, Piflas',fz:'LF 8/6, Mehrzweckanhänger'},
+  {typ:'brand',t:'Mülltonnenbrand, Piflas',fz:'LF 8/6'}
+];
+
+const FZ = [
+  {img:'fz_wlf', n:'Wechselladerfahrzeug mit Kran (MAN)', d:'Florian Piflas 36/1 · [Fahrzeugtyp] · Ladekran und Abrollbehälter', alt:'Neues Wechselladerfahrzeug von MAN mit Ladekran, Aufschrift Piflas 36/1', neu:true},
+  {img:'fz_man', n:'Löschfahrzeug (MAN, Aufbau Ziegler)', d:'[Fahrzeugtyp und Funkrufname] · u. a. Hydraulik-Rettungsgerät und Tragkraftspritze', alt:'Rotes Löschfahrzeug von MAN mit Aufbau von Ziegler, Geräteraum geöffnet'},
+  {img:'fz_magirus', n:'Löschgruppenfahrzeug (Iveco Magirus)', d:'[Fahrzeugtyp und Funkrufname] · Heckpumpe, Stromerzeuger, Hitzeschutz', alt:'Rotes Löschgruppenfahrzeug von Iveco Magirus in der Seitenansicht'},
+  {img:'fz_561', n:'Florian Piflas 56/1 (Aufbau Ziegler)', d:'[Fahrzeugtyp] · Schlauchmaterial und Logistik', alt:'Heckansicht des Fahrzeugs 56/1 mit rot-weißer Warnmarkierung'},
+  {img:'fz_mtw', n:'Florian Piflas 11/1 (VW Crafter)', d:'[Fahrzeugtyp] · Mannschaftstransport', alt:'Roter VW Crafter mit Aufschrift Piflas 11/1'}
+];
+const GER = [
+  ['g_ultrapower','Hydraulik-Aggregat für Rettungsschere und Spreizer','Hydraulik-Aggregat im Geräteraum des MAN-Fahrzeugs'],
+  ['g_pumpe','Feuerlöschkreiselpumpe (Heck)','Bedienstand der Heckpumpe'],
+  ['g_stromerzeuger','Stromerzeuger','Tragbarer Stromerzeuger im Geräteraum'],
+  ['g_hitzeschutz','Hitzeschutzkleidung','Einsatzkraft in silberner Hitzeschutzkleidung vor dem Fahrzeug'],
+  ['g_schlauch','Schläuche und Verteiler','Geräteraum mit Schläuchen und Verteilern'],
+  ['g_armaturen','Armaturen und Strahlrohre','Auszug mit Armaturen, Kupplungen und Strahlrohren'],
+  ['g_saugkorb','Saugkorb und Saugschutz','Auszug mit Saugkorb und Armaturen'],
+  ['g_schnellangriff','Schnellangriff','Geräteraum mit Schnellangriffsschlauch und Armaturen'],
+  ['g_schlauchlager','Schlauchlager im Fahrzeug 56/1','Schlauchlager mit gelben Schläuchen im Fahrzeug 56/1']
+];
+let S;
+const fresh = () => ({
+  einsaetze: BASE_E.map(e => ({...e})), news: NEWS.map(n => ({...n})), posts: [], termine: TERMINE.map(t => ({...t})).concat(JUB.events.map(e => ({...e, k:'Jubiläum', priv:false, jub:true}))), synced: false, today: null, settings: {sonderOn:false, sonderT:'Hohe Waldbrandgefahr', sonderX:'Kein Feuer im Freien, nicht rauchen im Wald und Zufahrten für die Feuerwehr freihalten.', sonderBis:'', warnOn:true, jubOn:true, jubEnd:'2027-12-31', pE:'https://www.ff-ergolding.de/', pO:'https://oberglaim.feuerwehren.bayern/'}, health: {ig:'warn'},
+  queue: [{kind:'news', id:'n1', t:'Leistungsprüfung erfolgreich abgelegt', txt:'Unsere Gruppe hat die Leistungsprüfung „Die Gruppe im Löscheinsatz“ bestanden. Herzlichen Glückwunsch!', von:'Jonas Beispiel (Redaktion)', by:'Jonas Beispiel', ig:true}],
+  user: null, pending2fa: null, next: null, draft: [], uid: 1, mdel: null, gone: {}, edit: null, eedit: null, cdel: null, trash: [], year: 2026, tf: 'Alle', detail: null, neu: null, alarmNr: 0, step: 1, nid: 100,
+  members: [
+    {n:'Erika Musterfrau', m:'erika@beispiel.de', r:'Administrator', s:'Aktiv · 2FA eingerichtet', inv:false},
+    {n:'Max Mustermann', m:'max@beispiel.de', r:'Freigeber', s:'Aktiv · 2FA eingerichtet', inv:false},
+    {n:'Jonas Beispiel', m:'jonas@beispiel.de', r:'Autor', s:'Aktiv', inv:false},
+    {n:'Lena Probe', m:'lena@beispiel.de', r:'Bereich Jugend', s:'Eingeladen · läuft in 31 Std. ab', inv:true}
+  ],
+  plan: [
+    {d:'29.11.', t:'Gerät im Fokus: Hydraulisches Rettungsgerät', w:'Jonas Beispiel', s:'In Arbeit'},
+    {d:'06.12.', t:'Bürgertipp: Kerzen und Adventskranz', w:'Max Mustermann', s:'Idee'},
+    {d:'13.12.', t:'Jugendfeuerwehr: Jahresrückblick', w:'Lena Probe', s:'Idee'}
+  ]
+});
+S = fresh();
+const restoreImg = () => { Object.keys(IMG).forEach(k => { if (!(k in IMG0)) delete IMG[k]; }); Object.assign(IMG, IMG0); };
+
+const ROLES = {
+  'Freigeber': {label:'Kommandant · Freigabe', tabs:['redaktion','beitraege','planung']},
+  'Administrator': {label:'Admin', tabs:['redaktion','beitraege','planung','fotos','mitglieder','system']},
+  'Autor': {label:'Redaktion', tabs:['beitraege','planung']}
+};
+const RL = {Administrator:'Admin', Freigeber:'Kommandant · Freigabe', Autor:'Redaktion', 'Bereich Jugend':'Redaktion Jugend'};
+const PUB = [['start','Start'],['aktuelles','Aktuelles'],['einsaetze','Einsätze'],['termine','Termine'],['mitmachen','Mitmachen'],['foerdern','Fördermitglied werden'],['buerger','Bürgerinfos'],['fahrzeuge','Fahrzeuge & Technik'],['jugend','Jugendfeuerwehr'],['verein','Verein'],['partner','Partnerfeuerwehren']];
+const MENU = [['Aktuell', ['aktuelles','einsaetze','termine']], ['Mitmachen', ['mitmachen','jugend','foerdern']], ['Ratgeber', ['buerger']], ['Über uns', ['verein','fahrzeuge','partner']]];
+const MLAB = {mitmachen:'Aktiv mitmachen', verein:'Verein & Chronik'};
+const menuHtml = r => { const pl = Object.fromEntries(pubList()); const a = k => `<a href="#${k}"${r===k?' aria-current="page"':''}${k==='jubilaeum'?' class="jubnav"':''}>${MLAB[k] || pl[k]}</a>`;
+  return a('start') + (jubActive() ? a('jubilaeum') : '') + MENU.map(([g, ks]) => `<h3 class="mg">${g}</h3>${ks.map(a).join('')}`).join(''); };
+const pubList = () => jubActive() ? [PUB[0], ['jubilaeum','125 Jahre'], ...PUB.slice(1)] : PUB;
+const BACK = {redaktion:['Freigabe',I.check], beitraege:['Beiträge',I.doc], planung:['Planung',I.cal], fotos:['Fotos',I.img], mitglieder:['Mitglieder',I.ppl], system:['System',I.gear]};
+
+/* ---------- Bausteine ---------- */
+const route = () => (location.hash || '#start').slice(1);
+const tag = typ => `<span class="tag t-${typ}">${ART[typ][0]}</span>`;
+const eRow = (e, i) => `<button class="li${S.neu === e.id ? ' neu' : ''}" data-act="detail" data-id="${e.id}"><span class="dt">${e.d}</span><span>${tag(e.typ)}<b>${esc(e.t)}</b></span></button>`;
+const tRow = t => `<div class="li${t.neu && S.neu === 'termin' ? ' neu' : ''}${t.jub ? ' jubrow' : ''}"><span class="cal"><b>${String(t.d).padStart(2,'0')}</b><span>${MON[t.m]}</span></span><span>${t.jub ? '<span class="tag t-jub">125 Jahre</span> ' : ''}<b>${esc(t.t)}</b><span class="mini" style="font-size:15px">${esc(t.o)}</span></span></div>`;
+const f = (label, inner) => `<label class="f">${label}${inner}</label>`;
+const pubHead = r => `<header class="top"><div class="wrap"><a href="#start" aria-label="Feuerwehr Piflas – Startseite"><span class="logo" role="img" aria-label="Feuerwehr Piflas"></span></a>
+  <nav class="dnav" aria-label="Hauptmenü">${pubList().slice(1,6).map(([k,l]) => `<a href="#${k}"${r===k?' aria-current="page"':''}${k==='jubilaeum'?' class="jubnav"':''}>${l}</a>`).join('')}<a href="#login">Login</a></nav>
+  <div class="tr"><a class="n112p" href="tel:112" aria-label="Notruf 112 anrufen">Notruf 112</a><button class="ib menu" data-act="menu-open" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer">${I.menu}</button></div></div></header>`;
+const pubFoot = () => `<footer class="foot"><div class="wrap"><span class="logo w" role="img" aria-label="Feuerwehr Piflas"></span>
+  <span>Feuerwehr Piflas e.V.<br>Gartenstraße 2, 84030 Ergolding / Piflas<br>info@feuerwehr-piflas.de · 0871 1433372 (nicht ständig besetzt)</span>
+  <nav aria-label="Fußzeile"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a><a href="https://www.instagram.com/feuerwehrpiflas/">Instagram</a><a href="https://www.facebook.com/feuerwehrpiflas">Facebook</a><a href="#partner">Partnerfeuerwehren</a><a href="#login">Login für Mitglieder</a></nav>
+  <span class="mini">© 2026 Feuerwehr Piflas e.V. · Demo-Version mit Beispielinhalten · Fotos: Feuerwehr Piflas</span></div></footer>`;
+const backHead = () => `<header class="btop"><div class="wrap"><a href="#start" aria-label="Zur öffentlichen Website"><span class="logo w" role="img" aria-label="Feuerwehr Piflas"></span></a>
+  <div class="tr"><small>Angemeldet als<br><b style="color:#fff">${esc(S.user.name)} · ${esc(ROLES[S.user.role].label)}</b></small><a class="hb" id="hb-link" href="handbuch.pdf" target="_blank" rel="noopener" aria-label="Handbuch (PDF) öffnen">${I.book}<span>Handbuch</span></a><button data-act="logout">Abmelden</button></div></div></header>`;
+const backTabs = r => `<nav class="btabs" aria-label="Redaktion">${ROLES[S.user.role].tabs.map(k => `<a href="#${k}"${r===k?' aria-current="page"':''}>${BACK[k][1]}${BACK[k][0]}${k==='redaktion' && S.queue.length ? `<span class="badge">${S.queue.length}</span>` : ''}</a>`).join('')}</nav>`;
+const sec = (inner, cls='') => `<section class="band ${cls}"><div class="wrap stack">${inner}</div></section>`;
+
+/* ---------- Öffentliche Seiten ---------- */
+const V = {};
+const IGF = [
+  ['wlf_hoch','Neues Wechselladerfahrzeug mit Ladekran in der Abenddämmerung'],
+  ['thl','Übung Technische Hilfeleistung am Pkw'],
+  ['ig0','Geräteraum-Mittwoch: Löschfahrzeug von MAN'],
+  ['blau','Gerätehaus bei Nacht mit blau beleuchteten Fahrzeugen'],
+  ['ig3','Geräteraum-Mittwoch: Hitzeschutzkleidung und Stromerzeuger'],
+  ['ig2','Geräteraum-Mittwoch: Heckpumpe des Löschgruppenfahrzeugs'],
+  ['halle','Gerätehaus bei Nacht mit offenen Toren'],
+  ['ig5','Geräteraum-Mittwoch: Schlauchlager im Fahrzeug 56/1'],
+  ['ig1','Geräteraum-Mittwoch: Löschgruppenfahrzeug von Iveco Magirus']
+];
+const jubBand = () => { const n = jubNext(); return `<section class="band jub" id="jub-band"><div class="wrap jubg"><div class="seal" aria-hidden="true">125<small>Jahre</small></div><div class="stack">
+  <span style="font-weight:600;color:#6B4A00">${JUB.founded} – ${JUB.founded + 125}</span><h2>125 Jahre Feuerwehr Piflas – feier mit uns!</h2>
+  <p>Ein ganzes Jahr voller Veranstaltungen: Steckerlfisch-Grillen, Kuppelcup, Tag der offenen Tür, Dorffest und mehr.</p>
+  ${n ? `<div class="cd"><b class="big">${daysTo(n)}</b> Tage bis <b>${esc(n.t)}</b> am ${dmy(n)}</div>` : ''}
+  <a class="btn" href="#jubilaeum" style="align-self:flex-start">Alle Veranstaltungen</a></div></div></section>`; };
+const nextUebung = () => pubT().find(t => t.k === 'Übung');
+const tile = n => `<button data-act="article" data-id="${n.id}" aria-label="Artikel lesen: ${esc(n.t)}">${n.img ? `<img src="${IMG[n.img]}" alt="${esc(n.alt)}">` : `<span class="phx">Foto folgt</span>`}<span class="ov"><span class="tag ${n.cat === '125 Jahre' ? 't-jub' : 't-news'}">${esc(n.cat || 'Verein')}</span><b>${esc(n.t)}</b></span></button>`;
+V.start = () => {
+  const u = nextUebung();
+  return `
+<section class="hero"><div class="wrap">
+  <figure style="margin:0"><img class="pic" src="${IMG.halle}" alt="Gerätehaus der Feuerwehr Piflas bei Nacht, Tore offen, Einsatzfahrzeuge in der Halle"><figcaption class="cap">Unser Gerätehaus in der Gartenstraße</figcaption></figure>
+  <div class="stack">${jubActive() ? `<a class="jubchip" href="#jubilaeum">125 Jahre · Festjahr 2027</a>` : ''}<span class="k">Ortsfeuerwehr des Marktes Ergolding</span>
+  <h1>Für Piflas im Einsatz. Ehrenamtlich, rund um die Uhr.</h1>
+  <p class="l">Brände, Unfälle, Hochwasser: Wir sind da, wenn du uns brauchst. Und wir suchen Verstärkung – vielleicht dich?</p>
+  <div class="row2"><a class="btn" href="#mitmachen">Mitmachen</a><a class="btn o" href="#foerdern">Fördermitglied werden</a></div></div>
+</div></section>
+${sec(`<div class="k112"><a href="tel:112" aria-label="Notruf 112 anrufen">112</a><span><b>Im Notfall immer 112 wählen.</b> Die Integrierte Leitstelle alarmiert uns direkt. Das Gerätehaus ist nicht ständig besetzt.</span></div>`)}
+${warnBand()}
+${jubActive() ? jubBand() : ''}
+<div class="wrap grid" id="kurz" style="padding-top:12px;padding-bottom:8px">
+  <div class="stack"><div class="sh"><h2>Nächste Termine</h2><a href="#termine">Alle Termine</a></div><div class="list">${pubT().slice(0,3).map(tRow).join('')}</div></div>
+  <div class="stack"><div class="sh"><h2>Letzte Einsätze</h2><a href="#einsaetze">Alle Einsätze</a></div><div class="list">${pubE().slice(0,3).map(eRow).join('')}</div></div>
+</div>
+${sec(`<div class="sh"><h2>Aus dem Vereinsleben</h2><a href="#aktuelles">Alle Berichte</a></div><div class="mosaic">${allNews().slice(0,3).map(tile).join('')}</div>`)}
+<section class="band mit" id="mitmach"><div class="wrap stack">
+  <h2>Mach mit – wir suchen dich!</h2>
+  <p style="font-size:18px">Keine Vorkenntnisse nötig, wir bilden dich aus. Such dir aus, wie du dabei sein willst:</p>
+  <div class="opts">
+    <a href="#mitmachen"><b>Aktiv im Einsatzdienst</b><span>Helfen, wenn es darauf ankommt</span></a>
+    <a href="#jugend"><b>Jugendfeuerwehr</b><span>Technik, Teamgeist und Spaß</span></a>
+    <a href="#foerdern"><b>Fördermitglied</b><span>Unterstützen ohne Einsatzdienst – Beitrittserklärung als PDF</span></a>
+  </div>
+  <form class="card" id="f-quick" novalidate style="max-width:640px"><h3>In 30 Sekunden melden – wir rufen dich an</h3>
+    ${f('Dein Name', '<input name="name" required autocomplete="name">')}
+    ${f('Telefon oder E-Mail', '<input name="kontakt" required autocomplete="tel">')}
+    ${f('Interesse', '<select name="int"><option>Aktiv mitmachen</option><option>Jugendfeuerwehr</option><option>Fördermitglied</option><option>Erst mal reinschnuppern</option></select>')}
+    <label class="chk"><input type="checkbox" name="ds" required><span class="ct">Ich habe die <a href="#datenschutz">Datenschutzhinweise</a> gelesen.</span></label>
+    <p class="err" id="e-quick"></p><button class="btn" type="submit">Ich bin interessiert</button></form>
+  ${u ? `<div class="vorbei"><b>Oder komm einfach vorbei:</b> Nächster Übungsabend am ${String(u.d).padStart(2,'0')}. ${MON[u.m]}, ${esc(u.o)}, Gartenstraße 2.</div>` : ''}
+</div></section>
+${(tp => sec(`<a class="tip${tp.sonder ? ' sonder' : ''}" id="tip" href="#buerger">${tp.sonder ? I.bell : I.bulb}<span><b style="display:block;font-size:15px">${esc(tp.t)}</b><span style="font-size:18px;font-weight:600" id="tip-text">${esc(tp.x)}</span><span style="display:block;margin-top:6px;font-weight:600;color:var(--rot-d)">Mehr Bürgerinfos</span></span></a>`))(tipNow())}
+${sec(`<div class="sh"><h2>Instagram</h2><a href="https://www.instagram.com/feuerwehrpiflas/">@feuerwehrpiflas</a></div><div class="ig">${S.posts.slice(0,9).map(p => `<div class="post">${esc(p)}<br>neu</div>`).join('')}${IGF.slice(0, Math.max(0,9-S.posts.length)).map(([k,a]) => `<div class="im"><img src="${IMG[k]}" alt="${esc(a)}"></div>`).join('')}</div><a class="btn o sm" href="https://www.instagram.com/feuerwehrpiflas/" style="align-self:flex-start">Auf Instagram folgen</a>`)}`;
+};
+
+V.jubilaeum = () => {
+  const n = jubNext(); const reps = jubReports().map(r => r.id);
+  return `<section class="band jub"><div class="wrap jubg"><div class="seal" aria-hidden="true">125<small>Jahre</small></div><div class="stack">
+    <span style="font-weight:600;color:#6B4A00">${JUB.founded} – ${JUB.founded + 125}</span><h1>125 Jahre Feuerwehr Piflas</h1>
+    <p style="font-size:18px">Seit ${JUB.founded} sind wir für Piflas da. Das feiern wir 2027 mit einer einmaligen Veranstaltungsreihe – und mit dir.</p>
+    ${n ? `<div class="cd"><b class="big">${daysTo(n)}</b> Tage bis <b>${esc(n.t)}</b> am ${dmy(n)}</div>` : ''}</div></div></section>
+  ${sec(`<h2>Das Festjahr ${JUB.founded + 125}</h2><ol class="tl">${JUB.events.map(e => { const past = tDate(e) < today(); return `<li class="${past ? 'past' : ''}${n && n.id === e.id ? ' nx' : ''}"><span class="cal"><b>${String(e.d).padStart(2,'0')}</b><span>${MON[e.m]}</span></span><span class="stack" style="gap:6px"><span>${past ? '<span class="tag t-bma">vorbei</span>' : (n && n.id === e.id ? '<span class="tag t-jub">als Nächstes</span>' : '')}</span><h3>${esc(e.t)}</h3><span class="mini" style="font-size:15px">${esc(e.o)}</span><p>${esc(e.txt)}</p>${past ? `<button class="btn o sm" data-act="article" data-id="r${e.id}" style="align-self:flex-start;color:var(--ink)">Rückblick lesen</button>` : `<button class="btn dk sm" data-act="vormerken" data-t="${esc(e.t)}" style="align-self:flex-start">Termin vormerken</button>`}</span></li>`; }).join('')}<li><span class="cal"><b>+</b><span>mehr</span></span><span><h3>Weitere Veranstaltungen folgen</h3><p class="mini" style="font-size:15px">Alle Termine erscheinen automatisch aus DIVERA (Kategorie „Jubiläum“).</p></span></li></ol>
+    <span class="mini">Beispieltermine für die Vorführung – die echten Daten trägt der Verein in DIVERA ein.</span>`)}
+  ${sec(`<div class="tip" style="background:#FBEAEA"><span><b style="display:block;font-size:18px">Hilf mit beim Jubiläum!</b>Für unsere Feste brauchen wir viele helfende Hände – an Grill, Kasse und Aufbau. <a href="#mitmachen">Jetzt melden</a> oder <a href="#foerdern">Fördermitglied werden</a>.</span></div><p class="mini" id="foto-hinweis" style="font-size:14px">Hinweis: Bei unseren Veranstaltungen wird fotografiert. Die Bilder können auf dieser Website und auf Instagram erscheinen. Wenn du nicht abgebildet werden möchtest, sprich unser Team an. Mehr dazu im <a href="#datenschutz">Datenschutz</a>.</p><a href="#verein">Zur Chronik des Vereins</a>`)}`;
+};
+
+V.aktuelles = () => {
+  let a = S.article && allNews().find(n => n.id === S.article);
+  const pq = !a && S.article && S.user && S.queue.find(q => q.id === S.article && q.kind === 'news');
+  if (pq) a = {...pq, d:'Entwurf', body:[pq.txt], img:(pq.imgs || [])[0], ph:'Foto folgt', preview:true};
+  if (a) return sec(`<div class="row2"><button class="btn o sm" data-act="article-close" style="align-self:flex-start">← Alle Berichte</button>${S.user ? '<a class="btn o sm" href="#beitraege" style="color:var(--ink)">Zur Redaktion</a>' : ''}${S.user && !a.preview && S.news.includes(S.news.find(n => n.id === a.id)) && canEdit(a) ? `<button class="btn o sm" data-act="edit" data-id="${a.id}" style="color:var(--ink)">Bearbeiten</button>` : ''}</div>
+    ${a.preview ? `<div class="stat" id="vorschau" style="font-size:16px"><b>Vorschau – noch nicht öffentlich.</b> ${a.of ? 'Deine Änderung wartet auf die Freigabe durch den Kommandanten. Bis dahin bleibt die bisherige Fassung online.' : 'Dein Beitrag wartet auf die Freigabe durch den Kommandanten.'}</div>` : ''}
+    ${a.img ? `<img class="pic" src="${IMG[a.img]}" alt="${esc(a.alt)}" style="aspect-ratio:16/9">` : `<div class="ph" style="background:#E9E7E2;color:var(--g2);border-color:#C9C6BF">${esc(a.ph || 'Foto folgt')}</div>`}
+    <div><span class="tag t-news">${esc(a.cat || 'Verein')}</span> <span class="mini">${esc(a.d)}</span></div><h1 style="font-size:40px">${esc(a.t)}</h1>
+    ${(a.body || [a.txt]).map(p => `<p>${esc(p)}</p>`).join('')}
+    ${(a.imgs || []).length > 1 ? `<div class="gal">${a.imgs.slice(1).map((k, i) => `<img src="${IMG[k]}" alt="${esc((a.alt || a.t) + ' – Foto ' + (i + 2))}">`).join('')}</div>` : ''}
+    <div class="tip" style="background:#FBEAEA"><span><b style="display:block">Lust, dabei zu sein?</b>Wir freuen uns über jede helfende Hand. <a href="#mitmachen">Jetzt mitmachen</a></span></div>`);
+  return sec(`<h1>Aktuelles</h1><p>Berichte aus Übungen, Ausbildung und Vereinsleben.</p><div class="nk">${allNews().map(n => `<article class="${S.neu===n.t?'neu':''}">${n.img ? `<img src="${IMG[n.img]}" alt="${esc(n.alt)}">` : `<div class="ph" style="border-radius:0;aspect-ratio:16/9;min-height:0">${esc(n.ph || 'Foto folgt')}</div>`}<div class="b"><span><span class="tag t-news">${esc(n.cat || 'Verein')}</span> <span class="mini">${esc(n.d)}</span></span><h3>${esc(n.t)}</h3><p style="color:var(--grau)">${esc(n.txt)}</p><button class="btn o sm" data-act="article" data-id="${n.id}" style="align-self:flex-start;color:var(--ink)">Weiterlesen</button></div></article>`).join('')}</div>`);
+};
+
+V.einsaetze = () => {
+  if (S.detail) {
+    const e = pubE().find(x => x.id === S.detail);
+    if (e) return sec(`<button class="btn o sm" data-act="detail-close" style="align-self:flex-start">← Alle Einsätze</button>
+      ${e.typ === 'thl' ? `<figure style="margin:0"><img class="pic" src="${IMG.thl}" alt="Übungsfahrzeug nach Entfernen von Türen und B-Säule" style="aspect-ratio:16/9"><figcaption class="cap">Symbolfoto aus einer Übung</figcaption></figure>` : `<div class="ph" style="min-height:180px;background:#E9E7E2;color:var(--g2);border-color:#C9C6BF">Einsatzfoto (ohne Personen und Kennzeichen)</div>`}
+      <div>${tag(e.typ)}</div><h1 style="font-size:40px">${esc(e.t)}</h1>
+      <div class="kv"><span>Datum</span><b>${e.d}${e.y}</b><span>Alarm</span><b>${e.z} Uhr (gerundet)</b><span>Einsatzart</span><b>${ART[e.typ][1]}</b><span>Fahrzeuge</span><b>${esc(e.fz)}</b></div>
+      <p>${esc(e.txt)}</p><span class="mini">Beispielinhalt</span>`);
+  }
+  const list = pubE().filter(e => e.y === S.year);
+  const c = {thl:0,brand:0,bma:0,unw:0}; list.forEach(e => c[e.typ]++);
+  const max = Math.max(1, ...Object.values(c));
+  const col = {thl:'#1D4F8C',brand:'#CD1719',bma:'#6B7178',unw:'#1E6B35'};
+  return sec(`<h1>Einsätze</h1>
+    <div class="chips" role="group" aria-label="Jahr wählen">${[2026,2025].map(y => `<button class="chip" data-act="year" data-y="${y}" aria-pressed="${S.year===y}">${y}</button>`).join('')}</div>
+    <div class="stat"><div><span class="num">${list.length}</span> <b>Einsätze ${S.year}</b> <span class="mini">(Beispiel)</span></div>
+      <div class="bars">${Object.keys(c).map(k => `<span>${ART[k][1].replace('Technische ','Techn. ')}</span><i style="background:${col[k]};width:${c[k]/max*100}%"></i><b>${c[k]}</b>`).join('')}</div></div>
+    <div class="list">${list.map(eRow).join('') || '<p class="leer">Keine Einsätze in diesem Jahr.</p>'}</div>
+    <span class="mini">Uhrzeit auf Viertelstunden gerundet, Ort nur als Ortsteil. Tippen für Details.</span>`);
+};
+
+V.termine = () => {
+  const ks = ['Alle','Übung','Jugend','Verein'].concat(jubActive() ? ['Jubiläum'] : []);
+  const list = pubT().filter(t => S.tf === 'Alle' || t.k === S.tf);
+  return sec(`<h1>Termine</h1><p>Alle nicht-privaten Termine kommen automatisch aus DIVERA 24/7. Private Termine werden nicht übernommen.</p>
+    <div class="chips" role="group" aria-label="Kategorie">${ks.map(k => `<button class="chip" data-act="tf" data-k="${k}" aria-pressed="${S.tf===k}">${k}</button>`).join('')}</div>
+    <div class="list">${list.map(tRow).join('')}</div>
+    <button class="btn o sm" data-act="ical" style="align-self:flex-start">Kalender abonnieren</button><span class="mini">Beispieltermine</span>`);
+};
+
+V.buerger = () => sec(`<h1>Bürgerinfos</h1><p>Was du im Notfall wissen solltest – und wie Brände gar nicht erst entstehen.</p>
+  <div class="alert"><h2 style="font-size:28px">Notruf 112 richtig absetzen</h2><ol><li><b>Wo</b> ist es passiert? Ort, Straße, Hausnummer</li><li><b>Was</b> ist passiert?</li><li><b>Wie viele</b> Verletzte oder Betroffene?</li><li><b>Welche</b> Verletzungen oder Gefahren?</li><li><b>Warten</b> auf Rückfragen – nicht selbst auflegen.</li></ol></div>
+  <div class="grid">
+    <div class="card"><h3>Gewarnt sein</h3><p>Installiere eine Warn-App wie NINA. Sirene 1 Minute auf- und abschwellend: Warnung. 1 Minute Dauerton: Entwarnung.</p><a href="#buerger">Hochwasser: aktuelle Pegel der Isar</a></div>
+    <div class="card"><h3>Rauchmelder retten Leben</h3><p>In Bayern Pflicht in Schlafräumen, Kinderzimmern und Fluren dorthin. Mittig an der Decke montieren, einmal im Jahr testen.</p></div>
+    <div class="card"><h3>Rettungsgasse</h3><p>Bei Stau auf mehrspurigen Straßen: ganz links nach links, alle anderen nach rechts – schon bevor Einsatzfahrzeuge kommen.</p></div>
+    ${(tp => `<div class="card" id="tip-buerger" style="background:${tp.sonder ? '#FBEAEA' : '#FFF6DB'};border-color:${tp.sonder ? '#F1C4C4' : '#F3E3B0'}"><h3>${esc(tp.t)}</h3><p>${esc(tp.x)}</p></div>`)(tipNow())}
+  </div>
+  <div class="card" id="warntage"><h2 style="font-size:26px">Warntage und Probealarm</h2>
+    <p>Zweimal im Jahr werden die Warnsysteme getestet – jeweils um 11 Uhr. Dann heulen vielerorts die Sirenen, Handys melden sich per Cell Broadcast, Warn-Apps wie NINA zeigen eine Probewarnung. Es ist nur ein Test.</p>
+    <div class="list">${WARNTAGE().slice(0, 2).map(w => `<div class="li"><span class="dt">${p2(w.d.getDate())}.${p2(w.d.getMonth() + 1)}.</span><span><b>${w.t}</b><small style="display:block;color:var(--grau)">${dLang(w.d)}, 11 Uhr${w.k === 'Probealarm' ? ' · jedes Jahr am 2. Donnerstag im März' : ' · jedes Jahr am 2. Donnerstag im September'}</small></span></div>`).join('')}</div>
+    <p class="mini">Signale: 1 Minute auf- und abschwellender Heulton = Warnung, Radio oder Warn-App einschalten. 1 Minute Dauerton = Entwarnung.</p></div>
+  <div class="card"><h3>Brandschutzerziehung</h3><p>Wir besuchen Kindergärten und Schulen in Ergolding und Piflas und zeigen spielerisch, wie man sich im Brandfall richtig verhält.</p><a class="btn dk sm" href="#mitmachen" style="align-self:flex-start">Besuch anfragen</a></div>`);
+
+V.foerdern = () => `
+<section class="hero"><div class="wrap"><div class="stack"><h1>Werde Fördermitglied</h1><p class="l">Fördernde Mitglieder sind das Rückgrat unseres Vereins. Dein Jahresbeitrag unterstützt Kameradschaft, Ausbildung und Jugendarbeit der Feuerwehr Piflas. Der Feuerwehr Piflas e.V. ist gemeinnützig.</p></div></div></section>
+${sec(`<div class="grid">
+  <div class="card"><h2 style="font-size:30px">So einfach geht's</h2>
+    <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px"><li>Beitrittserklärung herunterladen</li><li>Ausfüllen und unterschreiben</li><li>Im Gerätehaus, beim Vorstand oder per Post abgeben: Feuerwehr Piflas e.V., Gartenstraße 2, 84030 Ergolding</li></ol>
+    <div class="kv"><span>Jahresbeitrag</span><b>[Betrag] €</b></div>
+    <button class="btn" data-act="pdf" data-doc="Beitrittserklärung">Beitrittserklärung (PDF)</button><span class="mini">Stand: [Datum]</span></div>
+  <div class="card"><h2 style="font-size:30px">Spenden</h2><p>Spenden nimmt der Verein nicht über diese Website entgegen. Alle Angaben findest du im Spendenformular.</p>
+    <button class="btn o" data-act="pdf" data-doc="Spendenformular" style="color:var(--ink)">Spendenformular (PDF)</button><span class="mini">Stand: [Datum]</span></div>
+</div>`)}
+${sec(`<h2>Danke an alle, die uns unterstützen</h2><div class="ig" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div style="aspect-ratio:2">Logo</div><div style="aspect-ratio:2">Logo</div><div style="aspect-ratio:2">Logo</div></div><p>Lust, beim Dorffest mit anzupacken? <a href="#mitmachen">Schreib uns.</a></p>`, 'g')}`;
+
+V.mitmachen = () => { const u = nextUebung(); return sec(`<h1>Mach mit!</h1>
+  <p style="font-size:18px">Keine Vorkenntnisse nötig – wir bilden dich aus. Frauen und Männer sind bei uns gleichermaßen willkommen. Melde dich in 30 Sekunden, wir rufen dich an.</p>
+  <form class="card" id="f-kontakt" novalidate style="max-width:640px">
+  ${f('Dein Name', '<input name="name" required autocomplete="name">')}
+  ${f('Telefon oder E-Mail', '<input name="kontakt" required autocomplete="tel">')}
+  ${f('Interesse', '<select name="thema"><option>Aktiv im Einsatzdienst</option><option>Jugendfeuerwehr</option><option>Fördermitglied</option><option>Erst mal reinschnuppern</option><option>Brandschutzerziehung anfragen</option></select>')}
+  <p class="mini" style="font-size:14px">Du bist unter 16? Dann melde dich bitte gemeinsam mit einem Elternteil.</p>
+  <label class="chk"><input type="checkbox" name="ds" required><span class="ct">Ich habe die <a href="#datenschutz">Datenschutzhinweise</a> gelesen.</span></label>
+  <p class="err" id="e-kontakt"></p><button class="btn" type="submit">Ich bin interessiert</button></form>
+  ${u ? `<div class="stat" style="font-size:17px;max-width:640px"><b>Oder komm einfach vorbei:</b> Nächster Übungsabend am ${String(u.d).padStart(2,'0')}. ${MON[u.m]}, ${esc(u.o)}, Gartenstraße 2. Ohne Anmeldung.</div>` : ''}
+  <div class="grid"><a class="card" href="#jugend" style="text-decoration:none;color:var(--ink)"><h3>Jugendfeuerwehr</h3><p style="color:var(--grau)">Technik, Teamgeist und Spaß für Jugendliche.</p></a><a class="card" href="#foerdern" style="text-decoration:none;color:var(--ink)"><h3>Fördermitglied</h3><p style="color:var(--grau)">Keine Zeit für den Einsatzdienst? Unterstütze uns als Fördermitglied.</p></a></div>
+  <figure style="margin:0;max-width:760px"><img class="pic" src="${IMG.thl}" alt="Übung Technische Hilfeleistung: Pkw mit entfernten Türen" style="aspect-ratio:16/9"><figcaption class="cap">Technische Hilfeleistung – eine von vielen Übungen im Jahr</figcaption></figure>`); };
+
+V.fahrzeuge = () => sec(`<h1>Fahrzeuge & Technik</h1><p>Unsere Fahrzeuge und Anhänger bringen Mannschaft und Ausrüstung schnell zum Einsatzort. Jeden Mittwoch zeigen wir auf Instagram einen Geräteraum – hier eine Auswahl.</p>
+  <div class="feat"><img src="${IMG.wlf_hoch}" alt="Neues Wechselladerfahrzeug der Feuerwehr Piflas mit ausgefahrenem Ladekran in der Abenddämmerung"><div class="b"><span class="tag" style="background:var(--rot);color:#fff;align-self:flex-start">Neu im Fuhrpark</span><h2>Wechselladerfahrzeug mit Kran</h2><p style="color:#E3E4E6">Florian Piflas 36/1. Der Ladekran hebt schwere Lasten, etwa bei Unwettern oder Verkehrsunfällen; Abrollbehälter bringen Spezialausrüstung an die Einsatzstelle.</p><span class="mini">[Fahrzeugtyp, Kranleistung und Abrollbehälter bitte ergänzen]</span></div></div>
+  <div class="fz">${FZ.filter(f => !f.neu).map(f => `<div class="card"><img src="${IMG[f.img]}" alt="${esc(f.alt)}"><div class="b"><h3>${esc(f.n)}</h3><span>${esc(f.d)}</span>${f.cr ? `<span class="cap">${f.cr}</span>` : ''}</div></div>`).join('')}</div>
+  <h2 style="margin-top:12px">Ausrüstung</h2>
+  <div class="gal">${GER.map(g => `<figure><img src="${IMG[g[0]]}" alt="${esc(g[2])}"><figcaption>${esc(g[1])}</figcaption></figure>`).join('')}</div>
+  <div class="card"><h3>Anhänger</h3><p>Verkehrssicherungsanhänger, Mehrzweckanhänger und weitere.</p></div>
+  <span class="mini">Fotos: Feuerwehr Piflas (Instagram, Name der Fotografin bzw. des Fotografen folgt). Fahrzeugtypen und Funkrufnamen in eckigen Klammern bitte prüfen.</span>`);
+V.partner = () => sec(`<h1>Partnerfeuerwehren</h1><p>Gemeinsam für den Markt Ergolding: Bei Einsätzen, Übungen und Festen arbeiten wir eng mit unseren Nachbarwehren zusammen.</p>
+  <div class="grid partner">${PARTNER().map(([n,u]) => `<div class="card"><h2 style="font-size:24px">${esc(n)}</h2><p>[Kurzbeschreibung, z. B. gemeinsame Übungen, Einsatzgebiet]</p>${u ? `<a class="btn o sm" href="${esc(u)}" rel="noopener" target="_blank" style="color:var(--ink);align-self:flex-start">Zur Website</a><small class="mini">${esc(u.replace(/^https?:\/\//,'').replace(/\/$/,''))} – öffnet eine externe Seite</small>` : '<p class="mini">Link folgt</p>'}</div>`).join('')}</div>
+  <p>Gemeinsame Veranstaltungen findest du unter <a href="#termine">Termine</a>.</p>`);
+V.jugend = () => sec(`<h1>Jugendfeuerwehr</h1><p>Teamgeist, Technik und Spaß: In der Jugendfeuerwehr lernst du alles, was Feuerwehr ausmacht.</p><div class="ph" style="background:#E9E7E2;color:var(--g2);border-color:#C9C6BF">Foto: Jugendgruppe bei der Übung (mit Einwilligung der Eltern)</div><div class="card"><h3>Gruppenstunde</h3><p>[Wochentag und Uhrzeit] im Gerätehaus. Ansprechperson: [Jugendwart].</p></div><a class="btn" href="#mitmachen" style="align-self:flex-start">Schnuppern kommen</a>`);
+V.verein = () => {
+  const y27 = today() >= new Date(2027, 0, 1);
+  const rueck = jubOver() ? `<li id="chronik-2027"><b class="y">${JUB.founded + 125}</b><b>125 Jahre Feuerwehr Piflas – das Festjahr</b><p>Mit einer einmaligen Veranstaltungsreihe feierten wir unser Jubiläum:</p><ul style="margin:6px 0 0;padding-left:18px">${JUB.events.map(e => `<li><button class="btn o sm" data-act="article" data-id="r${e.id}" style="color:var(--ink);margin:4px 0">${esc(e.t)} (${dmy(e)})</button></li>`).join('')}</ul></li>`
+    : (y27 ? `<li><b class="y">${JUB.founded + 125}</b><b>125 Jahre Feuerwehr Piflas</b><p>Das Festjahr läuft. <a href="#jubilaeum">Zu allen Veranstaltungen</a></p></li>` : '');
+  return sec(`<h1>Verein</h1><p>Der Feuerwehr Piflas e.V. stellt die Einsatzkräfte der Ortsfeuerwehr und pflegt Kameradschaft und Dorfleben.</p><div class="grid"><div class="card"><h3>Vorstandschaft</h3><p>1. Vorstand: Matthias Jeschke<br>[weitere Ämter]</p></div><div class="card"><h3>Mitgliedschaft</h3><p>Aktiv, passiv oder fördernd – <a href="#foerdern">Fördermitglied werden</a>.</p></div></div>
+  <h2 id="chronik">Chronik</h2>${jubOver() ? '<p class="stat" style="font-size:16px">Das Jubiläumsjahr ist vorbei – danke an alle, die mit uns gefeiert haben! Hier der Rückblick.</p>' : ''}
+  <ol class="chron"><li><b class="y">${JUB.founded}</b><b>Gründung der Freiwilligen Feuerwehr Piflas</b></li><li><b class="y">[Jahr]</b><b>[Weitere Meilensteine folgen: Fahrzeuge, Gerätehaus, Jubiläen]</b></li>${rueck}</ol>
+  <a class="card plink" href="#partner"><b>Unsere Partnerfeuerwehren</b><span>Ergolding und Oberglaim – gemeinsam für den Markt Ergolding</span></a>`);
+};
+V.impressum = () => sec(`<h1>Impressum</h1><p class="mini">Entwurf – vor Veröffentlichung rechtlich prüfen lassen</p>
+  <h3>Angaben gemäß § 5 DDG</h3><p>Feuerwehr Piflas e.V.<br>Gartenstraße 2, 84030 Ergolding / Piflas<br>Telefon 0871 1433372 · info@feuerwehr-piflas.de</p>
+  <h3>Vertreten durch</h3><p>1. Vorstand Matthias Jeschke</p>
+  <h3>Registereintrag</h3><p>Vereinsregister Amtsgericht Landshut, VR 1115</p>
+  <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3><p>Stefan Windele, c/o Feuerwehr Piflas e.V., Anschrift wie oben</p>
+  <h3>Hinweis zur Feuerwehr</h3><p>Die Freiwillige Feuerwehr Piflas ist eine öffentliche Einrichtung des Marktes Ergolding (Art. 4 Abs. 1 Bayerisches Feuerwehrgesetz). Der Feuerwehr Piflas e.V. unterstützt sie personell (Art. 5 BayFwG) und betreibt diese Website. Einsatzberichte werden vom Kommandanten der Freiwilligen Feuerwehr Piflas ([Name]) freigegeben.</p>
+  <h3>Bildnachweis</h3><p>Fotos: Feuerwehr Piflas, [Name der Fotografin bzw. des Fotografen]. Abgebildete Personen haben der Veröffentlichung zugestimmt bzw. wurden informiert.</p>
+  <h3>Externe Links</h3><p>Für Inhalte verlinkter Seiten, etwa unserer Partnerfeuerwehren, sind deren Betreiber verantwortlich. Bei Kenntnis von Rechtsverstößen entfernen wir den Link umgehend.</p>`);
+V.datenschutz = () => sec(`<h1>Datenschutz</h1><p class="mini">Entwurf – vor Veröffentlichung rechtlich prüfen lassen</p>
+  <p>Diese Website setzt beim Besuch keine Cookies, nutzt kein Tracking und lädt keine Inhalte von Drittanbietern (auch keine Schriften, Karten oder Social-Media-Plugins).</p>
+  <h3>1. Verantwortlicher</h3><p>Feuerwehr Piflas e.V., vertreten durch den 1. Vorstand, Gartenstraße 2, 84030 Ergolding, info@feuerwehr-piflas.de</p>
+  <h3>2. Aufruf der Website</h3><p>Der Hoster verarbeitet technisch notwendige Server-Logfiles (u. a. IP-Adresse, Zeitpunkt, abgerufene Seite) zur sicheren Auslieferung (Art. 6 Abs. 1 lit. f DSGVO) und löscht sie nach [X] Tagen. Mit dem Hoster besteht ein Vertrag zur Auftragsverarbeitung. Besucherstatistiken werden ohne Cookies und ohne Weitergabe an Dritte erstellt.</p>
+  <h3>3. Kontakt- und Mitmach-Formular</h3><p>Deine Angaben (Name, Telefon oder E-Mail, Interesse) nutzen wir nur, um dich zu kontaktieren (Art. 6 Abs. 1 lit. b und f DSGVO). Wir löschen sie spätestens sechs Monate nach Abschluss, sofern daraus keine Mitgliedschaft entsteht.</p>
+  <h3>4. Einsatzberichte und Termine</h3><p>Einsatzberichte enthalten nur Einsatzart, Ortsteil, auf die Viertelstunde gerundete Uhrzeit und eingesetzte Fahrzeuge – keine Namen, Adressen, Kennzeichen oder Angaben zu Betroffenen. Sie werden vom Kommandanten freigegeben. Termine stammen aus dem Alarmierungssystem DIVERA 24/7; übernommen werden nur öffentliche Termine.</p>
+  <h3>5. Fotos</h3><p>Wir veröffentlichen Fotos von Übungen und Vereinsveranstaltungen, um über unsere Arbeit zu informieren und Mitglieder zu gewinnen (Art. 6 Abs. 1 lit. f DSGVO, bei Kindern und Jugendlichen mit Einwilligung der Sorgeberechtigten). Bei Veranstaltungen weisen wir vorab darauf hin. Du kannst der Veröffentlichung eines Fotos, auf dem du zu sehen bist, jederzeit widersprechen – wir entfernen es dann.</p>
+  <h3>6. Konten für Mitglieder</h3><p>Für eingeladene Mitglieder speichern wir Name, E-Mail, Rolle, Anmeldedaten und ein Änderungsprotokoll; angemeldete Mitglieder erhalten ein technisch notwendiges Login-Cookie.</p>
+  <h3>7. Instagram</h3><p>Auf der Website zeigen wir Vorschaubilder unserer Instagram-Beiträge, die unser Server vorab abruft – beim Besuch dieser Website werden keine Daten an Meta übertragen. Erst ein Klick auf einen Instagram-Link führt zu Meta Platforms Ireland Ltd. Für unseren Instagram-Auftritt selbst sind wir gemeinsam mit Meta verantwortlich, soweit Meta Statistiken (Insights) erstellt (Art. 26 DSGVO); Details enthält die Vereinbarung von Meta zu Seiten-Insights.</p>
+  <h3>8. Deine Rechte</h3><p>Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch (Art. 15–21 DSGVO). Beschwerde beim Bayerischen Landesamt für Datenschutzaufsicht (BayLDA), Promenade 18, 91522 Ansbach.</p>`);
+
+V.login = () => {
+  if (S.pending2fa) return sec(`<div class="login stack"><h1>Bestätigung</h1><p>Wir haben einen 6-stelligen Code an deine Authenticator-App geschickt.</p>
+    <form class="card" id="f-2fa" novalidate>${f('Code', '<input name="code" class="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required pattern="[0-9]{6}">')}<p class="err" id="e-2fa"></p><button class="btn" type="submit">Bestätigen</button><span class="mini">Demo: beliebige 6 Ziffern.</span></form></div>`);
+  return sec(`<div class="login stack"><h1>Login für Mitglieder</h1><p>Nur für eingeladene Mitglieder des Feuerwehr Piflas e.V.</p>
+    <form class="card" id="f-login" novalidate>
+      ${f('E-Mail', '<input name="mail" type="email" required autocomplete="username">')}
+      ${f('Passwort', '<input name="pw" type="password" required autocomplete="current-password">')}
+      ${f('Demo: anmelden als', '<select name="role"><option value="Freigeber">Kommandant (Freigabe)</option><option value="Administrator">Admin</option><option value="Autor">Redaktion</option></select>')}
+      <p class="err" id="e-login"></p><button class="btn" type="submit">Anmelden</button></form>
+    <div class="card stack" id="quick"><b>Schnell-Login für die Demo</b><span class="mini">Ohne E-Mail und Code – einfach Rolle wählen:</span><div class="row2 ql"><button class="btn o sm" type="button" data-act="quick-login" data-role="Freigeber" style="color:var(--ink)">Kommandant</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Administrator" style="color:var(--ink)">Admin</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Autor" style="color:var(--ink)">Redaktion</button></div>
+    </div><span class="mini">Kein Konto? Konten werden nur per Einladung durch die Admins vergeben.</span></div>`);
+};
+
+/* ---------- Backend ---------- */
+V.redaktion = () => {
+  const items = S.queue.map(q => q.kind === 'einsatz' ? `
+    <article class="card" data-q="${q.id}"><div class="row2"><span class="tag t-thl">Automatisch aus DIVERA</span><span class="tag t-news">Einsatzbericht</span></div>
+      <h2 style="font-size:28px">${esc(q.t)}</h2>
+      <div class="kv"><span>Einsatzart</span><b>${ART[q.typ][1]}</b><span>Zeit</span><b>${q.d}${q.y}, ${q.z} Uhr</b><span>Ort</span><b>${esc(q.t.split(', ')[1])}</b><span>Fahrzeuge</span><b>${esc(q.fz)}</b></div>
+      ${f('Kurzbericht (optional)', `<textarea id="txt-${q.id}">${esc(q.txt)}</textarea>`)}
+      <div class="row2" style="align-items:center"><div style="width:72px;height:72px;border-radius:10px;background:#E9E7E2;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--g2)" id="foto-${q.id}">${q.foto ? 'Foto ✓' : 'kein Foto'}</div><button class="btn o sm" data-act="foto" data-id="${q.id}" style="color:var(--ink)">+ Foto</button></div>
+      <span class="mini">Standortdaten werden aus Fotos automatisch entfernt. Keine erkennbaren Personen oder Kennzeichen.</span>
+      <label class="chk"><input type="checkbox" id="ig-${q.id}" ${q.ig ? 'checked' : ''}><span class="ct">Auch auf Instagram posten</span></label>
+      <div class="stat" style="padding:10px 12px;font-size:15px">Erscheint frühestens um ${q.ab} Uhr (2 Std. nach Alarm). In der Demo sofort.</div>
+      ${q.typ === 'thl' ? `<div class="tip" style="background:#FBEAEA;padding:12px"><span style="font-size:15px"><b>Bei Verletzten oder Toten:</b> erst veröffentlichen, wenn Polizei und Angehörige informiert sind. Keine Details zu Personen.</span></div>` : ''}
+      <label class="chk"><input type="checkbox" id="ok-${q.id}" ${q.ok ? 'checked' : ''}><span class="ct">Geprüft: keine erkennbaren Personen, Kennzeichen, Adressen oder vertraulichen Details (Verschwiegenheit, Datenschutz).</span></label>
+      <p class="err" id="e-${q.id}"></p>
+      <div class="pb"><button class="btn" data-act="publish" data-id="${q.id}">Veröffentlichen</button><button class="btn o" data-act="drop" data-id="${q.id}" style="color:var(--ink)">Verwerfen</button></div></article>` : `
+    <article class="card" data-q="${q.id}"><span class="tag t-news" style="align-self:flex-start">${q.of ? 'Änderung an bestehendem Beitrag' : 'News'} · eingereicht von ${esc(q.von)}</span><h2 style="font-size:26px">${esc(q.t)}</h2><p>${esc(q.txt)}</p>
+      ${(q.imgs || []).length ? `<div class="thumbs">${q.imgs.map((k, i) => `<span class="th"><img src="${IMG[k]}" alt="Eingereichtes Foto ${i + 1}"></span>`).join('')}</div>` : ''}
+      ${q.of ? '' : `<label class="chk"><input type="checkbox" id="ig-${q.id}" ${q.ig ? 'checked' : ''}><span class="ct">Auch auf Instagram posten</span></label>`}
+      <label class="chk"><input type="checkbox" id="ok-${q.id}" ${q.ok ? 'checked' : ''}><span class="ct">Geprüft: Bildrechte geklärt, Abgebildete informiert bzw. einverstanden (bei Kindern die Eltern), keine vertraulichen Details.</span></label>
+      <p class="err" id="e-${q.id}"></p>
+      <div class="pb"><button class="btn" data-act="publish" data-id="${q.id}">Veröffentlichen</button><button class="btn o" data-act="drop" data-id="${q.id}" style="color:var(--ink)">Zurück zur Überarbeitung</button></div></article>`).join('');
+  return sec(`<h1 style="font-size:40px">Zur Freigabe${S.queue.length ? ` <span style="color:var(--rot)">${S.queue.length}</span>` : ''}</h1><p style="color:var(--grau)">Prüfen, ergänzen, veröffentlichen – alles am Handy.</p>${items || '<p class="leer">Nichts zur Freigabe.<br>Neue Einsätze aus DIVERA erscheinen hier automatisch.</p>'}`);
+};
+const thumbs = () => S.draft.map((k, i) => `<span class="th"><img src="${IMG[k]}" alt="Foto ${i + 1}${i === 0 ? ' (Titelbild)' : ''}"><button type="button" class="ib sm" data-act="draft-rm" data-i="${i}" aria-label="Foto ${i + 1} entfernen">×</button></span>`).join('');
+const isAdm = () => !!S.user && S.user.role === 'Administrator';
+const canEdit = n => !!S.user && (S.user.role !== 'Autor' || n.by === S.user.name);
+const findC = (k, id) => k === 'e' ? S.einsaetze.find(x => String(x.id) === String(id)) : S.news.find(x => x.id === id);
+const nImgs = n => n.imgs && n.imgs.length ? n.imgs : (n.img ? [n.img] : []);
+const delBox = (k, id, what) => `<div class="stat" style="font-size:15px;padding:10px 12px" id="del-box"><b>${what} wirklich löschen?</b> Er verschwindet sofort von der Website. 30 Tage lang kannst du ihn im Papierkorb wiederherstellen. Ein Instagram-Post bleibt bestehen – den bitte in Instagram löschen.</div><div class="row2"><button class="btn sm" data-act="c-del-ok" data-k="${k}" data-id="${id}">Ja, löschen</button><button class="btn o sm" data-act="c-del-no" style="color:var(--ink)">Abbrechen</button></div>`;
+const mRow = n => { const own = canEdit(n), pend = S.queue.some(q => q.of === n.id);
+  return `<div class="li mrow" data-n="${n.id}" style="flex-direction:column;gap:8px"><span style="display:flex;gap:14px;width:100%"><span class="dt">${esc(n.d)}</span><span style="flex:1;min-width:0">${n.hid ? `<b>${esc(n.t)}</b>` : `<button class="lnk" data-act="article" data-id="${n.id}">${esc(n.t)}</button>`}<span class="mini" style="display:block">${n.hid ? '<b style="color:var(--rot-d)">Ausgeblendet</b>' : 'Online'}${pend ? ' · Änderung wartet auf Freigabe' : ''}${n.by ? ' · von ' + esc(n.by) : ''}</span></span></span>
+  ${S.cdel === 'n' + n.id ? delBox('n', n.id, 'Beitrag') : (own || isAdm()) ? `<div class="row2">${own ? `<button class="btn o sm" data-act="edit" data-id="${n.id}" style="color:var(--ink)">Bearbeiten</button><button class="btn o sm" data-act="hide" data-k="n" data-id="${n.id}" style="color:var(--ink)">${n.hid ? 'Wieder einblenden' : 'Ausblenden'}</button>` : ''}${isAdm() ? `<button class="btn o sm" data-act="c-del" data-k="n" data-id="${n.id}" style="color:var(--rot-d)">Löschen</button>` : ''}</div>` : ''}</div>`; };
+const eMRow = e => `<div class="li mrow" data-e="${e.id}" style="flex-direction:column;gap:8px"><span style="display:flex;gap:14px;width:100%"><span class="dt">${e.d}${String(e.y).slice(2)}</span><span style="flex:1;min-width:0">${tag(e.typ)}<b>${esc(e.t)}</b><span class="mini" style="display:block">${e.hid ? '<b style="color:var(--rot-d)">Ausgeblendet</b>' : 'Online'}</span></span></span>
+  ${S.eedit === e.id ? `${f('Kurzbericht', `<textarea id="etxt-${e.id}">${esc(e.txt)}</textarea>`)}<span class="mini">Keine Namen, Adressen oder Kennzeichen (W-04).</span><div class="row2"><button class="btn sm" data-act="e-save" data-id="${e.id}">Speichern</button><button class="btn o sm" data-act="e-cancel" style="color:var(--ink)">Abbrechen</button></div>`
+  : S.cdel === 'e' + e.id ? delBox('e', e.id, 'Einsatzbericht') : `<div class="row2"><button class="btn o sm" data-act="e-edit" data-id="${e.id}" style="color:var(--ink)">Bearbeiten</button><button class="btn o sm" data-act="hide" data-k="e" data-id="${e.id}" style="color:var(--ink)">${e.hid ? 'Wieder einblenden' : 'Ausblenden'}</button>${isAdm() ? `<button class="btn o sm" data-act="c-del" data-k="e" data-id="${e.id}" style="color:var(--rot-d)">Löschen</button>` : ''}</div>`}</div>`;
+V.beitraege = () => {
+  const autor = S.user.role === 'Autor';
+  const ed = S.edit && S.news.find(n => n.id === S.edit);
+  if (S.edit && !ed) S.edit = null;
+  const cats = ['Verein','Übung','Jugendfeuerwehr','Bürgertipp']; if (ed && !cats.includes(ed.cat)) cats.unshift(ed.cat);
+  const btn = ed ? (autor ? 'Änderung zur Freigabe einreichen' : 'Änderungen speichern') : (autor ? 'Zur Freigabe einreichen' : 'Veröffentlichen');
+  const hint = ed ? (autor ? 'Der Kommandant gibt deine Änderung frei. Bis dahin bleibt die bisherige Fassung online.' : 'Deine Änderungen sind sofort online. Instagram wird nicht erneut gepostet.') : (autor ? 'Du reichst Beiträge ein; der Kommandant gibt sie frei.' : 'Du darfst freigeben und veröffentlichst direkt.');
+  const mine = autor ? S.news.filter(canEdit) : S.news;
+  const jump = [['f-post', ed ? 'Bearbeiten' : 'Neuer Beitrag'], ['verwalten', autor ? 'Deine Beiträge' : 'Verwalten']].concat(autor ? [] : [['e-head', 'Einsätze']]).concat(isAdm() ? [['p-head', 'Papierkorb' + (S.trash.length ? ' (' + S.trash.length + ')' : '')]] : []);
+  return sec(`<h1 style="font-size:40px">Beiträge</h1>
+    <div class="chips" id="jump" role="group" aria-label="Springen zu">${jump.map(([id, l]) => `<button class="chip" data-act="jump" data-to="${id}">${l}</button>`).join('')}</div>
+    <form class="card${ed ? ' editing' : ''}" id="f-post" novalidate><h2 style="font-size:26px">${ed ? 'Beitrag bearbeiten' : 'Neuer Beitrag'}</h2>
+      <input type="hidden" name="of" value="${ed ? ed.id : ''}">
+      ${f('Titel', `<input name="t" required value="${ed ? esc(ed.t) : ''}">`)}
+      ${f('Kategorie', `<select name="k">${cats.map(c => `<option${ed && ed.cat === c ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>`)}
+      ${f('Text', `<textarea name="txt" required>${ed ? esc((ed.body || [ed.txt]).join('\n\n')) : ''}</textarea>`)}
+      <div class="f">Fotos (optional)<div class="thumbs" id="thumbs-post">${thumbs()}</div>
+        <label class="btn o sm upl" style="color:var(--ink)">${I.img}Fotos hinzufügen<input class="vh" type="file" accept="image/*" multiple data-up="post"></label>
+        <span class="mini">Das erste Foto wird das Titelbild. Fotos werden verkleinert, Standortdaten automatisch entfernt.</span></div>
+      ${f('Bildbeschreibung (für blinde Menschen, optional)', `<input name="alt" placeholder="z. B. Gruppe bei der Leistungsprüfung vor dem Gerätehaus" value="${ed && ed.alt && ed.alt !== ed.t ? esc(ed.alt) : ''}">`)}
+      ${ed ? '' : '<label class="chk"><input type="checkbox" name="ig" checked><span class="ct">Auch auf Instagram posten</span></label>'}
+      <label class="chk"><input type="checkbox" name="ok" required><span class="ct">Geprüft: Bildrechte geklärt, Abgebildete informiert bzw. einverstanden (bei Kindern die Eltern).</span></label>
+      <p class="err" id="e-post"></p>
+      <button class="btn" type="submit">${btn}</button>
+      ${ed ? '<button class="btn o" type="button" data-act="edit-cancel" style="color:var(--ink)">Abbrechen</button>' : ''}
+      <span class="mini">${hint}</span></form>
+    <h2 style="font-size:26px" id="verwalten" tabindex="-1">${autor ? 'Deine Beiträge' : 'Beiträge verwalten'}</h2>
+    <p class="mini" style="margin:0">${autor ? 'Du kannst deine eigenen Beiträge bearbeiten und ausblenden.' : isAdm() ? 'Du kannst alle Beiträge bearbeiten, ausblenden und nach Nachfrage löschen.' : 'Du kannst alle Beiträge bearbeiten und ausblenden. Löschen können nur die Admins.'} Ausgeblendete Beiträge sind nicht mehr öffentlich, bleiben aber erhalten.</p>
+    <div class="list" id="plist">${mine.map(mRow).join('') || '<p class="leer">Noch keine eigenen Beiträge.</p>'}</div>
+    ${autor ? '' : `<h2 style="font-size:26px" id="e-head" tabindex="-1">Einsätze verwalten</h2><div class="list" id="elist">${S.einsaetze.map(eMRow).join('')}</div>`}
+    ${isAdm() ? `<h2 style="font-size:26px" id="p-head" tabindex="-1">Papierkorb</h2><div class="list" id="trash">${S.trash.map(x => `<div class="li" style="align-items:center"><span style="flex:1;min-width:0"><b>${esc(x.item.t)}</b><span class="mini" style="display:block">${x.k === 'e' ? 'Einsatzbericht' : 'Beitrag'} · wird nach 30 Tagen endgültig gelöscht</span></span><button class="btn o sm" data-act="restore" data-id="${x.k}${x.item.id}" style="color:var(--ink)">Wiederherstellen</button></div>`).join('') || '<p class="leer">Der Papierkorb ist leer.</p>'}</div>` : ''}`);
+};
+const mediaGroups = () => {
+  const g = [['Beiträge', []], ['Seiten', []], ['Fahrzeuge & Technik', []], ['Instagram-Vorschau', []]], seen = {};
+  const add = (i, k, w) => { if (!k || !(k in IMG)) return; if (seen[k]) { seen[k].w.push(w); return; } seen[k] = {k, w:[w]}; g[i][1].push(seen[k]); };
+  S.news.forEach(n => (n.imgs && n.imgs.length ? n.imgs : [n.img]).forEach(k => add(0, k, 'Beitrag: ' + n.t)));
+  add(1, 'halle', 'Startseite: Titelbild'); add(1, 'thl', 'Mitmachen-Seite'); add(1, 'thl', 'Einsätze: Symbolfoto');
+  add(2, 'wlf_hoch', 'Fahrzeuge: Titelbild'); FZ.forEach(z => add(2, z.img, 'Fahrzeug: ' + z.n)); GER.forEach(x => add(2, x[0], 'Gerät: ' + x[1]));
+  IGF.forEach(([k, al]) => add(3, k, 'Instagram: ' + al));
+  return g.filter(x => x[1].length);
+};
+V.fotos = () => sec(`<h1 style="font-size:40px">Fotos</h1><p style="color:var(--grau)">Alle Fotos der Website an einem Ort. Ersetzen tauscht das Foto überall aus, wo es verwendet wird.</p>
+  ${mediaGroups().map(([gt, it], gi) => `<h2 style="font-size:24px">${gt}</h2>${gi === 3 ? '<p class="mini">Entfernen blendet das Bild nur auf der Website aus – auf Instagram bleibt es.</p>' : ''}<div class="mgrid">${it.map(m => `<div class="card mi" data-k="${m.k}">
+    <img src="${IMG[m.k]}" alt="">
+    <div class="b"><small>${m.w.map(esc).join('<br>')}</small>${S.gone[m.k] ? '<b class="mini" style="color:var(--rot-d)">Entfernt – Platzhalter sichtbar</b>' : ''}
+    ${S.mdel === m.k ? `<div class="stat" style="font-size:15px;padding:10px 12px"><b>Foto endgültig entfernen?</b> Es verschwindet überall, wo es verwendet wird.</div><div class="row2"><button class="btn sm" data-act="m-del-ok" data-k="${m.k}">Ja, entfernen</button><button class="btn o sm" data-act="m-del-no" style="color:var(--ink)">Abbrechen</button></div>`
+      : `<div class="row2">${gi === 3 ? '' : `<label class="btn o sm upl" style="color:var(--ink)">Ersetzen<input class="vh" type="file" accept="image/*" data-up="rep" data-k="${m.k}" aria-label="Foto ersetzen: ${esc(m.w[0])}"></label>`}${S.gone[m.k] ? '' : `<button class="btn o sm" data-act="m-del" data-k="${m.k}" style="color:var(--rot-d)">Entfernen</button>`}</div>`}</div></div>`).join('')}</div>`).join('')}`);
+V.planung = () => sec(`<h1 style="font-size:40px">Redaktionsplan</h1><div class="stat" style="font-size:15px"><b>Ziel: 1 Beitrag pro Woche.</b> Erinnerung geht 3 Tage vor dem Termin an die zuständige Person.</div>
+  <div class="list">${S.plan.map(p => `<div class="li"><span class="dt">${p.d}</span><span><b>${esc(p.t)}</b><span class="mini" style="font-size:15px">${esc(p.w)} · ${esc(p.s)}</span></span></div>`).join('')}</div>
+  <form class="card" id="f-plan" novalidate><h2 style="font-size:24px">Thema einplanen</h2>${f('Thema', '<input name="t" required>')}${f('Datum', '<input name="d" type="date" required>')}${f('Zuständig', `<select name="w">${S.members.filter(m => !m.inv).map(m => `<option>${esc(m.n)}</option>`).join('')}</select>`)}<p class="err" id="e-plan"></p><button class="btn" type="submit">Einplanen</button></form>`);
+V.system = () => {
+  const H = [
+    ['ok','Website erreichbar','Seit 30 Tagen ohne Ausfall (Beispiel)', ''],
+    ['ok','Updates','Automatisch eingespielt – zuletzt heute Nacht', ''],
+    ['ok','Datensicherung','Täglich 3 Uhr, extern gespeichert – letzte: heute', ''],
+    ['ok','DIVERA-Verbindung','Letzter Abruf vor 4 Minuten', ''],
+    [S.health.ig, 'Instagram-Verbindung', S.health.ig === 'ok' ? 'Verbunden – erneuert sich automatisch' : 'Läuft in 12 Tagen ab', S.health.ig === 'ok' ? '' : '<button class="btn sm" data-act="ig-reconnect">Neu verbinden</button>'],
+    ['ok','Sicherheitszertifikat (https)','Erneuert sich automatisch', '']
+  ];
+  const warn = H.filter(h => h[0] !== 'ok').length;
+  return sec(`<h1 style="font-size:40px">System</h1>
+  <p style="color:var(--grau)">Alles Wichtige auf einen Blick – ohne IT-Kenntnisse. ${warn ? `<b style="color:#8A5A00">${warn} Punkt braucht Aufmerksamkeit.</b>` : '<b style="color:#1E6B35">Alles in Ordnung.</b>'}</p>
+  <div class="amp" id="ampel">${H.map(([st,t,d,a]) => `<div><span class="dot2 ${st}" role="img" aria-label="${st === 'ok' ? 'in Ordnung' : 'Achtung'}"></span><span><b>${t}</b><small>${d}</small></span>${a}</div>`).join('')}</div>
+  <form class="card" id="f-settings" novalidate><h2 style="font-size:26px">Inhalte ändern – ohne Programmieren</h2>
+    <div class="f">Bürgertipp<span class="mini">Wechselt automatisch mit der Jahreszeit. Jetzt angezeigt: <b id="tip-auto">${esc(tipNow().t)}</b></span></div>
+    <label class="chk"><input type="checkbox" name="sonderOn" ${S.settings.sonderOn ? 'checked' : ''}><span class="ct">Aktuellen Sonderhinweis zeigen (z. B. Waldbrandgefahr, Unwetter, Hochwasser)</span></label>
+    ${f('Sonderhinweis: Überschrift', `<input name="sonderT" value="${esc(S.settings.sonderT)}">`)}
+    ${f('Sonderhinweis: Text', `<textarea name="sonderX">${esc(S.settings.sonderX)}</textarea>`)}
+    ${f('Sonderhinweis endet automatisch am (optional)', `<input name="sonderBis" type="date" value="${S.settings.sonderBis}">`)}
+    <label class="chk"><input type="checkbox" name="warnOn" ${S.settings.warnOn !== false ? 'checked' : ''}><span class="ct">Hinweis auf Warntag und Probealarm 14 Tage vorher auf der Startseite</span></label>
+    <label class="chk"><input type="checkbox" name="jubOn" ${S.settings.jubOn ? 'checked' : ''}><span class="ct">Jubiläum „125 Jahre“ auf der Website anzeigen</span></label>
+    ${f('Jubiläum automatisch ausblenden ab', `<input name="jubEnd" type="date" required value="${S.settings.jubEnd}">`)}
+    ${f('Link Partnerfeuerwehr Ergolding', `<input name="pE" type="url" placeholder="https://…" value="${esc(S.settings.pE)}">`)}
+    ${f('Link Partnerfeuerwehr Oberglaim', `<input name="pO" type="url" placeholder="https://…" value="${esc(S.settings.pO)}">`)}
+    <p class="err" id="e-settings"></p><button class="btn" type="submit">Speichern</button>
+    <span class="mini">Änderungen sind sofort online. Seitentexte, Fotos, Menü, Kontaktdaten und PDFs pflegst du genauso – Layout und Farben bleiben dabei geschützt.</span></form>
+  <h2 style="font-size:26px">Hilfe</h2>
+  <details class="help" open><summary>Handbuch und Erklärvideos</summary><ul><li><a href="handbuch.pdf" target="_blank" rel="noopener">Handbuch Mitgliederbereich (PDF, bebildert)</a> – für alle Rollen; auch oben über „Handbuch“ erreichbar</li><li>Kurzvideos: Beitrag schreiben · Einsatz freigeben · Mitglied einladen · Foto tauschen</li><li>Jede Seite im Backend hat ein „?“ mit Erklärung</li></ul></details>
+  <details class="help"><summary>Checkliste: Admin-Wechsel</summary><ol><li>Neue Person als Admin einladen, bisherige erst nach Übergabe entfernen</li><li>Passwort-Tresor des Vereins übergeben (Hosting, Domain, DIVERA, Instagram)</li><li>2-Faktor-Anmeldung bei der neuen Person einrichten</li><li>Gemeinsam eine Wiederherstellung aus der Datensicherung testen</li><li>Kontakte im Impressum und hier unter „Notfall“ aktualisieren</li></ol></details>
+  <details class="help"><summary>Monatlich und jährlich zu tun</summary><ul><li><b>Monatlich (10 Min.):</b> Monatsbericht lesen, gelbe und rote Punkte abarbeiten</li><li><b>Jährlich:</b> Rechtstexte, Bürgerinfos und Konten prüfen, alte Fotos aussortieren</li></ul></details>
+  <details class="help"><summary>Notfall: Wen anrufen?</summary><ul><li>Webhoster-Support: [Telefon]</li><li>Technische Ansprechperson: [Name, Telefon]</li><li>Zweite Person als Admin: [Name]</li></ul></details>`);
+};
+V.mitglieder = () => sec(`<h1 style="font-size:40px">Mitglieder</h1>
+  <form class="card" id="f-invite" novalidate><h2 style="font-size:26px">Neues Mitglied einladen</h2>
+    ${f('Name', '<input name="n" required autocomplete="off">')}${f('E-Mail', '<input name="m" type="email" required autocomplete="off">')}
+    ${f('Rolle', '<select name="r"><option value="Autor">Redaktion</option><option value="Freigeber">Kommandant · Freigabe</option><option value="Bereich Jugend">Redaktion Jugend</option><option value="Administrator">Admin</option></select>')}
+    <p class="err" id="e-invite"></p><button class="btn" type="submit">Einladung senden</button><span class="mini">Link 48 Std. gültig; das Mitglied legt sein Passwort selbst fest.</span></form>
+  <h2 style="font-size:26px">Alle Konten <span class="mini">(Beispiel)</span></h2>
+  <div class="stack" id="mlist">${S.members.map((m, i) => `<div class="card" style="gap:6px${m.inv ? ';border-style:dashed' : ''}"><div class="sh"><b>${esc(m.n)}</b><span class="tag t-bma">${esc(RL[m.r] || m.r)}</span></div><span class="${m.inv ? 'st-wait' : 'st-ok'}" style="font-size:15px">${esc(m.s)}</span>${m.inv ? `<div class="row2"><button class="btn o sm" data-act="resend" data-i="${i}" style="color:var(--ink)">Erneut senden</button><button class="btn o sm" data-act="revoke" data-i="${i}" style="color:var(--ink)">Zurückziehen</button></div>` : ''}</div>`).join('')}</div>`);
+
+/* ---------- Rendering ---------- */
+const BACKR = ['redaktion','beitraege','planung','fotos','mitglieder','system'];
+let lastRoute = null;
+function render(opts = {}) {
+  let r = route();
+  if (!V[r]) r = 'start';
+  if (BACKR.includes(r)) {
+    if (!S.user) { S.next = r; location.replace('#login'); return; }
+    if (!ROLES[S.user.role].tabs.includes(r)) { location.replace('#' + ROLES[S.user.role].tabs[0]); return; }
+  }
+  if (r === 'login' && S.user) { location.replace('#' + ROLES[S.user.role].tabs[0]); return; }
+  if (r === 'jubilaeum' && !jubActive()) { S.toChronik = jubOver(); location.replace(jubOver() ? '#verein' : '#start'); return; }
+  if (r !== 'einsaetze') S.detail = null;
+  if (r !== 'aktuelles') S.article = null;
+  const bk = BACKR.includes(r);
+  document.body.classList.toggle('bk', bk);
+  $('#chrome').innerHTML = bk ? backHead() : pubHead(r);
+  $('#main').className = bk ? 'bm' : '';
+  $('#main').innerHTML = V[r]() + (bk ? backTabs(r) : '');
+  $('#footer').innerHTML = bk ? '' : pubFoot();
+  $('#mnav').innerHTML = menuHtml(r);
+  document.title = (r === 'start' ? '' : (pubList().find(p => p[0]===r)?.[1] || BACK[r]?.[0] || r.charAt(0).toUpperCase()+r.slice(1)) + ' – ') + 'Feuerwehr Piflas';
+  if (!opts.keep && lastRoute !== r) window.scrollTo(0, 0);
+  if (opts.focusMain && lastRoute !== r) $('#main').focus({preventScroll:true});
+  lastRoute = r;
+  if (S.toChronik && r === 'verein') { S.toChronik = false; setTimeout(() => { const c = document.getElementById('chronik'); if (c) c.scrollIntoView({block:'start'}); }, 30); }
+  renderSteps();
+}
+function renderSteps() {
+  const s = S.step;
+  const st = (n, title, txt, btn) => `<div class="step${s===n?' on':''}${s>n?' ok':''}"><span class="n">${s>n?'✓':n}</span><b>${title}</b><p>${txt}</p>${btn}</div>`;
+  const hasE = S.queue.some(q => q.kind === 'einsatz');
+  $('#steps').innerHTML =
+    st(1, 'Alarm kommt aus DIVERA', 'Erzeugt einen anonymisierten Entwurf – nur Einsatzart, Ortsteil, gerundete Uhrzeit.', `<button class="btn sm" data-act="alarm"${hasE?' disabled':''}>Alarm simulieren</button>`) +
+    st(2, 'Kommandant gibt frei', 'Der Entwurf wartet unter „Freigabe“. Text oder Foto ergänzen, dann veröffentlichen.', `<button class="btn sm" data-act="demo-publish"${hasE?'':' disabled'}>Jetzt freigeben</button>`) +
+    st(3, 'Alle sind informiert', 'Der Bericht steht auf der Startseite, die Statistik zählt mit, Instagram ist gepostet.', `<button class="btn o sm" data-act="demo-result" style="color:var(--ink)"${s<3?' disabled':''}>Ergebnis ansehen</button>`) +
+    `<div class="step"><span class="n" aria-hidden="true">T</span><b>Termine aus DIVERA</b><p>Neue Termine werden automatisch übernommen und stehen auf der Startseite – private Termine nicht.</p><button class="btn dk sm" data-act="sync">Termin-Sync simulieren</button></div>`;
+  const cur = !S.today ? 'now' : (S.today.getFullYear() === 2027 ? '2027' : '2028');
+  $('#steps').innerHTML += `<div class="step"><span class="n" aria-hidden="true">J</span><b>Datum simulieren</b><p>Zeigt Jubiläum, Jahreszeiten-Tipps und Warntag-Hinweise zu verschiedenen Zeitpunkten.</p><div class="chips" role="group" aria-label="Datum simulieren">${[['now','Heute'],['2027-03','März 2027'],['2027','Juli 2027'],['2028','Februar 2028']].map(([k,l]) => `<button class="chip" data-act="date" data-v="${k}" aria-pressed="${cur===k}">${l}</button>`).join('')}</div></div>`;
+}
+
+let tT, pT;
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('on'), 3000); };
+const push = m => { $('#pushtxt').textContent = m; const p = $('#push'); p.classList.add('on'); clearTimeout(pT); pT = setTimeout(() => p.classList.remove('on'), 4500); };
+const setOpen = (cls, el, open) => {
+  document.body.classList.toggle(cls, open);
+  el.setAttribute('aria-hidden', String(!open));
+  if (open) el.removeAttribute('inert'); else el.setAttribute('inert', '');
+  document.querySelectorAll('[data-act="menu-open"]').forEach(b => b.setAttribute('aria-expanded', String(document.body.classList.contains('mopen'))));
+};
+const menu = o => { setOpen('mopen', $('#drawer'), o); if (o) $('#drawer [data-act="menu-close"]').focus(); };
+const sheet = o => { setOpen('sopen', $('#sheet'), o); if (o) $('#sheet [data-act="sheet-close"]').focus(); else $('#fab').focus({preventScroll:true}); };
+const closeAll = () => { if (document.body.classList.contains('mopen')) menu(false); if (document.body.classList.contains('sopen')) sheet(false); };
+
+const roundNow = () => { const d = new Date(); d.setMinutes(Math.round(d.getMinutes()/15)*15, 0, 0); return d; };
+const p2 = n => String(n).padStart(2,'0');
+const go = h => { if (location.hash === '#' + h) render(); else location.hash = h; };
+
+function alarm() {
+  if (S.queue.some(q => q.kind === 'einsatz')) return;
+  const a = ALARME[S.alarmNr % ALARME.length]; S.alarmNr++;
+  const t = roundNow(), ab = new Date(t.getTime() + 7200e3);
+  S.queue.unshift({kind:'einsatz', id:'e' + (S.nid++), typ:a.typ, t:a.t, fz:a.fz, d:`${p2(t.getDate())}.${p2(t.getMonth()+1)}.`, y:t.getFullYear(), z:`${p2(t.getHours())}:${p2(t.getMinutes())}`, ab:`${p2(ab.getHours())}:${p2(ab.getMinutes())}`, txt:`Wir waren mit ${a.fz.split(',')[0]} vor Ort.`, ig:true, foto:false});
+  S.step = 2;
+  if (!S.user || S.user.role === 'Autor') S.user = {name:'Max Mustermann', role:'Freigeber'};
+  push('Neuer Einsatzbericht wartet auf Freigabe');
+  go('redaktion');
+}
+function termSync() {
+  sheet(false);
+  if (S.synced) { toast('Keine neuen Termine in DIVERA'); go('start'); return; }
+  SYNC.forEach(t => S.termine.push({...t})); S.synced = true; S.neu = 'termin';
+  toast('1 Termin übernommen, 1 privater Termin ignoriert');
+  go('start');
+  setTimeout(() => { const el = document.querySelector('.li.neu'); if (el) el.scrollIntoView({block:'center'}); }, 80);
+  setTimeout(() => { S.neu = null; }, 2600);
+}
+function applyEdit(n, v) {
+  const paras = v.txt.split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
+  Object.assign(n, {t:v.t, cat:v.cat, body:paras, txt:paras[0] || v.txt, imgs:(v.imgs || []).slice(), img:(v.imgs || [])[0] || null, alt:v.alt || v.t});
+}
+function publish(id, force, quiet) {
+  const q = S.queue.find(x => x.id === id); if (!q) return;
+  const okEl = $('#ok-' + id);
+  if (!force && !(okEl ? okEl.checked : q.ok)) { const e = $('#e-' + id); if (e) e.textContent = 'Bitte zuerst die rechtliche Prüfung bestätigen.'; if (okEl) okEl.focus(); return; }
+  const txtEl = $('#txt-' + id), igEl = $('#ig-' + id);
+  const ig = igEl ? igEl.checked : q.ig;
+  S.queue = S.queue.filter(x => x.id !== id);
+  if (q.kind === 'einsatz') {
+    const e = {id:S.nid++, y:q.y, d:q.d, typ:q.typ, t:q.t, z:q.z, fz:q.fz, txt: txtEl ? txtEl.value : q.txt};
+    S.einsaetze.unshift(e); S.year = q.y; S.neu = e.id; S.step = 3;
+    if (ig) S.posts.unshift(ART[q.typ][0]);
+  } else if (q.of) {
+    const n = S.news.find(x => x.id === q.of);
+    if (n) applyEdit(n, q);
+    toast('Änderung freigegeben – jetzt online'); if (!quiet) render({keep:true}); return;
+  } else {
+    const d = new Date(); const im = (q.imgs || []).slice(); S.news.unshift({id:q.id, by:q.by, cat:q.cat || 'Verein', t:q.t, d:`${p2(d.getDate())}.${p2(d.getMonth()+1)}.`, txt:q.txt, body:[q.txt], ph:'Foto folgt', img: im[0] || null, imgs: im, alt: q.alt || q.t}); S.neu = q.t;
+    if (ig) S.posts.unshift('News');
+  }
+  toast(ig ? 'Veröffentlicht und auf Instagram gepostet' : 'Veröffentlicht');
+  if (!quiet) render({keep:true});
+  setTimeout(() => { S.neu = null; }, 2600);
+}
+
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (a && a.id === 'skip') { e.preventDefault(); const m = $('#main'); m.focus(); m.scrollIntoView(); return; }
+  if (a) { closeAll(); return; }
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const act = b.dataset.act, id = b.dataset.id;
+  if (b.tagName === 'A' && act !== 'sheet-close') e.preventDefault();
+  switch (act) {
+    case 'menu-open': menu(true); break;
+    case 'menu-close': menu(false); break;
+    case 'sheet-open': if (document.body.classList.contains('mopen')) menu(false); sheet(true); break;
+    case 'sheet-close': sheet(false); break;
+    case 'detail': S.detail = +id; if (route() !== 'einsaetze') { go('einsaetze'); } else { render(); } break;
+    case 'detail-close': S.detail = null; render(); break;
+    case 'article': S.article = id; if (route() !== 'aktuelles') { go('aktuelles'); } else { render(); window.scrollTo(0,0); } break;
+    case 'article-close': S.article = null; render(); break;
+    case 'draft-rm': S.draft.splice(+b.dataset.i, 1); $('#thumbs-post').innerHTML = thumbs(); break;
+    case 'm-del': S.mdel = b.dataset.k; render({keep:true}); break;
+    case 'm-del-no': S.mdel = null; render({keep:true}); break;
+    case 'm-del-ok': { const k = b.dataset.k; S.mdel = null;
+      const nw = S.news.filter(n => n.img === k || (n.imgs || []).includes(k));
+      if (nw.length) nw.forEach(n => { n.imgs = (n.imgs || [n.img]).filter(x => x !== k); n.img = n.imgs[0] || null; });
+      else { IMG[k] = PH_DEL; S.gone[k] = true; }
+      toast('Foto entfernt'); render({keep:true}); break; }
+    case 'year': S.year = +b.dataset.y; render({keep:true}); break;
+    case 'tf': S.tf = b.dataset.k; render({keep:true}); break;
+    case 'ical': toast('Kalender-Link kopiert (Demo)'); break;
+    case 'pdf': toast((b.dataset.doc || 'Dokument') + ' (PDF) öffnet sich – Datei folgt vom Verein'); break;
+    case 'sync': termSync(); break;
+    case 'ig-reconnect': S.health.ig = 'ok'; toast('Instagram neu verbunden (Demo)'); render({keep:true}); break;
+    case 'to-mitmach': { const m = document.getElementById('mitmach'); if (m) m.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'}); setTimeout(() => { const n = document.querySelector('#f-quick input'); if (n) n.focus({preventScroll:true}); }, 500); break; }
+    case 'vormerken': toast('„' + b.dataset.t + '“ im Kalender gespeichert (Demo)'); break;
+    case 'date': { const v = b.dataset.v; S.today = v === 'now' ? null : v === '2027-03' ? new Date(2027, 2, 3, 12) : (v === '2027' ? new Date(2027, 6, 1, 12) : new Date(2028, 1, 1, 12)); sheet(false); toast(v === 'now' ? 'Datum: heute' : v === '2027-03' ? 'Datum simuliert: 3. März 2027 (vor dem Probealarm)' : (v === '2027' ? 'Datum simuliert: 1. Juli 2027 (Festjahr, Sommer)' : 'Datum simuliert: 1. Februar 2028 (nach dem Jubiläum)')); if (v === '2028' && route() === 'jubilaeum') { S.toChronik = true; go('verein'); } else render(); break; }
+    case 'quick-login': { const r = b.dataset.role || 'Freigeber'; S.user = {name:{Freigeber:'Max Mustermann', Administrator:'Erika Musterfrau', Autor:'Jonas Beispiel'}[r], role:r}; toast('Angemeldet als ' + ROLES[r].label + ' (Demo)');
+      const nx = S.next && ROLES[r].tabs.includes(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break; }
+    case 'logout': S.user = null; S.draft = []; S.edit = null; S.eedit = null; S.cdel = null; toast('Abgemeldet'); go('start'); break;
+    case 'publish': publish(id); break;
+    case 'edit': { const n = S.news.find(x => x.id === id); if (!n || !canEdit(n)) break; S.edit = id; S.draft = nImgs(n).slice(); if (route() !== 'beitraege') go('beitraege'); else render(); window.scrollTo(0, 0); setTimeout(() => { const t = $('#f-post [name=t]'); if (t) t.focus(); }, 30); break; }
+    case 'jump': { const t = $('#' + b.dataset.to); if (t) { t.scrollIntoView({block:'start'}); window.scrollBy(0, -70); if (t.tabIndex < 0 && t.tagName !== 'FORM') t.focus({preventScroll:true}); } break; }
+    case 'edit-cancel': S.edit = null; S.draft = []; render({keep:true}); break;
+    case 'hide': { const k = b.dataset.k, c = findC(k, id); if (!c || (k === 'n' ? !canEdit(c) : S.user.role === 'Autor')) break; c.hid = !c.hid; toast(c.hid ? 'Ausgeblendet – nicht mehr öffentlich sichtbar' : 'Wieder eingeblendet – jetzt öffentlich'); render({keep:true}); break; }
+    case 'e-edit': if (!S.user || S.user.role === 'Autor') break; S.eedit = +id; render({keep:true}); break;
+    case 'e-cancel': S.eedit = null; render({keep:true}); break;
+    case 'e-save': { const c = findC('e', id), t = $('#etxt-' + id); if (c && t) c.txt = t.value.trim(); S.eedit = null; toast('Einsatzbericht gespeichert'); render({keep:true}); break; }
+    case 'c-del': if (!isAdm()) break; S.cdel = b.dataset.k + id; render({keep:true}); break;
+    case 'c-del-no': S.cdel = null; render({keep:true}); break;
+    case 'c-del-ok': { if (!isAdm()) break; const k = b.dataset.k, c = findC(k, id); S.cdel = null; if (!c) break;
+      const i = (k === 'e' ? S.einsaetze : S.news).indexOf(c);
+      if (k === 'e') S.einsaetze = S.einsaetze.filter(x => x !== c); else { S.news = S.news.filter(x => x !== c); S.queue = S.queue.filter(q => q.of !== c.id); if (S.edit === c.id) { S.edit = null; S.draft = []; } }
+      S.trash.unshift({k, item:c, i}); toast('Gelöscht – 30 Tage im Papierkorb'); render({keep:true}); break; }
+    case 'restore': { if (!isAdm()) break; const x = S.trash.find(t => t.k + t.item.id === id); if (!x) break; S.trash = S.trash.filter(t => t !== x);
+      (x.k === 'e' ? S.einsaetze : S.news).splice(x.i, 0, x.item);
+      toast('Wiederhergestellt'); render({keep:true}); break; }
+    case 'drop': { const q = S.queue.find(x => x.id === id); S.queue = S.queue.filter(x => x.id !== id); if (q && q.kind === 'einsatz') S.step = 1; toast(q && q.kind === 'einsatz' ? 'Entwurf verworfen – nichts veröffentlicht' : 'Zur Überarbeitung zurückgeschickt'); render({keep:true}); break; }
+    case 'foto': { const q = S.queue.find(x => x.id === id); if (q) { q.foto = true; const t = $('#txt-' + id); if (t) q.txt = t.value; const g = $('#ig-' + id); if (g) q.ig = g.checked; const o = $('#ok-' + id); if (o) q.ok = o.checked; } toast('Foto hinzugefügt, Standortdaten entfernt (Demo)'); render({keep:true}); break; }
+    case 'resend': S.members[+b.dataset.i].s = 'Eingeladen · Link 48 Std. gültig'; toast('Einladung erneut gesendet (Demo)'); render({keep:true}); break;
+    case 'revoke': { const m = S.members.splice(+b.dataset.i, 1)[0]; toast('Einladung an ' + m.n + ' zurückgezogen'); render({keep:true}); break; }
+    case 'alarm': sheet(false); alarm(); break;
+    case 'demo-publish': { sheet(false); const q = S.queue.find(x => x.kind === 'einsatz'); if (q) { if (route() !== 'redaktion') go('redaktion'); setTimeout(() => { q.ok = true; publish(q.id, true); go('start'); }, 50); } break; }
+    case 'demo-result': sheet(false); go('start'); setTimeout(() => { const el = document.querySelector('.li.neu') || document.querySelector('.list'); if (el) el.scrollIntoView({block:'center'}); }, 60); break;
+    case 'reset': { const u = null; restoreImg(); S = fresh(); S.user = u; sheet(false); toast('Demo zurückgesetzt'); go('start'); break; }
+  }
+});
+
+const val = (form, n) => (form.elements[n] && form.elements[n].value || '').trim();
+const check = (form, errId) => {
+  const bad = [...form.elements].filter(el => el.willValidate && !el.checkValidity());
+  const err = $('#' + errId);
+  if (bad.length) {
+    const lab = el => { const l = el.closest('label'); if (!l) return el.name; if (el.type === 'checkbox') { const t = l.innerText.trim(); return t.length > 48 ? t.split(':')[0].slice(0, 48) : t.replace(/\.$/, ''); } return [...l.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim() || el.name; };
+    err.textContent = 'Bitte prüfen: ' + bad.map(lab).join(', ');
+    bad[0].focus(); return false;
+  }
+  err.textContent = ''; return true;
+};
+document.addEventListener('submit', e => {
+  e.preventDefault();
+  const fm = e.target;
+  switch (fm.id) {
+    case 'f-login': if (!check(fm, 'e-login')) return; S.pending2fa = {role: val(fm,'role'), mail: val(fm,'mail')}; render(); setTimeout(() => { const c = document.querySelector('#f-2fa input'); if (c) c.focus(); }, 30); break;
+    case 'f-2fa': {
+      if (!check(fm, 'e-2fa')) return;
+      const r = S.pending2fa.role; const name = {Freigeber:'Max Mustermann', Administrator:'Erika Musterfrau', Autor:'Jonas Beispiel'}[r];
+      S.user = {name, role:r}; S.pending2fa = null; toast('Angemeldet als ' + ROLES[r].label);
+      const nx = S.next && ROLES[r].tabs.includes(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break;
+    }
+    case 'f-kontakt': if (!check(fm, 'e-kontakt')) return; fm.reset(); toast('Danke! Wir melden uns bei dir (Demo)'); break;
+    case 'f-quick': if (!check(fm, 'e-quick')) return; fm.reset(); toast('Super! Wir melden uns in den nächsten Tagen bei dir (Demo)'); break;
+    case 'f-post': {
+      if (!check(fm, 'e-post')) return;
+      const of = val(fm,'of');
+      if (of) {
+        const n = S.news.find(x => x.id === of); if (!n || !canEdit(n)) return;
+        const v = {cat: val(fm,'k'), t: val(fm,'t'), txt: fm.elements.txt.value.trim(), imgs: S.draft.slice(), alt: val(fm,'alt')};
+        S.draft = []; S.edit = null;
+        if (S.user.role === 'Autor') {
+          const item = {kind:'news', id:'n' + (S.nid++), of, ...v, von: S.user.name + ' (' + RL[S.user.role] + ')', by: S.user.name, ig:false};
+          S.queue = S.queue.filter(q => q.of !== of); S.queue.push(item);
+          toast('Änderung zur Freigabe eingereicht'); S.article = item.id;
+        } else { applyEdit(n, v); toast('Änderungen gespeichert – sofort online'); S.article = n.hid ? null : n.id; }
+        go(S.article ? 'aktuelles' : 'beitraege'); window.scrollTo(0, 0); break;
+      }
+      const item = {kind:'news', id:'n' + (S.nid++), cat: val(fm,'k'), t: val(fm,'t'), txt: val(fm,'txt'), von: S.user.name + ' (' + S.user.role + ')', by: S.user.name, ig: fm.elements.ig.checked, imgs: S.draft.slice(), alt: val(fm,'alt')};
+      S.draft = []; S.queue.push(item);
+      if (S.user.role === 'Autor') toast('Zur Freigabe eingereicht – hier die Vorschau');
+      else { item.ok = true; publish(item.id, true, true); }
+      S.article = item.id; go('aktuelles'); window.scrollTo(0, 0);
+      break;
+    }
+    case 'f-settings': {
+      if (!check(fm, 'e-settings')) return;
+      S.settings = {sonderOn: fm.elements.sonderOn.checked, sonderT: val(fm,'sonderT'), sonderX: val(fm,'sonderX'), sonderBis: val(fm,'sonderBis'), warnOn: fm.elements.warnOn.checked, jubOn: fm.elements.jubOn.checked, jubEnd: val(fm,'jubEnd'), pE: val(fm,'pE'), pO: val(fm,'pO')};
+      toast('Gespeichert – sofort online'); render({keep:true}); break;
+    }
+    case 'f-plan': {
+      if (!check(fm, 'e-plan')) return;
+      const d = new Date(val(fm,'d') + 'T12:00'); S.plan.push({d:`${p2(d.getDate())}.${p2(d.getMonth()+1)}.`, t: val(fm,'t'), w: val(fm,'w'), s:'Idee'});
+      toast('Eingeplant – Erinnerung 3 Tage vorher'); render({keep:true}); break;
+    }
+    case 'f-invite': {
+      if (!check(fm, 'e-invite')) return;
+      S.members.push({n: val(fm,'n'), m: val(fm,'m'), r: val(fm,'r'), s:'Eingeladen · Link 48 Std. gültig', inv:true});
+      toast('Einladung an ' + val(fm,'m') + ' gesendet (Demo)'); render({keep:true}); break;
+    }
+  }
+});
+let lastY = 0;
+window.addEventListener('scroll', () => { const y = window.scrollY; if (Math.abs(y - lastY) < 8) return; document.body.classList.toggle('fabhide', y > lastY && y > 120); lastY = y; }, {passive:true});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+$('#scrim').addEventListener('click', closeAll);
+document.addEventListener('change', async e => {
+  const inp = e.target.closest('input[data-up]'); if (!inp || !inp.files || !inp.files.length) return;
+  const files = [...inp.files]; inp.value = '';
+  let bad = 0; const urls = [];
+  for (const fl of files) { try { urls.push(await loadImg(fl)); } catch (_) { bad++; } }
+  if (inp.dataset.up === 'post') {
+    urls.forEach(u => { const k = 'u' + (S.uid++); IMG[k] = u; S.draft.push(k); });
+    const th = $('#thumbs-post'); if (th) th.innerHTML = thumbs();
+    if (urls.length) toast(urls.length === 1 ? 'Foto hinzugefügt' : urls.length + ' Fotos hinzugefügt');
+  } else if (inp.dataset.up === 'rep' && urls[0]) {
+    IMG[inp.dataset.k] = urls[0]; delete S.gone[inp.dataset.k]; toast('Foto ersetzt – überall aktualisiert'); render({keep:true});
+  }
+  if (bad) toast('Diese Datei ist kein lesbares Foto');
+});
+window.addEventListener('hashchange', () => { closeAll(); if (route() !== 'redaktion') $('#push').classList.remove('on'); render({focusMain:true}); });
+render();
+}
+</script>
+</body>
+</html>

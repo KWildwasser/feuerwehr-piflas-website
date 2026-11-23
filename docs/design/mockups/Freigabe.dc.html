@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Backend – Freigabe</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#A51214}a:hover{color:#7E0E10}
+</style>
+</helmet>
+<div style="width: 390px; height: 1300px; box-sizing: border-box; background: #F4F3F0; font-family: Barlow, system-ui, sans-serif; color: #1F2328; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column">
+
+  <header style="background: #1F2328; color: #FFFFFF; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px">
+    <img src="/_blob/b23e157e928b07392d75466e47d66084" alt="Feuerwehr Piflas" style="width: 120px; height: 33px; display: block">
+    <span style="font-size: 14px; color: #C9CBCE; text-align: right">Redaktion<br><strong style="color: #FFFFFF">Rolle: Freigeber</strong></span>
+  </header>
+
+  <section style="padding: 20px 16px 8px; display: flex; flex-direction: column; gap: 4px">
+    <h1 style="margin: 0; font-family: 'Barlow Condensed', Barlow, sans-serif; font-weight: 700; font-size: 36px; line-height: 1.05">Zur Freigabe <span style="color: #CD1719">2</span></h1>
+    <p style="margin: 0; font-size: 15px; color: #4A4F55">Prüfen, ergänzen, veröffentlichen – alles am Handy.</p>
+  </section>
+
+  <section style="padding: 12px 16px 8px">
+    <article style="background: #FFFFFF; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px; border: 1px solid #E4E2DD">
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <span style="background: #E7F0FB; color: #1D4F8C; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">Automatisch aus DIVERA</span>
+        <span style="background: #FFF1D6; color: #6B4500; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">Einsatzbericht</span>
+      </div>
+      <h2 style="margin: 0; font-family: 'Barlow Condensed', Barlow, sans-serif; font-size: 28px; line-height: 1.1">Verkehrsunfall, Ergolding</h2>
+      <div style="display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 10px; font-size: 15px">
+        <span style="color: #5B6168">Einsatzart</span><strong>Technische Hilfeleistung</strong>
+        <span style="color: #5B6168">Zeit</span><strong>12.11.2026, 17:45 Uhr</strong>
+        <span style="color: #5B6168">Ort</span><strong>Ergolding</strong>
+        <span style="color: #5B6168">Fahrzeuge</span><strong>LF 8/6</strong>
+      </div>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 15px">Kurzbericht (optional)<textarea rows="3" style="border: 1px solid #B8B5AE; border-radius: 10px; padding: 10px 12px; font: 16px Barlow, sans-serif; resize: none">Wir sicherten die Unfallstelle ab und unterstützten den Rettungsdienst.</textarea></label>
+      <div style="display: flex; gap: 8px">
+        <div style="width: 72px; height: 72px; border-radius: 10px; background: #E9E7E2; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #5B6168">Foto</div>
+        <button style="width: 72px; height: 72px; border-radius: 10px; border: 2px dashed #8A8F95; background: #FFFFFF; font: 600 13px Barlow, sans-serif; color: #1F2328">+ Foto</button>
+      </div>
+      <span style="font-size: 13px; color: #4A4F55">Standortdaten werden aus Fotos automatisch entfernt. Bitte keine erkennbaren Personen oder Kennzeichen.</span>
+      <label style="display: flex; gap: 10px; align-items: center; font-weight: 600; min-height: 44px"><input type="checkbox" checked style="width: 22px; height: 22px; margin: 0; accent-color: #CD1719">Auch auf Instagram posten</label>
+      <div style="background: #F4F3F0; border-radius: 10px; padding: 10px 12px; font-size: 14px">Erscheint frühestens 2 Std. nach Alarm, also ab 19:45 Uhr.</div>
+      <div style="display: flex; gap: 10px">
+        <button style="flex: 1; min-height: 48px; border-radius: 999px; border: 0; background: #CD1719; color: #FFFFFF; font: 700 16px Barlow, sans-serif">Veröffentlichen</button>
+        <button style="min-height: 48px; padding: 0 18px; border-radius: 999px; border: 2px solid #B8B5AE; background: #FFFFFF; color: #1F2328; font: 700 16px Barlow, sans-serif">Verwerfen</button>
+      </div>
+    </article>
+  </section>
+
+  <section style="padding: 12px 16px 8px">
+    <article style="background: #FFFFFF; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #E4E2DD">
+      <span style="align-self: flex-start; background: #EFEEEB; color: #4A4F55; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">News · von einem Autor eingereicht</span>
+      <h2 style="margin: 0; font-size: 20px; line-height: 1.25">Leistungsprüfung erfolgreich abgelegt</h2>
+      <span style="font-size: 14px; color: #5B6168">Eingereicht vor 2 Std. · geplant für Samstag, 10:00 Uhr</span>
+      <a href="#" style="align-self: flex-start; font-weight: 700">Ansehen und freigeben</a>
+    </article>
+  </section>
+
+  <nav aria-label="Backend" style="margin-top: auto; background: #FFFFFF; border-top: 1px solid #E4E2DD; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 6px 4px 10px">
+    <a href="Freigabe.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #CD1719; font-size: 13px; font-weight: 700"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Freigabe</a>
+    <a href="#" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #4A4F55; font-size: 13px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4zM8 9h8M8 13h8M8 17h5"/></svg>Beiträge</a>
+    <a href="#" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #4A4F55; font-size: 13px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M9 3v5M15 3v5"/></svg>Planung</a>
+    <a href="Mitglieder.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #4A4F55; font-size: 13px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>Mitglieder</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

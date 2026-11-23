@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Backend – Mitglieder einladen</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#A51214}a:hover{color:#7E0E10}
+</style>
+</helmet>
+<div style="width: 390px; height: 1300px; box-sizing: border-box; background: #F4F3F0; font-family: Barlow, system-ui, sans-serif; color: #1F2328; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column">
+
+  <header style="background: #1F2328; color: #FFFFFF; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px">
+    <img src="/_blob/b23e157e928b07392d75466e47d66084" alt="Feuerwehr Piflas" style="width: 120px; height: 33px; display: block">
+    <span style="font-size: 14px; color: #C9CBCE; text-align: right">Redaktion<br><strong style="color: #FFFFFF">Rolle: Administrator</strong></span>
+  </header>
+
+  <section style="padding: 20px 16px 8px">
+    <h1 style="margin: 0; font-family: 'Barlow Condensed', Barlow, sans-serif; font-weight: 700; font-size: 36px; line-height: 1.05">Mitglieder</h1>
+  </section>
+
+  <section style="padding: 8px 16px 8px">
+    <form style="background: #FFFFFF; border: 1px solid #E4E2DD; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-size: 20px; line-height: 1.25">Neues Mitglied einladen</h2>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 15px">Name<input type="text" style="min-height: 44px; border: 1px solid #B8B5AE; border-radius: 10px; padding: 0 12px; font: 16px Barlow, sans-serif"></label>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 15px">E-Mail<input type="email" style="min-height: 44px; border: 1px solid #B8B5AE; border-radius: 10px; padding: 0 12px; font: 16px Barlow, sans-serif"></label>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 15px">Rolle<select style="min-height: 44px; border: 1px solid #B8B5AE; border-radius: 10px; padding: 0 10px; font: 16px Barlow, sans-serif; background: #FFFFFF"><option>Autor – schreibt, reicht zur Freigabe ein</option><option>Freigeber – veröffentlicht</option><option>Bereichsredakteur – z. B. Jugend</option><option>Kassier – Fördermitglieder, Spenden</option><option>Administrator</option></select></label>
+      <button type="submit" style="min-height: 48px; border-radius: 999px; border: 0; background: #CD1719; color: #FFFFFF; font: 700 16px Barlow, sans-serif">Einladung senden</button>
+      <span style="font-size: 13px; color: #4A4F55">Das Mitglied bekommt eine E-Mail mit Link (48 Std. gültig) und legt sein Passwort selbst fest.</span>
+    </form>
+  </section>
+
+  <section style="padding: 16px 16px 8px; display: flex; flex-direction: column; gap: 8px">
+    <h2 style="margin: 0; font-size: 20px; line-height: 1.25">Alle Konten <span style="color: #5B6168; font-weight: 500">(Beispiel)</span></h2>
+
+    <div style="background: #FFFFFF; border: 1px solid #E4E2DD; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; justify-content: space-between; gap: 8px"><strong>Max Mustermann</strong><span style="background: #1F2328; color: #FFFFFF; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">Administrator</span></div>
+      <span style="font-size: 14px; color: #1E6B35">Aktiv · 2FA eingerichtet</span>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #E4E2DD; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; justify-content: space-between; gap: 8px"><strong>Erika Musterfrau</strong><span style="background: #FBEAEA; color: #A51214; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">Freigeber</span></div>
+      <span style="font-size: 14px; color: #1E6B35">Aktiv · 2FA eingerichtet</span>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #E4E2DD; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; justify-content: space-between; gap: 8px"><strong>Jonas Beispiel</strong><span style="background: #E7F0FB; color: #1D4F8C; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">Autor</span></div>
+      <span style="font-size: 14px; color: #4A4F55">Aktiv · 2FA empfohlen</span>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px dashed #B8B5AE; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; justify-content: space-between; gap: 8px"><strong>Lena Probe</strong><span style="background: #EFEEEB; color: #4A4F55; font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 6px">Bereich Jugend</span></div>
+      <span style="font-size: 14px; color: #6B4500">Eingeladen · Link läuft in 31 Std. ab</span>
+      <div style="display: flex; gap: 8px">
+        <button style="min-height: 44px; padding: 0 14px; border-radius: 999px; border: 2px solid #1F2328; background: #FFFFFF; font: 700 14px Barlow, sans-serif; color: #1F2328">Erneut senden</button>
+        <button style="min-height: 44px; padding: 0 14px; border-radius: 999px; border: 2px solid #B8B5AE; background: #FFFFFF; font: 700 14px Barlow, sans-serif; color: #1F2328">Zurückziehen</button>
+      </div>
+    </div>
+  </section>
+
+  <nav aria-label="Backend" style="margin-top: auto; background: #FFFFFF; border-top: 1px solid #E4E2DD; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 6px 4px 10px">
+    <a href="Freigabe.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #4A4F55; font-size: 13px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Freigabe</a>
+    <a href="#" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #4A4F55; font-size: 13px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4zM8 9h8M8 13h8M8 17h5"/></svg>Beiträge</a>
+    <a href="#" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #4A4F55; font-size: 13px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M9 3v5M15 3v5"/></svg>Planung</a>
+    <a href="Mitglieder.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #CD1719; font-size: 13px; font-weight: 700"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>Mitglieder</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

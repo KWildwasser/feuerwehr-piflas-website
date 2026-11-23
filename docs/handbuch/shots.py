@@ -1,0 +1,68 @@
+import asyncio
+from pathlib import Path
+from playwright.async_api import async_playwright
+"""Macht die Bildschirmfotos für das Handbuch aus der gebauten Demo (../demo/index.html)."""
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent
+def find(*c): return str(next(Path(x) for x in c if Path(x).exists()))
+U = (ROOT/'demo'/'index.html').resolve().as_uri()
+O = HERE/'img'
+T = str(ROOT/'demo'/'testimg') + '/'
+async def main():
+    async with async_playwright() as p:
+        b = await p.chromium.launch()
+        pg = await b.new_page(viewport={'width':390,'height':844}, device_scale_factor=2)
+        pg.on('console', lambda m: print('CONSOLE', m.type, m.text) if m.type in ('error','warning') else None); pg.on('pageerror', lambda e: print('PAGEERR', e))
+        async def go(h): await pg.evaluate(f"location.hash='{h}'"); await pg.wait_for_timeout(250); await pg.evaluate('window.scrollTo(0,0)'); await pg.wait_for_timeout(100)
+        async def el(sel, name):
+            await pg.add_style_tag(content='#fab,.btabs{display:none!important}.toast,#toast{opacity:0!important}.btop,header{position:static!important}')
+            await pg.locator(sel).first.scroll_into_view_if_needed(); await pg.wait_for_timeout(100); await pg.locator(sel).first.screenshot(path=str(O/name))
+            await pg.evaluate("document.querySelectorAll('style').forEach(s=>{ if (s.textContent.startsWith('#fab,.btabs')) s.remove(); })")
+        async def login(role):
+            await go('login')
+            await pg.fill('#f-login [name=mail]','max@beispiel.de'); await pg.fill('#f-login [name=pw]','geheim123')
+            await pg.select_option('#f-login [name=role]', role); await pg.evaluate("document.getElementById('f-login').requestSubmit()"); await pg.wait_for_timeout(200)
+            await pg.fill('#f-2fa input','123456'); await pg.evaluate("document.getElementById('f-2fa').requestSubmit()"); await pg.wait_for_timeout(300)
+        await pg.goto(U+'#start'); await pg.wait_for_timeout(500)
+        await pg.add_style_tag(content='#fab{display:none!important} #quick{display:none!important} label:has(select[name=role]), .f:has(select[name=role]){display:none!important}')
+        await pg.evaluate("document.querySelectorAll('.toast').forEach(t=>t.style.opacity=0)")
+        await go('login'); await el('#f-login','01-login.png')
+        await pg.fill('#f-login [name=mail]','erika@beispiel.de'); await pg.fill('#f-login [name=pw]','geheim123'); await pg.evaluate("document.querySelector('#f-login [name=role]').value='Administrator'"); await pg.evaluate("document.getElementById('f-login').requestSubmit()"); await pg.wait_for_timeout(250)
+        await el('#f-2fa','02-code.png')
+        await pg.fill('#f-2fa input','123456'); await pg.evaluate("document.getElementById('f-2fa').requestSubmit()"); await pg.wait_for_timeout(900)
+        print('nach 2fa', await pg.evaluate('location.hash'), await pg.inner_text('#e-2fa') if await pg.locator('#e-2fa').count() else '-', await pg.input_value('#f-2fa input') if await pg.locator('#f-2fa').count() else '-')
+        await pg.evaluate("document.querySelectorAll('.toast').forEach(t=>t.style.opacity=0)")
+        await pg.screenshot(path=str(O/'03-uebersicht.png'))
+        # Beitrag
+        await go('beitraege')
+        await pg.fill('#f-post [name=t]','Übung mit dem Wechsellader'); await pg.fill('#f-post [name=txt]','Am Samstag haben wir das Abrollen und Aufnehmen des Containers geübt.')
+        await pg.set_input_files('#f-post input[data-up=post]', [find(ROOT/'assets'/'fotos'/'fz_wlf.jpg', '/home/claude/fotos/out/fz_wlf.jpg'), find(ROOT/'assets'/'fotos'/'thl_breit.jpg', '/home/claude/fotos/out/thl_breit.jpg')]); await pg.wait_for_timeout(1500)
+        await pg.fill('#f-post [name=alt]','Wechsellader beim Abrollen des Containers')
+        await el('#f-post','04-beitrag.png')
+        await pg.evaluate("document.querySelector('.mrow[data-n=a2] [data-act=c-del]').click()"); await pg.wait_for_timeout(200)
+        await el('.mrow[data-n=a2]','15-loeschen.png')
+        await pg.evaluate("document.querySelector('[data-act=c-del-no]').click()"); await pg.wait_for_timeout(150)
+        await el('.mrow[data-n=a1]','16-verwalten.png')
+        # Mitglieder
+        await go('mitglieder'); await el('#f-invite','06-einladen.png'); await el('#mlist','07-mitgliederliste.png')
+        await go('fotos'); await pg.screenshot(path=str(O/'08-fotos.png'))
+        await go('system'); await el('#ampel','10-ampel.png'); await el('#f-settings','11-einstellungen.png')
+        await go('planung'); await el('#f-plan','12-plan.png')
+        await pg.click('[data-act=logout]'); await pg.wait_for_timeout(200)
+        # Autor Vorschau
+        await go('login'); await pg.evaluate("document.querySelector('#quick [data-role=Autor]').click()"); await pg.wait_for_timeout(300)
+        await go('beitraege'); await pg.fill('#f-post [name=t]','Jugendfeuerwehr beim Wissenstest'); await pg.fill('#f-post [name=txt]','Alle Teilnehmer haben bestanden.')
+        await pg.check('#f-post [name=ok]'); await pg.locator('#f-post button[type=submit]').scroll_into_view_if_needed(); await pg.evaluate("document.getElementById('f-post').requestSubmit()"); await pg.wait_for_timeout(700)
+        print('nach autor', await pg.evaluate('location.hash'), await pg.locator('#vorschau').count())
+        await pg.evaluate('window.scrollTo(0,0)')
+        await pg.evaluate("document.querySelectorAll('.toast').forEach(t=>t.style.opacity=0)")
+        await pg.screenshot(path=str(O/'05-vorschau.png'))
+        await pg.evaluate("location.hash='beitraege'"); await pg.wait_for_timeout(200); await pg.click('[data-act=logout]'); await pg.wait_for_timeout(200)
+        # Freigeber: Alarm
+        await go('login'); await pg.evaluate("document.querySelector('#quick [data-role=Freigeber]').click()"); await pg.wait_for_timeout(300)
+        await pg.evaluate("document.querySelector('[data-act=alarm]').click()"); await pg.wait_for_timeout(600)
+        await go('redaktion'); await pg.evaluate("document.querySelectorAll('.toast').forEach(t=>t.style.opacity=0)")
+        await el('article.card','13-freigabe-einsatz.png')
+        await el('article.card >> nth=1','14-freigabe-beitrag.png') if await pg.locator('article.card').count()>1 else None
+        await b.close()
+asyncio.run(main())

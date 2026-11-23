@@ -1,0 +1,36 @@
+Übergangsseite Feuerwehr Piflas – Anleitung zum Hochladen
+==========================================================
+
+Inhalt
+  index.html            Startseite (Notruf, Instagram/Facebook, Kontakt)
+  impressum.html        Impressum
+  datenschutz.html      Datenschutzerklärung
+  style.css             Gestaltung (keine externen Schriften o. Ä.)
+  logo.svg / logo-weiss.svg  Wortmarke aus dem Briefpapier (rot / weiß)
+  favicon.svg           Browser-Symbol (vorläufig, "FP")
+  .htaccess             HTTPS, www, Weiterleitung alter Joomla-URLs, Sicherheits-Header
+
+Vor dem Hochladen ausfüllen
+  1. datenschutz.html: [Name und Anschrift des Hosters] und [XX] Tage (Speicherdauer
+     der Logfiles, steht in den Unterlagen bzw. im Kundenmenü des Hosters).
+  2. Prüfen, ob info@feuerwehr-piflas.de wirklich ankommt.
+  3. Impressum: Vorstand und Verantwortlichen (M. Jeschke / S. Windele) bestätigen.
+
+Hochladen (per FTP/SFTP, z. B. mit FileZilla)
+  1. SICHERUNG: Den kompletten Inhalt des Webspace-Ordners herunterladen und
+     zusätzlich im Kundenmenü des Hosters die Joomla-Datenbank exportieren.
+     (Wird später für das Archiv der Einsatzberichte gebraucht.)
+  2. Auf dem Server einen Ordner "_alt" anlegen und alle bisherigen Dateien und
+     Ordner von Joomla dort hineinverschieben (nicht löschen).
+     Wichtig: auch die alte .htaccess mitverschieben.
+  3. Die Dateien aus diesem Paket in den nun leeren Hauptordner hochladen.
+     Hinweis: .htaccess ist eine "versteckte" Datei – in FileZilla über
+     Server > "Anzeige versteckter Dateien erzwingen" sichtbar machen.
+  4. https://www.feuerwehr-piflas.de im Browser und am Handy testen.
+  5. Den Ordner "_alt" danach per .htaccess sperren oder vom Server nehmen,
+     sobald die Sicherung lokal geprüft ist (alte Joomla-Versionen sind ein
+     Sicherheitsrisiko).
+
+Falls nach dem Hochladen ein Fehler 500 erscheint
+  .htaccess vorübergehend umbenennen (z. B. in _htaccess). Dann liegt es an einer
+  Einstellung des Hosters; die Seite funktioniert auch ohne diese Datei.
