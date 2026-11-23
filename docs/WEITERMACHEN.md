@@ -15,7 +15,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.17.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
 | `lastenheft/make_pdf.py` | Erzeugt das PDF aus der neuesten `lastenheft-vX.Y.md` |
 | `lastenheft/CLAUDE.md`, `start-prompt-phase1.txt` | Vorlagen für das Code-Repository und die erste Claude-Code-Sitzung |
-| `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.8 (alle Rollen) |
+| `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.16 (alle Rollen) |
 | `handbuch/inhalt.html`, `shots.py`, `make.py`, `img/` | Quellen: Text, Bildschirmfotos aus der Demo, PDF-Erzeugung |
 | `demo/README.md` | Aufbau der Demo und Zuordnung der Prüfungen zu den Lastenheft-IDs |
 | `demo/app-src.html` | Quelltext der Demo – **hier wird geändert** |
@@ -113,7 +113,7 @@ Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `laste
 - Ergebnisse nur für die Person selbst und die Kommandanten, keine Rangliste, Löschfrist 3 Jahre (Annahme). Lehrmaterial der Feuerwehrschulen nur verlinken. Offen: Verantwortlicher und Rechtsgrundlage (L-15).
 
 **Inhalte**
-- Kopf ohne Notruf-Knopf (112 auf der Startseite); im Menü „Login für Mitglieder“ ganz oben, Gruppen Aktuell, Mitmachen, Ratgeber, Über uns; Partnerfeuerwehren eigene Seite; **Jubiläum 2027** zeitgesteuert.
+- Kopf ohne Notruf-Knopf (112 auf der Startseite); im Menü ganz oben ein dezenter Knopf „Login“, Gruppen Aktuell, Mitmachen, Ratgeber, Über uns; Partnerfeuerwehren eigene Seite; **Jubiläum 2027** zeitgesteuert.
 - **Seiten pflegen** (Verein, Chronik, Fahrzeuge, Ausrüstung) durch alle Rollen, Redaktion über die Freigabe (B-21). Bildnachweis „Fotos: Feuerwehr Piflas“.
 
 ## 7. Datenschutz-Hinweis zu diesem Paket
