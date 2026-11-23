@@ -1,6 +1,6 @@
 # Webpräsenz Feuerwehr Piflas – Backup & Anleitung zum Weitermachen
 
-Stand: **23.11.2026** · Lastenheft **v1.14** · Demo **v13** · Handbuch **1.12** · Testsuite **693/693 bestanden**
+Stand: **23.11.2026** · Lastenheft **v1.15** · Demo **v14** · Handbuch **1.13** · Testsuite **693/693 bestanden**
 
 Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte, Bilder und Vorlagen. Damit kannst du (oder jemand aus dem Verein, oder eine neue Claude-Sitzung) jederzeit nahtlos weitermachen. Es enthält keine Zugangsdaten.
 
@@ -11,8 +11,8 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | Ordner / Datei | Inhalt |
 |---|---|
 | `PROJEKT-ANWEISUNGEN.md` | Benutzerdefinierte Anweisungen für das Claude-Projekt (zum Einfügen) |
-| `lastenheft/lastenheft-v1.14.md` | Das Lastenheft als Text – verbindliche Grundlage |
-| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.14.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
+| `lastenheft/lastenheft-v1.15.md` | Das Lastenheft als Text – verbindliche Grundlage |
+| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.15.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
 | `lastenheft/make_pdf.py` | Erzeugt das PDF aus der neuesten `lastenheft-vX.Y.md` |
 | `lastenheft/CLAUDE.md`, `start-prompt-phase1.txt` | Vorlagen für das Code-Repository und die erste Claude-Code-Sitzung |
 | `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.8 (alle Rollen) |
@@ -40,7 +40,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 - **GitHub (alles, öffentlich):** https://github.com/KWildwasser/feuerwehr-piflas-website
 - **Demo öffentlich (GitHub Pages):** https://kwildwasser.github.io/feuerwehr-piflas-website/demo/
 - **Projektseite (für den Pitch, mit QR-Code):** https://kwildwasser.github.io/feuerwehr-piflas-website/
-- **Demo v13 (Claude-Artefakt, gleicher Link wie zuvor):** https://claude.ai/artifact/JDBEcotDJPXWSgDe7dBzhn
+- **Demo v14 (Claude-Artefakt, gleicher Link wie zuvor):** https://claude.ai/artifact/JDBEcotDJPXWSgDe7dBzhn
 - Ältere, öffentlich geteilte Stände: v4 https://claude.ai/artifact/3zpe9uaMATpMUXYjNNLvS4 · v3 https://claude.ai/artifact/PPtQ5Y7QVMb5PSzn52DTCA (nicht mehr aktuell)
 - Partnerfeuerwehren: https://www.ff-ergolding.de/ · https://oberglaim.feuerwehren.bayern/
 - Instagram: https://www.instagram.com/feuerwehrpiflas/
@@ -74,7 +74,7 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 ## 4. Nächste Schritte (Reihenfolge)
 
 1. **Übergangsseite online stellen** – `uebergangsseite/LIESMICH.txt`. Vorher Joomla komplett sichern, Logfile-Dauer des Hosters in `datenschutz.html` eintragen.
-2. **Pitch** beim Kommandanten, im Gemeinderat und beim Bürgermeister mit der Projektseite und Demo v13 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Lernen, Störung simulieren).
+2. **Pitch** beim Kommandanten, im Gemeinderat und beim Bürgermeister mit der Projektseite und Demo v14 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Lernen, Störung simulieren).
 3. **Betriebsvariante entscheiden** (Lastenheft 4.3): Wer betreut die Seite? Ohne zwei Admins → Wartung durch Dienstleister.
 4. **Offene Punkte** aus Lastenheft Abschnitt 5 einsammeln (Kommandant, Ortsteile, Pflege der Vereinsseite laut Satzung, Jubiläumstermine, Fahrzeugtypen, Namen der Fotografinnen und Fotografen, PDFs, Förderbeitrag …).
 5. **Phase 0** (Zugänge, Hosting-Prüfung, DIVERA-API, Instagram-Business-Konto), dann **Phase 1** mit Claude Code und dem Start-Prompt.
@@ -83,34 +83,34 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 
 Dieses ZIP hochladen und z. B. schreiben:
 
-> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.14.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
+> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.15.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
 
-Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.14.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
+Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.15.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
 
 ## 6. Wichtige Entscheidungen (Kurzfassung)
 
-- **WordPress** statt statischer Seite, weil Mitglieder mit eigenen Konten pflegen sollen.
-- **Keine Selbstregistrierung** – nur Einladung durch einen Admin; immer mindestens zwei Admins.
-- **Keine Spenden online** (Satzung) – nur Werbung für Fördermitgliedschaft mit PDFs.
-- **DIVERA:** Einsätze datensparsam (nur Ortsteil, Uhrzeit gerundet), Freigabe durch den Kommandanten mit Pflicht-Bestätigung, frühestens 2 Std. nach Alarm; alle nicht-privaten Termine automatisch.
-- **Jubiläum 2027** zeitgesteuert, verschwindet danach automatisch und bleibt nur in der Chronik.
-- **Du-Form** überall, **gegliedertes Menü** (Aktuell, Mitmachen, Ratgeber, Über uns), **keine Gemeinderat-Seite**, **Partnerfeuerwehren** auf eigener Seite.
-- **Frauen und Männer** gleichermaßen ansprechen (N-13). Rollen: Admin, Kommandant · Freigabe, Redaktion, Bereichsredaktion; Ausnahmen „Kommandant“ und „Admin“, Feuerwehrfunktionen nach FwDV.
-- **Bearbeiten und Ausblenden** gemäß Rolle (Redaktion: eigene, Änderung über Freigabe); **Löschen** nur Admins nach Nachfrage, 30 Tage Papierkorb (B-14 bis B-16).
-- **Lernen (2.12, E-01 bis E-14):** Monatsthema vom Kommandanten mit Multiple-Choice-Test; Rolle „Mitglied“ nur lesen und lernen; Lernstand nur für Kommandanten (keine Admins), keine Rangliste, Löschfrist 3 Jahre (Annahme); Lehrmaterial der Feuerwehrschulen nur verlinken. Offen: Verantwortlicher und Rechtsgrundlage (L-15). Test mit genau 5 Fragen, bestanden ab 4 richtigen (E-06).
-- **Gern und leicht lernen (2.13, E-15 bis E-28):** große Themenkarte, Lernen in Schritten mit „Weiterlernen“, eine Frage pro Bildschirm mit sofortiger Rückmeldung, Erfolgsmoment, Serie, anonymes gemeinsames Ziel, Nachholen; Themenplan für Kommandanten (12 Monate, anlegen, bearbeiten, kopieren, ausblenden); Laientest als Abnahme.
-- **Angemeldet bleiben (B-10, B-23):** Nach dem Speichern bleibt man in der Ansicht, die Meldung hat „Beitrag ansehen“ und „Rückgängig“; öffentliche Seiten werden angemeldet mit Kopf und unterer Leiste gezeigt.
-- **Rote Zähler** an den Bereichen, wenn etwas zu tun ist (B-22); **Rollen ändern** durch Admins am Konto, nicht die eigene, immer zwei Admins (B-02).
-- **Eine Rolle je Konto**, kein Rollen-Auswahlfeld beim Login. Geplante Besetzung: 3 Kommandanten, 2 Admins, mehrere Redaktion.
-- **Rückgängig überall** (B-17), letzte Aktion 5 Minuten oben sichtbar – auch nach dem Veröffentlichen, und **Verlauf** je Inhalt, nur anhängen, mit Spam-Schutz (B-07, N-05).
-- **Inhalte-Übersicht** mit Suche, Filtern und Seitenweise-Laden für hunderte Einträge (B-18); **Einsatz von Hand** für Kommandanten (D-09).
-- **Seiten pflegen:** Verein, Chronik, Fahrzeuge, Ausrüstung; alle legen Fahrzeuge und Geräte an (Redaktion über Freigabe), entfernen nur Kommandant und Admins (B-21).
-- **E-Mail-Hinweis:** kurze Mail an alle Kommandanten je Einreichung und täglich um 7 Uhr, nur mit Link zur Freigabe – keine Inhalte, Freigeben nur auf der Website (W-09).
-- **Freigabe und Verlauf als Vergleich:** geänderte Felder Wort für Wort (rot weg, grün neu) (W-08, B-07).
-- **Überörtliche Einsätze:** Einsatzort als Ortsteil oder Gemeinde, nie Straße (D-02, D-09).
+**Grundlagen**
+- **WordPress** auf dem Vereins-Hosting, weil Mitglieder mit eigenen Konten pflegen. **Wartbarkeit** durch Ehrenamtliche ist Leitprinzip (A-01 bis A-12).
+- **Keine Spenden online** (Satzung), **keine Cookies, keine Drittanbieter** (N-01).
+- **Du-Form**, Frauen und Männer gleichermaßen ansprechen (N-13); Ausnahmen „Kommandant“, „Admin“ und FwDV-Funktionen.
+
+**Konten und Rechte**
+- Nur per **Einladung**, **eine Rolle je Konto**, immer **zwei Admins**. Rollen: Admin, Kommandant · Freigabe, Redaktion, Bereichsredaktion, Mitglied (nur Lernen). Admins ändern Rollen am Konto (B-02).
+- **Bearbeiten und Ausblenden** gemäß Rolle, **Löschen** nur Admins mit 30 Tagen Papierkorb (B-14 bis B-16). **Rückgängig** überall, **Verlauf** je Inhalt (B-07, B-17).
+- **Angemeldet bleiben:** nach dem Speichern in der Ansicht, auch öffentliche Seiten mit Kopf und unterer Leiste; rote Zähler zeigen, wo etwas zu tun ist (B-10, B-22, B-23).
+
+**Einsätze und Freigabe**
+- **DIVERA** datensparsam (Einsatzart, Ortsteil oder Gemeinde, gerundete Uhrzeit, Fahrzeuge), Freigabe durch den Kommandanten mit Pflicht-Häkchen, frühestens 2 Std. nach Alarm; **Einsatz von Hand** bei Störungen (D-01 bis D-09).
+- **Freigabe als Vergleich** (W-08); **E-Mail** an die Kommandanten nur als Hinweis mit Link, ohne Inhalte (W-09).
 - **Schnittstellen** austauschbar mit Fehlercodes, Diagnose, Notbetrieb und Reparatur-Anleitung (A-10 bis A-12).
-- **Fotos:** alle Rollen dürfen Fotos zu Beiträgen hinzufügen; nur Admins verwalten alle Fotos; Standard-Bildnachweis „Feuerwehr Piflas“.
-- **Wartbarkeit** ist Leitprinzip: alles Veränderliche im Backend, Zustands-Ampel, Handbuch, zwei Admins.
+
+**Lernen (2.12, 2.13)**
+- Monatsthema vom Kommandanten, in Schritten am Handy, 5 Fragen, bestanden ab 4; Themenplan für 12 Monate.
+- Ergebnisse nur für die Person selbst und die Kommandanten, keine Rangliste, Löschfrist 3 Jahre (Annahme). Lehrmaterial der Feuerwehrschulen nur verlinken. Offen: Verantwortlicher und Rechtsgrundlage (L-15).
+
+**Inhalte**
+- Menü: Aktuell, Mitmachen, Ratgeber, Über uns; Partnerfeuerwehren eigene Seite; **Jubiläum 2027** zeitgesteuert.
+- **Seiten pflegen** (Verein, Chronik, Fahrzeuge, Ausrüstung) durch alle Rollen, Redaktion über die Freigabe (B-21). Bildnachweis „Fotos: Feuerwehr Piflas“.
 
 ## 7. Datenschutz-Hinweis zu diesem Paket
 
