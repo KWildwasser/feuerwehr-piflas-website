@@ -120,7 +120,7 @@ section{padding:72px 0}
 .qrbar b{display:block;font-stretch:75%;font-size:28px;line-height:1.1;margin-bottom:4px}
 .qrbar span{color:var(--grau)}
 .qrbar code{font:600 15px/1.4 Fw,system-ui,sans-serif;color:var(--rot-d);overflow-wrap:anywhere}
-@media (max-width:640px){.qrbar{display:none}}
+@media (max-width:640px){.qrbar .wrap{gap:14px;padding-top:12px;padding-bottom:12px}.qrbar img{width:92px;height:92px}.qrbar b{font-size:20px}.qrbar span{font-size:15px}}
 footer{background:var(--ink);color:#C9CDD2;padding:40px 0;font-size:15px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:center}
 footer img{height:34px;display:block}
@@ -145,7 +145,7 @@ footer a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
     <span class="kicker">Freiwillige Feuerwehr Piflas · Markt Ergolding</span>
     <h1>Die neue Website der <em>Feuerwehr Piflas</em></h1>
     <p class="lead">Aktuelle Einsätze, Termine und Bürgertipps – gepflegt von Mitgliedern, freigegeben am Handy. Probier die klickbare Demo aus: öffentliche Seite und Mitgliederbereich.</p>
-    <div class="btns"><a class="btn p" href="demo/">Demo öffnen →</a><a class="btn o" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.8.pdf">Lastenheft lesen</a></div>
+    <div class="btns"><a class="btn p" href="demo/">Demo öffnen →</a><a class="btn o" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.9.pdf">Lastenheft lesen</a></div>
     <ul class="facts"><li>Keine Cookies</li><li>Kein Tracking</li><li>Am Handy bedienbar</li><li>Pflege ohne IT-Kenntnisse</li></ul>
   </div>
   <div class="stack" aria-hidden="true">
@@ -158,7 +158,7 @@ footer a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
   <div class="sh"><h2>Was die Website kann</h2><p>Gebaut mit WordPress auf dem Vereins-Hosting. Was sich wiederholt, läuft automatisch – was Menschen entscheiden müssen, geht schnell am Handy.</p></div>
   <div class="grid">
     <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2s5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3 1-6 1-8.5z"/></svg><h3>Einsätze aus DIVERA</h3><p>Nach jedem Alarm entsteht automatisch ein Entwurf – nur Einsatzart, Ortsteil, gerundete Uhrzeit und Fahrzeuge. Keine Adressen, keine Namen.</p></div>
-    <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M9.5 12l2 2 3.5-4"/></svg><h3>Freigabe am Handy</h3><p>Der Kommandant bekommt jede Einreichung per E-Mail, prüft und gibt frei – am Handy oder direkt aus der Mail, mit Pflicht-Häkchen. Veröffentlicht wird frühestens zwei Stunden nach dem Alarm.</p></div>
+    <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M9.5 12l2 2 3.5-4"/></svg><h3>Freigabe am Handy</h3><p>Der Kommandant bekommt bei jeder Einreichung einen E-Mail-Hinweis, sieht auf einen Blick, was neu oder geändert ist, und gibt am Handy frei – mit Pflicht-Häkchen. Veröffentlicht wird frühestens zwei Stunden nach dem Alarm.</p></div>
     <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M18 8v6M15 11h6"/></svg><h3>Mitmachen</h3><p>Ein kurzes Formular ganz oben, Wege zur Jugendfeuerwehr und zur Fördermitgliedschaft. Frauen und Männer gleichermaßen willkommen.</p></div>
     <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6c0 4-2 5.5-2 5.5h16S18 13 18 9a6 6 0 0 0-6-6z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg><h3>Bürgerinfos</h3><p>Notruf richtig absetzen, Warn-Apps, Sirenensignale. Der Tipp wechselt mit der Jahreszeit, Warntag und Probealarm werden angekündigt.</p></div>
     <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg><h3>Instagram ohne Tracking</h3><p>Freigegebene Beiträge gehen auf Wunsch auf Instagram. Die Vorschau holt der Server – Besucherinnen und Besucher übertragen nichts an Meta.</p></div>
@@ -196,11 +196,11 @@ footer a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
 <section id="dokumente" style="background:var(--hell)"><div class="wrap">
   <div class="sh"><h2>Dokumente</h2><p>Alles, was für Entscheidung und Umsetzung gebraucht wird.</p></div>
   <div class="docs">
-    <a class="doc" href="demo/"><span class="t">Demo</span><b>Klickbare Demo v7</b><span>Öffentliche Seite und Mitgliederbereich, läuft komplett im Browser</span></a>
-    <a class="doc" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.8.pdf"><span class="t">PDF · v1.8</span><b>Lastenheft &amp; Umsetzungsplan</b><span>Anforderungen, Recht, Infrastruktur, Phasen</span></a>
-    <a class="doc" href="handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf"><span class="t">PDF · v1.6</span><b>Handbuch Mitgliederbereich</b><span>Anleitung für Admins, Kommandant und Redaktion</span></a>
+    <a class="doc" href="demo/"><span class="t">Demo</span><b>Klickbare Demo v8</b><span>Öffentliche Seite und Mitgliederbereich, läuft komplett im Browser</span></a>
+    <a class="doc" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.9.pdf"><span class="t">PDF · v1.9</span><b>Lastenheft &amp; Umsetzungsplan</b><span>Anforderungen, Recht, Infrastruktur, Phasen</span></a>
+    <a class="doc" href="handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf"><span class="t">PDF · v1.7</span><b>Handbuch Mitgliederbereich</b><span>Anleitung für Admins, Kommandant und Redaktion</span></a>
     <a class="doc" href="https://github.com/KWildwasser/feuerwehr-piflas-website/blob/main/docs/design/corporate-design.md"><span class="t">Design</span><b>Corporate Design</b><span>Logo, Farben, Schrift, Gestaltungsregeln</span></a>
-    <a class="doc" href="https://github.com/KWildwasser/feuerwehr-piflas-website/blob/main/docs/demo/README.md"><span class="t">Qualität</span><b>Testsuite</b><span>565 automatische Prüfungen als Abnahmeliste</span></a>
+    <a class="doc" href="https://github.com/KWildwasser/feuerwehr-piflas-website/blob/main/docs/demo/README.md"><span class="t">Qualität</span><b>Testsuite</b><span>568 automatische Prüfungen als Abnahmeliste</span></a>
     <a class="doc" href="uebergangsseite/"><span class="t">Vorschau</span><b>Übergangsseite</b><span>Vorläufige Startseite bis zum Start der neuen Website</span></a>
   </div>
 </div></section>
