@@ -1,6 +1,6 @@
 # Website Feuerwehr Piflas
 
-Planung, klickbare Demo und Dokumentation für die neue Website des Feuerwehr Piflas e.V. (www.feuerwehr-piflas.de). Die Feuerwehr Piflas ist eine Ortsfeuerwehr des Marktes Ergolding.
+Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Piflas e.V. (www.feuerwehr-piflas.de). Die Feuerwehr Piflas ist eine Ortsfeuerwehr des Marktes Ergolding.
 
 [![Demo-Tests](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml/badge.svg)](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml)
 
