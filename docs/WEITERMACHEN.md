@@ -21,6 +21,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | `demo/app-src.html` | Quelltext der Demo – **hier wird geändert** |
 | `demo/build.py` → `demo/index.html` | Baut die fertige Demo (eine Datei, läuft offline) |
 | `demo/test_app.py`, `demo/testimg/` | Testsuite (700 Prüfungen) = Abnahmeliste für die echte Website |
+| `plan/Umsetzungsplan-bis-Weihnachten-2026.pdf`, `plan/umsetzungsplan-bis-weihnachten-2026.md` | Umsetzungsplan bis Weihnachten 2026 (PDF und Text; Online-Fassung siehe Links) |
 | `betrieb/schnittstellen.md` | Anleitung „Schnittstellen reparieren“ (DIVERA, Instagram) für die Technik – A-12 |
 | `index.html`, `assets/screens/`, `assets/qr-projektseite.svg` | Projektseite auf GitHub Pages (mit QR-Code für den Pitch) |
 | `../tools/sketches.py`, `demo/sketches/` | Eigene Skizzen für die Beispiel-Lernthemen (SVG); erzeugt `demo/sketches.js` für die Demo |
