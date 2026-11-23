@@ -33,6 +33,7 @@ CHROME=/pfad/zu/chrome python test_app.py    # optional eigener Browser
 | Navigation | Menügruppen, Partnerseite, Zurück-Taste, unbekannte Adressen, Tastatur | F-09, F-11, N-02 |
 | Formulare | Pflichtfelder, Datenschutz-Häkchen, Fehlermeldungen | F-06, W-04 |
 | Gern und leicht lernen | Begrüßung, Themenkarte mit Dauer und Symbol, Schritte mit Fortschritt, Weiterlernen, direkt zum Test, eine Frage pro Bildschirm, Rückmeldung mit Erklärung, Ergebnis mit Erfolgsmoment, Serie, anonymes gemeinsames Ziel, Themenplan (12 Monate, + Thema für Monat, kopieren), Ideen, „Was fehlt noch?“ | E-15 bis E-27 |
+| Angemeldet bleiben | nach dem Speichern in „Inhalte“, Meldung mit „Beitrag/Bericht/Vorschau ansehen“, öffentliche Seite mit Kopf, Menü und unterer Leiste | B-10, B-23 |
 | Zähler und Rollen ändern | rote Zahl an Lernen, Freigabe und System, verschwindet nach Erledigen; Rolle ändern mit Datum und Person, eigene Rolle gesperrt, mindestens zwei Admins, 2FA-Hinweis, Rückgängig | B-22, B-02, A-08, B-04 |
 | Login und Rollen | keine Rollenauswahl (Rolle aus dem Konto), unbekannte E-Mail, 2FA, Schnell-Login, Bereiche je Rolle, 3/2/mehrere Konten | B-01 bis B-06 |
 | Beiträge und Fotos | Fotos verkleinern, GPS entfernen, nur Bilder, Titelbild wählen, Vorschau, Sprung zum Beitrag | B-09 bis B-11, B-19 |

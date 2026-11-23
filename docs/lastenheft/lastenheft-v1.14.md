@@ -1,6 +1,6 @@
 # Lastenheft & Umsetzungsplan – Webpräsenz Feuerwehr Piflas
 
-23.11.2026 · Korbinian · Version 1.13 (WordPress) · Referenz: Demo v12 und Handbuch 1.11
+23.11.2026 · Korbinian · Version 1.14 (WordPress) · Referenz: Demo v13 und Handbuch 1.12
 
 ## 0. Auf einen Blick
 
@@ -11,7 +11,7 @@
 - **Leitprinzip:** Ehrenamtliche ohne IT-Kenntnisse können die Seite auch in Jahren noch betreuen (2.11).
 - **Vorhanden:**
   - Übergangsseite
-  - Klickbare Demo v12 mit Testsuite (686 Prüfungen), öffentlich auf GitHub Pages
+  - Klickbare Demo v13 mit Testsuite (693 Prüfungen), öffentlich auf GitHub Pages
   - Anleitung „Schnittstellen reparieren“ für die Technik (A-12)
   - Handbuch für den Mitgliederbereich
   - Backup-Paket
@@ -117,7 +117,7 @@ Voraussetzung: @feuerwehrpiflas ist ein professionelles Konto (Business). Eine F
 | B-07 | Verlauf: Jeder Beitrag, Einsatzbericht, jedes Fahrzeug und Gerät und die Seite „Verein & Chronik“ hat einen Verlauf mit Zeit, Person, Aktion (erstellt, bearbeitet, ausgeblendet, gelöscht, wiederhergestellt, rückgängig gemacht), Freigabe durch, optionaler Notiz und geänderten Feldern. Jede frühere Fassung lässt sich wiederherstellen (Redaktion: als Änderung zur Freigabe). Sicher: Einträge werden nur angehängt, niemand kann sie ändern oder löschen; die Person kommt aus der Anmeldung, nicht aus dem Formular; der Verlauf ist nur im Mitgliederbereich sichtbar. Darstellung: neueste Änderung oben, aktuelle Fassung markiert; je Eintrag Aktion, Zeit, Person, Freigabe und Notiz, darunter „Was wurde geändert?“ mit demselben Vergleich wie in der Freigabe (W-08). Schutz vor Spam: Speichern ohne Änderung erzeugt keinen Eintrag; Änderungen derselben Person am selben Inhalt innerhalb von 10 Minuten werden zusammengefasst; Begrenzung nach N-05; höchstens 50 Fassungen je Inhalt, ältere Zwischenstände werden ausgedünnt (die erste Fassung bleibt). Zusätzlich protokolliert die Website Anmeldungen und Rechteänderungen. | Muss |
 | B-08 | Bei Austritt wird das Konto deaktiviert, nicht gelöscht. Die Beiträge bleiben erhalten. | Muss |
 | B-09 | Ein Beitrag besteht aus Titel, Kategorie (Verein, Übung, Jugendfeuerwehr, Bürgertipp), Text, Fotos, optionaler Bildbeschreibung, dem Instagram-Häkchen und der Pflicht-Bestätigung (W-04). Kommandant und Admins veröffentlichen direkt, die Redaktion reicht zur Freigabe ein. | Muss |
-| B-10 | Nach dem Speichern springt die Seite zum Beitrag. In der Rolle Redaktion erscheint er als „Vorschau – noch nicht öffentlich“, bis er freigegeben ist. | Muss |
+| B-10 | Nach dem Speichern oder Veröffentlichen bleibt man angemeldet in der bisherigen Ansicht (z. B. „Inhalte“, „Freigabe“). Eine Meldung bestätigt es und bietet „Beitrag ansehen“ bzw. „Bericht ansehen“ – in der Rolle Redaktion „Vorschau ansehen“ mit dem Hinweis „Vorschau – noch nicht öffentlich“, bis freigegeben ist – sowie „Rückgängig“ (B-17). Beide Knöpfe stehen 5 Minuten lang auch oben in „Zuletzt“. | Muss |
 | B-11 | Fotos (alle Rollen): mehrere aus Kamera oder Galerie, vor dem Absenden einzeln entfernbar. Das erste ist das Titelbild. Beim Hochladen werden sie auf max. 1600 px verkleinert, Standort- und Kameradaten werden auch im Original entfernt. Nur Bilddateien sind erlaubt. | Muss |
 | B-12 | Fotoverwaltung (nur Admins): alle Fotos an einem Ort, jeweils mit Angabe, wo sie verwendet werden. „Ersetzen“ tauscht ein Foto überall aus. „Entfernen“ fragt nach und hinterlässt einen Platzhalter. Instagram-Bilder werden nur auf der Website ausgeblendet. | Muss |
 | B-13 | Handbuch: Das PDF „Handbuch Mitgliederbereich“ ist nach dem Login im Kopf jeder Seite verlinkt (Buch-Symbol) und zusätzlich im System-Bereich. Es ist öffentlich nicht verlinkt, im Theme hinterlegt und von den Admins austauschbar. Inhalt und Pflege: A-06. | Muss |
@@ -130,6 +130,7 @@ Voraussetzung: @feuerwehrpiflas ist ein professionelles Konto (Business). Eine F
 | B-20 | Grenzen gegen Missbrauch: Höchstlängen für alle Felder (z. B. Titel 120, Text 8.000 Zeichen), Fotos laut B-11. | Muss |
 | B-21 | Seiten pflegen (Bereich „Seiten“): Verein (Einleitung, Vorstandschaft als Zeilen Amt – Name), Chronik (Jahr, Titel, Text; automatisch nach Jahr sortiert), Fahrzeuge (Name, Kurzname für Einsatzberichte, Beschreibung, Foto, Bildbeschreibung, Hervorhebung „Neu im Fuhrpark“ mit Vorstellungstext) und Ausrüstung (Bezeichnung, Foto, Bildbeschreibung). Alle Rollen bearbeiten und legen neue Fahrzeuge und Geräte an; die Redaktion über die Freigabe (W-08). Entfernen dürfen Kommandant und Admins (Nachfrage, 30 Tage wiederherstellbar). Neue Fahrzeuge stehen sofort im Formular „Einsatz von Hand“ zur Auswahl. Die zentrale Fotoverwaltung (B-12) ist von hier aus verlinkt. | Muss |
 | B-22 | Zähler an den Bereichen: Ist etwas zu tun, zeigt das Symbol in der unteren Leiste eine rote Zahl – Freigabe: offene Einreichungen; Inhalte (Redaktion): „Zurück an dich“; Lernen: das Thema des Monats ist noch nicht bestanden, für Kommandanten zusätzlich je fehlendem Thema für diesen oder nächsten Monat; System: Hinweise der Schnittstellen. Ist alles erledigt, verschwindet die Zahl. Vorlesesoftware liest die Zahl mit Klartext vor (z. B. „Freigabe, 4 warten auf Freigabe“). | Muss |
+| B-23 | Angemeldet bleiben auf der öffentlichen Seite: Wer angemeldet ist, sieht auch die öffentlichen Seiten mit dem Kopf des Mitgliederbereichs (Logo, Menü der öffentlichen Seiten, Handbuch, „Abmelden“, Name und Rolle) und der unteren Leiste mit den eigenen Bereichen und Zählern (B-22). Im Menü steht statt „Login für Mitglieder“ „Zum Mitgliederbereich“. Niemand fällt beim Ansehen eines Beitrags aus dem Mitgliederbereich heraus. | Muss |
 
 **Rollen** (je Konto genau eine, B-01; geplante Besetzung: 3 Kommandanten, 2 Admins, mehrere Personen in der Redaktion, alle übrigen Aktiven als Mitglied)
 
@@ -358,10 +359,10 @@ Bei Widersprüchen gilt das Lastenheft. Demo und Handbuch werden dann angepasst.
 | Dokument | Wofür | Wo |
 | --- | --- | --- |
 | Lastenheft (dieses Dokument) | Was gebaut wird | Online-Dokument, Claude-Projekt, PDF |
-| Demo v12 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
-| Testsuite (686 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
+| Demo v13 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
+| Testsuite (693 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
 | Anleitung „Schnittstellen reparieren“ | Reparatur von DIVERA und Instagram durch die Technik (A-12) | GitHub, Backup (`betrieb/schnittstellen.md`) |
-| Handbuch Mitgliederbereich 1.11 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
+| Handbuch Mitgliederbereich 1.12 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
 | Corporate Design | Logo, Farben, Schrift | Claude-Projekt |
 | Backup-Paket mit WEITERMACHEN.md | Alles, um später weiterzuarbeiten | ZIP |
 
@@ -432,9 +433,9 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 | Ergebnis | Stand |
 | --- | --- |
 | Übergangsseite | Fertig zum Hochladen |
-| Demo v12 + Testsuite (686 Prüfungen) | Fertig, auf GitHub Pages |
-| Handbuch | Version 1.11 fertig |
-| Lastenheft | Version 1.13 |
+| Demo v13 + Testsuite (693 Prüfungen) | Fertig, auf GitHub Pages |
+| Handbuch | Version 1.12 fertig |
+| Lastenheft | Version 1.14 |
 | Backup-Paket | Wird mit jeder Version aktualisiert |
 
 **Sofort:** Übergangsseite hochladen. Vorher Joomla komplett sichern und die Speicherdauer der Logfiles in datenschutz.html eintragen.
@@ -548,3 +549,4 @@ Checkliste der IDs.
 | 1.11 | 23.11.2026 | Neu 2.12 „Lernen“ (E-01 bis E-14, Anforderung des 1. Kommandanten): Rolle „Mitglied“ ohne Schreib- und Bearbeitungsrechte, Monatsthema mit Inhalt, Merksätzen, Links zu den Feuerwehrschulen und Multiple-Choice-Test, eigener Lernstand, Lernstand nur für Kommandanten, Datensparsamkeit und Löschfrist. Neu L-14 bis L-17 (Urheberrecht, Datenschutz der Lernergebnisse, keine Leistungskontrolle, DGUV-Unterweisung bleibt). Geändert: B-06 und R-01 (Redaktionsplan unter „Inhalte“, höchstens sechs Bereiche in der Leiste), B-17 (Ausnahme Testversuche), Rollentabelle, Ziele, A-06, N-13, 0, 4.2, 5, 6 (neue Phase 6), CLAUDE.md-Vorlage (Präfix E-). Annahmen: bestanden ab 80 %, Löschfrist 3 Jahre, freiwillige Teilnahme. Demo v10, Testsuite (643 Prüfungen), Handbuch 1.9. |
 | 1.12 | 23.11.2026 | Neu B-22: rote Zähler an den Bereichen, wenn etwas zu tun ist (Freigabe, Inhalte, Lernen, System). Geändert: E-06 (genau 5 Fragen, bestanden ab 4 richtigen Antworten), E-05, B-02 (Admins ändern Rollen am Konto: nicht die eigene, immer mindestens zwei Admins, Hinweis auf 2FA, rückgängig machbar), 0, 4.2, 5, 6. Demo v11, Testsuite (655 Prüfungen), Handbuch 1.10. |
 | 1.13 | 23.11.2026 | Neu 2.13 „Gern und leicht lernen“ (E-15 bis E-28): Leitlinien und messbare Ziele, Startseite mit Begrüßung und großer Themenkarte, Lernen in Schritten mit Fortschritt und „Weiterlernen“, eine Frage pro Bildschirm mit sofortiger Rückmeldung, Ergebnis mit Erfolgsmoment, persönlicher Fortschritt und Serie, anonymes gemeinsames Ziel, Nachholen, Symbole und Lesezeit, Erinnerungen, leichter Zugang, Themenplan für Kommandanten (12 Monate, anlegen, bearbeiten, kopieren, ausblenden), Hilfen beim Anlegen, Laientest als Abnahme. Geändert: E-02, E-05, E-06, A-06, 0, 4.2, 5, 6. Demo v12, Testsuite (686 Prüfungen), Handbuch 1.11. |
+| 1.14 | 23.11.2026 | Geändert B-10: Nach dem Speichern bleibt man im Mitgliederbereich in der bisherigen Ansicht; die Meldung bietet „Beitrag ansehen“ bzw. „Vorschau ansehen“ und „Rückgängig“. Neu B-23: Angemeldete sehen auch die öffentlichen Seiten mit Kopf und unterer Leiste des Mitgliederbereichs. Demo v13, Testsuite (693 Prüfungen), Handbuch 1.12. |

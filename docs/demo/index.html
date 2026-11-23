@@ -267,7 +267,9 @@ main.bm{padding-bottom:calc(150px + var(--sab))}
 
 /* Demo */
 .fab{position:fixed;right:16px;bottom:calc(16px + var(--sab));z-index:50;background:var(--ink);color:#fff;border:3px solid #fff;border-radius:999px;min-height:52px;padding:0 18px;font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px -8px rgba(0,0,0,.5)}
-body.bk .fab{bottom:calc(76px + var(--sab))}
+body.bk .fab,body.lin .fab{bottom:calc(76px + var(--sab))}
+body.lin main{padding-bottom:0}body.lin .foot{padding-bottom:calc(96px + var(--sab))}
+.btop .hbm{color:#fff;border:1px solid #555B62;border-radius:999px;width:44px;height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;background:none}.btop .hbm svg{width:22px;height:22px}
 .fab{transition:transform .2s ease}
 body.fabhide .fab{transform:translateY(calc(100% + 100px))}
 .fab .dot{width:10px;height:10px;border-radius:50%;background:#FF5A55}
@@ -290,7 +292,7 @@ body.sopen .scrim{opacity:1;pointer-events:auto}
 .push.on{transform:none;visibility:visible}
 .push .ic{width:40px;height:40px;border-radius:10px;background:var(--rot);flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
 .toast{position:fixed;left:50%;bottom:calc(84px + var(--sab));transform:translate(-50%,20px);z-index:90;background:var(--ink);color:#fff;border-radius:12px;padding:12px 16px;font-size:15px;opacity:0;transition:.25s;pointer-events:none;width:max-content;max-width:calc(100vw - 32px)}
-body.bk .toast{bottom:calc(140px + var(--sab))}
+body.bk .toast,body.lin .toast{bottom:calc(140px + var(--sab))}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .t-ok{background:#E3F1E6;color:#1E6B35}.warnbox{background:#FFF6DB}.lead{font-size:19px;margin:0}
 .lst{display:inline-flex;width:32px;height:32px;border-radius:50%;align-items:center;justify-content:center;font-weight:800;flex:none}
@@ -416,7 +418,7 @@ ins{background:#DDF3E1;color:#14532D;text-decoration:underline;text-decoration-c
 <aside class="drawer" id="drawer" aria-label="Menü" aria-hidden="true" inert>
   <div class="dh"><span class="logo" style="width:130px;height:36px" role="img" aria-label="Feuerwehr Piflas"></span><button class="ib" data-act="menu-close" aria-label="Menü schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <nav id="mnav" aria-label="Hauptmenü"></nav>
-  <div class="foot" style="background:none;color:var(--ink);padding-bottom:0"><a class="btn o" href="#login" style="color:var(--ink)">Login für Mitglieder</a></div>
+  <div class="foot" style="background:none;color:var(--ink);padding-bottom:0"><a class="btn o" id="dr-login" href="#login" style="color:var(--ink)">Login für Mitglieder</a></div>
 </aside>
 
 <button class="fab" id="fab" data-act="sheet-open" aria-haspopup="dialog"><span class="dot" aria-hidden="true"></span>Demo</button>
@@ -741,7 +743,7 @@ const pubFoot = () => `<footer class="foot"><div class="wrap"><span class="logo 
   <nav aria-label="Fußzeile"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a><a href="https://www.instagram.com/feuerwehrpiflas/">Instagram</a><a href="https://www.facebook.com/feuerwehrpiflas">Facebook</a><a href="#partner">Partnerfeuerwehren</a><a href="#login">Login für Mitglieder</a></nav>
   <span class="mini">© 2026 Feuerwehr Piflas e.V. · Demo-Version mit Beispielinhalten · Fotos: Feuerwehr Piflas</span></div></footer>`;
 const backHead = () => `<header class="btop"><div class="wrap"><a href="#start" aria-label="Zur öffentlichen Website"><span class="logo w" role="img" aria-label="Feuerwehr Piflas"></span></a>
-  <div class="tr"><a class="hb" id="hb-link" href="handbuch.pdf" target="_blank" rel="noopener" aria-label="Handbuch (PDF) öffnen">${I.book}<span>Handbuch</span></a><button data-act="logout">Abmelden</button></div></div>
+  <div class="tr"><button class="ib hbm" data-act="menu-open" aria-label="Öffentliche Seiten: Menü öffnen" aria-expanded="false" aria-controls="drawer">${I.menu}</button><a class="hb" id="hb-link" href="handbuch.pdf" target="_blank" rel="noopener" aria-label="Handbuch (PDF) öffnen">${I.book}<span>Handbuch</span></a><button data-act="logout">Abmelden</button></div></div>
   <div class="wrap who" id="who">Angemeldet als <b>${esc(S.user.name)}</b> · ${esc(ROLES[S.user.role].label)}</div></header>`;
 const backTabs = r => `<nav class="btabs" aria-label="Redaktion">${ROLES[S.user.role].tabs.map(k => `<a href="#${k}"${(TABOF[r] || r)===k?' aria-current="page"':''}>${BACK[k][1]}${BACK[k][0]}${todoB(k)}</a>`).join('')}</nav>`;
 /* Zähler an den Tabs (B-22): zeigt, wo etwas zu tun ist – für Vorlesesoftware mit Klartext */
@@ -1082,10 +1084,16 @@ const legend = '<p class="mini legend" style="margin:0"><ins>grün = neu</ins> �
 const UK = ['einsaetze','news','queue','trash','dropped','fz','ger','verein','members','plan','settings','posts','iface','topics'];
 let UNDO = null;
 const snapAll = () => ({j: JSON.stringify(UK.map(k => S[k])), img: {...IMG}, gone: {...S.gone}});
-const done = (msg, u, ref) => { UNDO = {u, ref, msg, at:Date.now()}; toast(msg, true); };
+/* B-10: nach dem Speichern bleibt man in der Ansicht; die Meldung bietet „Ansehen“ (Beitrag, Einsatzbericht oder Vorschau) */
+const viewOf = (ref, vw) => { if (vw) return vw; if (!ref) return null;
+  if (ref[0] === 'n') { const n = S.news.find(x => x.id === ref[1]); return n && !n.hid ? ['n', n.id] : null; }
+  if (ref[0] === 'e') { const e = S.einsaetze.find(x => x.id === ref[1]); return e && !e.hid && !e.ab ? ['e', e.id] : null; }
+  return null; };
+const viewBtn = (vw, cls) => `<button type="button" class="${cls}" data-act="view" data-k="${vw[0]}" data-id="${esc(vw[1])}"${cls === 'tb' ? '' : ' style="color:var(--ink)"'}>${vw[0] === 'q' ? 'Vorschau ansehen' : vw[0] === 'e' ? 'Bericht ansehen' : 'Beitrag ansehen'}</button>`;
+const done = (msg, u, ref, vw) => { const v = viewOf(ref, vw); UNDO = {u, ref, msg, at:Date.now(), view:v}; toast(msg, true, v); };
 /* Die letzte Aktion bleibt 5 Minuten oben sichtbar – auch nach dem Veröffentlichen auf der Beitrags- oder Einsatzseite */
 const UNDO_MS = 5 * 60e3;
-const undoBar = () => S.user && UNDO && Date.now() - UNDO.at < UNDO_MS ? `<div class="wrap"><div class="undobar" id="undo-bar" role="status"><span><b>Zuletzt:</b> ${esc(UNDO.msg)}</span><button type="button" class="btn o sm" data-act="undo" style="color:var(--ink)">Rückgängig</button></div></div>` : '';
+const undoBar = () => S.user && UNDO && Date.now() - UNDO.at < UNDO_MS ? `<div class="wrap"><div class="undobar" id="undo-bar" role="status"><span><b>Zuletzt:</b> ${esc(UNDO.msg)}</span><span class="row2" style="gap:8px">${UNDO.view && !(UNDO.view[0] === 'n' && S.article === UNDO.view[1] && route() === 'aktuelles') && !(UNDO.view[0] === 'e' && S.detail === UNDO.view[1] && route() === 'einsaetze') ? viewBtn(UNDO.view, 'btn o sm') : ''}<button type="button" class="btn o sm" data-act="undo" style="color:var(--ink)">Rückgängig</button></span></div></div>` : '';
 function undo() {
   if (!UNDO) return; const {u, ref} = UNDO; UNDO = null;
   JSON.parse(u.j).forEach((v, i) => { S[UK[i]] = v; });
@@ -1681,11 +1689,13 @@ function render(opts = {}) {
   if (r !== 'einsaetze') S.detail = null;
   if (r !== 'aktuelles') S.article = null;
   if (r !== 'postfach') S.mview = null;
-  const bk = BACKR.includes(r);
-  document.body.classList.toggle('bk', bk);
-  $('#chrome').innerHTML = bk ? backHead() : pubHead(r);
+  const bk = BACKR.includes(r), lin = !!S.user && !bk;
+  document.body.classList.toggle('bk', bk); document.body.classList.toggle('lin', lin);
+  /* B-23: Angemeldet bleibt der Kopf mit Name und Rolle und die untere Leiste auch auf den öffentlichen Seiten */
+  $('#chrome').innerHTML = S.user ? backHead() : pubHead(r);
   $('#main').className = bk ? 'bm' : '';
-  $('#main').innerHTML = undoBar() + V[r]() + (bk ? backTabs(r) : '');
+  $('#main').innerHTML = undoBar() + V[r]() + (S.user ? backTabs(r) : '');
+  const dl = $('#dr-login'); if (dl) { dl.textContent = S.user ? 'Zum Mitgliederbereich' : 'Login für Mitglieder'; dl.setAttribute('href', S.user ? '#' + ROLES[S.user.role].tabs[0] : '#login'); }
   $('#footer').innerHTML = bk ? '' : pubFoot();
   $('#mnav').innerHTML = menuHtml(r);
   document.title = (r === 'start' ? '' : (pubList().find(p => p[0]===r)?.[1] || TITLE[r] || BACK[r]?.[0] || r.charAt(0).toUpperCase()+r.slice(1)) + ' – ') + 'Feuerwehr Piflas';
@@ -1725,7 +1735,7 @@ const DATES = [['now','Heute',null,''], ['2026-12','Dez. 2026',[2026,11,10],'Adv
   ['2027-09','Sept. 2027',[2027,8,1],'vor dem Warntag'], ['2027-10','Okt. 2027',[2027,9,10],'Herbst, nach dem Dorffest'], ['2027-12','Dez. 2027',[2027,11,20],'letzte Tage des Festjahres'], ['2028','Feb. 2028',[2028,1,1],'nach dem Jubiläum']];
 let tT, pT;
 /* Meldung unten; mit u = true zusätzlich der Knopf „Rückgängig“ (B-17) */
-const toast = (m, u) => { const t = $('#toast'); t.innerHTML = '<span>' + esc(m) + '</span>' + (u ? '<button type="button" class="tb" data-act="undo">Rückgängig</button>' : ''); t.classList.toggle('act', !!u); t.classList.add('on'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('on'), u ? 10000 : 3000); };
+const toast = (m, u, vw) => { const t = $('#toast'); t.innerHTML = '<span>' + esc(m) + '</span>' + (vw ? viewBtn(vw, 'tb') : '') + (u ? '<button type="button" class="tb" data-act="undo">Rückgängig</button>' : ''); t.classList.toggle('act', !!(u || vw)); t.classList.add('on'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('on'), u ? 10000 : 3000); };
 const push = m => { $('#pushtxt').textContent = m; const p = $('#push'); p.classList.add('on'); clearTimeout(pT); pT = setTimeout(() => p.classList.remove('on'), 4500); };
 const setOpen = (cls, el, open) => {
   document.body.classList.toggle(cls, open);
@@ -1900,6 +1910,9 @@ document.addEventListener('click', e => {
     case 'demo-lern': loginAs(b.dataset.v === 'm' ? 'Mitglied' : 'Freigeber'); sheet(false); toast('Angemeldet als ' + S.user.name + ' · ' + ROLES[S.user.role].label + ' (Demo)'); go(b.dataset.v === 'm' ? 'lernen' : 'lernstand'); break;
     case 'logout': UNDO = null; S.user = null; S.ted = null; S.qres = null; S.rch = null; S.quiz = null; S.draft = []; S.ed = null; S.cdel = null; S.sed = null; S.sdel = null; S.keyForm = null; toast('Abgemeldet'); go('start'); break;
     case 'undo': undo(); break;
+    case 'view': { const k = b.dataset.k, v = b.dataset.id; $('#toast').classList.remove('on');
+      if (k === 'e') { const e = S.einsaetze.find(x => x.id === +v); if (e) { S.year = e.y; S.detail = e.id; } go('einsaetze'); }
+      else { S.article = v; if (route() === 'aktuelles') { render(); window.scrollTo(0, 0); } else go('aktuelles'); } break; }
     /* Freigabe */
     case 'publish': publish(id); break;
     case 'drop': { syncQ(); const nt = $('#note-' + id); dropQ(id, nt ? nt.value.trim() : ''); render({keep:true}); break; }
@@ -2042,18 +2055,18 @@ document.addEventListener('submit', e => {
         if (isRed()) {
           const item = {kind:'news', id:'n' + (S.nid++), of, ...v, note, von: von(), by: S.user.name, ig:false};
           S.queue = S.queue.filter(q => q.of !== of); S.queue.push(item);
-          S.article = item.id; done('Änderung zur Freigabe eingereicht', u);
-        } else { saveC('n', n, editVals(v, n), {note, noRate:true}); S.article = n.hid ? null : n.id; done('Änderungen gespeichert – sofort online', u, ['n', n.id]); }
-        S.draft = []; S.ed = null; go(S.article ? 'aktuelles' : 'beitraege'); window.scrollTo(0, 0); break;
+          done('Änderung zur Freigabe eingereicht', u, null, ['q', item.id]);
+        } else { saveC('n', n, editVals(v, n), {note, noRate:true}); done('Änderungen gespeichert – sofort online', u, ['n', n.id]); }
+        S.draft = []; S.ed = null; go('beitraege'); window.scrollTo(0, 0); break;
       }
       if (!rateOk()) return;
       const u = snapAll();
       const item = {kind:'news', id:'n' + (S.nid++), cat: v.cat, t: v.t, txt: v.txt, von: von(), by: S.user.name, ig: fm.elements.ig.checked, imgs: v.imgs, alt: v.alt};
       if (S.ed && S.ed.re !== undefined && S.dropped[S.ed.re]) S.dropped.splice(S.ed.re, 1);
       S.draft = []; S.ed = null; S.queue.push(item);
-      if (isRed()) done('Zur Freigabe eingereicht – hier die Vorschau', u);
+      if (isRed()) done('Zur Freigabe eingereicht', u, null, ['q', item.id]);
       else { item.ok = true; publish(item.id, true, true, u); }
-      S.article = item.id; go('aktuelles'); window.scrollTo(0, 0);
+      go('beitraege'); window.scrollTo(0, 0);
       break;
     }
     case 'f-einsatz': {
@@ -2067,8 +2080,7 @@ document.addEventListener('submit', e => {
       if (/\d|stra(ß|ss)e|str\.|weg\b|gasse|platz|allee|ring\b/i.test(val(fm, 'ort'))) { err.textContent = 'Beim Einsatzort bitte nur Ortsteil oder Gemeinde angeben – keine Straße, keine Hausnummer.'; fm.elements.ort.focus(); return; }
       const vals = {t: val(fm, 'sw') + ', ' + val(fm, 'ort'), typ: val(fm, 'typ'), d: `${dt.slice(8, 10)}.${dt.slice(5, 7)}.`, y: +dt.slice(0, 4), z, fz: fzv, txt: val(fm, 'txt'), imgs: S.draft.slice()};
       const o = S.ed && S.ed.id ? getC('e', S.ed.id) : null, u = snapAll();
-      if (o) { if (!saveC('e', o, vals, {note: val(fm, 'note')})) return; sortE(); S.ed = null; S.draft = []; done('Einsatzbericht gespeichert – sofort online', u, ['e', o.id]);
-        if (o.hid || o.ab) go('beitraege'); else { S.year = o.y; S.detail = o.id; go('einsaetze'); } break; }
+      if (o) { if (!saveC('e', o, vals, {note: val(fm, 'note')})) return; sortE(); S.ed = null; S.draft = []; done('Einsatzbericht gespeichert – sofort online', u, ['e', o.id]); go('beitraege'); break; }
       if (!rateOk()) return;
       const ne = {id: S.nid++, ...vals, hand: S.user.name}, ab = al.getTime() + 7200e3;
       if (ab > Date.now()) ne.ab = ab;
@@ -2076,7 +2088,7 @@ document.addEventListener('submit', e => {
       if (fm.elements.ig.checked && !ne.ab) S.posts.unshift(ART[ne.typ][0]);
       S.ed = null; S.draft = []; S.year = ne.y;
       done(ne.ab ? 'Gespeichert – erscheint automatisch ' + fmtTs(ne.ab) + ' (2 Std. nach Alarm)' : 'Einsatzbericht veröffentlicht', u, ['e', ne.id]);
-      if (ne.ab) go('beitraege'); else { S.detail = ne.id; go('einsaetze'); } break;
+      go('beitraege'); break;
     }
     case 'f-item': {
       if (!check(fm, 'e-item')) return;

@@ -67,6 +67,7 @@ async def main():
         await go('login'); await pg.evaluate("document.querySelector('#quick [data-role=Autor]').click()"); await pg.wait_for_timeout(300)
         await go('beitraege'); await pg.click('[data-act=new][data-k=n]'); await pg.wait_for_timeout(250); await pg.fill('#f-post [name=t]','Jugendfeuerwehr beim Wissenstest'); await pg.fill('#f-post [name=txt]','Alle haben bestanden.')
         await pg.check('#f-post [name=ok]'); await pg.locator('#f-post button[type=submit]').scroll_into_view_if_needed(); await pg.evaluate("document.getElementById('f-post').requestSubmit()"); await pg.wait_for_timeout(700)
+        await pg.evaluate("document.querySelector('#toast [data-act=view]').click()"); await pg.wait_for_timeout(400)
         print('nach autor', await pg.evaluate('location.hash'), await pg.locator('#vorschau').count())
         await pg.evaluate('window.scrollTo(0,0)')
         await pg.evaluate("document.querySelectorAll('.toast').forEach(t=>t.style.opacity=0)")
