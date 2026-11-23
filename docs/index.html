@@ -64,6 +64,7 @@ section{padding:72px 0}
 
 /* Funktionen */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (min-width:881px){.grid .f:last-child:nth-child(3n+1){grid-column:1/-1}}
 @media (max-width:880px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.grid{grid-template-columns:1fr}}
 .f{background:var(--hell);border-radius:var(--r);padding:24px}
@@ -145,7 +146,7 @@ footer a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
     <span class="kicker">Freiwillige Feuerwehr Piflas · Markt Ergolding</span>
     <h1>Die neue Website der <em>Feuerwehr Piflas</em></h1>
     <p class="lead">Aktuelle Einsätze, Termine und Bürgertipps – gepflegt von Mitgliedern, freigegeben am Handy. Probier die klickbare Demo aus: öffentliche Seite und Mitgliederbereich.</p>
-    <div class="btns"><a class="btn p" href="demo/">Demo öffnen →</a><a class="btn o" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.10.pdf">Lastenheft lesen</a></div>
+    <div class="btns"><a class="btn p" href="demo/">Demo öffnen →</a><a class="btn o" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.11.pdf">Lastenheft lesen</a></div>
     <ul class="facts"><li>Keine Cookies</li><li>Kein Tracking</li><li>Am Handy bedienbar</li><li>Pflege ohne IT-Kenntnisse</li></ul>
   </div>
   <div class="stack" aria-hidden="true">
@@ -166,6 +167,7 @@ footer a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
     <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg><h3>Überblick nach Jahren</h3><p>Hunderte Einsätze, Übungen und Berichte? Suche beim Tippen, Filter nach Art, Jahr und Status – alles in Sekunden gefunden und im Editor geändert.</p></div>
     <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.6 5.6 6 .6-4.5 4 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.5-4 6-.6z"/></svg><h3>Nichts geht verloren</h3><p>Jede Änderung lässt sich rückgängig machen. Der Verlauf zeigt, wer wann was geändert hat – nur anhängen, mit Schutz vor Spam.</p></div>
     <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M9.5 12l2 2 3.5-4"/></svg><h3>Robust bei Störungen</h3><p>Fällt DIVERA oder Instagram aus, läuft die Website weiter. Fehlercode, Klartext, Notbetrieb – und eine Reparatur-Anleitung für die Technik.</p></div>
+    <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 9 12 4 2 9l10 5 10-5z"/><path d="M6 11v5c3 2.7 9 2.7 12 0v-5"/><path d="M22 9v6"/></svg><h3>Lernen für Aktive</h3><p>Jeden Monat ein Thema vom Kommandanten mit kurzem Test – Inhalte nach den Feuerwehrschulen, verlinkt. Nur die Kommandanten sehen den Lernstand, keine Rangliste.</p></div>
   </div>
 </div></section>
 
@@ -187,7 +189,7 @@ footer a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
   <ul class="list">
     <li><div><b>Datensparsam</b><span>Keine Cookies, keine Drittanbieter, keine Google Fonts. Fotos ohne Standortdaten.</span></div></li>
     <li><div><b>Persönlichkeitsrechte</b><span>Keine erkennbaren Einsatzbetroffenen, Kennzeichen oder Adressen. Kinder nur mit Einwilligung der Eltern.</span></div></li>
-    <li><div><b>Konten nur per Einladung</b><span>Rollen für Admin, Kommandant, Redaktion – mit 2-Faktor-Anmeldung.</span></div></li>
+    <li><div><b>Konten nur per Einladung</b><span>Rollen für Admin, Kommandant, Redaktion und Mitglieder – mit 2-Faktor-Anmeldung.</span></div></li>
     <li><div><b>Keine Spenden online</b><span>Wie in der Satzung festgelegt – Werbung für die Fördermitgliedschaft mit Formularen.</span></div></li>
     <li><div><b>Mit Handbuch</b><span>Schritt-für-Schritt-Anleitung für alle Rollen, mit Bildschirmfotos.</span></div></li>
   </ul>
@@ -196,11 +198,11 @@ footer a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
 <section id="dokumente" style="background:var(--hell)"><div class="wrap">
   <div class="sh"><h2>Dokumente</h2><p>Alles, was für Entscheidung und Umsetzung gebraucht wird.</p></div>
   <div class="docs">
-    <a class="doc" href="demo/"><span class="t">Demo</span><b>Klickbare Demo v9</b><span>Öffentliche Seite und Mitgliederbereich, läuft komplett im Browser</span></a>
-    <a class="doc" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.10.pdf"><span class="t">PDF · v1.10</span><b>Lastenheft &amp; Umsetzungsplan</b><span>Anforderungen, Recht, Infrastruktur, Phasen</span></a>
-    <a class="doc" href="handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf"><span class="t">PDF · v1.8</span><b>Handbuch Mitgliederbereich</b><span>Anleitung für Admins, Kommandant und Redaktion</span></a>
+    <a class="doc" href="demo/"><span class="t">Demo</span><b>Klickbare Demo v10</b><span>Öffentliche Seite und Mitgliederbereich, läuft komplett im Browser</span></a>
+    <a class="doc" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.11.pdf"><span class="t">PDF · v1.11</span><b>Lastenheft &amp; Umsetzungsplan</b><span>Anforderungen, Recht, Infrastruktur, Phasen</span></a>
+    <a class="doc" href="handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf"><span class="t">PDF · v1.9</span><b>Handbuch Mitgliederbereich</b><span>Anleitung für Admins, Kommandant, Redaktion und Mitglieder (Lernen)</span></a>
     <a class="doc" href="https://github.com/KWildwasser/feuerwehr-piflas-website/blob/main/docs/design/corporate-design.md"><span class="t">Design</span><b>Corporate Design</b><span>Logo, Farben, Schrift, Gestaltungsregeln</span></a>
-    <a class="doc" href="https://github.com/KWildwasser/feuerwehr-piflas-website/blob/main/docs/demo/README.md"><span class="t">Qualität</span><b>Testsuite</b><span>573 automatische Prüfungen als Abnahmeliste</span></a>
+    <a class="doc" href="https://github.com/KWildwasser/feuerwehr-piflas-website/blob/main/docs/demo/README.md"><span class="t">Qualität</span><b>Testsuite</b><span>643 automatische Prüfungen als Abnahmeliste</span></a>
     <a class="doc" href="uebergangsseite/"><span class="t">Vorschau</span><b>Übergangsseite</b><span>Vorläufige Startseite bis zum Start der neuen Website</span></a>
   </div>
 </div></section>

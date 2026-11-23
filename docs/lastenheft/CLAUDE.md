@@ -4,9 +4,9 @@
 Nur eigener Code:
 - wp-content/themes/ff-piflas/           Block-Theme
 - wp-content/plugins/ff-piflas-connect/  Rollen, Einladungen, DIVERA, Freigabe,
-                                         Fotos, Instagram, System-Bereich
+                                         Fotos, Instagram, Lernen, System-Bereich
 Anforderungen: docs/lastenheft.md (IDs F-, D-, W-, I-, B-, M-, C-, S-, R-, J-,
-A-, N-, L-). Vorlage: docs/referenz-demo/ (Abnahme: test_app.py).
+E-, A-, N-, L-). Vorlage: docs/referenz-demo/ (Abnahme: test_app.py).
 Handbuch: docs/handbuch/ (A-06).
 
 ## Regeln
@@ -24,6 +24,8 @@ Handbuch: docs/handbuch/ (A-06).
 - Veröffentlichen nur mit Pflicht-Bestätigung, serverseitig geprüft (W-04).
 - Löschen nur durch Admins, nach Nachfrage, über den Papierkorb (B-16).
 - Fotos: verkleinern, EXIF/GPS auch im Original entfernen (B-11).
+- Lernergebnisse nur in src/Learning/, eigene Tabelle, lesen nur mit der
+  Rechteprüfung „Lernstand sehen“ (nur Kommandant), Löschfrist per Cron (E-09, E-11).
 - Zugangsdaten nur in wp-config.php.
 - Ausgaben immer escapen (esc_html, esc_attr, wp_kses_post), Eingaben prüfen (N-05).
 - Keine externen Requests im Frontend; externe Links mit rel="noopener".

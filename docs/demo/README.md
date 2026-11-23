@@ -46,6 +46,7 @@ CHROME=/pfad/zu/chrome python test_app.py    # optional eigener Browser
 | Vergleich vorher/nachher | Freigabe und Verlauf: geänderte Felder Wort für Wort (rot/grün), Überblick nach Art | W-08, B-07 |
 | Schnittstellen | Fehlercodes, Verbindung testen, Schlüssel verdeckt, Diagnosebericht ohne Zugangsdaten, Notbetrieb, Instagram-Ausfall unsichtbar | D-08, A-10 bis A-12 |
 | Demo-Szenarien | Redaktion reicht ein, Einsatz von Hand, Verlauf, Anmelden als | – |
+| Lernen | Rolle „Mitglied“ nur „Lernen“ (kein Zugriff auf andere Bereiche), Thema des Monats, Archiv, Entwürfe unsichtbar, Quelle und Links extern, Test nur vollständig, 80 %-Grenze, Erklärungen, Wiederholen, kein Rückgängig beim Test, eigener Lernstand, Lernstand nur für Kommandanten (Admin gesperrt), Teilnahme, schwere Fragen, Verlauf, Übersicht pro Person, Thema anlegen mit Pflichtangaben und Häkchen, geplant ab Monatsersten, Ausblenden mit Rückgängig, 360/390 px | E-01 bis E-12, E-14, B-17 |
 | Bürgerinfos | Tipp nach Jahreszeit, Sonderhinweis, Warntag und Probealarm | C-04, C-07 |
 | Jubiläum | Ankündigung, Festjahr, Aufräumen 2028 | J-01 bis J-06 |
 | System | Ampel, Einstellungen, Handbuch-Link, Checkliste Admin-Wechsel | A-01, A-03, B-13 |
