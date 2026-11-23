@@ -74,14 +74,14 @@ body.mopen .scrim{opacity:1;pointer-events:auto}
 body.mopen .drawer{transform:none}
 .drawer .dh{display:flex;justify-content:space-between;align-items:center;padding:0 16px 8px}
 /* Menü (F-11): Login ganz oben, Gruppen mit dunkler Überschrift auf hellem Band, Seiten eingerückt mit Linie */
-.drawer .dlog{padding:4px 16px 14px;border-bottom:1px solid var(--linie)}.drawer .dlog .btn{width:100%;min-height:52px;font-size:18px}
+.drawer .dlogin{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--linie)}.drawer .dlogin .btn{width:100%;min-height:52px;font-size:18px;background:var(--hell);color:var(--ink);box-shadow:inset 0 0 0 1px #D9D6CF}.drawer .dlogin .btn:hover{background:#ECEAE5;color:var(--ink)}.drawer .dlogin svg{width:20px;height:20px}
 .drawer nav a{display:flex;align-items:center;min-height:50px;padding:0 22px;color:var(--ink);text-decoration:none;font-weight:600;font-size:19px}
 .drawer nav .mtop a{font-weight:800;border-bottom:1px solid var(--linie)}
 .drawer nav .mgr{border-bottom:1px solid var(--linie)}
-.drawer nav .mg{margin:0;padding:12px 22px 10px;font:800 14px/1.2 FwText,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:#ECEAE5;border-left:5px solid var(--rot)}
+.drawer nav .mg{margin:0;padding:12px 22px 10px;font:800 14px/1.2 FwText,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--g2);background:var(--hell);border-left:0}
 .drawer nav .mgl{margin:6px 0 8px 26px;border-left:2px solid #C9C6BF}
 .drawer nav .mgl a{padding-left:16px;font-weight:500;font-size:18px;min-height:46px}
-.drawer nav a[aria-current=page]{color:var(--rot);font-weight:800;box-shadow:inset 4px 0 0 var(--rot);background:#FBEBEB}
+.drawer nav a[aria-current=page]{color:var(--ink);font-weight:800;box-shadow:inset 4px 0 0 var(--rot);background:var(--hell)}
 .drawer .foot{padding:18px 22px 0;display:flex;flex-direction:column;gap:10px}
 
 /* Bühne */
@@ -503,7 +503,7 @@ h3{letter-spacing:-.005em}
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Menü" aria-hidden="true" inert>
   <div class="dh"><span class="logo" style="width:130px;height:36px" role="img" aria-label="Feuerwehr Piflas"></span><button class="ib" data-act="menu-close" aria-label="Menü schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-  <div class="dlog"><a class="btn" id="dr-login" href="#login">Login für Mitglieder</a></div>
+  <div class="dlogin"><a class="btn" id="dr-login" href="#login"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Login</span></a></div>
   <nav id="mnav" aria-label="Hauptmenü"></nav>
 </aside>
 
@@ -1790,7 +1790,7 @@ function render(opts = {}) {
   $('#chrome').innerHTML = S.user ? backHead() : pubHead(r);
   $('#main').className = bk ? 'bm' : '';
   $('#main').innerHTML = undoBar() + V[r]() + (S.user ? backTabs(r) : '');
-  const dl = $('#dr-login'); if (dl) { dl.textContent = S.user ? 'Zum Mitgliederbereich' : 'Login für Mitglieder'; dl.setAttribute('href', S.user ? '#' + ROLES[S.user.role].tabs[0] : '#login'); }
+  const dl = $('#dr-login'); if (dl) { dl.querySelector('span').textContent = S.user ? 'Zum Mitgliederbereich' : 'Login'; dl.setAttribute('href', S.user ? '#' + ROLES[S.user.role].tabs[0] : '#login'); }
   $('#footer').innerHTML = bk ? '' : pubFoot();
   $('#mnav').innerHTML = menuHtml(r);
   document.title = (r === 'start' ? '' : (pubList().find(p => p[0]===r)?.[1] || TITLE[r] || BACK[r]?.[0] || r.charAt(0).toUpperCase()+r.slice(1)) + ' – ') + 'Feuerwehr Piflas';

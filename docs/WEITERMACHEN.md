@@ -1,6 +1,6 @@
 # Webpräsenz Feuerwehr Piflas – Backup & Anleitung zum Weitermachen
 
-Stand: **23.11.2026** · Lastenheft **v1.16** · Demo **v16** · Handbuch **1.15** · Testsuite **700/700 bestanden**
+Stand: **23.11.2026** · Lastenheft **v1.17** · Demo **v16** · Handbuch **1.16** · Testsuite **700/700 bestanden**
 
 Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte, Bilder und Vorlagen. Damit kannst du (oder jemand aus dem Verein, oder eine neue Claude-Sitzung) jederzeit nahtlos weitermachen. Es enthält keine Zugangsdaten.
 
@@ -11,8 +11,8 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | Ordner / Datei | Inhalt |
 |---|---|
 | `PROJEKT-ANWEISUNGEN.md` | Benutzerdefinierte Anweisungen für das Claude-Projekt (zum Einfügen) |
-| `lastenheft/lastenheft-v1.16.md` | Das Lastenheft als Text – verbindliche Grundlage |
-| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.16.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
+| `lastenheft/lastenheft-v1.17.md` | Das Lastenheft als Text – verbindliche Grundlage |
+| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.17.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
 | `lastenheft/make_pdf.py` | Erzeugt das PDF aus der neuesten `lastenheft-vX.Y.md` |
 | `lastenheft/CLAUDE.md`, `start-prompt-phase1.txt` | Vorlagen für das Code-Repository und die erste Claude-Code-Sitzung |
 | `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.8 (alle Rollen) |
@@ -84,9 +84,9 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 
 Dieses ZIP hochladen und z. B. schreiben:
 
-> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.16.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
+> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.17.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
 
-Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.16.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
+Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.17.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
 
 ## 6. Wichtige Entscheidungen (Kurzfassung)
 

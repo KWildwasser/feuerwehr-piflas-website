@@ -1,6 +1,6 @@
 # Lastenheft & Umsetzungsplan – Webpräsenz Feuerwehr Piflas
 
-23.11.2026 · Korbinian · Version 1.16 (WordPress) · Referenz: Demo v15 und Handbuch 1.14
+23.11.2026 · Korbinian · Version 1.17 (WordPress) · Referenz: Demo v16 und Handbuch 1.16
 
 ## 0. Auf einen Blick
 
@@ -59,7 +59,7 @@ Priorität: **Muss** = zum Go-live, **Soll** = kurz danach, **Kann** = später. 
 | F-08 | Verein & Chronik | Vorstandschaft, Mitgliedschaft und Chronik ab Gründung. Das Festjahr 2027 bleibt nach dem Jubiläum in der Chronik (J-06). Verweis auf die Partnerfeuerwehren. Einleitung, Vorstandschaft und Chronik im Backend pflegbar (B-21). | Muss |
 | F-09 | Partnerfeuerwehren | Eigene Seite. Je Wehr (Ergolding, Oberglaim) eine Karte mit Kurzbeschreibung und Button „Zur Website“. Reine Links mit neuem Tab und rel=noopener, nichts eingebettet. Die Adressen pflegen die Admins im System-Bereich. | Muss |
 | F-10 | Bürgerinfos, Fördermitglied, Impressum/Datenschutz | Siehe 2.7, 2.8 und 3.1. | Muss |
-| F-11 | Navigation | Kopf mit Logo und Menü, ohne Notruf-Button (Notruf 112 steht auf der Startseite, F-01, und in den Bürgerinfos, C-01). Im Menü ganz oben ein großer Knopf „Login für Mitglieder“ (angemeldet: „Zum Mitgliederbereich“). Die Gruppen haben eine dunkle Überschrift auf hellem Band, ihre Seiten stehen eingerückt mit Linie darunter; die aktuelle Seite ist rot markiert. Menü: Start · 125 Jahre (nur im Festjahr) · **Aktuell:** Aktuelles, Einsätze, Termine · **Mitmachen:** Aktiv mitmachen, Jugendfeuerwehr, Fördermitglied werden · **Ratgeber:** Bürgerinfos · **Über uns:** Verein & Chronik, Fahrzeuge & Technik, Partnerfeuerwehren. Neue Seiten kommen in eine bestehende Gruppe. Keine eigene Seite für den Gemeinderat. | Muss |
+| F-11 | Navigation | Kopf mit Logo und Menü, ohne Notruf-Button (Notruf 112 steht auf der Startseite, F-01, und in den Bürgerinfos, C-01). Im Menü ganz oben ein großer, dezenter Knopf „Login“ (hell, nicht rot, senkrecht mittig; angemeldet: „Zum Mitgliederbereich“). Die Gruppen haben eine graue Überschrift auf hellem Band, ihre Seiten stehen eingerückt mit Linie darunter; nur die aktuelle Seite trägt eine rote Linie. Menü: Start · 125 Jahre (nur im Festjahr) · **Aktuell:** Aktuelles, Einsätze, Termine · **Mitmachen:** Aktiv mitmachen, Jugendfeuerwehr, Fördermitglied werden · **Ratgeber:** Bürgerinfos · **Über uns:** Verein & Chronik, Fahrzeuge & Technik, Partnerfeuerwehren. Neue Seiten kommen in eine bestehende Gruppe. Keine eigene Seite für den Gemeinderat. | Muss |
 | F-12 | Fußzeile | Adresse, E-Mail, Telefon (nicht ständig besetzt), Impressum, Datenschutz, Instagram, Facebook, Partnerfeuerwehren, Login für Mitglieder, Bildnachweis. | Muss |
 | F-13 | Archiv | Ausgewählte alte Einsatzberichte aus Joomla übernehmen, alte Adressen mit 301 weiterleiten. | Soll |
 | F-14 | Suche | Volltextsuche. | Kann |
@@ -439,7 +439,7 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 | Übergangsseite | Fertig zum Hochladen |
 | Demo v15 + Testsuite (700 Prüfungen) | Fertig, auf GitHub Pages |
 | Handbuch | Version 1.14 fertig |
-| Lastenheft | Version 1.16 |
+| Lastenheft | Version 1.17 |
 | Backup-Paket | Wird mit jeder Version aktualisiert |
 
 **Sofort:** Übergangsseite hochladen. Vorher Joomla komplett sichern und die Speicherdauer der Logfiles in datenschutz.html eintragen.
@@ -556,3 +556,4 @@ Checkliste der IDs.
 | 1.14 | 23.11.2026 | B-10: nach dem Speichern in der Ansicht bleiben; neu B-23: öffentliche Seiten angemeldet mit Kopf und Leiste. Demo v13, 693 Prüfungen, Handbuch 1.12. |
 | 1.15 | 23.11.2026 | Aufgeräumt, ohne neue Anforderungen: Doppelungen in 2.12 und 2.13 entfernt (E-02, E-05, E-06, E-07, E-13, E-14, E-24; Widerspruch 44/56 px aufgelöst), A-06 gekürzt, offene Punkte „Lernen“ gebündelt, Änderungsverlauf gekürzt. Demo ohne ungenutzten Code. Demo v14, Testsuite (693 Prüfungen), Handbuch 1.13. |
 | 1.16 | 23.11.2026 | F-11: kein Notruf-Button im Kopf, „Login für Mitglieder“ ganz oben im Menü, Menü klarer gegliedert. Neu E-29: Bilder und Skizzen je Abschnitt mit Bildbeschreibung; fünf eigene Beispielskizzen. Geändert: E-02. Demo v15, Testsuite (700 Prüfungen), Handbuch 1.14. |
+| 1.17 | 23.11.2026 | F-11: Menü-Knopf heißt nur „Login“, hell statt rot und senkrecht mittig; Gruppen-Überschriften grau, Rot nur für die aktuelle Seite. Demo v16 (ganze Website optisch überarbeitet), 700 Prüfungen, Handbuch 1.16. |
