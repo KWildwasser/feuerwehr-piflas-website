@@ -1,6 +1,6 @@
 # Lastenheft & Umsetzungsplan – Webpräsenz Feuerwehr Piflas
 
-23.11.2026 · Korbinian · Version 1.15 (WordPress) · Referenz: Demo v14 und Handbuch 1.13
+23.11.2026 · Korbinian · Version 1.16 (WordPress) · Referenz: Demo v15 und Handbuch 1.14
 
 ## 0. Auf einen Blick
 
@@ -11,7 +11,7 @@
 - **Leitprinzip:** Ehrenamtliche ohne IT-Kenntnisse können die Seite auch in Jahren noch betreuen (2.11).
 - **Vorhanden:**
   - Übergangsseite
-  - Klickbare Demo v14 mit Testsuite (693 Prüfungen), öffentlich auf GitHub Pages
+  - Klickbare Demo v15 mit Testsuite (700 Prüfungen), öffentlich auf GitHub Pages
   - Anleitung „Schnittstellen reparieren“ für die Technik (A-12)
   - Handbuch für den Mitgliederbereich
   - Backup-Paket
@@ -59,7 +59,7 @@ Priorität: **Muss** = zum Go-live, **Soll** = kurz danach, **Kann** = später. 
 | F-08 | Verein & Chronik | Vorstandschaft, Mitgliedschaft und Chronik ab Gründung. Das Festjahr 2027 bleibt nach dem Jubiläum in der Chronik (J-06). Verweis auf die Partnerfeuerwehren. Einleitung, Vorstandschaft und Chronik im Backend pflegbar (B-21). | Muss |
 | F-09 | Partnerfeuerwehren | Eigene Seite. Je Wehr (Ergolding, Oberglaim) eine Karte mit Kurzbeschreibung und Button „Zur Website“. Reine Links mit neuem Tab und rel=noopener, nichts eingebettet. Die Adressen pflegen die Admins im System-Bereich. | Muss |
 | F-10 | Bürgerinfos, Fördermitglied, Impressum/Datenschutz | Siehe 2.7, 2.8 und 3.1. | Muss |
-| F-11 | Navigation | Kopf mit Logo, Notruf-Button und Menü. Menü: Start · 125 Jahre (nur im Festjahr) · **Aktuell:** Aktuelles, Einsätze, Termine · **Mitmachen:** Aktiv mitmachen, Jugendfeuerwehr, Fördermitglied werden · **Ratgeber:** Bürgerinfos · **Über uns:** Verein & Chronik, Fahrzeuge & Technik, Partnerfeuerwehren. Neue Seiten kommen in eine bestehende Gruppe. Keine eigene Seite für den Gemeinderat. | Muss |
+| F-11 | Navigation | Kopf mit Logo und Menü, ohne Notruf-Button (Notruf 112 steht auf der Startseite, F-01, und in den Bürgerinfos, C-01). Im Menü ganz oben ein großer Knopf „Login für Mitglieder“ (angemeldet: „Zum Mitgliederbereich“). Die Gruppen haben eine dunkle Überschrift auf hellem Band, ihre Seiten stehen eingerückt mit Linie darunter; die aktuelle Seite ist rot markiert. Menü: Start · 125 Jahre (nur im Festjahr) · **Aktuell:** Aktuelles, Einsätze, Termine · **Mitmachen:** Aktiv mitmachen, Jugendfeuerwehr, Fördermitglied werden · **Ratgeber:** Bürgerinfos · **Über uns:** Verein & Chronik, Fahrzeuge & Technik, Partnerfeuerwehren. Neue Seiten kommen in eine bestehende Gruppe. Keine eigene Seite für den Gemeinderat. | Muss |
 | F-12 | Fußzeile | Adresse, E-Mail, Telefon (nicht ständig besetzt), Impressum, Datenschutz, Instagram, Facebook, Partnerfeuerwehren, Login für Mitglieder, Bildnachweis. | Muss |
 | F-13 | Archiv | Ausgewählte alte Einsatzberichte aus Joomla übernehmen, alte Adressen mit 301 weiterleiten. | Soll |
 | F-14 | Suche | Volltextsuche. | Kann |
@@ -228,7 +228,7 @@ Anforderung des 1. Kommandanten (23.11.2026): Die Website dient zusätzlich als 
 | ID | Anforderung | Prio |
 | --- | --- | --- |
 | E-01 | Rolle „Mitglied“: nur lesen und lernen. Die untere Leiste zeigt nur „Lernen“. Keine Schreib- oder Bearbeitungsrechte, keine Freigabe, kein Zugriff auf andere Bereiche – serverseitig geprüft. Einladung wie bei B-01 durch einen Admin, mit dem Häkchen „Gehört zur Einsatzabteilung“ (E-10). Alle anderen Rollen sehen „Lernen“ ebenfalls und können mitlernen. | Muss |
-| E-02 | Ein Thema besteht aus Titel, Monat, Symbol, Einleitung, Abschnitten (Überschrift und Text), „Das Wichtigste“ als Merksätze, Links zum Weiterlernen, Quelle mit Stand, „Fachlich geprüft: Name“, Sicherheitshinweis (E-12) und Test (E-06). Ablauf für Mitglieder: E-17. Fotos nur eigene, ohne erkennbare Einsatzbetroffene und Kennzeichen (Kann). | Muss |
+| E-02 | Ein Thema besteht aus Titel, Monat, Symbol, Einleitung, Abschnitten (Überschrift, Text und optional ein Bild, E-29), „Das Wichtigste“ als Merksätze, Links zum Weiterlernen, Quelle mit Stand, „Fachlich geprüft: Name“, Sicherheitshinweis (E-12) und Test (E-06). Ablauf für Mitglieder: E-17. | Muss |
 | E-03 | Ein Thema je Monat. Am Monatsersten wird das geplante Thema automatisch „Thema des Monats“, vorher ist es für Mitglieder unsichtbar. Frühere Themen bleiben mit Test abrufbar. Fehlt für den laufenden oder nächsten Monat ein veröffentlichtes Thema, sehen die Kommandanten einen Hinweis. | Muss |
 | E-04 | Material der Staatlichen Feuerwehrschulen Bayern (Feuerwehr-Lernbar, Merkblätter der Feuerwehrschulen), der DGUV und anderer Stellen wird in eigenen Worten zusammengefasst und verlinkt, nicht kopiert und nicht eingebettet (N-01, L-14). Links nur mit https://, sie öffnen sich in einem neuen Fenster. Die Quelle mit Stand ist Pflicht. | Muss |
 | E-05 | Themen anlegen, bearbeiten, kopieren und ausblenden: nur Kommandanten, im Themenplan (E-26) mit den Hilfen aus E-27, ohne Programmieren (A-01). „Als Entwurf speichern“ oder „Veröffentlichen“ (für einen späteren Monat: geplant). Veröffentlichen nur mit vollständigen Pflichtangaben und dem Pflicht-Häkchen „Ich habe den Inhalt fachlich geprüft. Quellen sind angegeben, fremde Texte und Bilder sind nicht ohne Erlaubnis kopiert.“ Je Monat ein veröffentlichtes Thema. Ausblenden statt Löschen, die Ergebnisse bleiben bis zur Löschfrist (E-11); Löschen nur durch Admins (B-16). Verlauf (B-07) und Rückgängig (B-17). | Muss |
@@ -274,6 +274,7 @@ Es ist davon auszugehen, dass nicht alle Mitglieder gern Weiterbildungen machen 
 | E-26 | Themenplan für Kommandanten: 12 Monate auf einen Blick (2 zurück, 9 voraus, der aktuelle hervorgehoben), je Monat Thema mit Symbol, Status (Entwurf, geplant, veröffentlicht, ausgeblendet) und Teilnahme oder „Noch kein Thema · + Thema für …“. Je Thema: Bearbeiten, Ansehen (Vorschau wie bei Mitgliedern, speichert keine Ergebnisse), Kopieren (z. B. ein Thema aus dem Vorjahr, landet im nächsten freien Monat), Ausblenden bzw. Einblenden. Ältere Themen aufklappbar. Löschen nur durch Admins (B-16). | Muss |
 | E-27 | Hilfen beim Anlegen: Themenideen zum Antippen (setzen Titel und Symbol; Liste im Backend pflegbar, A-01), Symbolwahl, Tipps für gute Themen und Fragen, Anzeige der Lesezeit und „Noch offen zum Veröffentlichen: …“, das alle fehlenden Angaben auf einmal nennt. | Muss |
 | E-28 | Abnahme mit Laien (wie A-09): Drei Mitglieder ohne Einweisung schaffen ein Thema am eigenen Handy in höchstens 10 Minuten und würden es „gern wieder“ machen; ein Kommandant legt nur mit dem Handbuch ein Thema an und plant es für den nächsten Monat. | Muss |
+| E-29 | Bilder und Skizzen: Je Abschnitt ein Bild, am besten eine einfache Skizze (z. B. Abstände, Handposition, Merkschema). Hochladen wie B-11 (verkleinert, Standortdaten entfernt), Bildbeschreibung Pflicht (N-02). Nur eigene Zeichnungen und Fotos – fremde Grafiken, etwa aus Merkblättern, nur mit schriftlicher Erlaubnis (L-14); keine erkennbaren Einsatzbetroffenen oder Kennzeichen. Das erste Bild eines Themas erscheint auch auf dessen Startseite. Die Demo enthält fünf eigene Beispielskizzen (Verkehrsabsicherung, Wiederbelebung, Gefahrenschema), erzeugt mit `tools/sketches.py`; sie sind fachlich zu prüfen wie der übrige Beispielinhalt. | Muss |
 
 ## 3. Nicht-funktionale Anforderungen
 
@@ -359,10 +360,10 @@ Bei Widersprüchen gilt das Lastenheft. Demo und Handbuch werden dann angepasst.
 | Dokument | Wofür | Wo |
 | --- | --- | --- |
 | Lastenheft (dieses Dokument) | Was gebaut wird | Online-Dokument, Claude-Projekt, PDF |
-| Demo v14 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
-| Testsuite (693 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
+| Demo v15 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
+| Testsuite (700 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
 | Anleitung „Schnittstellen reparieren“ | Reparatur von DIVERA und Instagram durch die Technik (A-12) | GitHub, Backup (`betrieb/schnittstellen.md`) |
-| Handbuch Mitgliederbereich 1.13 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
+| Handbuch Mitgliederbereich 1.14 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
 | Corporate Design | Logo, Farben, Schrift | Claude-Projekt |
 | Backup-Paket mit WEITERMACHEN.md | Alles, um später weiterzuarbeiten | ZIP |
 
@@ -436,9 +437,9 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 | Ergebnis | Stand |
 | --- | --- |
 | Übergangsseite | Fertig zum Hochladen |
-| Demo v14 + Testsuite (693 Prüfungen) | Fertig, auf GitHub Pages |
-| Handbuch | Version 1.13 fertig |
-| Lastenheft | Version 1.15 |
+| Demo v15 + Testsuite (700 Prüfungen) | Fertig, auf GitHub Pages |
+| Handbuch | Version 1.14 fertig |
+| Lastenheft | Version 1.16 |
 | Backup-Paket | Wird mit jeder Version aktualisiert |
 
 **Sofort:** Übergangsseite hochladen. Vorher Joomla komplett sichern und die Speicherdauer der Logfiles in datenschutz.html eintragen.
@@ -554,3 +555,4 @@ Checkliste der IDs.
 | 1.13 | 23.11.2026 | Neu 2.13 Lernen gern und leicht (E-15 bis E-28) mit Themenplan für Kommandanten. Demo v12, 686 Prüfungen, Handbuch 1.11. |
 | 1.14 | 23.11.2026 | B-10: nach dem Speichern in der Ansicht bleiben; neu B-23: öffentliche Seiten angemeldet mit Kopf und Leiste. Demo v13, 693 Prüfungen, Handbuch 1.12. |
 | 1.15 | 23.11.2026 | Aufgeräumt, ohne neue Anforderungen: Doppelungen in 2.12 und 2.13 entfernt (E-02, E-05, E-06, E-07, E-13, E-14, E-24; Widerspruch 44/56 px aufgelöst), A-06 gekürzt, offene Punkte „Lernen“ gebündelt, Änderungsverlauf gekürzt. Demo ohne ungenutzten Code. Demo v14, Testsuite (693 Prüfungen), Handbuch 1.13. |
+| 1.16 | 23.11.2026 | F-11: kein Notruf-Button im Kopf, „Login für Mitglieder“ ganz oben im Menü, Menü klarer gegliedert. Neu E-29: Bilder und Skizzen je Abschnitt mit Bildbeschreibung; fünf eigene Beispielskizzen. Geändert: E-02. Demo v15, Testsuite (700 Prüfungen), Handbuch 1.14. |

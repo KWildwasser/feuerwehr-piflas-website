@@ -21,6 +21,6 @@ ff='@font-face{font-family:FwText;src:url(data:font/woff;base64,'+f64+') format(
 assert '/*FONTFACE*/' in s
 s=s.replace('/*FONTFACE*/',ff,1)
 assert '/*IMGDATA*/' in s
-s=s.replace('/*IMGDATA*/','const IMG = '+json.dumps(d)+';',1)
+s=s.replace('/*IMGDATA*/','const IMG = '+json.dumps(d)+';\n'+open(HERE/'sketches.js').read()+'Object.assign(IMG, SKETCH);',1)
 open(HERE/'index.html','w').write(s)
 print(len(s)//1024,'KB')

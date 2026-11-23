@@ -72,10 +72,15 @@ button{cursor:pointer}
 body.mopen .scrim{opacity:1;pointer-events:auto}
 body.mopen .drawer{transform:none}
 .drawer .dh{display:flex;justify-content:space-between;align-items:center;padding:0 16px 8px}
-.drawer nav a{display:flex;align-items:center;min-height:52px;padding:0 22px;color:var(--ink);text-decoration:none;font-weight:600;font-size:19px;border-bottom:1px solid var(--linie)}
-.drawer nav .mg{margin:0;padding:18px 22px 6px;font:700 14px/1 FwText,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--grau)}
-.drawer nav .mg+a{border-top:1px solid var(--linie)}
-.drawer nav a[aria-current=page]{color:var(--rot);box-shadow:inset 4px 0 0 var(--rot)}
+/* Menü (F-11): Login ganz oben, Gruppen mit dunkler Überschrift auf hellem Band, Seiten eingerückt mit Linie */
+.drawer .dlog{padding:4px 16px 14px;border-bottom:1px solid var(--linie)}.drawer .dlog .btn{width:100%;min-height:52px;font-size:18px}
+.drawer nav a{display:flex;align-items:center;min-height:50px;padding:0 22px;color:var(--ink);text-decoration:none;font-weight:600;font-size:19px}
+.drawer nav .mtop a{font-weight:800;border-bottom:1px solid var(--linie)}
+.drawer nav .mgr{border-bottom:1px solid var(--linie)}
+.drawer nav .mg{margin:0;padding:12px 22px 10px;font:800 14px/1.2 FwText,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:#ECEAE5;border-left:5px solid var(--rot)}
+.drawer nav .mgl{margin:6px 0 8px 26px;border-left:2px solid #C9C6BF}
+.drawer nav .mgl a{padding-left:16px;font-weight:500;font-size:18px;min-height:46px}
+.drawer nav a[aria-current=page]{color:var(--rot);font-weight:800;box-shadow:inset 4px 0 0 var(--rot);background:#FBEBEB}
 .drawer .foot{padding:18px 22px 0;display:flex;flex-direction:column;gap:10px}
 
 /* Bühne */
@@ -361,6 +366,8 @@ body.bk .toast,body.lin .toast{bottom:calc(140px + var(--sab))}
 .lpm.now{padding:12px;border-radius:16px;background:#FFF6DB}
 .lpempty{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px;border:2px dashed #C9C6BF;border-radius:14px;color:var(--grau)}
 .lpc{gap:10px}.lpch{display:flex;gap:12px;align-items:center}
+.lfig{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--linie);background:#F4F3F0}.lfig img{display:block;width:100%;height:auto}
+.lcover{margin-bottom:4px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 
@@ -416,8 +423,8 @@ ins{background:#DDF3E1;color:#14532D;text-decoration:underline;text-decoration-c
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Menü" aria-hidden="true" inert>
   <div class="dh"><span class="logo" style="width:130px;height:36px" role="img" aria-label="Feuerwehr Piflas"></span><button class="ib" data-act="menu-close" aria-label="Menü schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="dlog"><a class="btn" id="dr-login" href="#login">Login für Mitglieder</a></div>
   <nav id="mnav" aria-label="Hauptmenü"></nav>
-  <div class="foot" style="background:none;color:var(--ink);padding-bottom:0"><a class="btn o" id="dr-login" href="#login" style="color:var(--ink)">Login für Mitglieder</a></div>
 </aside>
 
 <button class="fab" id="fab" data-act="sheet-open" aria-haspopup="dialog"><span class="dot" aria-hidden="true"></span>Demo</button>
@@ -623,8 +630,8 @@ const TOPICS = [
   {id:'lv', m:'2026-11', st:'aktiv', bsp:true, ic:'verkehr', t:'Verkehrsabsicherung', mail:true,
    intro:'Auf der Straße ist der fließende Verkehr die größte Gefahr für uns. Hier lernst du die wichtigsten Regeln zum Absichern einer Einsatzstelle.',
    secs:[{h:'Erst sichern, dann arbeiten', x:'Eine Einsatzstelle im Straßenverkehr sicherst du sofort ab – noch bevor die eigentliche Arbeit beginnt.\n\nDie Warnung soll Autofahrerinnen und Autofahrern genug Zeit geben, langsamer zu werden und auszuweichen. Den Verkehr regeln und umleiten ist grundsätzlich Sache der Polizei.'},
-     {h:'Wie weit vorher warnen?', x:'Als Faustwerte für die erste Warnung vor der Einsatzstelle gelten: innerorts (bis 50 km/h) etwa 100 m, auf der Landstraße (bis 100 km/h) etwa 200 m. Auf der Autobahn wird gestaffelt gewarnt, etwa bei 400, 600 und 800 m.\n\nVor Kurven und Kuppen ziehst du die Warnung so weit vor, dass man sie rechtzeitig sieht.'},
-     {h:'Sehen und gesehen werden', x:'Im Verkehrsraum trägst du immer Warnkleidung nach EN ISO 20471, mindestens Klasse 2.\n\nArbeite möglichst auf der Seite, die vom Verkehr abgewandt ist. Dreh dem Verkehr nicht den Rücken zu, wenn es sich vermeiden lässt.'},
+     {h:'Wie weit vorher warnen?', img:'sk-vk-strecke', x:'Als Faustwerte für die erste Warnung vor der Einsatzstelle gelten: innerorts (bis 50 km/h) etwa 100 m, auf der Landstraße (bis 100 km/h) etwa 200 m. Auf der Autobahn wird gestaffelt gewarnt, etwa bei 400, 600 und 800 m.\n\nVor Kurven und Kuppen ziehst du die Warnung so weit vor, dass man sie rechtzeitig sieht.'},
+     {h:'Sehen und gesehen werden', img:'sk-vk-weste', x:'Im Verkehrsraum trägst du immer Warnkleidung nach EN ISO 20471, mindestens Klasse 2.\n\nArbeite möglichst auf der Seite, die vom Verkehr abgewandt ist. Dreh dem Verkehr nicht den Rücken zu, wenn es sich vermeiden lässt.'},
      {h:'Regelmäßig üben', x:'Wer im Verkehrsraum eingesetzt wird, wird dazu regelmäßig unterwiesen – mindestens einmal im Jahr. Dieses Thema hilft beim Wiederholen, ersetzt die Unterweisung aber nicht.'}],
    keys:['Erst absichern, dann arbeiten.', 'Erste Warnung: innerorts ca. 100 m, Landstraße ca. 200 m, Autobahn gestaffelt.', 'Vor Kurven und Kuppen weiter vorziehen.', 'Warnkleidung mindestens Klasse 2.'],
    links:[{l:'Feuerwehr-Lernbar: Verkehrsabsicherung bei Einsatzstellen', u:'https://www.feuerwehr-lernbar.bayern/lexikon/v/verkehrsabsicherung-bei-einsatzstellen-der-feuerwehr/'}, {l:'Staatliche Feuerwehrschule Würzburg: Lehr- und Lernmittel', u:'https://www.sfs-w.de/'}, {l:'DGUV: Absicherung von Einsatzstellen (FBFHB-037, 2024)', u:'https://publikationen.dguv.de/regelwerk/publikationen-nach-fachbereich/feuerwehren-hilfeleistungen-brandschutz/feuerwehren-und-hilfeleistungsorganisationen/5074/fbfhb-037-absicherung-von-einsatzstellen-im-oeffentlichen-verkehrsraum-unter-beruecksichtigung-der-zu'}],
@@ -636,9 +643,9 @@ const TOPICS = [
      {q:'Vor der Einsatzstelle liegt eine Kurve. Was machst du?', o:['Die Warnung weiter vorziehen, damit man sie rechtzeitig sieht', 'Die Warnung weglassen', 'Die Warnung direkt an die Einsatzstelle stellen', 'Nur das Blaulicht anlassen'], c:0, x:'Die Warnung muss rechtzeitig sichtbar sein – also vor die Kurve.'}]},
   {id:'le', m:'2026-10', st:'aktiv', bsp:true, ic:'herz', t:'Erste Hilfe: Wiederbelebung', mail:true,
    intro:'Bei einem Herz-Kreislauf-Stillstand zählt jede Minute. Mit drei Schritten kannst du ein Leben retten: Prüfen, Rufen, Drücken.',
-   secs:[{h:'Prüfen', x:'Sprich die Person laut an und fasse sie an den Schultern. Reagiert sie nicht, machst du die Atemwege frei: Kopf vorsichtig nach hinten neigen, Kinn anheben.\n\nPrüfe dann höchstens 10 Sekunden, ob sie normal atmet. Schnappatmung – seltene, ruckartige Atemzüge – ist keine normale Atmung.'},
+   secs:[{h:'Prüfen', img:'sk-eh-ablauf', x:'Sprich die Person laut an und fasse sie an den Schultern. Reagiert sie nicht, machst du die Atemwege frei: Kopf vorsichtig nach hinten neigen, Kinn anheben.\n\nPrüfe dann höchstens 10 Sekunden, ob sie normal atmet. Schnappatmung – seltene, ruckartige Atemzüge – ist keine normale Atmung.'},
      {h:'Rufen', x:'Notruf 112 – oder lass jemanden anrufen. Lass einen Defibrillator (AED) holen, wenn einer in der Nähe ist.'},
-     {h:'Drücken', x:'Drück in der Mitte des Brustkorbs, 5 bis 6 cm tief, 100- bis 120-mal pro Minute. Nach 30-mal Drücken folgen 2 Beatmungen, wenn du das kannst. Sonst drückst du ohne Pause weiter.\n\nSobald der AED da ist: einschalten und den Ansagen folgen. Mach so lange weiter, bis der Rettungsdienst übernimmt.'}],
+     {h:'Drücken', img:'sk-eh-druck', x:'Drück in der Mitte des Brustkorbs, 5 bis 6 cm tief, 100- bis 120-mal pro Minute. Nach 30-mal Drücken folgen 2 Beatmungen, wenn du das kannst. Sonst drückst du ohne Pause weiter.\n\nSobald der AED da ist: einschalten und den Ansagen folgen. Mach so lange weiter, bis der Rettungsdienst übernimmt.'}],
    keys:['Prüfen – Rufen – Drücken.', 'Atmung höchstens 10 Sekunden prüfen.', '5–6 cm tief, 100–120 pro Minute.', '30-mal drücken, 2-mal beatmen.'],
    links:[{l:'German Resuscitation Council (GRC): Leitlinien Reanimation', u:'https://www.grc-org.de/'}, {l:'Feuerwehr-Lernbar Bayern', u:'https://www.feuerwehr-lernbar.bayern/'}],
    src:'Leitlinien des European Resuscitation Council (ERC) in der deutschen Fassung des GRC – aktuellen Stand prüfen',
@@ -649,7 +656,7 @@ const TOPICS = [
      {q:'Die Person zeigt nur Schnappatmung. Was heißt das?', o:['Sie atmet, also stabile Seitenlage', 'Das ist keine normale Atmung – sofort mit der Wiederbelebung beginnen', 'Erst einmal abwarten', 'Nur Beine hochlegen'], c:1, x:'Schnappatmung ist ein Zeichen für einen Kreislaufstillstand.'}]},
   {id:'lg', m:'2026-09', st:'aktiv', bsp:true, ic:'gefahr', t:'Gefahren an der Einsatzstelle', mail:true,
    intro:'Bei jeder Erkundung fragst du dich: Welche Gefahren gibt es hier? Das Merkschema AAAA-C-EEEE hilft dir, nichts zu vergessen.',
-   secs:[{h:'Die vier A', x:'Atemgifte – Rauch, Gase, Sauerstoffmangel.\n\nAngstreaktion – Menschen in Panik handeln unüberlegt, auch Einsatzkräfte.\n\nAusbreitung – Feuer, Rauch oder Stoffe breiten sich aus.\n\nAtomare Gefahren – radioaktive Stoffe und Strahlung.'},
+   secs:[{h:'Die vier A', img:'sk-gf-matrix', x:'Atemgifte – Rauch, Gase, Sauerstoffmangel.\n\nAngstreaktion – Menschen in Panik handeln unüberlegt, auch Einsatzkräfte.\n\nAusbreitung – Feuer, Rauch oder Stoffe breiten sich aus.\n\nAtomare Gefahren – radioaktive Stoffe und Strahlung.'},
      {h:'Das C', x:'Chemische Stoffe – zum Beispiel Gefahrgut, Säuren oder brennbare Flüssigkeiten.'},
      {h:'Die vier E', x:'Erkrankung und Verletzung – für Betroffene und für uns.\n\nExplosion – zum Beispiel durch Gase, Stäube oder Druckbehälter.\n\nElektrizität – Strom aus Leitungen, Anlagen, Fahrzeugen und Akkus.\n\nEinsturz – von Gebäuden, Bauteilen oder Gräben.'}],
    keys:['AAAA-C-EEEE bei jeder Erkundung durchgehen.', 'Auch an die eigene Sicherheit denken.', 'Erkannte Gefahren sofort an die Führungskraft melden.'],
@@ -720,7 +727,7 @@ const PUB = [['start','Start'],['aktuelles','Aktuelles'],['einsaetze','Einsätze
 const MENU = [['Aktuell', ['aktuelles','einsaetze','termine']], ['Mitmachen', ['mitmachen','jugend','foerdern']], ['Ratgeber', ['buerger']], ['Über uns', ['verein','fahrzeuge','partner']]];
 const MLAB = {mitmachen:'Aktiv mitmachen', verein:'Verein & Chronik'};
 const menuHtml = r => { const pl = Object.fromEntries(pubList()); const a = k => `<a href="#${k}"${r===k?' aria-current="page"':''}${k==='jubilaeum'?' class="jubnav"':''}>${MLAB[k] || pl[k]}</a>`;
-  return a('start') + (jubActive() ? a('jubilaeum') : '') + MENU.map(([g, ks]) => `<h3 class="mg">${g}</h3>${ks.map(a).join('')}`).join(''); };
+  return `<div class="mtop">${a('start') + (jubActive() ? a('jubilaeum') : '')}</div>` + MENU.map(([g, ks]) => `<div class="mgr"><h3 class="mg">${g}</h3><div class="mgl">${ks.map(a).join('')}</div></div>`).join(''); };
 const pubList = () => jubActive() ? [PUB[0], ['jubilaeum','125 Jahre'], ...PUB.slice(1)] : PUB;
 const BACK = {redaktion:['Freigabe',I.check], beitraege:['Inhalte',I.doc], seiten:['Seiten',I.img], planung:['Planung',I.cal], lernen:['Lernen',I.cap], mitglieder:['Mitglieder',I.ppl], system:['System',I.gear]};
 /* Unterseiten ohne eigenen Tab: werden dem Tab zugeordnet */
@@ -735,7 +742,7 @@ const tRow = t => `<div class="li${t.neu && S.neu === 'termin' ? ' neu' : ''}${t
 const f = (label, inner) => `<label class="f">${label}${inner}</label>`;
 const pubHead = r => `<header class="top"><div class="wrap"><a href="#start" aria-label="Feuerwehr Piflas – Startseite"><span class="logo" role="img" aria-label="Feuerwehr Piflas"></span></a>
   <nav class="dnav" aria-label="Hauptmenü">${pubList().slice(1,6).map(([k,l]) => `<a href="#${k}"${r===k?' aria-current="page"':''}${k==='jubilaeum'?' class="jubnav"':''}>${l}</a>`).join('')}<a href="#login">Login</a></nav>
-  <div class="tr"><a class="n112p" href="tel:112" aria-label="Notruf 112 anrufen">Notruf 112</a><button class="ib menu" data-act="menu-open" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer">${I.menu}</button></div></div></header>`;
+  <div class="tr"><button class="ib menu" data-act="menu-open" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer">${I.menu}</button></div></div></header>`;
 const pubFoot = () => `<footer class="foot"><div class="wrap"><span class="logo w" role="img" aria-label="Feuerwehr Piflas"></span>
   <span>Feuerwehr Piflas e.V.<br>Gartenstraße 2, 84030 Ergolding / Piflas<br>info@feuerwehr-piflas.de · 0871 1433372 (nicht ständig besetzt)</span>
   <nav aria-label="Fußzeile"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a><a href="https://www.instagram.com/feuerwehrpiflas/">Instagram</a><a href="https://www.facebook.com/feuerwehrpiflas">Facebook</a><a href="#partner">Partnerfeuerwehren</a><a href="#login">Login für Mitglieder</a></nav>
@@ -1458,6 +1465,10 @@ const lQuizAt = t => lPages(t).length - 1;
 /* Serie (E-20): Monate in Folge bestanden, vom neuesten Thema rückwärts – sieht nur die Person selbst */
 const lStreak = u => { const v = lVisible(); let i = v[0] && v[0].m === curM() && lState(u, v[0].id) !== 'ok' ? 1 : 0, n = 0; for (; i < v.length && lState(u, v[i].id) === 'ok'; i++) n++; return n; };
 const lk = tid => S.user.name + '|' + tid;
+/* Bild je Abschnitt (E-29): eigene Skizze oder eigenes Foto mit Bildbeschreibung */
+const lAlt = s => s.alt || SKETCH_ALT[s.img] || '';
+const lFig = s => s.img && IMG[s.img] ? `<figure class="lfig"><img src="${IMG[s.img]}" alt="${esc(lAlt(s))}"></figure>` : '';
+const lCover = t => (t.secs.find(s => s.img && IMG[s.img]) || null);
 const lNote = `<details class="help" id="l-info"><summary>Gut zu wissen: Wer sieht meine Ergebnisse?</summary><ul>
   <li>Mitmachen ist freiwillig und ergänzt die Übungsabende.</li>
   <li>Du siehst nur deine eigenen Ergebnisse. Den Lernstand aller sehen nur die Kommandanten – keine Admins, keine Redaktion, niemand öffentlich.</li>
@@ -1521,13 +1532,13 @@ V.thema = () => {
     const rs = myRes(me, t.id);
     body = `${t.bsp ? '<div class="stat warnbox" style="font-size:15px" id="l-bsp"><b>Beispielinhalt für die Demo.</b> Vor dem echten Einsatz prüft der Kommandant den Inhalt fachlich und gleicht ihn mit dem aktuellen Stand der Quellen ab.</div>' : ''}
     ${prev ? `<div class="stat" style="font-size:15px" id="l-prev"><b>Vorschau</b> – ${t.st === 'aktiv' ? 'erscheint am 1. ' + mLab(t.m) : 'noch nicht veröffentlicht'}. Mitglieder sehen das Thema noch nicht.</div>` : ''}
-    <div class="lintro">${lIcon(t, true)}<span class="lkick">Thema ${mLab(t.m)}</span><h1 style="font-size:36px">${esc(t.t)}</h1><p class="lead">${esc(t.intro)}</p>
+    ${lCover(t) ? `<figure class="lfig lcover">${`<img src="${IMG[lCover(t).img]}" alt="${esc(lAlt(lCover(t)))}">`}</figure>` : ''}<div class="lintro">${lIcon(t, true)}<span class="lkick">Thema ${mLab(t.m)}</span><h1 style="font-size:36px">${esc(t.t)}</h1><p class="lead">${esc(t.intro)}</p>
       <span class="lmeta"><span>⏱ ca. ${lMin(t)} Min.</span><span>${t.secs.length + 1} kurze Seiten</span><span>${t.qs.length} Fragen</span></span></div>
     ${rs.length ? `<p class="mini" id="l-mystat">Deine bisherigen Versuche: ${rs.length} · ${rs.some(r => r.ok) ? 'geschafft ✓' : 'noch nicht geschafft'}</p>` : ''}
     <div class="stack" style="gap:10px"><button class="btn big" data-act="l-next">Los geht’s</button>${t.qs.length ? '<button class="btn o lquick2" data-act="l-quiz" style="color:var(--ink)">Kenn ich schon – direkt zum Test</button>' : ''}</div>`;
   } else if (typeof page === 'number') {
     const s = t.secs[page];
-    body = `<article class="lpage" id="l-body"><h1 class="lkick">${esc(t.t)}</h1>${s.h ? `<h2 style="font-size:28px">${esc(s.h)}</h2>` : ''}${paras(s.x)}</article>${nav('Weiter')}`;
+    body = `<article class="lpage" id="l-body"><h1 class="lkick">${esc(t.t)}</h1>${s.h ? `<h2 style="font-size:28px">${esc(s.h)}</h2>` : ''}${lFig(s)}${paras(s.x)}</article>${nav('Weiter')}`;
   } else if (page === 'keys') {
     body = `<article class="lpage"><h1 class="lkick">${esc(t.t)}</h1><h2 style="font-size:28px">Das Wichtigste</h2>
       ${t.keys.length ? `<ul class="lkeys" id="l-keys">${t.keys.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
@@ -1562,7 +1573,7 @@ const ltCopy = t => ({...JSON.parse(JSON.stringify(t)), ic:t.ic || 'buch', keys:
 function ltRead(fm) { const d = S.ted, v = n => (fm.elements[n] ? fm.elements[n].value : '').trim();
   d.t = v('t'); d.m = v('m'); d.intro = v('intro'); d.src = v('src'); d.keys = fm.elements.keys.value; d.chk = fm.elements.chk.checked; d.mail = fm.elements.mail.checked;
   d.ic = (fm.querySelector('input[name="ic"]:checked') || {}).value || d.ic || 'buch';
-  d.secs = d.secs.map((s, i) => ({h:v('sh' + i), x:fm.elements['sx' + i].value}));
+  d.secs = d.secs.map((s, i) => ({h:v('sh' + i), x:fm.elements['sx' + i].value, img:s.img, alt:fm.elements['sa' + i] ? v('sa' + i) : s.alt}));
   d.links = d.links.map((l, i) => ({l:v('ll' + i), u:v('lu' + i)}));
   d.qs = d.qs.map((q, i) => ({q:v('qq' + i), o:[0, 1, 2, 3].map(j => v('qo' + i + '_' + j)), c:+((fm.querySelector(`input[name="qc${i}"]:checked`) || {}).value || 0), x:v('qx' + i)})); }
 /* „Was fehlt noch?“ – alle Lücken auf einmal nennen (E-27) */
@@ -1571,6 +1582,7 @@ function ltMissing(d) { const m = [];
   if (!d.secs.some(s => s.x.trim())) m.push('Text in einem Abschnitt');
   const eq = d.qs.map((q, i) => q.q ? 0 : i + 1).filter(Boolean); if (eq.length) m.push('Frage ' + eq.join(', '));
   d.qs.forEach((q, i) => { if (q.q && q.o.filter(Boolean).length < 2) m.push(`mindestens 2 Antworten bei Frage ${i + 1}`); else if (q.q && !q.o[q.c]) m.push(`richtige Antwort bei Frage ${i + 1} markieren`); });
+  d.secs.forEach((s, i) => { if (s.img && !(s.alt || '').trim()) m.push(`Bildbeschreibung zu Abschnitt ${i + 1}`); });
   if (!d.src) m.push('Quelle mit Stand');
   return m; }
 function ltCheck(d, pub) {
@@ -1598,7 +1610,11 @@ V.lthema = () => {
       <fieldset class="f"><legend>Symbol</legend><div class="licpick">${Object.entries(LIC).map(([k, c]) => `<label class="licp"><input type="radio" name="ic" value="${k}"${(d.ic || 'buch') === k ? ' checked' : ''}><span class="lic" style="background:${c[1]}">${c[2]}</span><span>${c[0]}</span></label>`).join('')}</div></fieldset>
       ${f('Einleitung (1–2 Sätze, macht Lust aufs Thema)', `<textarea name="intro" rows="2" maxlength="300">${esc(d.intro)}</textarea>`)}
       <h2 style="font-size:22px;margin:8px 0 0">Inhalt</h2><span class="mini">Jeder Abschnitt wird eine eigene Seite am Handy.</span>
-      ${d.secs.map((s, i) => `<fieldset class="ltf"><legend>Abschnitt ${i + 1}</legend>${f('Überschrift', `<input name="sh${i}" maxlength="80" value="${esc(s.h)}">`)}${f('Text (Leerzeile = neuer Absatz)', `<textarea name="sx${i}" rows="4">${esc(s.x)}</textarea>`)}${d.secs.length > 1 ? `<button type="button" class="btn o sm" data-act="lt-del" data-w="secs" data-i="${i}" style="color:var(--ink);align-self:flex-start">Abschnitt entfernen</button>` : ''}</fieldset>`).join('')}
+      ${d.secs.map((s, i) => `<fieldset class="ltf"><legend>Abschnitt ${i + 1}</legend>${f('Überschrift', `<input name="sh${i}" maxlength="80" value="${esc(s.h)}">`)}${f('Text (Leerzeile = neuer Absatz)', `<textarea name="sx${i}" rows="4">${esc(s.x)}</textarea>`)}
+        <div class="f">Bild oder Skizze (optional)<div class="thumbs">${s.img && IMG[s.img] ? `<span class="th"><img src="${IMG[s.img]}" alt="Bild zu Abschnitt ${i + 1}"><button type="button" class="ib sm" data-act="lt-img-rm" data-i="${i}" aria-label="Bild entfernen">×</button></span>` : ''}</div>
+          <label class="btn o sm upl" style="color:var(--ink);align-self:flex-start">${I.img}${s.img ? 'Bild ersetzen' : 'Bild hinzufügen'}<input class="vh" type="file" accept="image/*" data-up="lsec" data-i="${i}"></label></div>
+        ${s.img ? f('Bildbeschreibung (für Vorlesesoftware, Pflicht)', `<input name="sa${i}" maxlength="250" value="${esc(lAlt(s))}">`) : ''}
+        ${d.secs.length > 1 ? `<button type="button" class="btn o sm" data-act="lt-del" data-w="secs" data-i="${i}" style="color:var(--ink);align-self:flex-start">Abschnitt entfernen</button>` : ''}</fieldset>`).join('')}
       <button type="button" class="btn o sm" data-act="lt-add" data-w="secs" style="color:var(--ink);align-self:flex-start">+ Abschnitt</button>
       ${f('Das Wichtigste (eine Zeile pro Merksatz)', `<textarea name="keys" rows="3">${esc(d.keys)}</textarea>`)}
       <h2 style="font-size:22px;margin:8px 0 0">Links zum Weiterlernen</h2>
@@ -1895,6 +1911,7 @@ document.addEventListener('click', e => {
       S.ted = {...ltCopy(t), id: null, m, from: t.t}; toast('Kopie angelegt – Monat und Inhalt prüfen, dann speichern'); go('lthema'); break; }
     case 'lt-idea': { ltRead($('#f-lthema')); const [x, ic] = LIDEAS[+b.dataset.i]; S.ted.t = x; S.ted.ic = ic; render({keep:true}); break; }
     case 'lt-cancel': S.ted = null; go('lplan'); break;
+    case 'lt-img-rm': { ltRead($('#f-lthema')); const sc = S.ted.secs[+b.dataset.i]; delete sc.img; delete sc.alt; render({keep:true}); toast('Bild entfernt'); break; }
     case 'lt-add': case 'lt-del': { ltRead($('#f-lthema')); const w = b.dataset.w, L = S.ted[w];
       if (act === 'lt-add') L.push(w === 'qs' ? blankQ() : w === 'secs' ? {h:'', x:''} : {l:'', u:''}); else L.splice(+b.dataset.i, 1);
       render({keep:true}); break; }
@@ -2133,7 +2150,7 @@ document.addEventListener('submit', e => {
       Q.r[Q.i] = +v.value; Q.fb = true; render({keep:true}); setTimeout(() => { const x = $('#q-next'); if (x) x.focus({preventScroll:true}); const fbx = $('#q-fb'); if (fbx) fbx.scrollIntoView({block:'nearest'}); }, 30); break; }
     case 'f-lthema': { ltRead(fm); const d = S.ted, pub = !!(e.submitter && e.submitter.value === 'pub'), err = ltCheck(d, pub);
       if (err) { $('#e-lthema').textContent = err; return; }
-      const u = snapAll(), o = {id: d.id || 'l' + (S.nid++), m: d.m, t: d.t, intro: d.intro, secs: d.secs.filter(x => x.h || x.x.trim()), keys: d.keys.split('\n').map(x => x.trim()).filter(Boolean),
+      const u = snapAll(), o = {id: d.id || 'l' + (S.nid++), m: d.m, t: d.t, intro: d.intro, secs: d.secs.filter(x => x.h || x.x.trim()).map(x => x.img ? x : {h:x.h, x:x.x}), keys: d.keys.split('\n').map(x => x.trim()).filter(Boolean),
         links: d.links.filter(l => l.u), src: d.src, mail: d.mail, ic: d.ic || 'buch', qs: d.qs.filter(q => q.q).map(q => ({q: q.q, o: q.o.filter(Boolean), c: q.o.filter(Boolean).indexOf(q.o[q.c]), x: q.x})),
         st: pub ? 'aktiv' : 'entwurf', chk: pub ? {by: S.user.name, at: Date.now()} : null, bsp: false};
       const i = S.topics.findIndex(x => x.id === o.id); if (i >= 0) S.topics[i] = o; else S.topics.push(o);
@@ -2174,6 +2191,9 @@ document.addEventListener('change', async e => {
   } else if (up === 'q') {
     syncQ(); const q = S.queue.find(x => x.id === inp.dataset.id);
     if (q && urls.length) { q.imgs = (q.imgs || []).concat(urls.map(add)); toast(urls.length === 1 ? 'Foto hinzugefügt, Standortdaten entfernt' : urls.length + ' Fotos hinzugefügt, Standortdaten entfernt'); render({keep:true}); }
+  } else if (up === 'lsec' && urls[0] && S.ted) {
+    ltRead($('#f-lthema')); const sc = S.ted.secs[+inp.dataset.i]; sc.img = add(urls[0]); sc.alt = '';
+    render({keep:true}); toast('Bild hinzugefügt, Standortdaten entfernt – bitte Bildbeschreibung eintragen');
   } else if (up === 'sfoto' && urls[0]) {
     S.sdraft = add(urls[0]); sThumb(); toast('Foto ausgewählt – mit „Speichern“ übernehmen');
   } else if (up === 'rep' && urls[0]) {
