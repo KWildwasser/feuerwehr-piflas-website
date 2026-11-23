@@ -11,7 +11,7 @@
 - **Leitprinzip:** Ehrenamtliche ohne IT-Kenntnisse können die Seite auch in Jahren noch betreuen (2.11).
 - **Vorhanden:**
   - Übergangsseite
-  - Klickbare Demo v15 mit Testsuite (700 Prüfungen), öffentlich auf GitHub Pages
+  - Klickbare Demo v16 mit Testsuite (700 Prüfungen), öffentlich auf GitHub Pages
   - Anleitung „Schnittstellen reparieren“ für die Technik (A-12)
   - Handbuch für den Mitgliederbereich
   - Backup-Paket
@@ -130,7 +130,7 @@ Voraussetzung: @feuerwehrpiflas ist ein professionelles Konto (Business). Eine F
 | B-20 | Grenzen gegen Missbrauch: Höchstlängen für alle Felder (z. B. Titel 120, Text 8.000 Zeichen), Fotos laut B-11. | Muss |
 | B-21 | Seiten pflegen (Bereich „Seiten“): Verein (Einleitung, Vorstandschaft als Zeilen Amt – Name), Chronik (Jahr, Titel, Text; automatisch nach Jahr sortiert), Fahrzeuge (Name, Kurzname für Einsatzberichte, Beschreibung, Foto, Bildbeschreibung, Hervorhebung „Neu im Fuhrpark“ mit Vorstellungstext) und Ausrüstung (Bezeichnung, Foto, Bildbeschreibung). Alle Rollen bearbeiten und legen neue Fahrzeuge und Geräte an; die Redaktion über die Freigabe (W-08). Entfernen dürfen Kommandant und Admins (Nachfrage, 30 Tage wiederherstellbar). Neue Fahrzeuge stehen sofort im Formular „Einsatz von Hand“ zur Auswahl. Die zentrale Fotoverwaltung (B-12) ist von hier aus verlinkt. | Muss |
 | B-22 | Zähler an den Bereichen: Ist etwas zu tun, zeigt das Symbol in der unteren Leiste eine rote Zahl – Freigabe: offene Einreichungen; Inhalte (Redaktion): „Zurück an dich“; Lernen: das Thema des Monats ist noch nicht bestanden, für Kommandanten zusätzlich je fehlendem Thema für diesen oder nächsten Monat; System: Hinweise der Schnittstellen. Ist alles erledigt, verschwindet die Zahl. Vorlesesoftware liest die Zahl mit Klartext vor (z. B. „Freigabe, 4 warten auf Freigabe“). | Muss |
-| B-23 | Angemeldet bleiben auf der öffentlichen Seite: Wer angemeldet ist, sieht auch die öffentlichen Seiten mit dem Kopf des Mitgliederbereichs (Logo, Menü der öffentlichen Seiten, Handbuch, „Abmelden“, Name und Rolle) und der unteren Leiste mit den eigenen Bereichen und Zählern (B-22). Im Menü steht statt „Login für Mitglieder“ „Zum Mitgliederbereich“. Niemand fällt beim Ansehen eines Beitrags aus dem Mitgliederbereich heraus. | Muss |
+| B-23 | Angemeldet bleiben auf der öffentlichen Seite: Wer angemeldet ist, sieht auch die öffentlichen Seiten mit dem Kopf des Mitgliederbereichs (Logo, Menü der öffentlichen Seiten, Handbuch, „Abmelden“, Name und Rolle) und der unteren Leiste mit den eigenen Bereichen und Zählern (B-22). Im Menü steht statt „Login“ „Zum Mitgliederbereich“. Niemand fällt beim Ansehen eines Beitrags aus dem Mitgliederbereich heraus. | Muss |
 
 **Rollen** (je Konto genau eine, B-01; geplante Besetzung: 3 Kommandanten, 2 Admins, mehrere Personen in der Redaktion, alle übrigen Aktiven als Mitglied)
 
@@ -360,10 +360,10 @@ Bei Widersprüchen gilt das Lastenheft. Demo und Handbuch werden dann angepasst.
 | Dokument | Wofür | Wo |
 | --- | --- | --- |
 | Lastenheft (dieses Dokument) | Was gebaut wird | Online-Dokument, Claude-Projekt, PDF |
-| Demo v15 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
+| Demo v16 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
 | Testsuite (700 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
 | Anleitung „Schnittstellen reparieren“ | Reparatur von DIVERA und Instagram durch die Technik (A-12) | GitHub, Backup (`betrieb/schnittstellen.md`) |
-| Handbuch Mitgliederbereich 1.14 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
+| Handbuch Mitgliederbereich 1.16 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
 | Corporate Design | Logo, Farben, Schrift | Claude-Projekt |
 | Backup-Paket mit WEITERMACHEN.md | Alles, um später weiterzuarbeiten | ZIP |
 
@@ -437,8 +437,8 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 | Ergebnis | Stand |
 | --- | --- |
 | Übergangsseite | Fertig zum Hochladen |
-| Demo v15 + Testsuite (700 Prüfungen) | Fertig, auf GitHub Pages |
-| Handbuch | Version 1.14 fertig |
+| Demo v16 + Testsuite (700 Prüfungen) | Fertig, auf GitHub Pages |
+| Handbuch | Version 1.16 fertig |
 | Lastenheft | Version 1.17 |
 | Backup-Paket | Wird mit jeder Version aktualisiert |
 
