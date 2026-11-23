@@ -53,7 +53,7 @@ python -m playwright install chromium
 
 cd demo
 python build.py          # erzeugt index.html (ca. 2,3 MB)
-python test_app.py       # 2–4 Minuten, Ergebnis: "429 von 430 Prüfungen bestanden", Exit-Code 1 bei Fehlern
+python test_app.py       # 2–4 Minuten, Ergebnis: "430 von 430 Prüfungen bestanden", Exit-Code 1 bei Fehlern
 
 cd ../handbuch
 python shots.py          # neue Bildschirmfotos aus der Demo
