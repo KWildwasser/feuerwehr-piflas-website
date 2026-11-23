@@ -1,6 +1,6 @@
 # Lastenheft & Umsetzungsplan – Webpräsenz Feuerwehr Piflas
 
-23.11.2026 · Korbinian · Version 1.9 (WordPress) · Referenz: Demo v8 und Handbuch 1.7
+23.11.2026 · Korbinian · Version 1.10 (WordPress) · Referenz: Demo v9 und Handbuch 1.8
 
 ## 0. Auf einen Blick
 
@@ -10,7 +10,7 @@
 - **Leitprinzip:** Ehrenamtliche ohne IT-Kenntnisse können die Seite auch in Jahren noch betreuen (2.11).
 - **Vorhanden:**
   - Übergangsseite
-  - Klickbare Demo v8 mit Testsuite (568 Prüfungen), öffentlich auf GitHub Pages
+  - Klickbare Demo v9 mit Testsuite (573 Prüfungen), öffentlich auf GitHub Pages
   - Anleitung „Schnittstellen reparieren“ für die Technik (A-12)
   - Handbuch für den Mitgliederbereich
   - Backup-Paket
@@ -122,7 +122,7 @@ Voraussetzung: @feuerwehrpiflas ist ein professionelles Konto (Business). Eine F
 | B-14 | Bearbeiten im Editor (B-19): Beiträge (Titel, Kategorie, Text, Fotos, Titelbild, Bildbeschreibung) und Einsatzberichte (Stichwort, Einsatzart, Einsatzort, Datum, Uhrzeit, Fahrzeuge, Kurzbericht, Fotos), jeweils mit Pflicht-Bestätigung (W-04) und optionaler Notiz für den Verlauf. Die Redaktion bearbeitet nur eigene Beiträge; ihre Änderung geht zur Freigabe, bis dahin bleibt die bisherige Fassung online. Die Bereichsredaktion bearbeitet im eigenen Bereich, Kommandant und Admins alle Beiträge und Einsatzberichte, jeweils sofort online. Änderungen werden nicht erneut auf Instagram gepostet. | Muss |
 | B-15 | Ausblenden: Mit denselben Rechten wie bei B-14, aber ohne Freigabe, lässt sich ein Beitrag oder Einsatz sofort von der Website nehmen. Er bleibt gespeichert und lässt sich wieder einblenden. Ausgeblendetes erscheint nirgends öffentlich, auch nicht in der Einsatzstatistik. Ein Instagram-Post bleibt bestehen; darauf weist die Website hin. | Muss |
 | B-16 | Löschen: nur Admins, für Beiträge und Einsätze, immer erst nach einer Nachfrage. Gelöschtes kommt in den Papierkorb, lässt sich 30 Tage lang wiederherstellen und wird danach endgültig gelöscht. Gelöschte oder ausgeblendete Einsätze legt der DIVERA-Abgleich nicht erneut an. Ausnahme: Fahrzeuge und Geräte können auch Kommandanten entfernen und wiederherstellen (B-21). | Muss |
-| B-17 | Rückgängig: Nach jeder Änderung (speichern, ausblenden, löschen, entfernen, freigeben, verwerfen, zurückgeben, Einstellungen, Fotos, Einladungen, Notbetrieb) zeigt die Meldung einige Sekunden lang den Knopf „Rückgängig“, der den Stand davor wiederherstellt. Danach helfen Verlauf (B-07), Papierkorb (B-16) und die Liste „Verworfen und zurückgegeben“ (W-07). Das Rückgängigmachen steht selbst im Verlauf. Ein Instagram-Post bleibt bestehen; darauf weist die Website hin. | Muss |
+| B-17 | Rückgängig: Nach jeder Änderung (speichern, ausblenden, löschen, entfernen, freigeben, verwerfen, zurückgeben, Einstellungen, Fotos, Einladungen, Notbetrieb) zeigt die Meldung einige Sekunden lang den Knopf „Rückgängig“, der den Stand davor wiederherstellt. Zusätzlich bleibt die letzte Aktion 5 Minuten lang oben auf jeder Seite des Mitgliederbereichs und – für Angemeldete – auch auf der öffentlichen Seite sichtbar („Zuletzt: … · Rückgängig“), damit z. B. ein gerade veröffentlichter Beitrag oder Einsatzbericht direkt auf seiner Seite zurückgenommen werden kann. Das gilt für alle Eingaben, auch Veröffentlichen, Einplanen und Einladen. Danach helfen Verlauf (B-07), Papierkorb (B-16) und die Liste „Verworfen und zurückgegeben“ (W-07). Das Rückgängigmachen steht selbst im Verlauf. Ein Instagram-Post bleibt bestehen; darauf weist die Website hin. | Muss |
 | B-18 | Übersicht „Inhalte“ für Beiträge und Einsatzberichte, ausgelegt auf mehrere hundert Einträge: Suche beim Tippen (Titel, Text, Ort, Fahrzeug, Name), Filter nach Art (Einsätze, Übungen, Berichte), Jahr und Status (online, ausgeblendet, Änderung wartet, geplant), kombinierbar, mit Trefferzahl; die neuesten 20 zuerst, weitere mit „Weitere 20 anzeigen“; „Filter zurücksetzen“. Oben die Knöpfe „Neuer Beitrag“ und (Kommandant, Admin) „Einsatz von Hand“. Die Redaktion sieht nur eigene Beiträge und darüber „Zurück an dich“. Papierkorb für Admins unten. | Muss |
 | B-19 | Editor: Ein Eintrag öffnet sich auf einer eigenen Seite mit Formular, „Weitere Aktionen“ (ansehen, ausblenden, löschen) und Verlauf (B-07). Fotos: hinzufügen, einzeln entfernen und per „Titelbild“ nach vorn holen, ohne dass Eingaben verloren gehen; gilt auch für Einsätze in der Freigabe (W-03). Zurück zur Übersicht mit „← Zur Übersicht“ oder der Zurück-Taste. | Muss |
 | B-20 | Grenzen gegen Missbrauch: Höchstlängen für alle Felder (z. B. Titel 120, Text 8.000 Zeichen), Fotos laut B-11. | Muss |
@@ -294,10 +294,10 @@ Bei Widersprüchen gilt das Lastenheft. Demo und Handbuch werden dann angepasst.
 | Dokument | Wofür | Wo |
 | --- | --- | --- |
 | Lastenheft (dieses Dokument) | Was gebaut wird | Online-Dokument, Claude-Projekt, PDF |
-| Demo v8 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
-| Testsuite (568 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
+| Demo v9 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
+| Testsuite (573 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
 | Anleitung „Schnittstellen reparieren“ | Reparatur von DIVERA und Instagram durch die Technik (A-12) | GitHub, Backup (`betrieb/schnittstellen.md`) |
-| Handbuch Mitgliederbereich 1.7 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
+| Handbuch Mitgliederbereich 1.8 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
 | Corporate Design | Logo, Farben, Schrift | Claude-Projekt |
 | Backup-Paket mit WEITERMACHEN.md | Alles, um später weiterzuarbeiten | ZIP |
 
@@ -360,9 +360,9 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 | Ergebnis | Stand |
 | --- | --- |
 | Übergangsseite | Fertig zum Hochladen |
-| Demo v8 + Testsuite (568 Prüfungen) | Fertig, auf GitHub Pages |
-| Handbuch | Version 1.7 fertig |
-| Lastenheft | Version 1.9 |
+| Demo v9 + Testsuite (573 Prüfungen) | Fertig, auf GitHub Pages |
+| Handbuch | Version 1.8 fertig |
+| Lastenheft | Version 1.10 |
 | Backup-Paket | Wird mit jeder Version aktualisiert |
 
 **Sofort:** Übergangsseite hochladen. Vorher Joomla komplett sichern und die Speicherdauer der Logfiles in datenschutz.html eintragen.
@@ -469,3 +469,4 @@ Checkliste der IDs.
 | 1.7 | 23.11.2026 | Neu: D-09 (Einsatz von Hand), W-08 (Änderungen an Seiten freigeben), B-17 (Rückgängig), B-18 (Übersicht mit Suche, Filtern und Seitenweise-Laden für mehrere hundert Einträge), B-19 (Editor, Titelbild wählen), B-20 (Höchstlängen), B-21 (Verein, Chronik, Fahrzeuge und Ausrüstung pflegen; Kommandanten fügen Fahrzeuge und Geräte hinzu und entfernen sie), A-10 bis A-12 (Schnittstellen austauschbar, Diagnose und Notbetrieb, Reparatur-Anleitung). Geändert: B-01 (eine Rolle je Konto, keine Rollenauswahl beim Login), B-07 (Verlauf jetzt Muss, sicher und mit Spam-Schutz), B-14 (Editor, Einsätze vollständig bearbeitbar), B-16 (Ausnahme Fahrzeuge), W-07 (verworfen/zurückgegeben 30 Tage wiederherstellbar, mit Hinweis), D-08, F-02, F-03, F-05, F-08, N-05 (Begrenzung), A-06, Rollentabelle mit geplanter Besetzung (3 Kommandanten, 2 Admins, mehrere Redaktion), 4.2, 5, 6, CLAUDE.md-Vorlage. Demo v6 (Fehler behoben: Fotos beim Einsatzbericht), Testsuite (539 Prüfungen), Handbuch 1.5. Annahmen: Redaktion pflegt Seiten über die Freigabe; Ortsteil-Liste Piflas, Ergolding, Oberglaim vorläufig. |
 | 1.8 | 23.11.2026 | Neu W-09: E-Mail an alle Kommandanten bei jeder Einreichung und tägliche Erinnerung (Uhrzeit einstellbar), mit Inhalt und Knöpfen „Freigeben“/„Verwerfen“; sichere Einmal-Links mit Bestätigungsseite und Pflicht-Häkchen. Geändert: B-21 und W-08 (alle Rollen legen Fahrzeuge und Geräte an, Redaktion über die Freigabe; entfernen weiter nur Kommandant und Admins), B-06 (Kopf im Mitgliederbereich am Handy), Rollentabelle, A-06, L-02, 4.2, 5, 6. Demo v7, Testsuite (565 Prüfungen), Handbuch 1.6. |
 | 1.9 | 23.11.2026 | Geändert: W-09 (Mail nur noch als Hinweis mit Link zur Freigabe, ohne Inhalte und ohne Freigeben aus der Mail – Verschwiegenheit), W-08 (Freigabe als Vergleich: geänderte Felder Wort für Wort hervorgehoben, Überblick nach Art), B-07 (Verlauf mit „Was wurde geändert?“), D-02, D-09, F-03, B-14, L-02, L-03 (Einsätze auch überörtlich: Einsatzort als Ortsteil oder Gemeinde, Straßen und Hausnummern werden abgewiesen), A-06, 4.2, 5, 6. Demo v8 (u. a. mehr Monate in der Datumssimulation), Testsuite (568 Prüfungen), Handbuch 1.7. |
+| 1.10 | 23.11.2026 | B-17 ergänzt: Rückgängig auch beim Veröffentlichen gut erreichbar – die letzte Aktion bleibt 5 Minuten oben sichtbar („Zuletzt: … · Rückgängig“), auch auf der Seite des gerade veröffentlichten Beitrags; gilt für alle Eingaben (auch Einplanen). Demo v9, Testsuite (573 Prüfungen), Handbuch 1.8. |

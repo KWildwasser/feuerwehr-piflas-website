@@ -1,6 +1,6 @@
 # Webpräsenz Feuerwehr Piflas – Backup & Anleitung zum Weitermachen
 
-Stand: **23.11.2026** · Lastenheft **v1.9** · Demo **v8** · Handbuch **1.7** · Testsuite **569/569 bestanden**
+Stand: **23.11.2026** · Lastenheft **v1.10** · Demo **v9** · Handbuch **1.8** · Testsuite **573/573 bestanden**
 
 Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte, Bilder und Vorlagen. Damit kannst du (oder jemand aus dem Verein, oder eine neue Claude-Sitzung) jederzeit nahtlos weitermachen. Es enthält keine Zugangsdaten.
 
@@ -11,16 +11,16 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | Ordner / Datei | Inhalt |
 |---|---|
 | `PROJEKT-ANWEISUNGEN.md` | Benutzerdefinierte Anweisungen für das Claude-Projekt (zum Einfügen) |
-| `lastenheft/lastenheft-v1.9.md` | Das Lastenheft als Text – verbindliche Grundlage |
-| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.9.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
+| `lastenheft/lastenheft-v1.10.md` | Das Lastenheft als Text – verbindliche Grundlage |
+| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.10.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
 | `lastenheft/make_pdf.py` | Erzeugt das PDF aus der neuesten `lastenheft-vX.Y.md` |
 | `lastenheft/CLAUDE.md`, `start-prompt-phase1.txt` | Vorlagen für das Code-Repository und die erste Claude-Code-Sitzung |
-| `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.7 (alle Rollen) |
+| `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.8 (alle Rollen) |
 | `handbuch/inhalt.html`, `shots.py`, `make.py`, `img/` | Quellen: Text, Bildschirmfotos aus der Demo, PDF-Erzeugung |
 | `demo/README.md` | Aufbau der Demo und Zuordnung der Prüfungen zu den Lastenheft-IDs |
 | `demo/app-src.html` | Quelltext der Demo – **hier wird geändert** |
 | `demo/build.py` → `demo/index.html` | Baut die fertige Demo (eine Datei, läuft offline) |
-| `demo/test_app.py`, `demo/testimg/` | Testsuite (569 Prüfungen) = Abnahmeliste für die echte Website |
+| `demo/test_app.py`, `demo/testimg/` | Testsuite (573 Prüfungen) = Abnahmeliste für die echte Website |
 | `betrieb/schnittstellen.md` | Anleitung „Schnittstellen reparieren“ (DIVERA, Instagram) für die Technik – A-12 |
 | `index.html`, `assets/screens/`, `assets/qr-projektseite.svg` | Projektseite auf GitHub Pages (mit QR-Code für den Pitch) |
 | `../tools/make_qr.js` | Erzeugt den QR-Code offline: `node tools/make_qr.js <URL> <ziel.svg>` |
@@ -40,7 +40,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 - **GitHub (alles, öffentlich):** https://github.com/KWildwasser/feuerwehr-piflas-website
 - **Demo öffentlich (GitHub Pages):** https://kwildwasser.github.io/feuerwehr-piflas-website/demo/
 - **Projektseite (für den Pitch, mit QR-Code):** https://kwildwasser.github.io/feuerwehr-piflas-website/
-- **Demo v8 (Claude-Artefakt, gleicher Link wie zuvor):** https://claude.ai/artifact/JDBEcotDJPXWSgDe7dBzhn
+- **Demo v9 (Claude-Artefakt, gleicher Link wie zuvor):** https://claude.ai/artifact/JDBEcotDJPXWSgDe7dBzhn
 - Ältere, öffentlich geteilte Stände: v4 https://claude.ai/artifact/3zpe9uaMATpMUXYjNNLvS4 · v3 https://claude.ai/artifact/PPtQ5Y7QVMb5PSzn52DTCA (nicht mehr aktuell)
 - Partnerfeuerwehren: https://www.ff-ergolding.de/ · https://oberglaim.feuerwehren.bayern/
 - Instagram: https://www.instagram.com/feuerwehrpiflas/
@@ -57,7 +57,7 @@ python -m playwright install chromium
 
 cd demo
 python build.py          # erzeugt index.html (ca. 2,3 MB)
-python test_app.py       # 2–4 Minuten, Ergebnis: "569 von 569 Prüfungen bestanden", Exit-Code 1 bei Fehlern
+python test_app.py       # 2–4 Minuten, Ergebnis: "573 von 573 Prüfungen bestanden", Exit-Code 1 bei Fehlern
 
 cd ../handbuch
 python shots.py          # neue Bildschirmfotos aus der Demo
@@ -74,7 +74,7 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 ## 4. Nächste Schritte (Reihenfolge)
 
 1. **Übergangsseite online stellen** – `uebergangsseite/LIESMICH.txt`. Vorher Joomla komplett sichern, Logfile-Dauer des Hosters in `datenschutz.html` eintragen.
-2. **Pitch** beim Kommandanten, im Gemeinderat und beim Bürgermeister mit der Projektseite und Demo v8 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Störung simulieren).
+2. **Pitch** beim Kommandanten, im Gemeinderat und beim Bürgermeister mit der Projektseite und Demo v9 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Störung simulieren).
 3. **Betriebsvariante entscheiden** (Lastenheft 4.3): Wer betreut die Seite? Ohne zwei Admins → Wartung durch Dienstleister.
 4. **Offene Punkte** aus Lastenheft Abschnitt 5 einsammeln (Kommandant, Ortsteile, Pflege der Vereinsseite laut Satzung, Jubiläumstermine, Fahrzeugtypen, Namen der Fotografinnen und Fotografen, PDFs, Förderbeitrag …).
 5. **Phase 0** (Zugänge, Hosting-Prüfung, DIVERA-API, Instagram-Business-Konto), dann **Phase 1** mit Claude Code und dem Start-Prompt.
@@ -83,9 +83,9 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 
 Dieses ZIP hochladen und z. B. schreiben:
 
-> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.9.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
+> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.10.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
 
-Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.9.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
+Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.10.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
 
 ## 6. Wichtige Entscheidungen (Kurzfassung)
 
@@ -98,7 +98,7 @@ Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `laste
 - **Frauen und Männer** gleichermaßen ansprechen (N-13). Rollen: Admin, Kommandant · Freigabe, Redaktion, Bereichsredaktion; Ausnahmen „Kommandant“ und „Admin“, Feuerwehrfunktionen nach FwDV.
 - **Bearbeiten und Ausblenden** gemäß Rolle (Redaktion: eigene, Änderung über Freigabe); **Löschen** nur Admins nach Nachfrage, 30 Tage Papierkorb (B-14 bis B-16).
 - **Eine Rolle je Konto**, kein Rollen-Auswahlfeld beim Login. Geplante Besetzung: 3 Kommandanten, 2 Admins, mehrere Redaktion.
-- **Rückgängig überall** (B-17) und **Verlauf** je Inhalt, nur anhängen, mit Spam-Schutz (B-07, N-05).
+- **Rückgängig überall** (B-17), letzte Aktion 5 Minuten oben sichtbar – auch nach dem Veröffentlichen, und **Verlauf** je Inhalt, nur anhängen, mit Spam-Schutz (B-07, N-05).
 - **Inhalte-Übersicht** mit Suche, Filtern und Seitenweise-Laden für hunderte Einträge (B-18); **Einsatz von Hand** für Kommandanten (D-09).
 - **Seiten pflegen:** Verein, Chronik, Fahrzeuge, Ausrüstung; alle legen Fahrzeuge und Geräte an (Redaktion über Freigabe), entfernen nur Kommandant und Admins (B-21).
 - **E-Mail-Hinweis:** kurze Mail an alle Kommandanten je Einreichung und täglich um 7 Uhr, nur mit Link zur Freigabe – keine Inhalte, Freigeben nur auf der Website (W-09).

@@ -38,7 +38,7 @@ CHROME=/pfad/zu/chrome python test_app.py    # optional eigener Browser
 | Bearbeiten, Ausblenden, Löschen | Rechte je Rolle, Editor, Änderung über Freigabe, Nachfrage, Papierkorb | B-14 bis B-16, B-19 |
 | Inhalte-Übersicht | über 300 Einträge, Suche beim Tippen, Filter Art/Jahr/Status, 20 je Seite, Zurücksetzen | B-18 |
 | Verlauf und Spam-Schutz | wer/wann/was, Freigabe, Notiz, Fassung wiederherstellen, nur anhängen, keine Leer-Einträge, Zusammenfassen, Begrenzung | B-07, N-05 |
-| Rückgängig | Freigabe, Löschen, Verwerfen, Wiederherstellen, Notbetrieb | B-17 |
+| Rückgängig | Freigabe, Veröffentlichen (auch auf der Beitragsseite), Einplanen, Löschen, Verwerfen, Wiederherstellen, Notbetrieb; letzte Aktion oben sichtbar | B-17 |
 | Seiten pflegen | Verein, Vorstandschaft, Chronik (Sortierung), Fahrzeuge (Foto, neu, entfernen, wiederherstellen), Ausrüstung, Redaktion legt Fahrzeuge an (über Freigabe) | B-21, W-08 |
 | Einsatz von Hand | Rundung, überörtlicher Einsatzort, Straße wird abgewiesen, Fahrzeug-Pflicht, Foto, 2-Stunden-Regel (geplant), Zukunft abgewiesen | D-09, D-04 |
 | Freigabe und DIVERA | 4 Beispiele, Alarm, echte Einsatzfotos, Pflicht-Häkchen, Zurückgeben mit Hinweis, Verwerfen und Wiederherstellen, Statistik, Termin-Abgleich | D-, W- |

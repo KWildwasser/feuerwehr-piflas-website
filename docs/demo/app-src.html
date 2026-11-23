@@ -329,6 +329,7 @@ ins{background:#DDF3E1;color:#14532D;text-decoration:underline;text-decoration-c
 .hnow{background:var(--rot);color:#fff;font-size:12px}.hnote{font-style:italic;color:var(--ink);background:#FFF6DB;border-radius:8px;padding:4px 8px;align-self:flex-start}
 .hd summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center;color:var(--rot-d)}.hd[open] summary{margin-bottom:6px}
 .mlist{margin:0;padding-left:20px}
+.undobar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#FFF6DB;border:1px solid #F3E3B0;border-radius:12px;padding:8px 12px;margin-top:12px;font-size:15px}
 .mail{gap:10px}.mail .mhead{display:flex;flex-direction:column;gap:2px;font-size:14px;border-bottom:1px solid var(--linie);padding-bottom:10px;overflow-wrap:anywhere}
 .mitem{display:flex;flex-direction:column;gap:8px}.mail .mitem.card{border:1px solid var(--linie);box-shadow:none}
 .mitem h3{margin:0}
@@ -930,7 +931,10 @@ const legend = '<p class="mini legend" style="margin:0"><ins>grün = neu</ins> �
 const UK = ['einsaetze','news','queue','trash','dropped','fz','ger','verein','members','plan','settings','posts','iface'];
 let UNDO = null;
 const snapAll = () => ({j: JSON.stringify(UK.map(k => S[k])), img: {...IMG}, gone: {...S.gone}});
-const done = (msg, u, ref) => { UNDO = {u, ref}; toast(msg, true); };
+const done = (msg, u, ref) => { UNDO = {u, ref, msg, at:Date.now()}; toast(msg, true); };
+/* Die letzte Aktion bleibt 5 Minuten oben sichtbar – auch nach dem Veröffentlichen auf der Beitrags- oder Einsatzseite */
+const UNDO_MS = 5 * 60e3;
+const undoBar = () => S.user && UNDO && Date.now() - UNDO.at < UNDO_MS ? `<div class="wrap"><div class="undobar" id="undo-bar" role="status"><span><b>Zuletzt:</b> ${esc(UNDO.msg)}</span><button type="button" class="btn o sm" data-act="undo" style="color:var(--ink)">Rückgängig</button></div></div>` : '';
 function undo() {
   if (!UNDO) return; const {u, ref} = UNDO; UNDO = null;
   JSON.parse(u.j).forEach((v, i) => { S[UK[i]] = v; });
@@ -1271,7 +1275,7 @@ function render(opts = {}) {
   document.body.classList.toggle('bk', bk);
   $('#chrome').innerHTML = bk ? backHead() : pubHead(r);
   $('#main').className = bk ? 'bm' : '';
-  $('#main').innerHTML = V[r]() + (bk ? backTabs(r) : '');
+  $('#main').innerHTML = undoBar() + V[r]() + (bk ? backTabs(r) : '');
   $('#footer').innerHTML = bk ? '' : pubFoot();
   $('#mnav').innerHTML = menuHtml(r);
   document.title = (r === 'start' ? '' : (pubList().find(p => p[0]===r)?.[1] || TITLE[r] || BACK[r]?.[0] || r.charAt(0).toUpperCase()+r.slice(1)) + ' – ') + 'Feuerwehr Piflas';
@@ -1310,7 +1314,7 @@ const DATES = [['now','Heute',null,''], ['2026-12','Dez. 2026',[2026,11,10],'Adv
   ['2027-09','Sept. 2027',[2027,8,1],'vor dem Warntag'], ['2027-10','Okt. 2027',[2027,9,10],'Herbst, nach dem Dorffest'], ['2027-12','Dez. 2027',[2027,11,20],'letzte Tage des Festjahres'], ['2028','Feb. 2028',[2028,1,1],'nach dem Jubiläum']];
 let tT, pT;
 /* Meldung unten; mit u = true zusätzlich der Knopf „Rückgängig“ (B-17) */
-const toast = (m, u) => { const t = $('#toast'); t.innerHTML = '<span>' + esc(m) + '</span>' + (u ? '<button type="button" class="tb" data-act="undo">Rückgängig</button>' : ''); t.classList.toggle('act', !!u); t.classList.add('on'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('on'), u ? 8000 : 3000); };
+const toast = (m, u) => { const t = $('#toast'); t.innerHTML = '<span>' + esc(m) + '</span>' + (u ? '<button type="button" class="tb" data-act="undo">Rückgängig</button>' : ''); t.classList.toggle('act', !!u); t.classList.add('on'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('on'), u ? 10000 : 3000); };
 const push = m => { $('#pushtxt').textContent = m; const p = $('#push'); p.classList.add('on'); clearTimeout(pT); pT = setTimeout(() => p.classList.remove('on'), 4500); };
 const setOpen = (cls, el, open) => {
   document.body.classList.toggle(cls, open);
@@ -1457,7 +1461,7 @@ document.addEventListener('click', e => {
     /* Anmelden */
     case 'quick-login': { const r = b.dataset.role || 'Freigeber'; loginAs(r); S.ed = null; toast('Angemeldet als ' + S.user.name + ' · ' + ROLES[r].label + ' (Demo)'); sheet(false);
       const nx = S.next && mayRoute(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break; }
-    case 'logout': S.user = null; S.draft = []; S.ed = null; S.cdel = null; S.sed = null; S.sdel = null; S.keyForm = null; toast('Abgemeldet'); go('start'); break;
+    case 'logout': UNDO = null; S.user = null; S.draft = []; S.ed = null; S.cdel = null; S.sed = null; S.sdel = null; S.keyForm = null; toast('Abgemeldet'); go('start'); break;
     case 'undo': undo(); break;
     /* Freigabe */
     case 'publish': publish(id); break;
@@ -1675,8 +1679,8 @@ document.addEventListener('submit', e => {
     }
     case 'f-plan': {
       if (!check(fm, 'e-plan')) return;
-      const d = new Date(val(fm,'d') + 'T12:00'); S.plan.push({d:`${p2(d.getDate())}.${p2(d.getMonth()+1)}.`, t: val(fm,'t'), w: val(fm,'w'), s:'Idee'});
-      toast('Eingeplant – Erinnerung 3 Tage vorher'); render({keep:true}); break;
+      const u = snapAll(), d = new Date(val(fm,'d') + 'T12:00'); S.plan.push({d:`${p2(d.getDate())}.${p2(d.getMonth()+1)}.`, t: val(fm,'t'), w: val(fm,'w'), s:'Idee'});
+      done('Eingeplant – Erinnerung 3 Tage vorher', u); render({keep:true}); break;
     }
     case 'f-invite': {
       if (!check(fm, 'e-invite')) return; const u = snapAll();
