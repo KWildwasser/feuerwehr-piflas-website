@@ -47,9 +47,10 @@ async def main():
         await el('#aktionen','15-loeschen.png')
         await pg.evaluate("document.querySelector('[data-act=c-del-no]').click()"); await pg.wait_for_timeout(150)
         await go('beitraege'); await pg.click('[data-act=new][data-k=e]'); await pg.wait_for_timeout(250)
-        await pg.fill('#f-einsatz [name=sw]','Ölspur'); await pg.fill('#f-einsatz [name=zt]','14:30'); await pg.check('#f-einsatz [name=fz] >> nth=1')
+        await pg.fill('#f-einsatz [name=sw]','Ölspur'); await pg.fill('#f-einsatz [name=zt]','14:30'); await pg.evaluate("document.querySelectorAll('#f-einsatz [name=fz]')[1].checked = true")
         await el('#f-einsatz','18-einsatz-hand.png')
         await go('redaktion'); await el('main article[data-q=c1]','23-freigabe-aenderung.png')
+        await go('postfach'); await pg.click('#inbox .li >> nth=0'); await pg.wait_for_timeout(250); await el('#mail','24-mail.png')
         await go('seiten'); await pg.click('[data-act=sp][data-v=fz]'); await pg.wait_for_timeout(200); await el('#slist','20-seiten-fahrzeuge.png')
         await pg.click('[data-act=sp][data-v=chronik]'); await pg.wait_for_timeout(200); await el('#f-chronik','21-chronik.png')
         # Mitglieder

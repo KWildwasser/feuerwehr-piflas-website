@@ -1,6 +1,6 @@
 # Lastenheft & Umsetzungsplan – Webpräsenz Feuerwehr Piflas
 
-23.11.2026 · Korbinian · Version 1.7 (WordPress) · Referenz: Demo v6 und Handbuch 1.5
+23.11.2026 · Korbinian · Version 1.8 (WordPress) · Referenz: Demo v7 und Handbuch 1.6
 
 ## 0. Auf einen Blick
 
@@ -10,7 +10,7 @@
 - **Leitprinzip:** Ehrenamtliche ohne IT-Kenntnisse können die Seite auch in Jahren noch betreuen (2.11).
 - **Vorhanden:**
   - Übergangsseite
-  - Klickbare Demo v6 mit Testsuite (539 Prüfungen), öffentlich auf GitHub Pages
+  - Klickbare Demo v7 mit Testsuite (565 Prüfungen), öffentlich auf GitHub Pages
   - Anleitung „Schnittstellen reparieren“ für die Technik (A-12)
   - Handbuch für den Mitgliederbereich
   - Backup-Paket
@@ -87,7 +87,8 @@ Priorität: **Muss** = zum Go-live, **Soll** = kurz danach, **Kann** = später. 
 | W-05 | Warnhinweis bei technischer Hilfe: Gibt es Verletzte oder Tote, wird erst veröffentlicht, wenn Polizei und Angehörige informiert sind. | Muss |
 | W-06 | Häkchen „Auch auf Instagram“, getrennt von der Veröffentlichung auf der Website. | Muss |
 | W-07 | Einsätze lassen sich verwerfen, Beiträge und Änderungen „Zurück zur Überarbeitung“ schicken, jeweils mit optionalem Hinweis. Verworfenes und Zurückgegebenes bleibt 30 Tage in der Liste „Verworfen und zurückgegeben“ und lässt sich wiederherstellen. Die einreichende Person sieht Zurückgegebenes mit Hinweis unter „Inhalte“ und kann es überarbeiten und neu einreichen. | Muss |
-| W-08 | Änderungen der Redaktion an Seiten, Fahrzeugen, Ausrüstung und Chronik (B-21) erscheinen in der Freigabe mit allen geänderten Feldern „alt → neu“ und werden mit „Übernehmen“ freigegeben. | Muss |
+| W-08 | Änderungen der Redaktion an Seiten, Fahrzeugen, Ausrüstung und Chronik sowie neue Fahrzeuge und Geräte (B-21) erscheinen in der Freigabe mit allen geänderten Feldern „alt → neu“ und werden mit „Übernehmen“ freigegeben. | Muss |
+| W-09 | E-Mail an die Kommandanten: Jede neue Einreichung (Einsatz-Entwurf, Beitrag, Änderung, neues Fahrzeug oder Gerät) geht sofort per E-Mail an alle mit der Rolle Kommandant · Freigabe. Solange etwas offen ist, kommt täglich zu einer einstellbaren Uhrzeit (Standard 7:00 Uhr, im System-Bereich abschaltbar) eine Erinnerung mit allen offenen Einreichungen. Die Mail enthält den Inhalt (Titel, Text bzw. Einsatzfelder oder geänderte Felder, verkleinerte Fotos) und die Knöpfe „Freigeben“ und „Verwerfen“ bzw. „Zurückgeben“. Sicherheit: Jeder Knopf ist ein persönlicher, signierter Link (nur für diese Person und Einreichung, 72 Stunden gültig, nur einmal nutzbar). Er öffnet eine Bestätigungsseite; erst dort wird ausgelöst – beim Freigeben mit Pflicht-Häkchen (W-04), beim Zurückgeben mit optionalem Hinweis. So lösen Mail-Programme, die Links vorab öffnen, nichts aus. Ist die Einreichung schon erledigt, zeigt die Seite „Bereits erledigt“. Die 2-Stunden-Regel (D-04) gilt weiter; im Verlauf steht „per E-Mail“. Versand über den SMTP-Zugang des Hostings, ohne Tracking-Pixel. | Muss |
 
 ### 2.4 Instagram
 
@@ -110,7 +111,7 @@ Voraussetzung: @feuerwehrpiflas ist ein professionelles Konto (Business). Eine F
 | B-03 | Die Rechte sind laut Rollentabelle fest im eigenen Plugin hinterlegt. | Muss |
 | B-04 | 2-Faktor-Anmeldung ist Pflicht für Admins und den Kommandanten, für alle anderen empfohlen. | Muss |
 | B-05 | „Passwort vergessen“ per Mail. Nach mehreren Fehlversuchen wird das Konto vorübergehend gesperrt. | Muss |
-| B-06 | Der Mitgliederbereich ist voll am Handy bedienbar. Die untere Leiste zeigt nur die Bereiche der eigenen Rolle. | Muss |
+| B-06 | Der Mitgliederbereich ist voll am Handy bedienbar. Die untere Leiste zeigt nur die Bereiche der eigenen Rolle. Im Kopf stehen Logo, Handbuch und „Abmelden“ in einer Zeile, Name und Rolle darunter in einer eigenen Zeile – ab 360 px ohne Überlappung. | Muss |
 | B-07 | Verlauf: Jeder Beitrag, Einsatzbericht, jedes Fahrzeug und Gerät und die Seite „Verein & Chronik“ hat einen Verlauf mit Zeit, Person, Aktion (erstellt, bearbeitet, ausgeblendet, gelöscht, wiederhergestellt, rückgängig gemacht), Freigabe durch, optionaler Notiz und geänderten Feldern. Jede frühere Fassung lässt sich wiederherstellen (Redaktion: als Änderung zur Freigabe). Sicher: Einträge werden nur angehängt, niemand kann sie ändern oder löschen; die Person kommt aus der Anmeldung, nicht aus dem Formular; der Verlauf ist nur im Mitgliederbereich sichtbar. Schutz vor Spam: Speichern ohne Änderung erzeugt keinen Eintrag; Änderungen derselben Person am selben Inhalt innerhalb von 10 Minuten werden zusammengefasst; Begrenzung nach N-05; höchstens 50 Fassungen je Inhalt, ältere Zwischenstände werden ausgedünnt (die erste Fassung bleibt). Zusätzlich protokolliert die Website Anmeldungen und Rechteänderungen. | Muss |
 | B-08 | Bei Austritt wird das Konto deaktiviert, nicht gelöscht. Die Beiträge bleiben erhalten. | Muss |
 | B-09 | Ein Beitrag besteht aus Titel, Kategorie (Verein, Übung, Jugendfeuerwehr, Bürgertipp), Text, Fotos, optionaler Bildbeschreibung, dem Instagram-Häkchen und der Pflicht-Bestätigung (W-04). Kommandant und Admins veröffentlichen direkt, die Redaktion reicht zur Freigabe ein. | Muss |
@@ -125,7 +126,7 @@ Voraussetzung: @feuerwehrpiflas ist ein professionelles Konto (Business). Eine F
 | B-18 | Übersicht „Inhalte“ für Beiträge und Einsatzberichte, ausgelegt auf mehrere hundert Einträge: Suche beim Tippen (Titel, Text, Ort, Fahrzeug, Name), Filter nach Art (Einsätze, Übungen, Berichte), Jahr und Status (online, ausgeblendet, Änderung wartet, geplant), kombinierbar, mit Trefferzahl; die neuesten 20 zuerst, weitere mit „Weitere 20 anzeigen“; „Filter zurücksetzen“. Oben die Knöpfe „Neuer Beitrag“ und (Kommandant, Admin) „Einsatz von Hand“. Die Redaktion sieht nur eigene Beiträge und darüber „Zurück an dich“. Papierkorb für Admins unten. | Muss |
 | B-19 | Editor: Ein Eintrag öffnet sich auf einer eigenen Seite mit Formular, „Weitere Aktionen“ (ansehen, ausblenden, löschen) und Verlauf (B-07). Fotos: hinzufügen, einzeln entfernen und per „Titelbild“ nach vorn holen, ohne dass Eingaben verloren gehen; gilt auch für Einsätze in der Freigabe (W-03). Zurück zur Übersicht mit „← Zur Übersicht“ oder der Zurück-Taste. | Muss |
 | B-20 | Grenzen gegen Missbrauch: Höchstlängen für alle Felder (z. B. Titel 120, Text 8.000 Zeichen), Fotos laut B-11. | Muss |
-| B-21 | Seiten pflegen (Bereich „Seiten“): Verein (Einleitung, Vorstandschaft als Zeilen Amt – Name), Chronik (Jahr, Titel, Text; automatisch nach Jahr sortiert), Fahrzeuge (Name, Kurzname für Einsatzberichte, Beschreibung, Foto, Bildbeschreibung, Hervorhebung „Neu im Fuhrpark“ mit Vorstellungstext) und Ausrüstung (Bezeichnung, Foto, Bildbeschreibung). Alle Rollen bearbeiten; die Redaktion über die Freigabe (W-08). Kommandant und Admins fügen Fahrzeuge und Geräte hinzu und entfernen sie (Nachfrage, 30 Tage wiederherstellbar). Neue Fahrzeuge stehen sofort im Formular „Einsatz von Hand“ zur Auswahl. Die zentrale Fotoverwaltung (B-12) ist von hier aus verlinkt. | Muss |
+| B-21 | Seiten pflegen (Bereich „Seiten“): Verein (Einleitung, Vorstandschaft als Zeilen Amt – Name), Chronik (Jahr, Titel, Text; automatisch nach Jahr sortiert), Fahrzeuge (Name, Kurzname für Einsatzberichte, Beschreibung, Foto, Bildbeschreibung, Hervorhebung „Neu im Fuhrpark“ mit Vorstellungstext) und Ausrüstung (Bezeichnung, Foto, Bildbeschreibung). Alle Rollen bearbeiten und legen neue Fahrzeuge und Geräte an; die Redaktion über die Freigabe (W-08). Entfernen dürfen Kommandant und Admins (Nachfrage, 30 Tage wiederherstellbar). Neue Fahrzeuge stehen sofort im Formular „Einsatz von Hand“ zur Auswahl. Die zentrale Fotoverwaltung (B-12) ist von hier aus verlinkt. | Muss |
 
 **Rollen** (je Konto genau eine, B-01; geplante Besetzung: 3 Kommandanten, 2 Admins, mehrere Personen in der Redaktion)
 
@@ -133,7 +134,7 @@ Voraussetzung: @feuerwehrpiflas ist ein professionelles Konto (Business). Eine F
 | --- | --- | --- | --- |
 | Admin | Webmaster/in und eine zweite Person (A-08), geplant 2 | Freigabe, Inhalte, Seiten (mit Fotos), Planung, Mitglieder, System | Alles, auch Mitglieder einladen, Rollen vergeben, Fotos verwalten, Einstellungen und Schnittstellen, Inhalte nach Nachfrage löschen |
 | Kommandant · Freigabe | Kommandant und Stellvertretung, geplant 3 | Freigabe, Inhalte, Seiten, Planung | Beiträge, Einsätze und Änderungen veröffentlichen, Einsätze von Hand anlegen, alles bearbeiten und ausblenden, Seiten pflegen, Fahrzeuge und Geräte hinzufügen und entfernen, Instagram-Post auslösen |
-| Redaktion | Pressearbeit, Aktive, geplant mehrere | Inhalte, Seiten, Planung | Beiträge mit Fotos schreiben und einreichen, eigene bearbeiten (über die Freigabe) und ausblenden, Änderungen an Seiten vorschlagen, nicht selbst veröffentlichen |
+| Redaktion | Pressearbeit, Aktive, geplant mehrere | Inhalte, Seiten, Planung | Beiträge mit Fotos schreiben und einreichen, eigene bearbeiten (über die Freigabe) und ausblenden, Änderungen an Seiten sowie neue Fahrzeuge und Geräte vorschlagen, nicht selbst veröffentlichen |
 | Bereichsredaktion | z. B. Jugendwart | Inhalte, Seiten, Planung | Im eigenen Bereich schreiben, veröffentlichen, bearbeiten und ausblenden |
 
 ### 2.6 Überwachung
@@ -207,7 +208,7 @@ Im Zweifel gewinnt die einfachere, verbreitetere Lösung.
 | A-03 | Zustands-Ampel im System-Bereich für Erreichbarkeit, Updates, Backup, DIVERA, Instagram und Zertifikat, mit Klartext und, wo möglich, einem Knopf zur Lösung. | Muss |
 | A-04 | Automatische Updates und Backups, das Zertifikat erneuert sich selbst. Richtwert: 30–60 Minuten Admin-Arbeit pro Monat. | Muss |
 | A-05 | WordPress-Standard und wenige bekannte, kostenlose Plugins statt Eigenbau. | Muss |
-| A-06 | Das Handbuch (PDF, bebildert, Du-Form) ist Teil der Lieferung. Es enthält Rollen, Anmelden, Inhalte (schreiben, finden, bearbeiten, ausblenden, löschen, Rückgängig und Verlauf), Redaktionsplan, Freigeben (auch Änderungen und Einsatz von Hand), Seiten pflegen, Mitglieder- und Fotoverwaltung, System mit Schnittstellen-Diagnose und Notbetrieb, regelmäßige Aufgaben, die Checkliste „Admin-Wechsel“, Notfallkontakte und häufige Fragen. Die Bildschirmfotos zeigen die echte Website, nach Phase 2 aus der Staging-Seite neu erstellt. Jede neue Funktion bekommt einen Abschnitt im Handbuch. | Muss |
+| A-06 | Das Handbuch (PDF, bebildert, Du-Form) ist Teil der Lieferung. Es enthält Rollen, Anmelden, Inhalte (schreiben, finden, bearbeiten, ausblenden, löschen, Rückgängig und Verlauf), Redaktionsplan, Freigeben (auch Änderungen, Einsatz von Hand und per E-Mail), Seiten pflegen, Mitglieder- und Fotoverwaltung, System mit Schnittstellen-Diagnose und Notbetrieb, regelmäßige Aufgaben, die Checkliste „Admin-Wechsel“, Notfallkontakte und häufige Fragen. Die Bildschirmfotos zeigen die echte Website, nach Phase 2 aus der Staging-Seite neu erstellt. Jede neue Funktion bekommt einen Abschnitt im Handbuch. | Muss |
 | A-07 | Konten und Verträge laufen auf den Verein (Domain, Hosting, DIVERA, Meta, GitHub). Die Zugangsdaten liegen im Passwort-Tresor des Vereins, mit Notfallzugang für den Vorstand. | Muss |
 | A-08 | Immer mindestens zwei Admins. Jährlich eine Übergabe-Übung mit Test der Wiederherstellung. | Muss |
 | A-09 | Laientest als Abnahme: Ein Mitglied ohne IT-Kenntnisse erledigt zehn typische Aufgaben nur mit dem Handbuch. | Muss |
@@ -240,7 +241,7 @@ Die Freiwillige Feuerwehr ist eine Einrichtung des Marktes Ergolding (Art. 4 Bay
 | ID | Grundlage | Anforderung | Umsetzung |
 | --- | --- | --- | --- |
 | L-01 | Art. 4, 5 BayFwG | Verein betreibt, Kommandant gibt frei, schriftlich mit dem Markt abgestimmt | Impressum, Freigabe; Vereinbarung offen |
-| L-02 | Verschwiegenheit (Art. 20 GO, Merkblatt StMI) | Keine vertraulichen Einsatzdetails | D-02, W-04 |
+| L-02 | Verschwiegenheit (Art. 20 GO, Merkblatt StMI) | Keine vertraulichen Einsatzdetails | D-02, W-04; Inhalte in Freigabe-Mails (W-09) prüfen |
 | L-03 | DSGVO / BayDSG | Keine erkennbaren Personen, Kennzeichen oder Objekte; Ort nur als Ortsteil | Anonymisierung; Test „keine Adressen“ |
 | L-04 | Pietät | Bei Verletzten oder Toten erst nach Information von Polizei und Angehörigen | W-05 |
 | L-05 | DSGVO Art. 6, 13, 21; KUG | Fotos von Festen und Übungen: vorher informieren, Widerspruch beachten, Kinder nur mit Einwilligung der Eltern | Foto-Hinweis, Pflicht-Häkchen, Fotoverwaltung |
@@ -293,10 +294,10 @@ Bei Widersprüchen gilt das Lastenheft. Demo und Handbuch werden dann angepasst.
 | Dokument | Wofür | Wo |
 | --- | --- | --- |
 | Lastenheft (dieses Dokument) | Was gebaut wird | Online-Dokument, Claude-Projekt, PDF |
-| Demo v6 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
-| Testsuite (539 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
+| Demo v7 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
+| Testsuite (565 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
 | Anleitung „Schnittstellen reparieren“ | Reparatur von DIVERA und Instagram durch die Technik (A-12) | GitHub, Backup (`betrieb/schnittstellen.md`) |
-| Handbuch Mitgliederbereich 1.5 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
+| Handbuch Mitgliederbereich 1.6 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
 | Corporate Design | Logo, Farben, Schrift | Claude-Projekt |
 | Backup-Paket mit WEITERMACHEN.md | Alles, um später weiterzuarbeiten | ZIP |
 
@@ -330,6 +331,7 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 - [ ] DIVERA: API-Zugang in der gebuchten Stufe? Wie sind private und Jubiläumstermine markiert?
 - [ ] Instagram auf professionelles Konto umstellen, Meta-Entwicklerkonto auf den Verein anlegen
 - [ ] Joomla sichern, Umfang des Archivs festlegen (F-13)
+- [ ] SMTP-Versand über den Hoster prüfen (Zustellbarkeit, SPF/DKIM) für Freigabe-Mails (W-09)
 
 **Inhalte**
 
@@ -349,6 +351,7 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 - [ ] Verträge zur Auftragsverarbeitung mit Hoster und DIVERA
 - [ ] Verzeichnis der Verarbeitungstätigkeiten
 - [ ] Foto-Einwilligung in die Aufnahmeformulare
+- [ ] Dürfen Inhalte noch unveröffentlichter Einsatzberichte per E-Mail verschickt werden (W-09, L-02)? Mit Kommandant und Fachperson klären
 - [ ] Prüfung durch eine Fachperson für Datenschutz oder Recht vor dem Go-live
 
 ## 6. Umsetzungsplan
@@ -358,9 +361,9 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 | Ergebnis | Stand |
 | --- | --- |
 | Übergangsseite | Fertig zum Hochladen |
-| Demo v6 + Testsuite (539 Prüfungen) | Fertig, auf GitHub Pages |
-| Handbuch | Version 1.5 fertig |
-| Lastenheft | Version 1.7 |
+| Demo v7 + Testsuite (565 Prüfungen) | Fertig, auf GitHub Pages |
+| Handbuch | Version 1.6 fertig |
+| Lastenheft | Version 1.8 |
 | Backup-Paket | Wird mit jeder Version aktualisiert |
 
 **Sofort:** Übergangsseite hochladen. Vorher Joomla komplett sichern und die Speicherdauer der Logfiles in datenschutz.html eintragen.
@@ -465,3 +468,4 @@ Checkliste der IDs.
 | 1.5 | 23.11.2026 | Ausnahmen von N-13: „Kommandant“ statt „Kommando“, „Admin“ statt „Administration“; Feuerwehrfunktionen nach FwDV (z. B. Gruppenführer, Jugendwart). Rollen umbenannt in Admin und Kommandant · Freigabe, Freigabegruppe: Kommandant und stellvertretender Kommandant. Texte in Lastenheft, Demo und Handbuch 1.3 angepasst; Demo-Personen getauscht (Kommandant: Max Mustermann, Admin: Erika Musterfrau). |
 | 1.6 | 23.11.2026 | Gesamtprüfung von Testsuite, Demo, Lastenheft und Handbuch. Präzisiert: W-01 (Freigabegruppe = Rolle Kommandant · Freigabe), Rollentabelle, N-02 (Sprunglink), N-03 (lange Wörter), N-05 (Eingaben nie als HTML), N-11 (Robustheit, ID-Zuordnung in demo/README.md), 4.2, CLAUDE.md-Vorlage. Demo: Sprungleiste unter „Beiträge“, Sprunglink repariert, Umbruch langer Wörter. Testsuite 430 Prüfungen mit Exit-Code, Handbuch 1.4. |
 | 1.7 | 23.11.2026 | Neu: D-09 (Einsatz von Hand), W-08 (Änderungen an Seiten freigeben), B-17 (Rückgängig), B-18 (Übersicht mit Suche, Filtern und Seitenweise-Laden für mehrere hundert Einträge), B-19 (Editor, Titelbild wählen), B-20 (Höchstlängen), B-21 (Verein, Chronik, Fahrzeuge und Ausrüstung pflegen; Kommandanten fügen Fahrzeuge und Geräte hinzu und entfernen sie), A-10 bis A-12 (Schnittstellen austauschbar, Diagnose und Notbetrieb, Reparatur-Anleitung). Geändert: B-01 (eine Rolle je Konto, keine Rollenauswahl beim Login), B-07 (Verlauf jetzt Muss, sicher und mit Spam-Schutz), B-14 (Editor, Einsätze vollständig bearbeitbar), B-16 (Ausnahme Fahrzeuge), W-07 (verworfen/zurückgegeben 30 Tage wiederherstellbar, mit Hinweis), D-08, F-02, F-03, F-05, F-08, N-05 (Begrenzung), A-06, Rollentabelle mit geplanter Besetzung (3 Kommandanten, 2 Admins, mehrere Redaktion), 4.2, 5, 6, CLAUDE.md-Vorlage. Demo v6 (Fehler behoben: Fotos beim Einsatzbericht), Testsuite (539 Prüfungen), Handbuch 1.5. Annahmen: Redaktion pflegt Seiten über die Freigabe; Ortsteil-Liste Piflas, Ergolding, Oberglaim vorläufig. |
+| 1.8 | 23.11.2026 | Neu W-09: E-Mail an alle Kommandanten bei jeder Einreichung und tägliche Erinnerung (Uhrzeit einstellbar), mit Inhalt und Knöpfen „Freigeben“/„Verwerfen“; sichere Einmal-Links mit Bestätigungsseite und Pflicht-Häkchen. Geändert: B-21 und W-08 (alle Rollen legen Fahrzeuge und Geräte an, Redaktion über die Freigabe; entfernen weiter nur Kommandant und Admins), B-06 (Kopf im Mitgliederbereich am Handy), Rollentabelle, A-06, L-02, 4.2, 5, 6. Demo v7, Testsuite (565 Prüfungen), Handbuch 1.6. |

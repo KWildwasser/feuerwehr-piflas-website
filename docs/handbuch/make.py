@@ -65,7 +65,7 @@ dl.faq dt{{font-weight:700;margin-top:3mm}} dl.faq dd{{margin:1mm 0 0 0}}
 cover = f'''<section class="cover"><div class="bar"></div><img src="data:image/svg+xml;base64,{logo}" alt="Feuerwehr Piflas">
 <h1>Handbuch<br>Mitgliederbereich</h1><p class="sub">So pflegst du die Website der Feuerwehr Piflas –<br>Schritt für Schritt, am Handy, ohne IT-Kenntnisse.</p>
 <div class="rollen"><span class="r a">Alle</span><span class="r f">Kommandant</span><span class="r ad">Admin</span></div>
-<table><tr><td>Version</td><td><b>1.5</b></td></tr><tr><td>Stand</td><td>23.11.2026 (auf Basis der Demo v6)</td></tr><tr><td>Grundlage</td><td>Lastenheft v1.7, u. a. A-06, A-10 bis A-12, B-01, B-07, B-13 bis B-19, D-09</td></tr><tr><td>Pflege</td><td>Admins – bei jeder neuen Funktion ergänzen</td></tr></table>
+<table><tr><td>Version</td><td><b>1.6</b></td></tr><tr><td>Stand</td><td>23.11.2026 (auf Basis der Demo v7)</td></tr><tr><td>Grundlage</td><td>Lastenheft v1.8, u. a. A-06, A-10 bis A-12, B-01, B-07, B-13 bis B-21, D-09, W-09</td></tr><tr><td>Pflege</td><td>Admins – bei jeder neuen Funktion ergänzen</td></tr></table>
 <div class="foot">Feuerwehr Piflas e.V. · Gartenstraße 2 · 84030 Ergolding / Piflas · Nur für Mitglieder mit Zugang</div></section>'''
 head = f'<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><title>Handbuch Mitgliederbereich – Website Feuerwehr Piflas</title><style>{css}</style></head><body>'
 (H/'cover.html').write_text(head.replace('</style>','@page{margin:0}</style>') + cover + '</body></html>')

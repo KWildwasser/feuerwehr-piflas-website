@@ -25,7 +25,7 @@ CHROME=/pfad/zu/chrome python test_app.py    # optional eigener Browser
 
 | Bereich | Prüfungen | IDs |
 |---|---|---|
-| Seitenrundgang in 360/390/430/1280 px | kein seitliches Scrollen, Überschrift, Namen und Labels, Tippziele ≥ 44 px, Bilder, keine JS-Fehler; Mitgliederbereich in 360/390 | N-02, N-03 |
+| Seitenrundgang in 360/390/430/1280 px | kein seitliches Scrollen, Überschrift, Namen und Labels, Tippziele ≥ 44 px, Bilder, keine JS-Fehler; Mitgliederbereich in 360/390, Kopf ohne Überlappung | N-02, N-03, B-06 |
 | Aktuelles und Einsätze | Kategorien, ältere Jahre, Einsatzart, „Weitere laden“ | F-02, F-03 |
 | Startseite | Reihenfolge, Fotos, Instagram-Raster, keine Fahrzeugdaten | F-01, I-01 |
 | Recht | keine externen Anfragen, keine IBAN, Hinweis für unter 16-Jährige, Impressum, Datenschutz | N-01, L-03 bis L-11 |
@@ -39,9 +39,10 @@ CHROME=/pfad/zu/chrome python test_app.py    # optional eigener Browser
 | Inhalte-Übersicht | über 300 Einträge, Suche beim Tippen, Filter Art/Jahr/Status, 20 je Seite, Zurücksetzen | B-18 |
 | Verlauf und Spam-Schutz | wer/wann/was, Freigabe, Notiz, Fassung wiederherstellen, nur anhängen, keine Leer-Einträge, Zusammenfassen, Begrenzung | B-07, N-05 |
 | Rückgängig | Freigabe, Löschen, Verwerfen, Wiederherstellen, Notbetrieb | B-17 |
-| Seiten pflegen | Verein, Vorstandschaft, Chronik (Sortierung), Fahrzeuge (Foto, neu, entfernen, wiederherstellen), Ausrüstung, Redaktion über Freigabe | B-21, W-08 |
+| Seiten pflegen | Verein, Vorstandschaft, Chronik (Sortierung), Fahrzeuge (Foto, neu, entfernen, wiederherstellen), Ausrüstung, Redaktion legt Fahrzeuge an (über Freigabe) | B-21, W-08 |
 | Einsatz von Hand | Rundung, Fahrzeug-Pflicht, Foto, 2-Stunden-Regel (geplant), Zukunft abgewiesen | D-09, D-04 |
 | Freigabe und DIVERA | 4 Beispiele, Alarm, echte Einsatzfotos, Pflicht-Häkchen, Zurückgeben mit Hinweis, Verwerfen und Wiederherstellen, Statistik, Termin-Abgleich | D-, W- |
+| E-Mail an Kommandanten | Mail je Einreichung an alle 3 Kommandanten, Inhalt, Freigeben/Verwerfen aus der Mail mit Bestätigungsseite und Pflicht-Häkchen, Einmal-Link („Bereits erledigt“), tägliche Erinnerung | W-09 |
 | Schnittstellen | Fehlercodes, Verbindung testen, Schlüssel verdeckt, Diagnosebericht ohne Zugangsdaten, Notbetrieb, Instagram-Ausfall unsichtbar | D-08, A-10 bis A-12 |
 | Demo-Szenarien | Redaktion reicht ein, Einsatz von Hand, Verlauf, Anmelden als | – |
 | Bürgerinfos | Tipp nach Jahreszeit, Sonderhinweis, Warntag und Probealarm | C-04, C-07 |

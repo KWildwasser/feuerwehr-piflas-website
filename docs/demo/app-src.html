@@ -246,11 +246,11 @@ body.bk{background:var(--hell)}
 .btop{position:sticky;top:0;z-index:40;background:var(--ink);color:#fff;padding-top:var(--sat)}
 .btop .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:60px}
 .btop .logo{width:118px;height:32px}
-.btop small{color:#C9CBCE;font-size:13px;text-align:right;line-height:1.25}
-.btop button{background:none;border:1px solid #555B62;color:#fff;border-radius:999px;min-height:40px;padding:0 12px;font-size:14px;font-weight:600}
+.btop .who{display:block;min-height:0;padding-bottom:8px;margin-top:-4px;color:#C9CBCE;font-size:13px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btop .who b{color:#fff}
+.btop button{background:none;border:1px solid #555B62;color:#fff;border-radius:999px;min-height:44px;padding:0 12px;font-size:14px;font-weight:600}
 .btop .hb{display:inline-flex;align-items:center;gap:6px;border:1px solid #555B62;color:#fff;border-radius:999px;min-height:44px;min-width:44px;justify-content:center;padding:0 12px;font-size:14px;font-weight:600;text-decoration:none}.btop .hb svg{width:20px;height:20px}
 .btop .tr{display:flex;align-items:center;gap:8px}
-@media (max-width:480px){.btop .hb span{display:none}.btop .hb{padding:0}.btop .logo{width:92px;height:26px;flex:none}.btop small{font-size:12px}.btop .tr{gap:6px}.btop button{padding:0 10px}}
+@media (max-width:480px){.btop .hb span{display:none}.btop .hb{padding:0}.btop .logo{width:92px;height:26px;flex:none}.btop .who{font-size:12px}.btop .tr{gap:6px}.btop button{padding:0 10px}}
 .btabs{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#fff;border-top:1px solid var(--linie);display:flex;justify-content:center;padding-bottom:var(--sab)}
 .btabs a{flex:1;max-width:160px;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--grau);font-size:12px;font-weight:600;position:relative}
 .btabs a[aria-current=page]{color:var(--rot)}
@@ -317,6 +317,9 @@ fieldset.crow{border-top:1px solid var(--linie);padding-top:10px}
 .dlog{white-space:pre-wrap;font-size:13px;background:#F4F3F0;padding:10px;border-radius:8px;overflow-wrap:anywhere;margin:6px 0 0}
 .steps2{margin:0;padding-left:20px}
 #f-post textarea[name=txt]{min-height:200px}
+.mail{gap:10px}.mail .mhead{display:flex;flex-direction:column;gap:2px;font-size:14px;border-bottom:1px solid var(--linie);padding-bottom:10px;overflow-wrap:anywhere}
+.mitem{display:flex;flex-direction:column;gap:8px}.mail .mitem.card{border:1px solid var(--linie);box-shadow:none}
+.mitem h3{margin:0}
 .sgh{font-size:14px;margin:6px 0 -2px;color:var(--g2);text-transform:uppercase;letter-spacing:.05em}
 @media(prefers-reduced-motion:reduce){.drawer,.sheet,.push,.toast,.scrim,.fab{transition:none}.neu{animation:none}}
 </style>
@@ -355,7 +358,7 @@ fieldset.crow{border-top:1px solid var(--linie);padding-top:10px}
    3. Bausteine:  esc() für JEDE Benutzereingabe, f(), sec(), eRow/tRow/tile
    4. Seiten:     V.<route> öffentlich (start, aktuelles …) und Mitgliederbereich (redaktion, beitraege, editor, seiten …)
    5. Verlauf:    KINDS, saveC(), hLog(), histHtml() (B-07), snapAll()/done()/undo() (B-17), rateOk() (N-05)
-   6. Schnittstellen: IFACE/ERR, diagHtml() (A-10 bis A-12)
+   6. Schnittstellen: IFACE/ERR, diagHtml() (A-10 bis A-12); E-Mail an Kommandanten: syncMails(), V.postfach (W-09)
    7. Ablauf:     render() je Hash-Route, click-Handler (data-act), submit-Handler (Formular-IDs f-…)
    Regeln: Du-Form, N-13, keine externen Anfragen. Nach jeder Änderung build.py und test_app.py ausführen. */
 {
@@ -529,7 +532,7 @@ const fresh = () => { const t0 = Date.now() - 30 * 864e5; const st = {
   news: NEWS.map(n => ({...n})).concat(ARCH.N.map(n => ({...n}))),
   fz: FZ.map(z => ({id: z.id || z.img, ...z})), ger: GER.map(([img, n, alt]) => ({id: img, img, n, alt})),
   verein: {id:'verein', intro:'Der Feuerwehr Piflas e.V. stellt die Einsatzkräfte der Ortsfeuerwehr und pflegt Kameradschaft und Dorfleben.', vorstand:[['1. Vorstand','Matthias Jeschke'], ['[Weitere Ämter laut Satzung]','[Name]']], chronik:[{y:String(JUB.founded), t:'Gründung der Freiwilligen Feuerwehr Piflas', x:''}, {y:'[Jahr]', t:'[Weitere Meilensteine folgen: Fahrzeuge, Gerätehaus, Jubiläen]', x:''}]},
-  posts: [], termine: TERMINE.map(t => ({...t})).concat(JUB.events.map(e => ({...e, k:'Jubiläum', priv:false, jub:true}))), synced: false, today: null, settings: {sonderOn:false, sonderT:'Hohe Waldbrandgefahr', sonderX:'Kein Feuer im Freien, nicht rauchen im Wald und Zufahrten für die Feuerwehr freihalten.', sonderBis:'', warnOn:true, jubOn:true, jubEnd:'2027-12-31', pE:'https://www.ff-ergolding.de/', pO:'https://oberglaim.feuerwehren.bayern/'},
+  posts: [], termine: TERMINE.map(t => ({...t})).concat(JUB.events.map(e => ({...e, k:'Jubiläum', priv:false, jub:true}))), synced: false, today: null, settings: {sonderOn:false, sonderT:'Hohe Waldbrandgefahr', sonderX:'Kein Feuer im Freien, nicht rauchen im Wald und Zufahrten für die Feuerwehr freihalten.', sonderBis:'', warnOn:true, jubOn:true, jubEnd:'2027-12-31', pE:'https://www.ff-ergolding.de/', pO:'https://oberglaim.feuerwehren.bayern/', mailOn:true, mailT:'07:00'},
   /* Schnittstellen (A-10 bis A-12): st ok|warn|bad, code aus ERR, man = Notbetrieb */
   iface: {div:{st:'ok', code:'', man:false}, ig:{st:'warn', code:'IG-EXP', man:false}},
   /* Freigabe-Beispiele: neuer Beitrag, Jugendbericht, Fahrzeug-Änderung, Chronik-Ergänzung */
@@ -539,7 +542,7 @@ const fresh = () => { const t0 = Date.now() - 30 * 864e5; const st = {
     {kind:'change', id:'c1', k:'fz', tid:'fz_mtw', vals:{d:'[Fahrzeugtyp] · Mannschaftstransport für [Anzahl] Personen, auch für die Jugendfeuerwehr'}, note:'Einsatzzweck ergänzt', von:'Lukas Schreiber (Redaktion)', by:'Lukas Schreiber'},
     {kind:'change', id:'c2', k:'v', tid:'verein', vals:{chronik:null}, note:'Meilenstein ergänzt', von:'Jonas Beispiel (Redaktion)', by:'Jonas Beispiel'}
   ],
-  dropped: [], hist: {}, seedH: true, rl: {}, t0,
+  dropped: [], hist: {}, seedH: true, rl: {}, t0, mails: [], mailed: [], mview: null, mconf: null,
   user: null, pending2fa: null, next: null, draft: [], uid: 1, mdel: null, gone: {}, cdel: null, trash: [], year: 2026, etyp: 'alle', pe: 20, ncat: 'Alle', pn: 6, tf: 'Alle', detail: null, neu: null, alarmNr: 0, step: 1, nid: 100,
   ed: null, flt: {q:'', typ:'alle', y:'alle', st:'alle', n:20}, sp: 'verein', sed: null, sdraft: undefined, tmp: {}, keyForm: null,
   members: ACC.map(a => ({...a, s: a.inv ? 'Eingeladen · läuft in 31 Std. ab' : (a.r === 'Autor' ? 'Aktiv' : 'Aktiv · 2FA eingerichtet'), inv: !!a.inv})),
@@ -585,7 +588,8 @@ const pubFoot = () => `<footer class="foot"><div class="wrap"><span class="logo 
   <nav aria-label="Fußzeile"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a><a href="https://www.instagram.com/feuerwehrpiflas/">Instagram</a><a href="https://www.facebook.com/feuerwehrpiflas">Facebook</a><a href="#partner">Partnerfeuerwehren</a><a href="#login">Login für Mitglieder</a></nav>
   <span class="mini">© 2026 Feuerwehr Piflas e.V. · Demo-Version mit Beispielinhalten · Fotos: Feuerwehr Piflas</span></div></footer>`;
 const backHead = () => `<header class="btop"><div class="wrap"><a href="#start" aria-label="Zur öffentlichen Website"><span class="logo w" role="img" aria-label="Feuerwehr Piflas"></span></a>
-  <div class="tr"><small>Angemeldet als<br><b style="color:#fff">${esc(S.user.name)} · ${esc(ROLES[S.user.role].label)}</b></small><a class="hb" id="hb-link" href="handbuch.pdf" target="_blank" rel="noopener" aria-label="Handbuch (PDF) öffnen">${I.book}<span>Handbuch</span></a><button data-act="logout">Abmelden</button></div></div></header>`;
+  <div class="tr"><a class="hb" id="hb-link" href="handbuch.pdf" target="_blank" rel="noopener" aria-label="Handbuch (PDF) öffnen">${I.book}<span>Handbuch</span></a><button data-act="logout">Abmelden</button></div></div>
+  <div class="wrap who" id="who">Angemeldet als <b>${esc(S.user.name)}</b> · ${esc(ROLES[S.user.role].label)}</div></header>`;
 const backTabs = r => `<nav class="btabs" aria-label="Redaktion">${ROLES[S.user.role].tabs.map(k => `<a href="#${k}"${(TABOF[r] || r)===k?' aria-current="page"':''}>${BACK[k][1]}${BACK[k][0]}${k==='redaktion' && S.queue.length ? `<span class="badge">${S.queue.length}</span>` : ''}</a>`).join('')}</nav>`;
 const sec = (inner, cls='') => `<section class="band ${cls}"><div class="wrap stack">${inner}</div></section>`;
 
@@ -913,10 +917,10 @@ V.redaktion = () => {
       <p class="err" id="e-${q.id}"></p>
       <div class="pb"><button class="btn" data-act="publish" data-id="${q.id}">Veröffentlichen</button><button class="btn o" data-act="drop" data-id="${q.id}" style="color:var(--ink)">Verwerfen</button></div></article>`;
     const back = `${f('Hinweis an die Redaktion (optional, bei „Zurück“)', `<input id="note-${q.id}" maxlength="300" placeholder="z. B. Bitte noch Datum ergänzen">`)}`;
-    if (q.kind === 'change') { const o = getC(q.k, q.tid); if (!o) return '';
-      const ks = Object.keys(q.vals).filter(x => JSON.stringify(o[x]) !== JSON.stringify(q.vals[x]));
+    if (q.kind === 'change') { const o = q.add ? {n: q.vals.n} : getC(q.k, q.tid); if (!o) return '';
+      const ks = Object.keys(q.vals).filter(x => q.add ? nz(q.vals[x]) !== null : JSON.stringify(o[x]) !== JSON.stringify(q.vals[x]));
       return `
-    <article class="card" data-q="${q.id}"><span class="tag t-news" style="align-self:flex-start">Änderung: ${esc(KINDS[q.k].l)} · eingereicht von ${esc(q.von)}</span><h2 style="font-size:26px">${esc(o.n || o.t || 'Verein & Chronik')}</h2>
+    <article class="card" data-q="${q.id}"><span class="tag t-news" style="align-self:flex-start">${q.add ? 'Neu: ' + esc(KINDS[q.k].l) : 'Änderung: ' + esc(KINDS[q.k].l)} · eingereicht von ${esc(q.von)}</span><h2 style="font-size:26px">${esc(o.n || o.t || 'Verein & Chronik')}</h2>
       ${q.note ? `<p class="mini" style="margin:0">Notiz: „${esc(q.note)}“</p>` : ''}
       <div class="kv chg">${ks.map(x => `<span>${esc(FLAB[x] || x)}</span><b>${x === 'img' && q.vals.img && IMG[q.vals.img] ? `<img src="${IMG[q.vals.img]}" alt="Neues Foto" style="width:112px;border-radius:10px">` : `<del>${esc(shortVal(x, o[x]))}</del> → ${esc(shortVal(x, q.vals[x]))}`}</b>`).join('') || '<span>–</span><b>Keine Abweichung mehr</b>'}</div>
       <label class="chk"><input type="checkbox" id="ok-${q.id}" ${q.ok ? 'checked' : ''}><span class="ct">Geprüft: Angaben stimmen, Bildrechte geklärt, keine vertraulichen Details.</span></label>
@@ -932,6 +936,7 @@ V.redaktion = () => {
   };
   const dr = S.dropped.map((d, i) => `<div class="li" style="align-items:center"><span style="flex:1;min-width:0"><b>${esc(d.q.t || (getC(d.q.k, d.q.tid) || {}).n || KINDS[d.q.k || 'n'].l)}</b><span class="mini" style="display:block">${d.q.kind === 'einsatz' ? 'Einsatz-Entwurf verworfen' : 'Zurück an ' + esc(d.q.by)}${d.note ? ' · „' + esc(d.note) + '“' : ''} · ${esc(d.by)}, ${fmtTs(d.at)} · 30 Tage wiederherstellbar</span></span><button class="btn o sm" data-act="q-restore" data-i="${i}" style="color:var(--ink)">Wiederherstellen</button></div>`).join('');
   return sec(`<h1 style="font-size:40px">Zur Freigabe${S.queue.length ? ` <span style="color:var(--rot)">${S.queue.length}</span>` : ''}</h1><p style="color:var(--grau)">Prüfen, ergänzen, veröffentlichen – alles am Handy.</p>
+    <p class="mini" id="mailinfo" style="margin:0">Jede neue Einreichung geht per E-Mail an alle ${S.members.filter(m => m.r === 'Freigeber' && !m.inv).length} Kommandanten – mit Inhalt und Knöpfen zum Freigeben oder Verwerfen.${S.settings.mailOn ? ' Solange etwas offen ist, kommt täglich um ' + esc(S.settings.mailT) + ' Uhr eine Erinnerung.' : ''}</p>
     ${ivBanner()}${S.queue.map(card).join('') || '<p class="leer">Nichts zur Freigabe.<br>Neue Einsätze aus DIVERA erscheinen hier automatisch.</p>'}
     <h2 style="font-size:24px" id="dropped-head">Verworfen und zurückgegeben</h2><div class="list" id="dropped">${dr || '<p class="leer">Nichts verworfen.</p>'}</div>`);
 };
@@ -1063,7 +1068,7 @@ V.seiten = () => { const sp = S.sp, red = isRed();
   const tr = S.trash.filter(x => x.k === sp);
   const body = sp === 'verein' ? vereinForm() + histHtml('v', S.verein)
     : sp === 'chronik' ? chronikForm() + histHtml('v', S.verein)
-    : `${red ? '' : `<button class="btn" data-act="s-new" data-k="${sp}" style="align-self:flex-start">+ ${sp === 'fz' ? 'Fahrzeug' : 'Gerät'} hinzufügen</button>`}
+    : `${`<button class="btn" data-act="s-new" data-k="${sp}" style="align-self:flex-start">+ ${sp === 'fz' ? 'Fahrzeug' : 'Gerät'} hinzufügen</button>`}
       ${S.sed === sp + ':new' ? itemForm(sp, null) : ''}
       <div class="stack" id="slist">${(sp === 'fz' ? S.fz : S.ger).map(o => itemCard(sp, o)).join('')}</div>
       ${red ? '' : `<h2 style="font-size:22px" id="s-trash-head">Entfernt (30 Tage wiederherstellbar)</h2><div class="list" id="s-trash">${tr.map(x => `<div class="li" style="align-items:center"><span style="flex:1;min-width:0"><b>${esc(x.item.n)}</b></span><button class="btn o sm" data-act="restore" data-id="${x.k}${esc(x.item.id)}" style="color:var(--ink)">Wiederherstellen</button></div>`).join('') || '<p class="leer">Nichts entfernt.</p>'}</div>`}`;
@@ -1137,6 +1142,8 @@ V.system = () => {
     <label class="chk"><input type="checkbox" name="warnOn" ${S.settings.warnOn !== false ? 'checked' : ''}><span class="ct">Hinweis auf Warntag und Probealarm 14 Tage vorher auf der Startseite</span></label>
     <label class="chk"><input type="checkbox" name="jubOn" ${S.settings.jubOn ? 'checked' : ''}><span class="ct">Jubiläum „125 Jahre“ auf der Website anzeigen</span></label>
     ${f('Jubiläum automatisch ausblenden ab', `<input name="jubEnd" type="date" required value="${S.settings.jubEnd}">`)}
+    <label class="chk"><input type="checkbox" name="mailOn" ${S.settings.mailOn ? 'checked' : ''}><span class="ct">Tägliche E-Mail-Erinnerung an die Kommandanten, solange etwas auf Freigabe wartet</span></label>
+    ${f('Uhrzeit der Erinnerung', `<input name="mailT" type="time" value="${esc(S.settings.mailT)}">`)}
     ${f('Link Partnerfeuerwehr Ergolding', `<input name="pE" type="url" placeholder="https://…" value="${esc(S.settings.pE)}">`)}
     ${f('Link Partnerfeuerwehr Oberglaim', `<input name="pO" type="url" placeholder="https://…" value="${esc(S.settings.pO)}">`)}
     <p class="err" id="e-settings"></p><button class="btn" type="submit">Speichern</button>
@@ -1157,6 +1164,45 @@ V.mitglieder = () => sec(`<h1 style="font-size:40px">Mitglieder</h1>
   <h2 style="font-size:26px">Alle Konten <span class="mini">(Beispiel)</span></h2>
   <div class="stack" id="mlist">${S.members.map((m, i) => `<div class="card" style="gap:6px${m.inv ? ';border-style:dashed' : ''}"><div class="sh"><b>${esc(m.n)}</b><span class="tag t-bma">${esc(RL[m.r] || m.r)}</span></div><span class="${m.inv ? 'st-wait' : 'st-ok'}" style="font-size:15px">${esc(m.s)}</span>${m.inv ? `<div class="row2"><button class="btn o sm" data-act="resend" data-i="${i}" style="color:var(--ink)">Erneut senden</button><button class="btn o sm" data-act="revoke" data-i="${i}" style="color:var(--ink)">Zurückziehen</button></div>` : ''}</div>`).join('')}</div>`);
 
+
+/* ---------- E-Mail an die Kommandanten (W-09) – in der Demo als Postfach dargestellt ----------
+   Echte Website: Versand per SMTP; jeder Knopf ist ein persönlicher, signierter Link (72 Std., einmalig),
+   der eine Bestätigungsseite öffnet. Erst dort wird – mit Pflicht-Häkchen – ausgelöst. */
+const kdts = () => S.members.filter(m => m.r === 'Freigeber' && !m.inv);
+const qCopy = q => JSON.parse(JSON.stringify(q));
+const syncMails = () => S.queue.forEach(q => { if (!S.mailed.includes(q.id)) { S.mailed.push(q.id); S.mails.unshift({id:'m' + (S.nid++), at:Date.now(), typ:'neu', qs:[qCopy(q)]}); } });
+const qTitle = q => q.kind === 'change' ? (q.add ? 'Neu: ' + q.vals.n : 'Änderung: ' + ((getC(q.k, q.tid) || {}).n || (getC(q.k, q.tid) || {}).t || 'Verein & Chronik')) : q.t;
+const qWhat = q => q.kind === 'einsatz' ? (q.hand ? 'Einsatzbericht (von Hand)' : 'Neuer Einsatzbericht aus DIVERA') : q.kind === 'change' ? KINDS[q.k].l + (q.add ? ' (neu)' : ' (Änderung)') + ' von ' + q.von : (q.of ? 'Änderung an einem Beitrag' : 'Neuer Beitrag') + ' von ' + q.von;
+const mailItem = (q, big) => { const open = S.queue.some(x => x.id === q.id);
+  const body = q.kind === 'einsatz' ? `<div class="kv"><span>Einsatzart</span><b>${ART[q.typ][1]}</b><span>Zeit</span><b>${q.d}${q.y}, ${q.z} Uhr</b><span>Fahrzeuge</span><b>${esc(q.fz)}</b></div><p>${esc(q.txt || '')}</p>`
+    : q.kind === 'change' ? `<div class="kv chg">${Object.keys(q.vals).filter(x => nz(q.vals[x]) !== null).map(x => `<span>${esc(FLAB[x] || x)}</span><b>${esc(shortVal(x, q.vals[x]))}</b>`).join('')}</div>`
+    : `<p>${esc(q.txt)}</p>`;
+  const imgs = (q.imgs || []).filter(k => IMG[k]);
+  return `<div class="mitem${big ? '' : ' card'}"><span class="mini">${esc(qWhat(q))}</span><h3>${esc(qTitle(q))}</h3>${body}
+    ${imgs.length ? `<div class="thumbs">${imgs.map((k, i) => `<span class="th"><img src="${IMG[k]}" alt="Foto ${i + 1}"></span>`).join('')}</div>` : ''}
+    ${big ? '' : open ? `<div class="row2"><button class="btn" data-act="mail-act" data-v="ok" data-id="${q.id}">✓ Freigeben</button><button class="btn o" data-act="mail-act" data-v="drop" data-id="${q.id}" style="color:var(--ink)">✗ ${q.kind === 'einsatz' ? 'Verwerfen' : 'Zurückgeben'}</button></div>` : '<p class="mini" style="margin:0"><b>Bereits erledigt.</b> Die Knöpfe in dieser Mail gelten nicht mehr.</p>'}</div>`; };
+V.postfach = () => {
+  const k = kdts()[0], hd = `<div class="tip" style="background:#E8EEF7;padding:12px"><span style="font-size:15px"><b>Nur Demo:</b> So sieht das E-Mail-Postfach von ${esc(k.n)} (Kommandant) aus. Die echte Website verschickt diese Mails an alle Kommandanten.</span></div>`;
+  if (S.mconf) { const c = S.mconf, q = S.queue.find(x => x.id === c.id);
+    if (c.done) return sec(`${hd}<h1 style="font-size:34px">${c.done === 'ok' ? 'Freigegeben' : c.done === 'drop' ? 'Erledigt' : 'Link nicht mehr gültig'}</h1><p id="mconf-msg">${c.done === 'ok' ? 'Danke! Der Bericht ist freigegeben und erscheint auf der Website (Einsätze frühestens 2 Stunden nach dem Alarm). Im Verlauf steht „per E-Mail“.' : c.done === 'drop' ? 'Erledigt – nichts wurde veröffentlicht. 30 Tage lang lässt es sich im Mitgliederbereich wiederherstellen.' : 'Diese Einreichung wurde schon bearbeitet. Jeder Link aus der E-Mail gilt nur einmal und 72 Stunden.'}</p><button class="btn o sm" data-act="mail-back" style="align-self:flex-start;color:var(--ink)">← Zurück zum Postfach</button>`);
+    if (!q) return sec(`${hd}<h1 style="font-size:34px">Link nicht mehr gültig</h1><p id="mconf-msg">Diese Einreichung wurde schon bearbeitet. Jeder Link aus der E-Mail gilt nur einmal und 72 Stunden.</p><button class="btn o sm" data-act="mail-back" style="align-self:flex-start;color:var(--ink)">← Zurück zum Postfach</button>`);
+    const ok = c.v === 'ok';
+    return sec(`${hd}<form class="card" id="f-mail" novalidate><span class="mini">Website Feuerwehr Piflas · Bestätigung</span><h1 style="font-size:30px">${ok ? 'Freigeben' : q.kind === 'einsatz' ? 'Verwerfen' : 'Zurückgeben'}?</h1>
+      ${mailItem(q, true)}
+      ${ok ? `<label class="chk"><input type="checkbox" name="ok" required><span class="ct">${q.kind === 'einsatz' ? 'Geprüft: keine erkennbaren Personen, Kennzeichen, Adressen oder vertraulichen Details (Verschwiegenheit, Datenschutz).' : 'Geprüft: Angaben stimmen, Bildrechte geklärt, Abgebildete informiert bzw. einverstanden (bei Kindern die Eltern).'}</span></label>` : f(q.kind === 'einsatz' ? 'Grund (optional)' : 'Hinweis an die Redaktion (optional)', '<input name="note" maxlength="300">')}
+      <p class="err" id="e-mail"></p><button class="btn" type="submit">${ok ? 'Jetzt freigeben' : q.kind === 'einsatz' ? 'Verwerfen bestätigen' : 'Zurückgeben bestätigen'}</button>
+      <button class="btn o" type="button" data-act="mail-back" style="color:var(--ink)">Abbrechen</button>
+      <span class="mini">Sicherheit: Dieser Link gilt nur für dich, 72 Stunden und nur einmal. Mail-Programme, die Links vorab öffnen, lösen nichts aus – erst dieser Knopf.</span></form>`); }
+  const m = S.mview && S.mails.find(x => x.id === S.mview);
+  if (m) return sec(`${hd}<button class="btn o sm" data-act="mail-back" style="align-self:flex-start;color:var(--ink)">← Postfach</button>
+    <article class="card mail" id="mail"><div class="mhead"><span><b>Von:</b> Website Feuerwehr Piflas &lt;noreply@feuerwehr-piflas.de&gt;</span><span><b>An:</b> ${kdts().map(x => esc(x.n)).join(', ')}</span><span><b>Betreff:</b> ${esc(m.typ === 'neu' ? 'Zur Freigabe: ' + qTitle(m.qs[0]) : 'Erinnerung: ' + m.qs.length + (m.qs.length === 1 ? ' Einreichung wartet' : ' Einreichungen warten') + ' auf Freigabe')}</span><span class="mini">${fmtTs(m.at)}</span></div>
+      <p>Hallo ${esc(k.n.split(' ')[0])},</p><p>${m.typ === 'neu' ? 'es gibt eine neue Einreichung für die Website:' : 'auf der Website ' + (m.qs.length === 1 ? 'wartet noch eine Einreichung' : 'warten noch ' + m.qs.length + ' Einreichungen') + ' auf deine Freigabe:'}</p>
+      ${m.qs.map(q => mailItem(S.queue.find(x => x.id === q.id) || q)).join('')}
+      <p><a href="#redaktion">Im Mitgliederbereich öffnen</a></p>
+      <p class="mini">Du bekommst diese Mail, weil du die Rolle „Kommandant · Freigabe“ hast. Es reicht, wenn eine Person freigibt – die anderen sehen dann „Bereits erledigt“.${S.settings.mailOn ? ' Solange etwas offen ist, kommt täglich um ' + esc(S.settings.mailT) + ' Uhr eine Erinnerung.' : ''} Ohne Tracking, ohne Werbung.</p></article>`);
+  return sec(`${hd}<h1 style="font-size:34px">Postfach</h1><div class="list" id="inbox">${S.mails.map(x => `<button class="li" data-act="mail-open" data-id="${x.id}"><span class="dt">${new Date(x.at).getHours().toString().padStart(2,'0')}:${new Date(x.at).getMinutes().toString().padStart(2,'0')}</span><span style="flex:1;min-width:0"><span class="mini">${x.typ === 'neu' ? 'Neue Einreichung' : 'Tägliche Erinnerung'}</span><b>${esc(x.typ === 'neu' ? 'Zur Freigabe: ' + qTitle(x.qs[0]) : 'Erinnerung: ' + x.qs.length + ' offen')}</b></span></button>`).join('') || '<p class="leer">Keine E-Mails.</p>'}</div>`);
+};
+
 /* ---------- Rendering ---------- */
 const BACKR = ['redaktion','beitraege','editor','seiten','fotos','planung','mitglieder','system'];
 const mayRoute = r => ROLES[S.user.role].tabs.includes(TABOF[r] || r) && (r !== 'fotos' || isAdm()) && (r !== 'editor' || !!S.ed);
@@ -1166,7 +1212,8 @@ function seedHist() { const a2 = getC('n', 'a2'); if (!a2) return; const b = pic
     {ts:S.t0 + 864e5, by:'Jonas Beispiel', act:'Bearbeitet', n:2, note:'Dank ergänzt', ok:'Max Mustermann', snap:JSON.stringify(b)}]; }
 let lastRoute = null;
 function render(opts = {}) {
-  if (S.seedH) { S.seedH = false; seedHist(); }
+  if (S.seedH) { S.seedH = false; seedHist(); S.mailed = S.queue.map(q => q.id); S.mails = S.queue.map((q, i) => ({id:'m' + i, at:Date.now() - (i + 1) * 3600e3, typ:'neu', qs:[qCopy(q)]})); }
+  syncMails();
   let r = route();
   if (!V[r]) r = 'start';
   if (BACKR.includes(r)) {
@@ -1177,6 +1224,7 @@ function render(opts = {}) {
   if (r === 'jubilaeum' && !jubActive()) { S.toChronik = jubOver(); location.replace(jubOver() ? '#verein' : '#start'); return; }
   if (r !== 'einsaetze') S.detail = null;
   if (r !== 'aktuelles') S.article = null;
+  if (r !== 'postfach') { S.mview = null; S.mconf = null; }
   const bk = BACKR.includes(r);
   document.body.classList.toggle('bk', bk);
   $('#chrome').innerHTML = bk ? backHead() : pubHead(r);
@@ -1207,6 +1255,7 @@ function renderSteps() {
     box('F', 'Freigabe-Beispiele', `In der Freigabe ${S.queue.length === 1 ? 'wartet 1 Einreichung' : 'warten ' + S.queue.length + ' Einreichungen'} – Beiträge, eine Fahrzeug-Änderung und ein Chronik-Eintrag.`, '<button class="btn sm" data-act="demo-freigabe">Freigabe öffnen</button>') +
     box('R', 'Redaktion reicht ein', 'Mia Muster (Redaktion) reicht einen Beitrag ein. Danach prüfst du ihn als Kommandant.', '<button class="btn sm" data-act="demo-submit">Beitrag einreichen</button>') +
     box('H', 'Einsatz von Hand anlegen', 'Für Einsätze, die nicht aus DIVERA kommen – etwa bei einer Störung.', '<button class="btn sm" data-act="demo-manual">Formular öffnen</button>') +
+    box('M', 'E-Mail an die Kommandanten', 'Jede Einreichung löst eine Mail mit Inhalt aus, dazu täglich eine Erinnerung. Freigeben oder Verwerfen geht direkt aus der Mail.', '<div class="row2"><button class="btn sm" data-act="demo-mail">Postfach öffnen</button><button class="btn o sm" data-act="demo-remind" style="color:var(--ink)">Erinnerung simulieren</button></div>') +
     box('V', 'Verlauf und Rückgängig', 'Jede Änderung ist mit Name und Zeit nachvollziehbar und lässt sich rückgängig machen.', '<button class="btn sm" data-act="demo-verlauf">Verlauf ansehen</button>') +
     box('S', 'Störung simulieren', 'Zeigt Diagnose und Notbetrieb – und was Besucherinnen und Besucher sehen.', `<div class="chips" role="group" aria-label="Störung simulieren">${[['DIV-401','DIVERA: Schlüssel'],['DIV-FMT','DIVERA: Format'],['IG-190','Instagram'],['ok','Alles behoben']].map(([k, l]) => `<button class="chip" data-act="fail" data-v="${k}" aria-pressed="${fail === k}">${l}</button>`).join('')}</div>`) +
     box('T', 'Termine aus DIVERA', 'Neue Termine werden automatisch übernommen und stehen auf der Startseite – private Termine nicht.', '<button class="btn dk sm" data-act="sync">Termin-Sync simulieren</button>') +
@@ -1267,6 +1316,11 @@ function publish(id, force, quiet, u0) {
   const u = u0 || snapAll();
   syncQ();
   const ig = q.ig, me = who();
+  if (q.kind === 'change' && q.add) {
+    S.queue = S.queue.filter(x => x !== q); const it = {id: q.k + (S.nid++), ...q.vals};
+    (q.k === 'fz' ? S.fz : S.ger).push(it); hNew(q.k, it, 'Hinzugefügt', {by:q.by, ok:me});
+    done('„' + it.n + '“ übernommen – jetzt online', u, [q.k, it.id]); if (!quiet) render({keep:true}); return;
+  }
   if (q.kind === 'change') {
     const o = getC(q.k, q.tid); S.queue = S.queue.filter(x => x !== q);
     if (o) { if (q.k === 'fz' && q.vals.neu && !o.neu) S.fz.forEach(z => { z.neu = false; }); saveC(q.k, o, q.vals, {by:q.by, ok:me, note:q.note, noRate:true}); }
@@ -1292,6 +1346,12 @@ function publish(id, force, quiet, u0) {
   }
   if (!quiet) render({keep:true});
   setTimeout(() => { S.neu = null; }, 2600);
+}
+function dropQ(id, note) {
+  const q = S.queue.find(x => x.id === id); if (!q) return false; const u = snapAll();
+  S.queue = S.queue.filter(x => x !== q); S.dropped.unshift({q, at:Date.now(), by:who(), note: note || ''});
+  if (q.kind === 'einsatz') S.step = 1;
+  done(q.kind === 'einsatz' ? 'Entwurf verworfen – nichts veröffentlicht' : 'Zur Überarbeitung zurückgeschickt', u); return true;
 }
 const openEd = (k, id, re) => { const o = id ? getC(k, id) : null;
   if ((id && !o) || (k === 'e' && isRed()) || (k === 'n' && o && !canEdit(o))) return;
@@ -1354,10 +1414,7 @@ document.addEventListener('click', e => {
     case 'undo': undo(); break;
     /* Freigabe */
     case 'publish': publish(id); break;
-    case 'drop': { syncQ(); const q = S.queue.find(x => x.id === id); if (!q) break; const nt = $('#note-' + id), u = snapAll();
-      S.queue = S.queue.filter(x => x !== q); S.dropped.unshift({q, at:Date.now(), by:who(), note: nt ? nt.value.trim() : ''});
-      if (q.kind === 'einsatz') S.step = 1;
-      done(q.kind === 'einsatz' ? 'Entwurf verworfen – nichts veröffentlicht' : 'Zur Überarbeitung zurückgeschickt', u); render({keep:true}); break; }
+    case 'drop': { syncQ(); const nt = $('#note-' + id); dropQ(id, nt ? nt.value.trim() : ''); render({keep:true}); break; }
     case 'q-restore': { const i = +b.dataset.i, d = S.dropped[i]; if (!d) break; const u = snapAll(); S.dropped.splice(i, 1);
       if (d.q.kind === 'einsatz') { S.queue.unshift(d.q); S.step = 2; } else S.queue.push(d.q);
       done('Wiederhergestellt – wartet wieder auf Freigabe', u); render({keep:true}); break; }
@@ -1397,7 +1454,7 @@ document.addEventListener('click', e => {
       done('Fassung wiederhergestellt – jetzt online', u, [k, o.id]); render({keep:true}); break; }
     /* Seiten: Verein, Chronik, Fahrzeuge, Ausrüstung */
     case 'sp': S.sp = b.dataset.v; S.sed = null; S.sdel = null; S.sdraft = undefined; S.tmp = {}; render({keep:true}); break;
-    case 's-new': if (isRed()) break; S.sed = b.dataset.k + ':new'; S.sdraft = undefined; render({keep:true}); setTimeout(() => { const t = $('#f-item [name=n]'); if (t) t.focus(); }, 30); break;
+    case 's-new': S.sed = b.dataset.k + ':new'; S.sdraft = undefined; render({keep:true}); setTimeout(() => { const t = $('#f-item [name=n]'); if (t) t.focus(); }, 30); break;
     case 's-edit': S.sed = b.dataset.key; S.sdraft = undefined; render({keep:true}); setTimeout(() => { const t = $('#f-item'); if (t) { t.scrollIntoView({block:'start'}); window.scrollBy(0, -70); } }, 30); break;
     case 's-cancel': S.sed = null; S.sdraft = undefined; render({keep:true}); break;
     case 's-img-rm': S.sdraft = null; sThumb(); break;
@@ -1441,6 +1498,13 @@ document.addEventListener('click', e => {
       S.queue.push({kind:'news', id:'n' + (S.nid++), cat:'Übung', t:'Übungsabend: Löschangriff aus dem Hydranten', txt:'[Bericht folgt: Wer war dabei, was wurde geübt?]', von:mia.n + ' (Redaktion)', by:mia.n, ig:true, imgs:[]});
       loginAs('Freigeber'); push('Neuer Beitrag von Mia Muster wartet auf Freigabe'); go('redaktion'); break; }
     case 'demo-manual': sheet(false); if (!S.user || isRed()) loginAs('Freigeber'); openEd('e', null); break;
+    case 'demo-mail': sheet(false); S.mview = null; S.mconf = null; go('postfach'); break;
+    case 'demo-remind': { sheet(false); if (!S.queue.length) { toast('Nichts offen – keine Erinnerung'); break; }
+      const m = {id:'m' + (S.nid++), at:Date.now(), typ:'erinnerung', qs:S.queue.map(qCopy)}; S.mails.unshift(m); S.mview = m.id; S.mconf = null;
+      toast('Erinnerung verschickt (' + S.settings.mailT + ' Uhr)'); go('postfach'); break; }
+    case 'mail-open': S.mview = id; S.mconf = null; render(); window.scrollTo(0, 0); break;
+    case 'mail-back': if (S.mconf) S.mconf = null; else S.mview = null; render(); window.scrollTo(0, 0); break;
+    case 'mail-act': S.mconf = {id, v:b.dataset.v}; render(); window.scrollTo(0, 0); break;
     case 'demo-verlauf': sheet(false); if (!S.user || isRed()) loginAs('Freigeber'); openEd('n', 'a2'); S.hOpen = 'n:a2'; render(); setTimeout(() => { const v = document.querySelector('.vl'); if (v) { v.open = true; v.scrollIntoView({block:'start'}); } }, 60); break;
     case 'fail': { sheet(false); const v = b.dataset.v;
       if (v === 'ok') { S.iface = {div:{st:'ok', code:'', man:false}, ig:{st:'ok', code:'', man:false}}; toast('Alle Schnittstellen wieder in Ordnung'); render(); break; }
@@ -1529,7 +1593,10 @@ document.addEventListener('submit', e => {
       const k = fm.dataset.k, o = fm.dataset.id ? getC(k, fm.dataset.id) : null, note = val(fm, 'note');
       const vals = {n: val(fm, 'n'), alt: val(fm, 'alt'), img: S.sdraft !== undefined ? S.sdraft : (o ? o.img : null)};
       if (k === 'fz') { vals.kurz = val(fm, 'kurz'); vals.d = val(fm, 'd'); if (fm.elements.neu) { vals.neu = fm.elements.neu.checked; vals.lang = val(fm, 'lang'); } }
-      if (!o) { if (isRed() || !rateOk()) return; const u = snapAll(), it = {id: k + (S.nid++), ...vals};
+      if (!o && isRed()) { if (!rateOk()) return; const u = snapAll();
+        S.queue.push({kind:'change', id:'c' + (S.nid++), k, tid:null, add:true, vals, note, von:von(), by:S.user.name});
+        S.sed = null; S.sdraft = undefined; done('„' + vals.n + '“ zur Freigabe eingereicht', u); render({keep:true}); break; }
+      if (!o) { if (!rateOk()) return; const u = snapAll(), it = {id: k + (S.nid++), ...vals};
         if (it.neu) S.fz.forEach(z => { z.neu = false; }); (k === 'fz' ? S.fz : S.ger).push(it); hNew(k, it, 'Hinzugefügt');
         S.sed = null; S.sdraft = undefined; done('„' + it.n + '“ hinzugefügt – jetzt online', u, [k, it.id]); render({keep:true}); break; }
       if (!saveOrSubmit(k, o, vals, note)) return;
@@ -1548,6 +1615,15 @@ document.addEventListener('submit', e => {
       if (!saveOrSubmit('v', S.verein, vals, val(fm, 'note'))) return;
       delete S.tmp['f-chronik']; render({keep:true}); break;
     }
+    case 'f-mail': {
+      const c = S.mconf, q = c && S.queue.find(x => x.id === c.id); if (!q) { if (c) c.done = 'gone'; render(); break; }
+      if (c.v === 'ok' && !check(fm, 'e-mail')) return;
+      const prev = S.user, k = kdts()[0]; S.user = {name:k.n, role:'Freigeber'};
+      if (c.v === 'ok') { q.ok = true; publish(q.id, true, true); const n = q.kind === 'einsatz' ? S.einsaetze[0] : null; toast('Per E-Mail freigegeben – jetzt online', true);
+        const h = S.hist[q.kind === 'einsatz' && n ? hk('e', n.id) : q.kind === 'change' ? hk(q.k, q.tid) : hk('n', q.of || q.id)]; if (h) h[h.length - 1].note = (h[h.length - 1].note ? h[h.length - 1].note + ' · ' : '') + 'per E-Mail'; }
+      else { dropQ(q.id, val(fm, 'note')); }
+      S.user = prev; c.done = c.v; render(); window.scrollTo(0, 0); break;
+    }
     case 'f-key': {
       if (!check(fm, 'e-key')) return; fm.reset(); S.keyForm = null;
       if (S.iface.div.code === 'DIV-401') { S.iface.div = {st:'ok', code:'', man:S.iface.div.man}; toast('Schlüssel gespeichert – Verbindung in Ordnung'); }
@@ -1556,7 +1632,7 @@ document.addEventListener('submit', e => {
     }
     case 'f-settings': {
       if (!check(fm, 'e-settings')) return; const u = snapAll();
-      S.settings = {sonderOn: fm.elements.sonderOn.checked, sonderT: val(fm,'sonderT'), sonderX: val(fm,'sonderX'), sonderBis: val(fm,'sonderBis'), warnOn: fm.elements.warnOn.checked, jubOn: fm.elements.jubOn.checked, jubEnd: val(fm,'jubEnd'), pE: val(fm,'pE'), pO: val(fm,'pO')};
+      S.settings = {mailOn: fm.elements.mailOn.checked, mailT: val(fm,'mailT') || '07:00', sonderOn: fm.elements.sonderOn.checked, sonderT: val(fm,'sonderT'), sonderX: val(fm,'sonderX'), sonderBis: val(fm,'sonderBis'), warnOn: fm.elements.warnOn.checked, jubOn: fm.elements.jubOn.checked, jubEnd: val(fm,'jubEnd'), pE: val(fm,'pE'), pO: val(fm,'pO')};
       done('Gespeichert – sofort online', u); render({keep:true}); break;
     }
     case 'f-plan': {

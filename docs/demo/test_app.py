@@ -17,7 +17,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SHOTS = HERE / 'shots'; SHOTS.mkdir(exist_ok=True)
 URL = (HERE / 'index.html').as_uri()
-ROUTES = ['start','jubilaeum','aktuelles','einsaetze','termine','buerger','foerdern','mitmachen','fahrzeuge','jugend','verein','partner','impressum','datenschutz','login']
+ROUTES = ['start','jubilaeum','aktuelles','einsaetze','termine','buerger','foerdern','mitmachen','fahrzeuge','jugend','verein','partner','impressum','datenschutz','login','postfach']
 VIEWS = [('360', dict(width=360, height=780), True), ('390', dict(width=390, height=844), True), ('430', dict(width=430, height=932), True), ('1280', dict(width=1280, height=900), False)]
 results = []
 def rec(ok, name, detail=''):
@@ -76,6 +76,8 @@ async def main():
                     rec(sw <= vp['width'] and not hard and not soft, f'[{vname}] Mitgliederbereich {label}: kein Überlauf, Barrierefreiheit, Tippziele', f'sw={sw} ' + '; '.join(hard + soft)[:300])
                 for r in ['redaktion', 'beitraege', 'seiten', 'fotos', 'planung', 'mitglieder', 'system']:
                     await pg.evaluate(f"location.hash='{r}'"); await pg.wait_for_timeout(150); await bcheck('#' + r)
+                hb = await pg.evaluate("(() => { const l = document.querySelector('.btop .logo').getBoundingClientRect(), t = document.querySelector('.btop .tr').getBoundingClientRect(), w = document.querySelector('#who'); return [l.right <= t.left, w.getBoundingClientRect().height < 24, w.getBoundingClientRect().top >= t.bottom - 6, getComputedStyle(w).textOverflow === 'ellipsis']; })()")
+                rec(all(hb), f'[{vname}] Kopf im Mitgliederbereich: nichts überlappt, Name und Rolle in eigener Zeile', str(hb))
                 for sp in ['chronik', 'fz', 'g']:
                     await pg.evaluate("location.hash='seiten'"); await pg.wait_for_timeout(100); await pg.click(f'[data-act=sp][data-v={sp}]'); await pg.wait_for_timeout(100); await bcheck('Seiten/' + sp)
                 await pg.click('[data-act=s-edit] >> nth=0'); await pg.wait_for_timeout(100); await bcheck('Seiten/Bearbeiten')
@@ -640,13 +642,22 @@ async def main():
             rec('Stromerzeuger 8 kVA' in await pubtext('fahrzeuge'), 'Ausrüstung: Bezeichnung geändert')
             await lo(); await ql('Autor')
             await pg.click('.btabs a[href="#seiten"]'); await pg.wait_for_timeout(120); await pg.click('[data-act=sp][data-v=fz]'); await pg.wait_for_timeout(100)
-            rec(await pg.locator('[data-act=s-new]').count() == 0 and await pg.locator('[data-act=s-del]').count() == 0, 'Redaktion: kann Fahrzeuge nicht hinzufügen oder entfernen')
+            rec(await pg.locator('[data-act=s-new]').count() == 1 and await pg.locator('[data-act=s-del]').count() == 0, 'Redaktion: kann Fahrzeuge anlegen, aber nicht entfernen')
+            await pg.click('[data-act=s-new]'); await pg.wait_for_timeout(100)
+            await pg.fill('#f-item [name=n]', 'Rüstwagen-Test'); await pg.check('#f-item [name=ok]'); await pg.click('#f-item button[type=submit]'); await pg.wait_for_timeout(120)
+            rec('Freigabe' in await toast() and 'Rüstwagen-Test' not in await pubtext('fahrzeuge'), 'Redaktion: neues Fahrzeug geht zur Freigabe')
+            await pg.evaluate("location.hash='seiten'"); await pg.wait_for_timeout(120)
             await pg.click('.sitem[data-key="fz:fz_man"] [data-act=s-edit]'); await pg.wait_for_timeout(100)
             await pg.fill('#f-item [name=d]', 'Vorschlag der Redaktion'); await pg.check('#f-item [name=ok]'); await pg.click('#f-item button[type=submit]'); await pg.wait_for_timeout(120)
             rec('Freigabe' in await toast() and 'Vorschlag der Redaktion' not in await pubtext('fahrzeuge'), 'Redaktion: Fahrzeug-Änderung geht zur Freigabe')
             await lo()
             # ---------- Zurückgeben an die Redaktion und neu einreichen ----------
             await ql('Freigeber'); await pg.evaluate("location.hash='redaktion'"); await pg.wait_for_timeout(120)
+            c = pg.locator('main article:has-text("Rüstwagen-Test")')
+            rec('Neu: Fahrzeug' in await c.inner_text(), 'Freigabe zeigt neues Fahrzeug der Redaktion')
+            await c.locator('input[id^=ok-]').check(); await c.locator('[data-act=publish]').click(); await pg.wait_for_timeout(150)
+            rec('Rüstwagen-Test' in await pubtext('fahrzeuge'), 'Neues Fahrzeug nach Freigabe online')
+            await pg.evaluate("location.hash='redaktion'"); await pg.wait_for_timeout(150)
             c = pg.locator('main article:has-text("Autor-Beitrag")')
             await c.locator('input[id^=note-]').fill('Bitte Datum ergänzen'); await c.locator('[data-act=drop]').click(); await pg.wait_for_timeout(120)
             await lo(); await ql('Autor')
@@ -714,6 +725,32 @@ async def main():
             await sheet_click('#steps [data-act=fail][data-v="ok"]')
             rec(await pg.locator('.ig > div').count() == 9 and await pg.locator('#ig-fallback').count() == 0, 'Störung behoben: Vorschau wieder da')
             await pg.evaluate("location.hash='beitraege'"); await pg.wait_for_timeout(120)
+            await lo()
+            # ---------- E-Mail an die Kommandanten (W-09) ----------
+            await ql('Freigeber'); await pg.evaluate("location.hash='redaktion'"); await pg.wait_for_timeout(150)
+            nq = await pg.locator('main article[data-q]').count(); mi = await pg.inner_text('#mailinfo')
+            rec(nq >= 2 and '3 Kommandanten' in mi and 'täglich um 07:00' in mi, 'Freigabe: Hinweis auf E-Mail an alle 3 Kommandanten und tägliche Erinnerung', str(nq))
+            await lo()
+            await sheet_click('#steps [data-act=demo-mail]')
+            rec(await hash() == '#postfach' and await pg.locator('#inbox .li').count() >= nq, 'E-Mail: jede Einreichung erzeugt eine Mail')
+            await pg.click('#inbox .li >> nth=0'); await pg.wait_for_timeout(150)
+            mt = await pg.inner_text('#mail')
+            rec('Max Mustermann, Thomas Muster, Sabine Beispiel' in mt and 'Zur Freigabe:' in mt and await pg.locator('#mail [data-act=mail-act]').count() == 2, 'E-Mail: an alle Kommandanten, mit Inhalt und Knöpfen Freigeben/Verwerfen')
+            await pg.click('#mail [data-act=mail-act][data-v=ok]'); await pg.wait_for_timeout(150)
+            await pg.click('#f-mail button[type=submit]'); await pg.wait_for_timeout(80)
+            rec('Bitte prüfen' in await pg.inner_text('#e-mail'), 'E-Mail-Freigabe: Bestätigungsseite mit Pflicht-Häkchen (W-04)')
+            await pg.check('#f-mail [name=ok]'); await pg.click('#f-mail button[type=submit]'); await pg.wait_for_timeout(150)
+            rec('freigegeben' in await pg.inner_text('#mconf-msg'), 'E-Mail-Freigabe: veröffentlicht')
+            await pg.click('[data-act=mail-back]'); await pg.wait_for_timeout(100)
+            rec('Bereits erledigt' in await pg.inner_text('#mail') and await pg.locator('#mail [data-act=mail-act]').count() == 0, 'E-Mail: Link gilt nur einmal („Bereits erledigt“)')
+            await sheet_click('#steps [data-act=demo-remind]')
+            rt = await pg.inner_text('#mail')
+            rec('Erinnerung' in rt and 'noch' in rt and await pg.locator('#mail .mitem').count() == nq - 1, 'Tägliche Erinnerung listet alle offenen Einreichungen', str(await pg.locator('#mail .mitem').count()))
+            await pg.click('#mail [data-act=mail-act][data-v=drop] >> nth=0'); await pg.wait_for_timeout(150)
+            await pg.fill('#f-mail [name=note]', 'Per Mail zurück'); await pg.click('#f-mail button[type=submit]'); await pg.wait_for_timeout(150)
+            rec('Erledigt' in await pg.inner_text('main h1'), 'E-Mail: Verwerfen bzw. Zurückgeben mit Hinweis')
+            await ql('Freigeber'); await pg.evaluate("location.hash='redaktion'"); await pg.wait_for_timeout(150)
+            rec(await pg.locator('main article[data-q]').count() == nq - 2 and 'Per Mail zurück' in await pg.inner_text('#dropped'), 'E-Mail-Aktionen kommen in der Freigabe an')
             await lo()
             # ---------- Demo-Szenarien ----------
             await sheet_click('#steps [data-act=demo-submit]')
