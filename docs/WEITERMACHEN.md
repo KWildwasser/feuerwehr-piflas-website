@@ -1,6 +1,6 @@
 # Webpräsenz Feuerwehr Piflas – Backup & Anleitung zum Weitermachen
 
-Stand: **23.11.2026** · Lastenheft **v1.9** · Demo **v8** · Handbuch **1.7** · Testsuite **568/568 bestanden**
+Stand: **23.11.2026** · Lastenheft **v1.9** · Demo **v8** · Handbuch **1.7** · Testsuite **569/569 bestanden**
 
 Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte, Bilder und Vorlagen. Damit kannst du (oder jemand aus dem Verein, oder eine neue Claude-Sitzung) jederzeit nahtlos weitermachen. Es enthält keine Zugangsdaten.
 
@@ -20,7 +20,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | `demo/README.md` | Aufbau der Demo und Zuordnung der Prüfungen zu den Lastenheft-IDs |
 | `demo/app-src.html` | Quelltext der Demo – **hier wird geändert** |
 | `demo/build.py` → `demo/index.html` | Baut die fertige Demo (eine Datei, läuft offline) |
-| `demo/test_app.py`, `demo/testimg/` | Testsuite (568 Prüfungen) = Abnahmeliste für die echte Website |
+| `demo/test_app.py`, `demo/testimg/` | Testsuite (569 Prüfungen) = Abnahmeliste für die echte Website |
 | `betrieb/schnittstellen.md` | Anleitung „Schnittstellen reparieren“ (DIVERA, Instagram) für die Technik – A-12 |
 | `index.html`, `assets/screens/`, `assets/qr-projektseite.svg` | Projektseite auf GitHub Pages (mit QR-Code für den Pitch) |
 | `../tools/make_qr.js` | Erzeugt den QR-Code offline: `node tools/make_qr.js <URL> <ziel.svg>` |
@@ -57,7 +57,7 @@ python -m playwright install chromium
 
 cd demo
 python build.py          # erzeugt index.html (ca. 2,3 MB)
-python test_app.py       # 2–4 Minuten, Ergebnis: "568 von 568 Prüfungen bestanden", Exit-Code 1 bei Fehlern
+python test_app.py       # 2–4 Minuten, Ergebnis: "569 von 569 Prüfungen bestanden", Exit-Code 1 bei Fehlern
 
 cd ../handbuch
 python shots.py          # neue Bildschirmfotos aus der Demo

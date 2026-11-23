@@ -40,7 +40,7 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 pip install playwright pillow markdown pypdf && python -m playwright install chromium
 cd docs/demo
 python build.py        # baut index.html aus app-src.html und ../assets
-python test_app.py     # 568 Prüfungen, Exit-Code 1 bei Fehlern
+python test_app.py     # 569 Prüfungen, Exit-Code 1 bei Fehlern
 ```
 
 Bei jedem Push prüft GitHub Actions die Demo automatisch ([Workflow](.github/workflows/demo-tests.yml)). Reihenfolge bei Änderungen: Lastenheft (ID) → Demo → Prüfung → Handbuch → PDFs.

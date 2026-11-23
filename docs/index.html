@@ -116,11 +116,11 @@ section{padding:72px 0}
 /* QR-Leiste für den Pitch */
 .qrbar{background:#fff;border-bottom:1px solid var(--linie)}
 .qrbar .wrap{display:flex;align-items:center;gap:24px;padding-top:18px;padding-bottom:18px}
-.qrbar img{width:132px;height:132px;flex:none;border-radius:10px;border:1px solid var(--linie)}
+.qrbar img{width:220px;height:220px;flex:none;border-radius:10px;border:1px solid var(--linie)}
 .qrbar b{display:block;font-stretch:75%;font-size:28px;line-height:1.1;margin-bottom:4px}
 .qrbar span{color:var(--grau)}
 .qrbar code{font:600 15px/1.4 Fw,system-ui,sans-serif;color:var(--rot-d);overflow-wrap:anywhere}
-@media (max-width:640px){.qrbar .wrap{gap:14px;padding-top:12px;padding-bottom:12px}.qrbar img{width:92px;height:92px}.qrbar b{font-size:20px}.qrbar span{font-size:15px}}
+@media (max-width:640px){.qrbar .wrap{flex-direction:column;align-items:center;text-align:center;gap:12px;padding-top:20px;padding-bottom:20px}.qrbar img{width:min(78vw,300px);height:auto;aspect-ratio:1;padding:10px;background:#fff}.qrbar b{font-size:22px}.qrbar span{font-size:15px}}
 footer{background:var(--ink);color:#C9CDD2;padding:40px 0;font-size:15px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:center}
 footer img{height:34px;display:block}
@@ -200,7 +200,7 @@ footer a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
     <a class="doc" href="lastenheft/Lastenheft-Feuerwehr-Piflas-v1.9.pdf"><span class="t">PDF · v1.9</span><b>Lastenheft &amp; Umsetzungsplan</b><span>Anforderungen, Recht, Infrastruktur, Phasen</span></a>
     <a class="doc" href="handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf"><span class="t">PDF · v1.7</span><b>Handbuch Mitgliederbereich</b><span>Anleitung für Admins, Kommandant und Redaktion</span></a>
     <a class="doc" href="https://github.com/KWildwasser/feuerwehr-piflas-website/blob/main/docs/design/corporate-design.md"><span class="t">Design</span><b>Corporate Design</b><span>Logo, Farben, Schrift, Gestaltungsregeln</span></a>
-    <a class="doc" href="https://github.com/KWildwasser/feuerwehr-piflas-website/blob/main/docs/demo/README.md"><span class="t">Qualität</span><b>Testsuite</b><span>568 automatische Prüfungen als Abnahmeliste</span></a>
+    <a class="doc" href="https://github.com/KWildwasser/feuerwehr-piflas-website/blob/main/docs/demo/README.md"><span class="t">Qualität</span><b>Testsuite</b><span>569 automatische Prüfungen als Abnahmeliste</span></a>
     <a class="doc" href="uebergangsseite/"><span class="t">Vorschau</span><b>Übergangsseite</b><span>Vorläufige Startseite bis zum Start der neuen Website</span></a>
   </div>
 </div></section>

@@ -765,6 +765,7 @@ async def main():
             await sheet_click('#sheet [data-act=reset]')
             await pg.evaluate('window.scrollTo(0,0)'); await pg.wait_for_timeout(250); await pg.click('#fab'); await pg.wait_for_timeout(300)
             rec(await pg.evaluate("document.body.classList.contains('sopen')"), 'Demo-Steuerung öffnet')
+            rec(await pg.get_attribute('#projektseite', 'href') == 'https://kwildwasser.github.io/feuerwehr-piflas-website/', 'Demo-Steuerung: Link zurück zur Projektseite')
             await pg.click('#steps [data-act=alarm]'); await pg.wait_for_timeout(250)
             rec(await hash() == '#redaktion', 'Alarm simulieren führt zur Freigabe (Auto-Login Kommandant)', await hash())
             rec(await pg.evaluate("document.querySelector('#push').classList.contains('on')"), 'Push-Hinweis erscheint')
