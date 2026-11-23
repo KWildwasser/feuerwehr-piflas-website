@@ -113,6 +113,14 @@ section{padding:72px 0}
 .road .done{border-color:#1E6B35}.road .done .st{background:#E5F4E4;color:#1E6B35}
 .road .now{border:2px solid var(--rot)}.road .now .st{background:var(--rot);color:#fff}
 
+/* QR-Leiste für den Pitch */
+.qrbar{background:#fff;border-bottom:1px solid var(--linie)}
+.qrbar .wrap{display:flex;align-items:center;gap:24px;padding-top:18px;padding-bottom:18px}
+.qrbar img{width:132px;height:132px;flex:none;border-radius:10px;border:1px solid var(--linie)}
+.qrbar b{display:block;font-stretch:75%;font-size:28px;line-height:1.1;margin-bottom:4px}
+.qrbar span{color:var(--grau)}
+.qrbar code{font:600 15px/1.4 Fw,system-ui,sans-serif;color:var(--rot-d);overflow-wrap:anywhere}
+@media (max-width:640px){.qrbar{display:none}}
 footer{background:var(--ink);color:#C9CDD2;padding:40px 0;font-size:15px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:center}
 footer img{height:34px;display:block}
@@ -128,6 +136,10 @@ footer a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
 </div></header>
 
 <main>
+<section class="qrbar" aria-label="Auf dem Handy öffnen" style="padding:0"><div class="wrap">
+  <img src="assets/qr-projektseite.svg" alt="QR-Code zu dieser Seite">
+  <div><b>Selbst ausprobieren – Code mit der Handy-Kamera scannen</b><span>Öffnet diese Seite am Handy. Von dort geht es mit „Demo öffnen“ direkt in die Demo.</span><br><code>kwildwasser.github.io/feuerwehr-piflas-website</code></div>
+</div></section>
 <section class="hero"><div class="wrap">
   <div>
     <span class="kicker">Freiwillige Feuerwehr Piflas · Markt Ergolding</span>
