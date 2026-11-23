@@ -7,7 +7,7 @@
 <p class="note"><b>Du hast die Rolle „Mitglied“?</b> Dann brauchst du nur Kapitel 3 (Anmelden) und Kapitel 12 (Lernen).</p>
 <p>Die Website hat zwei Teile:</p>
 <ul><li><b>Öffentliche Website</b> – das sehen alle: Aktuelles, Einsätze, Termine, Mitmachen, Bürgerinfos usw.</li>
-<li><b>Mitgliederbereich</b> – nach dem Login. Oben steht, als wer du angemeldet bist, unten ist eine Leiste mit deinen Bereichen. Über das Logo oben links kommst du jederzeit zur öffentlichen Website, über „Handbuch“ zu diesem Dokument.</li></ul>
+<li><b>Mitgliederbereich</b> – nach dem Login. Oben steht, als wer du angemeldet bist, unten ist eine Leiste mit deinen Bereichen. Eine <b>rote Zahl</b> an einem Bereich zeigt, dass dort etwas zu tun ist – zum Beispiel offene Freigaben oder ein Lernthema, das du noch nicht bestanden hast. Ist alles erledigt, verschwindet sie. Über das Logo oben links kommst du jederzeit zur öffentlichen Website, über „Handbuch“ zu diesem Dokument.</li></ul>
 <figure class="shot"><img src="img/03-uebersicht.png" alt=""><figcaption>Mitgliederbereich als Admin: oben Name und Rolle, unten die Bereiche Freigabe, Inhalte, Seiten, Lernen, Mitglieder und System.</figcaption></figure>
 <p class="note">Die Abbildungen stammen aus der Demo der Website. Auf der fertigen Seite können Texte und Farben leicht abweichen, die Abläufe bleiben gleich.</p>
 
@@ -174,10 +174,11 @@
 <div class="two"><div><p>Die Liste zeigt alle Konten mit Rolle und Status:</p><ul>
 <li><span class="g">Aktiv · 2FA eingerichtet</span> – alles in Ordnung.</li>
 <li><span class="y">Eingeladen · läuft in … ab</span> – Einladung noch nicht angenommen. Mit <b>„Erneut senden“</b> kommt ein neuer Link, mit <b>„Zurückziehen“</b> wird die Einladung ungültig.</li></ul>
-<p><b>Rolle ändern:</b> Konto antippen, neue Rolle wählen, speichern. Die Änderung gilt sofort.</p>
+<p><b>Rolle ändern:</b> Beim Konto auf <b>„Rolle ändern“</b> tippen, neue Rolle wählen, bei Bedarf das Häkchen „Einsatzabteilung“ anpassen und <b>„Speichern“</b>. Die Änderung gilt sofort, am Konto steht dann, wann und von wem sie geändert wurde. Mit „Rückgängig“ lässt sie sich zurücknehmen.</p>
+<ul><li>Deine <b>eigene</b> Rolle ändert ein anderer Admin.</li><li>Es bleiben immer <b>mindestens zwei Admins</b> – sonst lehnt die Seite das Herabstufen ab.</li><li>Wer neu Admin oder Kommandant wird, richtet beim nächsten Login die 2-Faktor-Anmeldung ein.</li></ul>
 <p><b>Mitglied hört auf:</b> Konto <b>deaktivieren</b> (nicht löschen). Die Beiträge bleiben erhalten, die Lernergebnisse werden sofort gelöscht.</p>
 <p><b>Faustregel:</b> Immer mindestens <b>zwei Admins</b>. Freigabe- und Admin-Rechte nur so viel wie nötig.</p></div>
-<div><figure class="shot"><img src="img/07-mitgliederliste.png" alt=""></figure></div></div>
+<div><figure class="shot"><img src="img/07-mitgliederliste.png" alt=""></figure><figure class="shot"><img src="img/27-rolle.png" alt=""><figcaption>Rolle ändern</figcaption></figure></div></div>
 
 <h2>9. Fotos verwalten <span class="r ad">Admin</span></h2>
 <p>Zu finden unter <b>„Seiten“</b> → <b>„Alle Fotos der Website“</b>.</p>
@@ -244,7 +245,7 @@
 <li>Unten auf <b>„Lernen“</b> tippen. Oben steht das <b>Thema des Monats</b>.</li>
 <li><b>„Jetzt lernen“</b> tippen und den Text lesen. „Das Wichtigste“ fasst die Merksätze zusammen, unter „Weiterlernen“ findest du Links zur Feuerwehr-Lernbar und zu Merkblättern der Feuerwehrschulen.</li>
 <li>Unten die Fragen beantworten – je Frage eine Antwort antippen – und <b>„Auswerten“</b> tippen.</li>
-<li>Ab <b>80 % richtig</b> ist der Test bestanden. Du siehst zu jeder Frage, ob sie richtig war, die richtige Antwort und eine Erklärung.</li>
+<li>Jeder Test hat <b>5 Fragen</b>. Ab <b>4 richtigen Antworten</b> ist er bestanden. Du siehst zu jeder Frage, ob sie richtig war, die richtige Antwort und eine Erklärung.</li>
 <li>Nicht bestanden? Kein Problem: Erklärungen lesen, <b>„Nochmal versuchen“</b>. So oft du willst.</li></ol>
 <p>Frühere Themen stehen darunter, mit ✓ für bestanden. Unter „Dein Lernstand“ siehst du, wie viele Themen du geschafft hast.</p></div>
 <div><figure class="shot"><img src="img/22-lernen.png" alt=""><figcaption>„Lernen“ mit dem Thema des Monats</figcaption></figure><figure class="shot"><img src="img/23-ergebnis.png" alt=""><figcaption>Ergebnis mit Erklärungen</figcaption></figure></div></div>
@@ -260,7 +261,7 @@
 <li>Den Inhalt in <b>Abschnitte</b> gliedern (Überschrift und Text, Leerzeile = neuer Absatz). Mit „+ Abschnitt“ kommt ein weiterer dazu.</li>
 <li>Unter <b>„Das Wichtigste“</b> je Zeile einen Merksatz.</li>
 <li><b>Links</b> zum Weiterlernen eintragen (nur Adressen mit https://).</li>
-<li><b>Testfragen:</b> mindestens 3, je Frage 2 bis 4 Antworten. Den Kreis vor der <b>richtigen</b> Antwort antippen und eine kurze Erklärung schreiben. „+ Frage“ fügt eine weitere hinzu.</li>
+<li><b>Testfragen:</b> genau 5, je Frage 2 bis 4 Antworten. Den Kreis vor der <b>richtigen</b> Antwort antippen und eine kurze Erklärung schreiben. Bestanden ist der Test ab 4 richtigen Antworten.</li>
 <li><b>Quelle mit Stand</b> angeben, z. B. „Merkblatt 6.003, SFS Würzburg, Stand 05/2023“.</li>
 <li>Das Häkchen <b>„fachlich geprüft“</b> setzen und <b>„Veröffentlichen“</b> tippen. Liegt der Monat in der Zukunft, ist das Thema <b>geplant</b> und erscheint am Monatsersten von selbst. Noch nicht fertig? <b>„Als Entwurf speichern“</b>.</li></ol>
 <p class="note">Fehlt für diesen oder den nächsten Monat ein Thema, steht unter „Lernen“ ein gelber Hinweis. Ein Thema lässt sich jederzeit <b>bearbeiten</b> oder <b>ausblenden</b> – mit „Rückgängig“ wie überall.</p></div>

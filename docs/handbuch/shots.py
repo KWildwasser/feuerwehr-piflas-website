@@ -55,6 +55,7 @@ async def main():
         await pg.click('[data-act=sp][data-v=chronik]'); await pg.wait_for_timeout(200); await el('#f-chronik','21-chronik.png')
         # Mitglieder
         await go('mitglieder'); await el('#f-invite','06-einladen.png'); await el('#mlist','07-mitgliederliste.png')
+        await pg.click('#mlist .card:has-text("Ben Muster") [data-act=r-edit]'); await pg.wait_for_timeout(200); await el('#mlist .card:has(#f-role)','27-rolle.png'); await pg.evaluate("document.querySelector('[data-act=r-no]').click()"); await pg.wait_for_timeout(150)
         await go('fotos'); await pg.screenshot(path=str(O/'08-fotos.png'))
         await go('system'); await el('#ampel','10-ampel.png')
         await pg.evaluate("(() => { const s = window.__demo.state(); s.iface.div = {st:'bad', code:'DIV-401', man:false}; window.__demo.render(); })()"); await pg.wait_for_timeout(200)

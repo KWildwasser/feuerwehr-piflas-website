@@ -571,7 +571,8 @@ const ARCH = (() => {
   }
   return {E, N};
 })();
-const L_PASS = 80; /* bestanden ab 80 % richtige Antworten (Annahme, Lastenheft E-06) */
+/* E-06: jeder Test hat genau 5 Fragen, bestanden ab 4 richtigen Antworten */
+const L_Q = 5, L_MIN = 4;
 /* Lern-Themen (Beispielinhalte, vom Kommandanten fachlich zu prüfen). Eigene Worte, Quellen nur verlinkt. */
 const TOPICS = [
   {id:'lv', m:'2026-11', st:'aktiv', bsp:true, t:'Verkehrsabsicherung', mail:true,
@@ -625,7 +626,7 @@ const seedRes = st => { const R = []; let x = 7; const rnd = () => (x = (x * 930
   const hard = {lg:[.05,.3,.1,.05,.1], le:[.1,.15,.35,.1,.3], lv:[.05,.45,.15,.1,.25]};
   Object.keys(who).forEach(tid => { const t = st.topics.find(z => z.id === tid), [y, m] = t.m.split('-').map(Number);
     who[tid].forEach((u, k) => { const at = new Date(y, m - 1, 2 + k * 2, 19).getTime();
-      const r = t.qs.map((q, i) => rnd() < hard[tid][i] ? (q.c + 1) % q.o.length : q.c), sc = r.filter((a, i) => a === t.qs[i].c).length, ok = sc / t.qs.length * 100 >= L_PASS;
+      const r = t.qs.map((q, i) => rnd() < hard[tid][i] ? (q.c + 1) % q.o.length : q.c), sc = r.filter((a, i) => a === t.qs[i].c).length, ok = sc >= L_MIN;
       R.push({u, tid, at, r, sc, n:t.qs.length, ok});
       if (!ok && rnd() < .7) R.push({u, tid, at:at + 864e5, r:t.qs.map(q => q.c), sc:t.qs.length, n:t.qs.length, ok:true}); }); });
   return R; };
@@ -645,7 +646,7 @@ const fresh = () => { const t0 = Date.now() - 30 * 864e5; const st = {
     {kind:'change', id:'c1', k:'fz', tid:'fz_mtw', vals:{d:'[Fahrzeugtyp] · Mannschaftstransport für [Anzahl] Personen, auch für die Jugendfeuerwehr'}, note:'Einsatzzweck ergänzt', von:'Lukas Schreiber (Redaktion)', by:'Lukas Schreiber'},
     {kind:'change', id:'c2', k:'v', tid:'verein', vals:{chronik:null}, note:'Meilenstein ergänzt', von:'Jonas Beispiel (Redaktion)', by:'Jonas Beispiel'}
   ],
-  topics: TOPICS.map(t => JSON.parse(JSON.stringify(t))), results: [], lt: null, ted: null, qres: null, lsel: null,
+  topics: TOPICS.map(t => JSON.parse(JSON.stringify(t))), results: [], lt: null, ted: null, qres: null, lsel: null, rch: null,
   dropped: [], hist: {}, seedH: true, rl: {}, t0, mails: [], mailed: [], mview: null,
   user: null, pending2fa: null, next: null, draft: [], uid: 1, mdel: null, gone: {}, cdel: null, trash: [], year: 2026, etyp: 'alle', pe: 20, ncat: 'Alle', pn: 6, tf: 'Alle', detail: null, neu: null, alarmNr: 0, step: 1, nid: 100,
   ed: null, flt: {q:'', typ:'alle', y:'alle', st:'alle', n:20}, sp: 'verein', sed: null, sdraft: undefined, tmp: {}, keyForm: null,
@@ -697,7 +698,18 @@ const pubFoot = () => `<footer class="foot"><div class="wrap"><span class="logo 
 const backHead = () => `<header class="btop"><div class="wrap"><a href="#start" aria-label="Zur öffentlichen Website"><span class="logo w" role="img" aria-label="Feuerwehr Piflas"></span></a>
   <div class="tr"><a class="hb" id="hb-link" href="handbuch.pdf" target="_blank" rel="noopener" aria-label="Handbuch (PDF) öffnen">${I.book}<span>Handbuch</span></a><button data-act="logout">Abmelden</button></div></div>
   <div class="wrap who" id="who">Angemeldet als <b>${esc(S.user.name)}</b> · ${esc(ROLES[S.user.role].label)}</div></header>`;
-const backTabs = r => `<nav class="btabs" aria-label="Redaktion">${ROLES[S.user.role].tabs.map(k => `<a href="#${k}"${(TABOF[r] || r)===k?' aria-current="page"':''}>${BACK[k][1]}${BACK[k][0]}${k==='redaktion' && S.queue.length ? `<span class="badge">${S.queue.length}</span>` : ''}</a>`).join('')}</nav>`;
+const backTabs = r => `<nav class="btabs" aria-label="Redaktion">${ROLES[S.user.role].tabs.map(k => `<a href="#${k}"${(TABOF[r] || r)===k?' aria-current="page"':''}>${BACK[k][1]}${BACK[k][0]}${todoB(k)}</a>`).join('')}</nav>`;
+/* Zähler an den Tabs (B-22): zeigt, wo etwas zu tun ist – für Vorlesesoftware mit Klartext */
+const todo = k => {
+  if (!S.user) return [0, ''];
+  if (k === 'redaktion') return [S.queue.length, 'warten auf Freigabe'];
+  if (k === 'beitraege') { const n = isRed() ? S.dropped.filter(d => d.q.by === S.user.name && d.q.kind !== 'einsatz').length : 0; return [n, 'zurück an dich']; }
+  if (k === 'lernen') { const cur = lVisible()[0]; let n = cur && lState(S.user.name, cur.id) !== 'ok' ? 1 : 0;
+    if (isKdt()) n += [curM(), nextM(curM())].filter(m => !S.topics.some(t => t.m === m && t.st === 'aktiv')).length; return [n, 'zu tun']; }
+  if (k === 'system') return [['div', 'ig'].filter(x => S.iface[x].st !== 'ok').length, 'Hinweise'];
+  return [0, ''];
+};
+const todoB = k => { const [n, l] = todo(k); return n ? `<span class="badge" aria-hidden="true">${n}</span><span class="sr">, ${n} ${l}</span>` : ''; };
 const sec = (inner, cls='') => `<section class="band ${cls}"><div class="wrap stack">${inner}</div></section>`;
 
 /* ---------- Öffentliche Seiten ---------- */
@@ -1319,7 +1331,15 @@ V.mitglieder = () => sec(`<h1 style="font-size:40px">Mitglieder</h1>
     <label class="chk"><input type="checkbox" name="akt" checked><span class="ct">Gehört zur Einsatzabteilung – zählt im Lernstand</span></label>
     <p class="err" id="e-invite"></p><button class="btn" type="submit">Einladung senden</button><span class="mini">Link 48 Std. gültig; das Mitglied legt sein Passwort selbst fest.</span></form>
   <h2 style="font-size:26px">Alle Konten <span class="mini">(Beispiel)</span></h2>
-  <div class="stack" id="mlist">${S.members.map((m, i) => `<div class="card" style="gap:6px${m.inv ? ';border-style:dashed' : ''}"><div class="sh"><b>${esc(m.n)}</b><span class="tag t-bma">${esc(RL[m.r] || m.r)}</span></div><span class="${m.inv ? 'st-wait' : 'st-ok'}" style="font-size:15px">${esc(m.s)}</span>${m.akt === false ? '<span class="mini">Nicht in der Einsatzabteilung – zählt nicht im Lernstand</span>' : ''}${m.inv ? `<div class="row2"><button class="btn o sm" data-act="resend" data-i="${i}" style="color:var(--ink)">Erneut senden</button><button class="btn o sm" data-act="revoke" data-i="${i}" style="color:var(--ink)">Zurückziehen</button></div>` : ''}</div>`).join('')}</div>`);
+  <div class="stack" id="mlist">${S.members.map((m, i) => `<div class="card" style="gap:6px${m.inv ? ';border-style:dashed' : ''}"><div class="sh"><b>${esc(m.n)}</b><span class="tag t-bma">${esc(RL[m.r] || m.r)}</span></div><span class="${m.inv ? 'st-wait' : 'st-ok'}" style="font-size:15px">${esc(m.s)}</span>${m.akt === false ? '<span class="mini">Nicht in der Einsatzabteilung – zählt nicht im Lernstand</span>' : ''}${m.inv ? `<div class="row2"><button class="btn o sm" data-act="resend" data-i="${i}" style="color:var(--ink)">Erneut senden</button><button class="btn o sm" data-act="revoke" data-i="${i}" style="color:var(--ink)">Zurückziehen</button></div>` : roleEd(m, i)}</div>`).join('')}</div>`);
+/* Rolle ändern (B-02): nur Admins, nie die eigene Rolle, immer mindestens zwei Admins (A-08) */
+const ROPT = [['Mitglied','Mitglied · nur Lernen'],['Autor','Redaktion'],['Bereich Jugend','Redaktion Jugend'],['Freigeber','Kommandant · Freigabe'],['Administrator','Admin']];
+const roleEd = (m, i) => m.n === S.user.name ? '<span class="mini">Deine eigene Rolle ändert ein anderer Admin.</span>'
+  : S.rch !== i ? `<div class="row2"><button class="btn o sm" data-act="r-edit" data-i="${i}" style="color:var(--ink)">Rolle ändern</button></div>`
+  : `<form id="f-role" class="stack" style="gap:8px" novalidate>${f('Neue Rolle für ' + esc(m.n), `<select name="r">${ROPT.map(([v, l]) => `<option value="${v}"${m.r === v ? ' selected' : ''}>${l}</option>`).join('')}</select>`)}
+    <label class="chk"><input type="checkbox" name="akt"${m.akt !== false ? ' checked' : ''}><span class="ct">Gehört zur Einsatzabteilung – zählt im Lernstand</span></label>
+    <p class="err" id="e-role"></p><span class="mini">Gilt sofort. Für Admin und Kommandant ist die 2-Faktor-Anmeldung Pflicht. Lernergebnisse bleiben erhalten.</span>
+    <div class="row2"><button class="btn sm" type="submit">Speichern</button><button class="btn o sm" type="button" data-act="r-no" style="color:var(--ink)">Abbrechen</button></div></form>`;
 
 
 /* ---------- E-Mail an die Kommandanten (W-09) – in der Demo als Postfach dargestellt ----------
@@ -1404,10 +1424,10 @@ V.thema = () => {
   if (!t || (!isKdt() && !(t.st === 'aktiv' && t.m <= curM()))) return sec('<h1>Thema nicht gefunden</h1><a class="btn o" href="#lernen" style="color:var(--ink);align-self:flex-start">← Zu „Lernen“</a>');
   const prev = t.st !== 'aktiv' || t.m > curM(), me = S.user.name, rs = myRes(me, t.id), res = S.qres && S.qres.tid === t.id ? S.qres : null;
   const quiz = res ? `<div class="card" id="q-result"><h2 style="font-size:26px;margin:0">${res.ok ? 'Bestanden ✓' : 'Noch nicht bestanden'}</h2>
-      <p style="margin:0" id="q-score"><b>${res.sc} von ${res.n} richtig (${pct(res.sc, res.n)} %).</b> ${res.ok ? 'Stark!' : 'Ab ' + L_PASS + ' % ist der Test bestanden. Lies die Erklärungen und probier es nochmal.'}${res.prev ? ' <i>Vorschau – das Ergebnis wird nicht gespeichert.</i>' : ''}</p>
+      <p style="margin:0" id="q-score"><b>${res.sc} von ${res.n} richtig.</b> ${res.ok ? 'Stark!' : 'Bestanden ist der Test ab ' + L_MIN + ' von ' + L_Q + ' richtigen Antworten. Lies die Erklärungen und probier es nochmal.'}${res.prev ? ' <i>Vorschau – das Ergebnis wird nicht gespeichert.</i>' : ''}</p>
       <ol class="qrev">${t.qs.map((q, i) => { const ok = res.r[i] === q.c; return `<li class="${ok ? 'qok' : 'qno'}"><b>${esc(q.q)}</b><span>${ok ? '✓ Richtig' : '✗ Deine Antwort: ' + esc(q.o[res.r[i]] || '–')}</span>${ok ? '' : `<span>Richtig ist: <b>${esc(q.o[q.c])}</b></span>`}${q.x ? `<span class="mini">${esc(q.x)}</span>` : ''}</li>`; }).join('')}</ol>
       <div class="row2"><button class="btn" data-act="q-retry">Nochmal versuchen</button><a class="btn o" href="#lernen" style="color:var(--ink)">Zu „Lernen“</a></div></div>`
-    : `<form class="card" id="f-quiz" novalidate><h2 style="font-size:26px;margin:0">Kurzer Test: ${t.qs.length} Fragen</h2><span class="mini">Ab ${L_PASS} % bestanden. Du kannst den Test so oft machen, wie du willst.${prev ? ' <b>Vorschau:</b> Ergebnis wird nicht gespeichert.' : ''}</span>
+    : `<form class="card" id="f-quiz" novalidate><h2 style="font-size:26px;margin:0">Kurzer Test: ${t.qs.length} Fragen</h2><span class="mini">Bestanden ab ${L_MIN} von ${L_Q} richtigen Antworten. Du kannst den Test so oft machen, wie du willst.${prev ? ' <b>Vorschau:</b> Ergebnis wird nicht gespeichert.' : ''}</span>
       ${t.qs.map((q, i) => `<fieldset class="qz"><legend>${i + 1}. ${esc(q.q)}</legend>${q.o.map((o, j) => o ? `<label class="opt"><input type="radio" name="q${i}" value="${j}"><span>${esc(o)}</span></label>` : '').join('')}</fieldset>`).join('')}
       <p class="err" id="e-quiz"></p><button class="btn" type="submit">Auswerten</button></form>`;
   return sec(`<a class="btn o sm" href="#lernen" style="color:var(--ink);align-self:flex-start">← Lernen</a>
@@ -1427,8 +1447,8 @@ V.thema = () => {
 /* Themen anlegen und bearbeiten – nur Kommandanten */
 const blankQ = () => ({q:'', o:['', '', '', ''], c:0, x:''});
 const ltNew = () => { let m = curM(); while (S.topics.some(t => t.m === m && t.st === 'aktiv')) m = nextM(m);
-  return {id:null, t:'', m, intro:'', secs:[{h:'', x:''}], keys:'', links:[{l:'', u:''}], qs:[blankQ(), blankQ(), blankQ()], src:'', mail:true, chk:false}; };
-const ltCopy = t => ({...JSON.parse(JSON.stringify(t)), keys:t.keys.join('\n'), links:t.links.length ? JSON.parse(JSON.stringify(t.links)) : [{l:'', u:''}], qs:t.qs.map(q => ({...q, o:q.o.concat(['', '', '', '']).slice(0, 4)})), chk:false, mail:t.mail !== false});
+  return {id:null, t:'', m, intro:'', secs:[{h:'', x:''}], keys:'', links:[{l:'', u:''}], qs:Array.from({length:L_Q}, blankQ), src:'', mail:true, chk:false}; };
+const ltCopy = t => ({...JSON.parse(JSON.stringify(t)), keys:t.keys.join('\n'), links:t.links.length ? JSON.parse(JSON.stringify(t.links)) : [{l:'', u:''}], qs:t.qs.map(q => ({...q, o:q.o.concat(['', '', '', '']).slice(0, 4)})).concat(Array.from({length:L_Q}, blankQ)).slice(0, L_Q), chk:false, mail:t.mail !== false});
 function ltRead(fm) { const d = S.ted, v = n => (fm.elements[n] ? fm.elements[n].value : '').trim();
   d.t = v('t'); d.m = v('m'); d.intro = v('intro'); d.src = v('src'); d.keys = fm.elements.keys.value; d.chk = fm.elements.chk.checked; d.mail = fm.elements.mail.checked;
   d.secs = d.secs.map((s, i) => ({h:v('sh' + i), x:fm.elements['sx' + i].value}));
@@ -1441,7 +1461,7 @@ function ltCheck(d, pub) {
   if (!d.intro) return 'Bitte schreib eine kurze Einleitung.';
   if (!d.secs.some(s => s.x.trim())) return 'Bitte fülle mindestens einen Abschnitt mit Text.';
   const qs = d.qs.filter(q => q.q);
-  if (qs.length < 3) return 'Bitte lege mindestens 3 Fragen an.';
+  if (qs.length < L_Q) return `Bitte fülle alle ${L_Q} Fragen aus (noch leer: ${d.qs.map((q, i) => q.q ? 0 : i + 1).filter(Boolean).join(', ')}).`;
   for (const [i, q] of d.qs.entries()) { if (!q.q) continue;
     if (q.o.filter(Boolean).length < 2) return `Frage ${i + 1}: Bitte gib mindestens 2 Antworten an.`;
     if (!q.o[q.c]) return `Frage ${i + 1}: Die als richtig markierte Antwort ist leer.`; }
@@ -1456,7 +1476,7 @@ V.lthema = () => {
   const d = S.ted, n = d.id ? S.results.filter(r => r.tid === d.id).length : 0;
   return sec(`<button class="btn o sm" data-act="lt-cancel" style="align-self:flex-start;color:var(--ink)">← Abbrechen</button>
     <h1 style="font-size:36px">${d.id ? 'Thema bearbeiten' : 'Neues Thema'}</h1>
-    <details class="help"><summary>Tipps für ein gutes Thema</summary><ul><li>Ein Thema pro Monat, in 10 Minuten zu schaffen.</li><li>Schreib in eigenen Worten und verlinke Merkblätter und die Lernbar, statt Texte oder Bilder zu kopieren.</li><li>Gib die Quelle mit Stand an und prüfe, ob es eine neuere Fassung gibt.</li><li>3 bis 5 Fragen, jede mit einer kurzen Erklärung.</li><li>Keine Fotos von Einsätzen, Personen oder Kennzeichen.</li></ul></details>
+    <details class="help"><summary>Tipps für ein gutes Thema</summary><ul><li>Ein Thema pro Monat, in 10 Minuten zu schaffen.</li><li>Schreib in eigenen Worten und verlinke Merkblätter und die Lernbar, statt Texte oder Bilder zu kopieren.</li><li>Gib die Quelle mit Stand an und prüfe, ob es eine neuere Fassung gibt.</li><li>Genau 5 Fragen, jede mit einer kurzen Erklärung. Bestanden ist ab 4 richtigen Antworten.</li><li>Keine Fotos von Einsätzen, Personen oder Kennzeichen.</li></ul></details>
     ${n ? `<div class="stat warnbox" style="font-size:15px"><b>Schon ${n} Testergebnisse.</b> Ändere Fragen nur, wenn ein Fehler drin ist – sonst passen die Ergebnisse nicht mehr zusammen.</div>` : ''}
     <form class="card" id="f-lthema" novalidate>
       ${f('Titel', `<input name="t" maxlength="80" value="${esc(d.t)}">`)}
@@ -1469,12 +1489,11 @@ V.lthema = () => {
       <h2 style="font-size:22px;margin:8px 0 0">Links zum Weiterlernen</h2>
       ${d.links.map((l, i) => `<fieldset class="ltf"><legend>Link ${i + 1}</legend>${f('Text', `<input name="ll${i}" maxlength="100" value="${esc(l.l)}">`)}${f('Adresse', `<input name="lu${i}" type="url" inputmode="url" placeholder="https://" value="${esc(l.u)}">`)}${d.links.length > 1 ? `<button type="button" class="btn o sm" data-act="lt-del" data-w="links" data-i="${i}" style="color:var(--ink);align-self:flex-start">Link entfernen</button>` : ''}</fieldset>`).join('')}
       <button type="button" class="btn o sm" data-act="lt-add" data-w="links" style="color:var(--ink);align-self:flex-start">+ Link</button>
-      <h2 style="font-size:22px;margin:8px 0 0">Testfragen</h2><span class="mini">Markiere bei jeder Frage die richtige Antwort.</span>
+      <h2 style="font-size:22px;margin:8px 0 0">Testfragen</h2><span class="mini">Genau ${L_Q} Fragen. Markiere bei jeder Frage die richtige Antwort. Bestanden ist ab ${L_MIN} richtigen.</span>
       ${d.qs.map((q, i) => `<fieldset class="ltf" data-q="${i}"><legend>Frage ${i + 1}</legend>${f('Frage', `<input name="qq${i}" maxlength="200" value="${esc(q.q)}">`)}
         ${q.o.map((o, j) => `<div class="ltopt"><label class="opt rad"><input type="radio" name="qc${i}" value="${j}"${q.c === j ? ' checked' : ''}><span class="sr">Antwort ${j + 1} ist richtig</span></label><input name="qo${i}_${j}" maxlength="150" aria-label="Frage ${i + 1}, Antwort ${j + 1}" placeholder="Antwort ${j + 1}${j > 1 ? ' (optional)' : ''}" value="${esc(o)}"></div>`).join('')}
         ${f('Erklärung (wird nach dem Test gezeigt)', `<input name="qx${i}" maxlength="300" value="${esc(q.x)}">`)}
-        ${d.qs.length > 1 ? `<button type="button" class="btn o sm" data-act="lt-del" data-w="qs" data-i="${i}" style="color:var(--ink);align-self:flex-start">Frage entfernen</button>` : ''}</fieldset>`).join('')}
-      <button type="button" class="btn o sm" data-act="lt-add" data-w="qs" id="lt-addq" style="color:var(--ink);align-self:flex-start">+ Frage</button>
+        </fieldset>`).join('')}
       ${f('Quelle mit Stand', `<input name="src" maxlength="250" value="${esc(d.src)}" placeholder="z. B. Merkblatt 6.003, SFS Würzburg, Stand 05/2023">`)}
       <label class="chk"><input type="checkbox" name="mail"${d.mail ? ' checked' : ''}><span class="ct">Am Monatsersten alle Mitglieder per E-Mail auf das neue Thema hinweisen (nur Hinweis mit Link)</span></label>
       <label class="chk"><input type="checkbox" name="chk"${d.chk ? ' checked' : ''}><span class="ct">Ich habe den Inhalt fachlich geprüft. Quellen sind angegeben, fremde Texte und Bilder sind nicht ohne Erlaubnis kopiert.</span></label>
@@ -1735,7 +1754,7 @@ document.addEventListener('click', e => {
       const u = snapAll(); t.st = on ? 'aktiv' : 'aus'; done(on ? 'Wieder eingeblendet' : 'Ausgeblendet – Mitglieder sehen das Thema nicht mehr, Ergebnisse bleiben', u); render({keep:true}); break; }
     case 'ls-sel': S.lsel = id; render({keep:true}); break;
     case 'demo-lern': loginAs(b.dataset.v === 'm' ? 'Mitglied' : 'Freigeber'); sheet(false); toast('Angemeldet als ' + S.user.name + ' · ' + ROLES[S.user.role].label + ' (Demo)'); go(b.dataset.v === 'm' ? 'lernen' : 'lernstand'); break;
-    case 'logout': UNDO = null; S.user = null; S.ted = null; S.qres = null; S.draft = []; S.ed = null; S.cdel = null; S.sed = null; S.sdel = null; S.keyForm = null; toast('Abgemeldet'); go('start'); break;
+    case 'logout': UNDO = null; S.user = null; S.ted = null; S.qres = null; S.rch = null; S.draft = []; S.ed = null; S.cdel = null; S.sed = null; S.sdel = null; S.keyForm = null; toast('Abgemeldet'); go('start'); break;
     case 'undo': undo(); break;
     /* Freigabe */
     case 'publish': publish(id); break;
@@ -1801,8 +1820,10 @@ document.addEventListener('click', e => {
       else { IMG[k] = PH_DEL; S.gone[k] = true; }
       done('Foto entfernt', u); render({keep:true}); break; }
     /* Mitglieder */
+    case 'r-edit': S.rch = +b.dataset.i; render({keep:true}); setTimeout(() => { const x = document.querySelector('#f-role select'); if (x) x.focus(); }, 30); break;
+    case 'r-no': S.rch = null; render({keep:true}); break;
     case 'resend': S.members[+b.dataset.i].s = 'Eingeladen · Link 48 Std. gültig'; toast('Einladung erneut gesendet (Demo)'); render({keep:true}); break;
-    case 'revoke': { const u = snapAll(), m = S.members.splice(+b.dataset.i, 1)[0]; done('Einladung an ' + m.n + ' zurückgezogen', u); render({keep:true}); break; }
+    case 'revoke': { S.rch = null; const u = snapAll(), m = S.members.splice(+b.dataset.i, 1)[0]; done('Einladung an ' + m.n + ' zurückgezogen', u); render({keep:true}); break; }
     /* Schnittstellen (A-10 bis A-12) */
     case 'jump': { const t = $('#' + b.dataset.to); if (t) { t.scrollIntoView({block:'start'}); window.scrollBy(0, -70); } break; }
     case 'ig-reconnect': S.iface.ig = {st:'ok', code:'', man:false}; toast('Instagram neu verbunden (Demo)'); render({keep:true}); break;
@@ -1959,7 +1980,7 @@ document.addEventListener('submit', e => {
     case 'f-quiz': { const t = topic(S.lt); if (!t) return;
       const r = t.qs.map((q, i) => { const c = fm.querySelector(`input[name="q${i}"]:checked`); return c ? +c.value : -1; }), miss = r.map((a, i) => a < 0 ? i + 1 : 0).filter(Boolean);
       if (miss.length) { $('#e-quiz').textContent = 'Bitte beantworte alle Fragen. Noch offen: ' + miss.join(', ') + '.'; return; }
-      const sc = r.filter((a, i) => a === t.qs[i].c).length, ok = pct(sc, t.qs.length) >= L_PASS, prev = t.st !== 'aktiv' || t.m > curM();
+      const sc = r.filter((a, i) => a === t.qs[i].c).length, ok = sc >= L_MIN, prev = t.st !== 'aktiv' || t.m > curM();
       if (!prev) S.results.push({u: S.user.name, tid: t.id, at: Date.now(), r, sc, n: t.qs.length, ok});
       S.qres = {tid: t.id, r, sc, n: t.qs.length, ok, prev}; toast(ok ? 'Bestanden – ' + sc + ' von ' + t.qs.length + ' richtig' : sc + ' von ' + t.qs.length + ' richtig – noch nicht bestanden');
       render({keep:true}); setTimeout(() => { const q = $('#q-result'); if (q) q.scrollIntoView({block:'start'}); }, 30); break; }
@@ -1970,8 +1991,14 @@ document.addEventListener('submit', e => {
         st: pub ? 'aktiv' : 'entwurf', chk: pub ? {by: S.user.name, at: Date.now()} : null, bsp: false};
       const i = S.topics.findIndex(x => x.id === o.id); if (i >= 0) S.topics[i] = o; else S.topics.push(o);
       S.ted = null; done(!pub ? 'Als Entwurf gespeichert – Mitglieder sehen es noch nicht' : o.m > curM() ? 'Geplant – erscheint am 1. ' + mLab(o.m) : 'Veröffentlicht – alle Mitglieder sehen das Thema', u); go('lernen'); break; }
+    case 'f-role': { const m = S.members[S.rch]; if (!m) return; const r = val(fm, 'r'), akt = fm.elements.akt.checked;
+      if (m.r === 'Administrator' && r !== 'Administrator' && cntR('Administrator') <= 2) { $('#e-role').textContent = 'Es muss immer mindestens zwei Admins geben. Lade zuerst eine weitere Person als Admin ein.'; return; }
+      if (r === m.r && akt === (m.akt !== false)) { S.rch = null; render({keep:true}); break; }
+      const u = snapAll(), was = RL[m.r]; m.r = r; m.akt = akt; const d = today();
+      m.s = 'Aktiv · Rolle geändert am ' + p2(d.getDate()) + '.' + p2(d.getMonth() + 1) + '.' + d.getFullYear() + ' von ' + S.user.name + (r === 'Administrator' || r === 'Freigeber' ? ' · 2FA beim nächsten Login Pflicht' : '');
+      S.rch = null; done(was === RL[r] ? 'Einsatzabteilung für ' + m.n + ' geändert' : 'Rolle von ' + m.n + ': ' + was + ' → ' + RL[r], u); render({keep:true}); break; }
     case 'f-invite': {
-      if (!check(fm, 'e-invite')) return; const u = snapAll();
+      if (!check(fm, 'e-invite')) return; S.rch = null; const u = snapAll();
       S.members.push({n: val(fm,'n'), m: val(fm,'m'), r: val(fm,'r'), s:'Eingeladen · Link 48 Std. gültig', inv:true, akt: fm.elements.akt.checked});
       done('Einladung an ' + val(fm,'m') + ' gesendet (Demo)', u); render({keep:true}); break;
     }
