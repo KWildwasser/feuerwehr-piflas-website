@@ -1,6 +1,6 @@
 # Webpräsenz Feuerwehr Piflas – Backup & Anleitung zum Weitermachen
 
-Stand: **23.11.2026** · Lastenheft **v1.16** · Demo **v15** · Handbuch **1.14** · Testsuite **700/700 bestanden**
+Stand: **23.11.2026** · Lastenheft **v1.16** · Demo **v16** · Handbuch **1.15** · Testsuite **700/700 bestanden**
 
 Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte, Bilder und Vorlagen. Damit kannst du (oder jemand aus dem Verein, oder eine neue Claude-Sitzung) jederzeit nahtlos weitermachen. Es enthält keine Zugangsdaten.
 
@@ -41,7 +41,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 - **GitHub (alles, öffentlich):** https://github.com/KWildwasser/feuerwehr-piflas-website
 - **Demo öffentlich (GitHub Pages):** https://kwildwasser.github.io/feuerwehr-piflas-website/demo/
 - **Projektseite (für den Pitch, mit QR-Code):** https://kwildwasser.github.io/feuerwehr-piflas-website/
-- **Demo v15 (Claude-Artefakt, gleicher Link wie zuvor):** https://claude.ai/artifact/JDBEcotDJPXWSgDe7dBzhn
+- **Demo v16 (Claude-Artefakt, gleicher Link wie zuvor):** https://claude.ai/artifact/JDBEcotDJPXWSgDe7dBzhn
 - Ältere, öffentlich geteilte Stände: v4 https://claude.ai/artifact/3zpe9uaMATpMUXYjNNLvS4 · v3 https://claude.ai/artifact/PPtQ5Y7QVMb5PSzn52DTCA (nicht mehr aktuell)
 - Partnerfeuerwehren: https://www.ff-ergolding.de/ · https://oberglaim.feuerwehren.bayern/
 - Instagram: https://www.instagram.com/feuerwehrpiflas/
@@ -75,7 +75,7 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 ## 4. Nächste Schritte (Reihenfolge)
 
 1. **Übergangsseite online stellen** – `uebergangsseite/LIESMICH.txt`. Vorher Joomla komplett sichern, Logfile-Dauer des Hosters in `datenschutz.html` eintragen.
-2. **Pitch** beim Kommandanten, im Gemeinderat und beim Bürgermeister mit der Projektseite und Demo v15 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Lernen, Störung simulieren).
+2. **Pitch** beim Kommandanten, im Gemeinderat und beim Bürgermeister mit der Projektseite und Demo v16 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Lernen, Störung simulieren).
 3. **Betriebsvariante entscheiden** (Lastenheft 4.3): Wer betreut die Seite? Ohne zwei Admins → Wartung durch Dienstleister.
 4. **Offene Punkte** aus Lastenheft Abschnitt 5 einsammeln (Kommandant, Ortsteile, Pflege der Vereinsseite laut Satzung, Jubiläumstermine, Fahrzeugtypen, Namen der Fotografinnen und Fotografen, PDFs, Förderbeitrag …).
 5. **Phase 0** (Zugänge, Hosting-Prüfung, DIVERA-API, Instagram-Business-Konto), dann **Phase 1** mit Claude Code und dem Start-Prompt.
@@ -94,6 +94,9 @@ Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `laste
 - **WordPress** auf dem Vereins-Hosting, weil Mitglieder mit eigenen Konten pflegen. **Wartbarkeit** durch Ehrenamtliche ist Leitprinzip (A-01 bis A-12).
 - **Keine Spenden online** (Satzung), **keine Cookies, keine Drittanbieter** (N-01).
 - **Du-Form**, Frauen und Männer gleichermaßen ansprechen (N-13); Ausnahmen „Kommandant“, „Admin“ und FwDV-Funktionen.
+
+**Gestaltung**
+- Ruhig und hochwertig: weiße Karten mit weichem Schatten statt Rahmen, helle Filter-Knöpfe, dünne Kopflinie mit rotem Akzent, leichtere Platzhalter und Jubiläumsband (Demo v16). Rot #CD1719 und Roboto bleiben; Kontrast und 44-px-Tippziele werden in der Testsuite geprüft. Im Theme als zentrale Stil-Datei umsetzen, nicht je Seite.
 
 **Konten und Rechte**
 - Nur per **Einladung**, **eine Rolle je Konto**, immer **zwei Admins**. Rollen: Admin, Kommandant · Freigabe, Redaktion, Bereichsredaktion, Mitglied (nur Lernen). Admins ändern Rollen am Konto (B-02).

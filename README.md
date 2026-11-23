@@ -28,7 +28,7 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 |---|---|
 | [`docs/demo/`](docs/demo/) | Referenz-Demo (eine HTML-Datei, statisch) mit Testsuite – [README](docs/demo/README.md) |
 | [`docs/lastenheft/`](docs/lastenheft/) | Lastenheft v1.16 als [Text](docs/lastenheft/lastenheft-v1.16.md) und [PDF](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.16.pdf), Vorlagen für Claude Code |
-| [`docs/handbuch/`](docs/handbuch/) | [Handbuch Mitgliederbereich 1.14](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf) mit Quellen |
+| [`docs/handbuch/`](docs/handbuch/) | [Handbuch Mitgliederbereich 1.15](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf) mit Quellen |
 | [`docs/design/`](docs/design/) | [Corporate Design](docs/design/corporate-design.md), frühe Entwürfe |
 | [`docs/assets/`](docs/assets/) | Logo, Schrift (Roboto, OFL), Fotos, Briefpapier |
 | [`docs/uebergangsseite/`](docs/uebergangsseite/) | Übergangsseite zum Hochladen |

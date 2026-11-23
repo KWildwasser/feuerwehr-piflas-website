@@ -412,6 +412,85 @@ ins{background:#DDF3E1;color:#14532D;text-decoration:underline;text-decoration-c
 
 .sgh{font-size:14px;margin:6px 0 -2px;color:var(--g2);text-transform:uppercase;letter-spacing:.05em}
 @media(prefers-reduced-motion:reduce){.drawer,.sheet,.push,.toast,.scrim,.fab{transition:none}.neu{animation:none}}
+/* ===== Feinschliff (Demo v16): ruhige Flächen, weiche Schatten statt Rahmen, einheitliche Abstände ===== */
+:root{--hell:#F6F5F2;--linie:#E9E7E2;--r:18px;--sh1:0 0 0 1px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.05);--sh2:0 0 0 1px rgba(31,35,40,.05),0 2px 4px rgba(31,35,40,.04),0 12px 28px -14px rgba(31,35,40,.18)}
+body{letter-spacing:.003em}
+h1,h2{letter-spacing:-.012em}
+h3{letter-spacing:-.005em}
+.band{padding:36px 0}
+@media(min-width:760px){.band{padding:56px 0}.stack{gap:16px}}
+.band.g{background:var(--hell)}
+/* Kopf: hell, dünne Linie, kleiner roter Akzent */
+.top{background:rgba(255,255,255,.94);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--linie);box-shadow:inset 0 3px 0 var(--rot)}
+.top .wrap{min-height:68px}
+.top .logo{width:164px;height:45px}
+.ib{border:1px solid var(--linie);border-radius:14px;transition:background .15s}
+.ib:hover{background:var(--hell)}
+.dnav a{position:relative}
+.dnav a[aria-current=page]::after{content:'';position:absolute;left:0;right:0;bottom:2px;height:2px;border-radius:2px;background:var(--rot)}
+/* Knöpfe und Filter */
+.btn{letter-spacing:.01em;transition:background .15s,box-shadow .15s,transform .1s;box-shadow:0 1px 2px rgba(165,18,20,.25),0 6px 16px -8px rgba(205,23,25,.55)}
+.btn:active{transform:translateY(1px)}
+.btn.o,.btn.dk,.btn[disabled]{box-shadow:none}
+.btn.o{border-width:1.5px}
+.chip{border:0;background:var(--hell);box-shadow:inset 0 0 0 1px var(--linie);transition:background .15s}
+.chip:hover{background:#EFEDE8}
+.chip[aria-pressed=true]{box-shadow:none}
+.tag{border-radius:999px;padding:3px 10px;letter-spacing:.01em}
+/* Karten: weiße Fläche mit weichem Schatten */
+.card,.nk article,.tl li,.amp>div,details.help,.lcard{border:0;border-radius:var(--r);box-shadow:var(--sh1)}
+.card,.nk article{box-shadow:var(--sh2)}
+.nk article{transition:box-shadow .2s,transform .2s}
+.nk article:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(31,35,40,.05),0 18px 36px -16px rgba(31,35,40,.28)}
+.tl li.past{box-shadow:none;background:var(--hell)}
+.tl li.nx{box-shadow:0 0 0 2px #C99A2E}
+.stat{border-radius:var(--r)}
+.kv{gap:8px 12px}
+.list{border-top:1px solid var(--linie)}
+.li{transition:background .15s}
+.li:hover{background:var(--hell)}
+.cal{border-radius:14px;box-shadow:inset 0 0 0 1px var(--linie);background:#fff}
+.cal b{font-family:FwCond,FwText,sans-serif;font-size:22px}
+.tip{border-radius:var(--r);box-shadow:inset 0 0 0 1px #F1E2B5}
+.warnb{border-width:1px;border-radius:var(--r)}
+.leer{border:1.5px dashed #D6D3CC;border-radius:var(--r);background:#fff}
+/* Bühne */
+.hero{background:radial-gradient(120% 140% at 100% 0,#2C3238 0,#1F2328 60%);padding:32px 0 40px}
+@media(min-width:860px){.hero{padding:56px 0 64px}}
+.pic,.feat,.mosaic button{border-radius:20px}
+.ph{background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.22);border-radius:20px}
+.mosaic .phx{border:1px dashed rgba(255,255,255,.2);background:linear-gradient(160deg,#2E3339,#24282D)}
+.mit .opts a{border-radius:16px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 10px 24px -14px rgba(0,0,0,.45);transition:transform .15s}
+.mit .opts a:hover{transform:translateY(-2px)}
+/* Jubiläum: leichter, feine Goldlinie */
+.jub{background:linear-gradient(180deg,#FFF9EE,#FFF4E0);border-top:1px solid #EAD6A6;border-bottom:1px solid #EAD6A6}
+.cd{border-color:#F0E2BF;border-radius:16px;box-shadow:0 1px 2px rgba(107,74,0,.06)}
+.seal{border-width:4px;box-shadow:0 0 0 3px #fff inset,0 8px 20px -10px rgba(107,74,0,.6)}
+/* Formulare */
+.f{gap:6px}
+.f input,.f select,.f textarea,.ltopt>input{border-color:#8E8B84;border-radius:12px;transition:border-color .15s,box-shadow .15s}
+.f input:focus,.f select:focus,.f textarea:focus,.ltopt>input:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 3px rgba(31,35,40,.14)}
+.opt{border-radius:12px;transition:background .15s}
+.qz,.ltf{border-radius:16px}
+/* Fuß */
+.foot{padding-top:40px;background:#1B1F23}
+.foot nav a{text-decoration:none;opacity:.95}.foot nav a:hover{text-decoration:underline}
+/* Mitgliederbereich */
+.btop{background:#1B1F23;box-shadow:inset 0 3px 0 var(--rot)}
+.btop .logo{width:128px;height:35px}
+.btop button,.btop .hb,.btop .hbm{border-color:rgba(255,255,255,.22);transition:background .15s}
+.btop button:hover,.btop .hb:hover,.btop .hbm:hover{background:rgba(255,255,255,.08)}
+.btabs{background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--linie);box-shadow:0 -8px 24px -18px rgba(31,35,40,.35)}
+.btabs a[aria-current=page]::before{content:'';position:absolute;top:0;left:28%;right:28%;height:3px;border-radius:0 0 3px 3px;background:var(--rot)}
+.badge{box-shadow:0 0 0 2px #fff}
+.step{border-width:1px;border-radius:16px}.step.on{box-shadow:0 0 0 1px var(--rot)}
+/* Hinweise */
+.toast{border-radius:14px;box-shadow:0 14px 34px -12px rgba(0,0,0,.45)}
+.sheet{box-shadow:0 -12px 40px -16px rgba(0,0,0,.35)}
+.drawer{box-shadow:-20px 0 40px -20px rgba(0,0,0,.35)}
+.fab{border-width:2px;box-shadow:0 10px 26px -10px rgba(0,0,0,.5)}
+@media (max-width:480px){.btop .logo{width:96px;height:27px}}
+@media(min-width:760px){h1{hyphens:manual}}
 </style>
 </head>
 <body>
