@@ -315,6 +315,50 @@ body.bk .toast{bottom:calc(140px + var(--sab))}
 .lhard{grid-template-columns:minmax(0,1fr) 46px;gap:4px 10px}.lhard .lq{grid-column:1/-1;margin-top:6px}
 .ltab th,.ltab td{padding:6px 4px;border-bottom:1px solid var(--linie);text-align:center}
 .ltab th[scope=row],.ltab thead th:first-child{text-align:left;font-weight:600}
+.lic{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:14px;flex:none;color:var(--ink)}.lic svg{width:28px;height:28px}
+.lic.big{width:72px;height:72px;border-radius:20px}.lic.big svg{width:42px;height:42px}
+.lhero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;padding:20px;border-radius:20px;background:linear-gradient(135deg,#CD1719,#9E1113);color:#fff}
+.lhero h2{font-size:30px;margin:0;color:#fff}.lhero p{margin:0;color:#fff}.lhero .lic{background:#fff!important}
+.lhero.done{background:linear-gradient(135deg,#1E6B35,#14502A)}
+.lhero .btn.wb{background:#fff;color:#A11214;border-color:#fff}.lhero.done .btn.wb{color:#14502A}
+.lhero .lquick{color:#fff;border-color:rgba(255,255,255,.8);background:transparent}
+.lhero .lmeta span{background:rgba(255,255,255,.18);color:#fff}
+.lkick{font-size:14px;font-weight:700;letter-spacing:.02em;opacity:.85;margin:0;font-family:inherit;line-height:1.3}
+.lmeta{display:flex;flex-wrap:wrap;gap:6px}.lmeta span{font-size:14px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--hell)}
+.lcst{font-size:16px}
+.lbar{display:block;height:8px;border-radius:4px;background:rgba(0,0,0,.12);overflow:hidden}.lbar i{display:block;height:100%;background:var(--rot);border-radius:4px;transition:width .3s}
+.lhero .lbar{background:rgba(255,255,255,.3)}.lhero .lbar i{background:#fff}
+.lbar.big{height:10px}
+@media(max-width:420px){.lhero{grid-template-columns:1fr}.lhero h2{font-size:26px}}
+.lstats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.lstats .stat{padding:14px;gap:4px;font-size:15px}
+.lnum{font:700 34px/1 FwCond,sans-serif}.lnum small{font-size:16px;font-weight:600}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.lcard{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--linie);border-radius:16px;background:#fff;color:var(--ink);min-height:72px;width:100%;font:inherit;cursor:pointer}
+.lkdt{border:2px dashed #C9C6BF}
+.lflow .wrap{max-width:680px}
+.ltopbar{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.lintro{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.lpage{display:flex;flex-direction:column;gap:12px;font-size:18px;line-height:1.55}.lpage p{margin:0}
+.lkeys{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}.lkeys li{background:var(--hell);border-left:4px solid var(--rot);padding:10px 12px;border-radius:8px;font-weight:600}
+.lnav{display:flex;justify-content:space-between;gap:10px;position:sticky;bottom:calc(70px + var(--sab));background:linear-gradient(rgba(244,243,240,0),var(--hell) 30%);padding-top:14px}
+.lnav .btn{flex:1;max-width:260px}
+.btn.big{min-height:56px;font-size:19px}
+.lq{gap:12px}.lq .qz{border:0;padding:0}.lq legend{font-size:21px;font-weight:700;margin-bottom:8px;padding:0}
+.lq .opt{min-height:56px;font-size:17px;border:2px solid transparent}
+.opt.right{background:#E3F1E6;border-color:#1E6B35}.opt.wrong{background:#FDE7E7;border-color:#A11214}
+.qz[disabled] .opt{cursor:default}
+.lfb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}.lfb.ok{background:#E3F1E6;color:#14502A}.lfb.no{background:#FFF6DB;color:#4A3500}
+.lresult{align-items:stretch;gap:14px}.lbadge{align-self:center;width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 44px/1 FwCond,sans-serif;background:#FFF6DB;color:#6B4500}
+.lresult.ok .lbadge{background:#1E6B35;color:#fff;animation:lpop .6s ease-out}
+@keyframes lpop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.lresult.ok .lbadge{animation:none}.lbar i{transition:none}}
+.licpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.licp{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border:2px solid var(--linie);border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;min-height:44px}
+.licp input{position:absolute;opacity:0;width:1px;height:1px}.licp:has(input:checked){border-color:var(--rot);background:#FBEBEB}.licp:has(input:focus-visible){outline:3px solid var(--ink)}
+.lplan{display:flex;flex-direction:column;gap:14px}.lpm{display:flex;flex-direction:column;gap:8px}.lpm h2{font-size:22px;margin:0;display:flex;gap:8px;align-items:center}
+.lpm.now{padding:12px;border-radius:16px;background:#FFF6DB}
+.lpempty{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px;border:2px dashed #C9C6BF;border-radius:14px;color:var(--grau)}
+.lpc{gap:10px}.lpch{display:flex;gap:12px;align-items:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .vg h3{margin-bottom:6px}
 .vg p{color:var(--grau)}
@@ -575,7 +619,7 @@ const ARCH = (() => {
 const L_Q = 5, L_MIN = 4;
 /* Lern-Themen (Beispielinhalte, vom Kommandanten fachlich zu prüfen). Eigene Worte, Quellen nur verlinkt. */
 const TOPICS = [
-  {id:'lv', m:'2026-11', st:'aktiv', bsp:true, t:'Verkehrsabsicherung', mail:true,
+  {id:'lv', m:'2026-11', st:'aktiv', bsp:true, ic:'verkehr', t:'Verkehrsabsicherung', mail:true,
    intro:'Auf der Straße ist der fließende Verkehr die größte Gefahr für uns. Hier lernst du die wichtigsten Regeln zum Absichern einer Einsatzstelle.',
    secs:[{h:'Erst sichern, dann arbeiten', x:'Eine Einsatzstelle im Straßenverkehr sicherst du sofort ab – noch bevor die eigentliche Arbeit beginnt.\n\nDie Warnung soll Autofahrerinnen und Autofahrern genug Zeit geben, langsamer zu werden und auszuweichen. Den Verkehr regeln und umleiten ist grundsätzlich Sache der Polizei.'},
      {h:'Wie weit vorher warnen?', x:'Als Faustwerte für die erste Warnung vor der Einsatzstelle gelten: innerorts (bis 50 km/h) etwa 100 m, auf der Landstraße (bis 100 km/h) etwa 200 m. Auf der Autobahn wird gestaffelt gewarnt, etwa bei 400, 600 und 800 m.\n\nVor Kurven und Kuppen ziehst du die Warnung so weit vor, dass man sie rechtzeitig sieht.'},
@@ -589,7 +633,7 @@ const TOPICS = [
      {q:'Und innerorts (bis 50 km/h)?', o:['ca. 20 m', 'ca. 100 m', 'ca. 400 m', 'Innerorts ist keine Warnung nötig'], c:1, x:'Innerorts gilt als Faustwert etwa 100 m.'},
      {q:'Welche Warnkleidung brauchst du im Verkehrsraum mindestens?', o:['Warnkleidung nach EN ISO 20471, Klasse 2', 'Klasse 1 reicht immer', 'Eine Jacke mit ein paar Reflexstreifen', 'Bei Tag keine'], c:0, x:'Mindestens Klasse 2 – auch bei Tag.'},
      {q:'Vor der Einsatzstelle liegt eine Kurve. Was machst du?', o:['Die Warnung weiter vorziehen, damit man sie rechtzeitig sieht', 'Die Warnung weglassen', 'Die Warnung direkt an die Einsatzstelle stellen', 'Nur das Blaulicht anlassen'], c:0, x:'Die Warnung muss rechtzeitig sichtbar sein – also vor die Kurve.'}]},
-  {id:'le', m:'2026-10', st:'aktiv', bsp:true, t:'Erste Hilfe: Wiederbelebung', mail:true,
+  {id:'le', m:'2026-10', st:'aktiv', bsp:true, ic:'herz', t:'Erste Hilfe: Wiederbelebung', mail:true,
    intro:'Bei einem Herz-Kreislauf-Stillstand zählt jede Minute. Mit drei Schritten kannst du ein Leben retten: Prüfen, Rufen, Drücken.',
    secs:[{h:'Prüfen', x:'Sprich die Person laut an und fasse sie an den Schultern. Reagiert sie nicht, machst du die Atemwege frei: Kopf vorsichtig nach hinten neigen, Kinn anheben.\n\nPrüfe dann höchstens 10 Sekunden, ob sie normal atmet. Schnappatmung – seltene, ruckartige Atemzüge – ist keine normale Atmung.'},
      {h:'Rufen', x:'Notruf 112 – oder lass jemanden anrufen. Lass einen Defibrillator (AED) holen, wenn einer in der Nähe ist.'},
@@ -602,7 +646,7 @@ const TOPICS = [
      {q:'In welchem Takt drückst du?', o:['60-mal pro Minute', '100- bis 120-mal pro Minute', '150- bis 180-mal pro Minute', 'Das ist egal'], c:1, x:'100 bis 120 pro Minute – etwa im Takt von „Stayin’ Alive“.'},
      {q:'Wie oft drückst du, bevor du 2-mal beatmest?', o:['15-mal', '30-mal', '5-mal', '50-mal'], c:1, x:'30 : 2 bei Erwachsenen.'},
      {q:'Die Person zeigt nur Schnappatmung. Was heißt das?', o:['Sie atmet, also stabile Seitenlage', 'Das ist keine normale Atmung – sofort mit der Wiederbelebung beginnen', 'Erst einmal abwarten', 'Nur Beine hochlegen'], c:1, x:'Schnappatmung ist ein Zeichen für einen Kreislaufstillstand.'}]},
-  {id:'lg', m:'2026-09', st:'aktiv', bsp:true, t:'Gefahren an der Einsatzstelle', mail:true,
+  {id:'lg', m:'2026-09', st:'aktiv', bsp:true, ic:'gefahr', t:'Gefahren an der Einsatzstelle', mail:true,
    intro:'Bei jeder Erkundung fragst du dich: Welche Gefahren gibt es hier? Das Merkschema AAAA-C-EEEE hilft dir, nichts zu vergessen.',
    secs:[{h:'Die vier A', x:'Atemgifte – Rauch, Gase, Sauerstoffmangel.\n\nAngstreaktion – Menschen in Panik handeln unüberlegt, auch Einsatzkräfte.\n\nAusbreitung – Feuer, Rauch oder Stoffe breiten sich aus.\n\nAtomare Gefahren – radioaktive Stoffe und Strahlung.'},
      {h:'Das C', x:'Chemische Stoffe – zum Beispiel Gefahrgut, Säuren oder brennbare Flüssigkeiten.'},
@@ -615,7 +659,7 @@ const TOPICS = [
      {q:'Was ist mit „Angstreaktion“ gemeint?', o:['Menschen handeln in Panik unüberlegt – auch Einsatzkräfte', 'Nur Tiere geraten in Panik', 'Die Angst vor dem Funkgerät', 'Das gibt es im Einsatz nicht'], c:0, x:'Panik kann Betroffene und Einsatzkräfte gefährden.'},
      {q:'Wann gehst du das Schema durch?', o:['Bei jeder Erkundung', 'Nur bei Gefahrgut', 'Nur nach dem Einsatz', 'Das macht nur der Kommandant'], c:0, x:'Gefahren erkennen ist Aufgabe aller – bei jeder Erkundung.'},
      {q:'Was meint „Ausbreitung“?', o:['Feuer, Rauch oder Stoffe breiten sich aus', 'Die Fahrzeuge breit aufstellen', 'Schläuche ausrollen', 'Viele Zuschauer'], c:0, x:'Ausbreitung kann Menschen, Tiere und Sachen zusätzlich gefährden.'}]},
-  {id:'ld', m:'2026-12', st:'entwurf', bsp:true, t:'Feuerlöscher richtig einsetzen', mail:true,
+  {id:'ld', m:'2026-12', st:'entwurf', bsp:true, ic:'feuer', t:'Feuerlöscher richtig einsetzen', mail:true,
    intro:'[Einleitung folgt]', secs:[{h:'[Überschrift]', x:'[Text folgt – vom Kommandanten zu erstellen, z. B. nach den Unterlagen der Feuerwehrschule]'}], keys:[], links:[], src:'', qs:[]}
 ];
 /* Beispiel-Ergebnisse für den Lernstand (fest vorgegeben, damit die Demo immer gleich aussieht) */
@@ -646,7 +690,7 @@ const fresh = () => { const t0 = Date.now() - 30 * 864e5; const st = {
     {kind:'change', id:'c1', k:'fz', tid:'fz_mtw', vals:{d:'[Fahrzeugtyp] · Mannschaftstransport für [Anzahl] Personen, auch für die Jugendfeuerwehr'}, note:'Einsatzzweck ergänzt', von:'Lukas Schreiber (Redaktion)', by:'Lukas Schreiber'},
     {kind:'change', id:'c2', k:'v', tid:'verein', vals:{chronik:null}, note:'Meilenstein ergänzt', von:'Jonas Beispiel (Redaktion)', by:'Jonas Beispiel'}
   ],
-  topics: TOPICS.map(t => JSON.parse(JSON.stringify(t))), results: [], lt: null, ted: null, qres: null, lsel: null, rch: null,
+  topics: TOPICS.map(t => JSON.parse(JSON.stringify(t))), results: [], lt: null, ted: null, qres: null, lsel: null, rch: null, lprog: {}, quiz: null,
   dropped: [], hist: {}, seedH: true, rl: {}, t0, mails: [], mailed: [], mview: null,
   user: null, pending2fa: null, next: null, draft: [], uid: 1, mdel: null, gone: {}, cdel: null, trash: [], year: 2026, etyp: 'alle', pe: 20, ncat: 'Alle', pn: 6, tf: 'Alle', detail: null, neu: null, alarmNr: 0, step: 1, nid: 100,
   ed: null, flt: {q:'', typ:'alle', y:'alle', st:'alle', n:20}, sp: 'verein', sed: null, sdraft: undefined, tmp: {}, keyForm: null,
@@ -679,8 +723,8 @@ const menuHtml = r => { const pl = Object.fromEntries(pubList()); const a = k =>
 const pubList = () => jubActive() ? [PUB[0], ['jubilaeum','125 Jahre'], ...PUB.slice(1)] : PUB;
 const BACK = {redaktion:['Freigabe',I.check], beitraege:['Inhalte',I.doc], seiten:['Seiten',I.img], planung:['Planung',I.cal], lernen:['Lernen',I.cap], mitglieder:['Mitglieder',I.ppl], system:['System',I.gear]};
 /* Unterseiten ohne eigenen Tab: werden dem Tab zugeordnet */
-const TABOF = {editor:'beitraege', fotos:'seiten', planung:'beitraege', thema:'lernen', lthema:'lernen', lernstand:'lernen'};
-const TITLE = {editor:'Bearbeiten', fotos:'Fotos', thema:'Thema', lthema:'Thema bearbeiten', lernstand:'Lernstand'};
+const TABOF = {editor:'beitraege', fotos:'seiten', planung:'beitraege', thema:'lernen', lthema:'lernen', lernstand:'lernen', lplan:'lernen'};
+const TITLE = {editor:'Bearbeiten', fotos:'Fotos', thema:'Thema', lthema:'Thema bearbeiten', lernstand:'Lernstand', lplan:'Themenplan'};
 
 /* ---------- Bausteine ---------- */
 const route = () => (location.hash || '#start').slice(1);
@@ -921,6 +965,7 @@ V.login = () => {
     <form class="card" id="f-login" novalidate>
       ${f('E-Mail', '<input name="mail" type="email" required autocomplete="username" maxlength="120">')}
       ${f('Passwort', '<input name="pw" type="password" required autocomplete="current-password">')}
+      <label class="chk"><input type="checkbox" name="stay"><span class="ct">Auf diesem Gerät angemeldet bleiben</span></label><span class="mini" style="margin-top:-6px">Gilt nur für die Rolle „Mitglied“, bis zu 90 Tage (E-25). Auf fremden Geräten nicht anhaken.</span>
       <p class="err" id="e-login"></p><button class="btn" type="submit">Anmelden</button>
       <span class="mini" id="demo-konten">Demo-Konten, Passwort beliebig: max@beispiel.de (Kommandant), erika@beispiel.de (Admin), jonas@beispiel.de (Redaktion), anna@beispiel.de (Mitglied)</span></form>
     <div class="card stack" id="quick"><b>Schnell-Login für die Demo</b><span class="mini">Ohne E-Mail und Code – einfach ein Beispielkonto wählen:</span><div class="row2 ql"><button class="btn o sm" type="button" data-act="quick-login" data-role="Freigeber" style="color:var(--ink)">Kommandant</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Administrator" style="color:var(--ink)">Admin</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Autor" style="color:var(--ink)">Redaktion</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Mitglied" style="color:var(--ink)">Mitglied</button></div>
@@ -1365,15 +1410,17 @@ V.postfach = () => {
   return sec(`${hd}<h1 style="font-size:34px">Postfach</h1><div class="list" id="inbox">${S.mails.map(x => `<button class="li" data-act="mail-open" data-id="${x.id}"><span class="dt">${p2(new Date(x.at).getHours())}:${p2(new Date(x.at).getMinutes())}</span><span style="flex:1;min-width:0"><span class="mini">${x.typ === 'neu' ? 'Neue Einreichung' : 'Tägliche Erinnerung'}</span><b>${esc(mSubj(x))}</b></span></button>`).join('') || '<p class="leer">Keine E-Mails.</p>'}</div>`);
 };
 
-/* ---------- Lernen (Lastenheft 2.12 „Lernen“, E-01 bis E-14) ----------
-   Jeden Monat ein Thema vom Kommandanten: Inhalt, Merksätze, Links zu den Feuerwehrschulen, kurzer Test.
+/* ---------- Lernen (Lastenheft 2.12 „Lernen“ E-01 bis E-14, 2.13 „Gern und leicht lernen“ E-15 bis E-28) ----------
+   Jeden Monat ein Thema vom Kommandanten: in kleinen Schritten lesen, dann 5 Fragen, eine pro Bildschirm.
    Ergebnisse sieht jede Person nur für sich; den Lernstand aller sehen nur die Kommandanten (kein Admin).
    Freiwillig, keine Rangliste, ersetzt keine Ausbildung und keine Unterweisung nach DGUV Vorschrift 49 § 8. */
 const L_KEEP = '3 Jahren';    /* Löschfrist der Ergebnisse (Annahme, E-11 – rechtlich prüfen lassen) */
 const mkey = d => d.getFullYear() + '-' + p2(d.getMonth() + 1);
 const curM = () => mkey(today());
 const mLab = k => { const [y, m] = k.split('-'); return MONL[+m - 1] + ' ' + y; };
+const mShort = k => MON[+k.split('-')[1] - 1] + ' ' + k.slice(2, 4);
 const nextM = k => { const [y, m] = k.split('-').map(Number); return m === 12 ? (y + 1) + '-01' : y + '-' + p2(m + 1); };
+const prevM = k => { const [y, m] = k.split('-').map(Number); return m === 1 ? (y - 1) + '-12' : y + '-' + p2(m - 1); };
 const topic = id => S.topics.find(t => t.id === id);
 /* Für Mitglieder sichtbar: veröffentlicht und der Monat hat begonnen */
 const lVisible = () => S.topics.filter(t => t.st === 'aktiv' && t.m <= curM()).sort((a, b) => b.m.localeCompare(a.m));
@@ -1384,105 +1431,169 @@ const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
 const paras = x => String(x || '').split(/\n\s*\n/).map(s => s.trim()).filter(Boolean).map(s => `<p>${esc(s)}</p>`).join('');
 const lTag = t => t.st === 'aus' ? '<span class="tag t-unw">Ausgeblendet</span>' : t.st === 'entwurf' ? '<span class="tag t-bma">Entwurf</span>' : t.m > curM() ? '<span class="tag t-thl">Geplant</span>' : '<span class="tag t-ok">Veröffentlicht</span>';
 const stIcon = s => s === 'ok' ? '<span class="lst ok" title="bestanden">✓<span class="sr">bestanden</span></span>' : s === 'nein' ? '<span class="lst no" title="versucht, noch nicht bestanden">✗<span class="sr">noch nicht bestanden</span></span>' : '<span class="lst op" title="offen">–<span class="sr">offen</span></span>';
+/* Symbole je Thema (E-23): eigene Zeichnungen, keine fremden Grafiken */
+const SV = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const LIC = {
+  verkehr: ['Verkehr', '#F9ECE7', SV('<path d="M10 3h4l4 16H6z"/><path d="M8.5 9h7M7.3 14h9.4"/><path d="M4 21h16"/>')],
+  herz: ['Erste Hilfe', '#FBEBEB', SV('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/><path d="M12 9v5M9.5 11.5h5"/>')],
+  gefahr: ['Gefahren', '#F9EEDA', SV('<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>')],
+  feuer: ['Brand', '#FBEBEB', SV('<path d="M12 21c-4 0-6-2.7-6-6 0-4 3-6 4-9 1.5 2 2 3 2 5 1-1 1.5-2 1.5-3 2.5 2 4.5 4.5 4.5 7 0 3.3-2 6-6 6z"/>')],
+  funk: ['Funk', '#E7F1FB', SV('<rect x="7" y="8" width="10" height="13" rx="2"/><path d="M10 8V3M10 13h4M10 16h4"/>')],
+  technik: ['Technik', '#F0EFEC', SV('<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-2.5z"/>')],
+  wasser: ['Wasser', '#E7F1FB', SV('<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>')],
+  atem: ['Atemschutz', '#EFEDFF', SV('<circle cx="12" cy="11" r="7"/><path d="M9 11h6M10 15h4"/>')],
+  buch: ['Allgemein', '#E5F4E4', SV('<path d="M4 19.5V5a2 2 0 0 1 2-2h14v16H6.5A2.5 2.5 0 0 0 4 21.5"/>')]
+};
+const lic = t => LIC[t && t.ic] || LIC.buch;
+const lIcon = (t, big) => { const c = lic(t); return `<span class="lic${big ? ' big' : ''}" style="background:${c[1]}">${c[2]}</span>`; };
+/* Lesezeit (E-23): etwa 150 Wörter pro Minute plus 2 Minuten für die Fragen */
+const lMin = t => { const w = [t.intro, ...t.secs.map(s => s.h + ' ' + s.x), ...t.keys].join(' ').split(/\s+/).filter(Boolean).length; return Math.max(3, Math.round(w / 150) + 2); };
+/* Seiten eines Themas (E-17): Start, je Abschnitt eine Seite, „Das Wichtigste“, dann der Test */
+const lPages = t => ['intro', ...t.secs.map((s, i) => i), 'keys', 'quiz'];
+const lQuizAt = t => lPages(t).length - 1;
+/* Serie (E-20): Monate in Folge bestanden, vom neuesten Thema rückwärts – sieht nur die Person selbst */
+const lStreak = u => { const v = lVisible(); let i = v[0] && v[0].m === curM() && lState(u, v[0].id) !== 'ok' ? 1 : 0, n = 0; for (; i < v.length && lState(u, v[i].id) === 'ok'; i++) n++; return n; };
+const lk = tid => S.user.name + '|' + tid;
 const lNote = `<details class="help" id="l-info"><summary>Gut zu wissen: Wer sieht meine Ergebnisse?</summary><ul>
   <li>Mitmachen ist freiwillig und ergänzt die Übungsabende.</li>
   <li>Du siehst nur deine eigenen Ergebnisse. Den Lernstand aller sehen nur die Kommandanten – keine Admins, keine Redaktion, niemand öffentlich.</li>
   <li>Es gibt keine Rangliste. Die Ergebnisse dienen dazu, Übungen gut zu planen.</li>
   <li>Ergebnisse werden nach ${L_KEEP} gelöscht, beim Austritt sofort.</li>
   <li>Das Lernen hier ersetzt keine Ausbildung, keine Übung und keine Unterweisung. Im Einsatz gilt, was deine Führungskraft anordnet.</li></ul></details>`;
+const lMiss = () => [curM(), nextM(curM())].filter(m => !S.topics.some(t => t.m === m && t.st === 'aktiv'));
 
+/* Startseite „Lernen“ (E-16, E-20 bis E-22) */
 V.lernen = () => {
-  const vis = lVisible(), cur = vis[0], me = S.user.name, k = isKdt();
-  const done = vis.filter(t => lState(me, t.id) === 'ok').length;
-  const curTxt = cur ? (cur.m === curM() ? 'Thema im ' + MONL[+cur.m.split('-')[1] - 1] : 'Aktuelles Thema (aus ' + mLab(cur.m) + ')') : '';
-  const row = t => `<button class="li lrow" data-act="l-open" data-id="${t.id}"><span class="dt">${MON[+t.m.split('-')[1] - 1]} ${t.m.slice(2, 4)}</span><span style="flex:1;min-width:0"><b>${esc(t.t)}</b></span>${stIcon(lState(me, t.id))}</button>`;
-  let adm = '';
-  if (k) {
-    const all = S.topics.slice().sort((a, b) => b.m.localeCompare(a.m)), nm = nextM(curM());
-    const has = m => S.topics.some(t => t.m === m && t.st === 'aktiv');
-    const miss = [curM(), nm].filter(m => !has(m));
-    adm = `<h2 style="font-size:26px" id="l-verwalten">Themen verwalten</h2>
-    ${miss.length ? `<div class="stat warnbox" id="l-miss" style="font-size:15px"><b>Für ${miss.map(mLab).join(' und ')} ist noch kein Thema veröffentlicht.</b> Lege es rechtzeitig an – es erscheint am Monatsersten automatisch.</div>` : ''}
-    <div class="row2"><button class="btn" data-act="lt-new">+ Neues Thema</button><a class="btn o" href="#lernstand" style="color:var(--ink)">Lernstand ansehen</a></div>
-    <div class="stack" id="l-admin">${all.map(t => `<div class="card" style="gap:6px" data-tid="${t.id}"><div class="sh"><b>${esc(t.t || '[ohne Titel]')}</b>${lTag(t)}</div><span class="mini" style="font-size:15px">${mLab(t.m)} · ${t.qs.length} Fragen · ${new Set(S.results.filter(r => r.tid === t.id).map(r => r.u)).size} haben teilgenommen</span>
-      <div class="row2"><button class="btn o sm" data-act="lt-edit" data-id="${t.id}" style="color:var(--ink)">Bearbeiten</button><button class="btn o sm" data-act="l-open" data-id="${t.id}" style="color:var(--ink)">Ansehen</button>${t.st === 'aus' ? `<button class="btn o sm" data-act="lt-show" data-id="${t.id}" style="color:var(--ink)">Wieder einblenden</button>` : t.st === 'aktiv' ? `<button class="btn o sm" data-act="lt-hide" data-id="${t.id}" style="color:var(--ink)">Ausblenden</button>` : ''}</div></div>`).join('')}</div>`;
+  const vis = lVisible(), cur = vis[0], me = S.user.name, first = me.split(' ')[0];
+  const done = vis.filter(t => lState(me, t.id) === 'ok').length, open = vis.slice(1).filter(t => lState(me, t.id) !== 'ok');
+  let hero = '<div class="stat" id="l-cur">Noch kein Thema veröffentlicht. Schau nächsten Monat wieder vorbei.</div>', sub = 'Schön, dass du da bist.';
+  if (cur) {
+    const st = lState(me, cur.id), pg = S.lprog[lk(cur.id)] || 0, n = lQuizAt(cur) + cur.qs.length, mon = MONL[+cur.m.split('-')[1] - 1];
+    const lab = cur.m === curM() ? 'Dein Thema im ' + mon : 'Aktuelles Thema (aus ' + mLab(cur.m) + ')';
+    sub = st === 'ok' ? `Stark – dein Thema für ${mon} hast du geschafft.` : pg ? 'Du bist mittendrin – mach einfach da weiter, wo du aufgehört hast.' : `Dein Thema für ${mon} wartet auf dich. Dauert nur etwa ${lMin(cur)} Minuten.`;
+    hero = `<div class="lhero${st === 'ok' ? ' done' : ''}" id="l-cur">${lIcon(cur, true)}<div class="stack" style="gap:6px;min-width:0">
+      <span class="lkick">${esc(lab)}</span><h2>${esc(cur.t)}</h2><p>${esc(cur.intro)}</p>
+      <span class="lmeta"><span>⏱ ca. ${lMin(cur)} Min.</span><span>${cur.qs.length} Fragen</span>${lic(cur)[0] !== 'Allgemein' ? `<span>${esc(lic(cur)[0])}</span>` : ''}</span>
+      <span id="l-curst" class="lcst">${st === 'ok' ? '<b>✓ Geschafft</b>' : st === 'nein' ? '<b>Knapp – probier es nochmal</b>' : pg ? `<b>Weiter bei Schritt ${pg + 1} von ${n}</b>` : '<b>Noch offen</b>'}</span>
+      ${pg && st !== 'ok' ? `<span class="lbar" aria-hidden="true"><i style="width:${pct(pg, n)}%"></i></span>` : ''}
+      <div class="row2"><button class="btn wb" data-act="l-open" data-id="${cur.id}">${st === 'ok' ? 'Nochmal ansehen' : pg ? 'Weiterlernen' : 'Los geht’s'}</button>${st !== 'ok' && cur.qs.length ? `<button class="btn o sm lquick" data-act="l-quiz" data-id="${cur.id}">Kenn ich schon – direkt zum Test</button>` : ''}</div></div></div>`;
   }
-  return sec(`<h1 style="font-size:40px">Lernen</h1>
-    <p>Jeden Monat ein neues Thema: kurz lesen, dann ein kleiner Test. So bleibst du fit – in deinem Tempo, wann du Zeit hast.</p>
-    ${cur ? `<div class="card ltop" id="l-cur"><span class="mini">${esc(curTxt)}</span><h2 style="font-size:28px;margin:0">${esc(cur.t)}</h2><p style="margin:0">${esc(cur.intro)}</p>
-      <div class="sh"><span id="l-curst">${lState(me, cur.id) === 'ok' ? '<b class="st-ok">Bestanden ✓</b>' : lState(me, cur.id) === 'nein' ? '<b class="st-wait">Noch nicht bestanden – probier es nochmal</b>' : '<b>Noch offen</b>'}</span><button class="btn" data-act="l-open" data-id="${cur.id}">${lState(me, cur.id) === 'offen' ? 'Jetzt lernen' : 'Thema öffnen'}</button></div></div>` : '<div class="stat" id="l-cur">Noch kein Thema veröffentlicht.</div>'}
-    <div class="stat" id="l-mine" style="font-size:15px"><b>Dein Lernstand:</b> ${done} von ${vis.length} Themen bestanden.</div>
-    ${vis.length > 1 ? `<h2 style="font-size:26px">Frühere Themen</h2><div class="list" id="l-arch">${vis.slice(1).map(row).join('')}</div>` : ''}
+  const streak = lStreak(me), act = lActive(), okN = cur ? act.filter(m => lState(m.n, cur.id) === 'ok').length : 0;
+  const card = t => `<button class="lcard" data-act="l-open" data-id="${t.id}">${lIcon(t)}<span class="stack" style="gap:2px;min-width:0;flex:1;text-align:left"><span class="mini">${mLab(t.m)}</span><b>${esc(t.t)}</b></span>${stIcon(lState(me, t.id))}</button>`;
+  const kdt = isKdt() ? (() => { const miss = lMiss(); return `<div class="card lkdt" id="l-kdt"><b>Für Kommandanten</b>
+      ${miss.length ? `<div class="stat warnbox" id="l-miss" style="font-size:15px;padding:12px"><b>Für ${miss.map(mLab).join(' und ')} ist noch kein Thema veröffentlicht.</b> Leg es im Themenplan an – es erscheint am Monatsersten von selbst.</div>` : ''}
+      <div class="row2"><a class="btn sm" href="#lplan" id="to-lplan">Themenplan</a><a class="btn o sm" href="#lernstand" style="color:var(--ink)">Lernstand</a></div></div>`; })() : '';
+  return sec(`<h1 style="font-size:40px" id="l-hi">Servus, ${esc(first)}!</h1>
+    <p class="lead" id="l-sub">${esc(sub)}</p>
+    ${hero}
+    ${kdt}
+    <div class="lstats">
+      <div class="stat" id="l-mine"><span class="sr">Dein Lernstand: </span><span class="lnum">${done}<small> von ${vis.length}</small></span><span>Themen geschafft</span>
+        <span class="lbar" aria-hidden="true"><i style="width:${pct(done, vis.length)}%"></i></span></div>
+      <div class="stat" id="l-streak">${streak >= 2 ? `<span class="lnum">${streak}</span><span>Monate in Folge dabei – weiter so!</span>` : `<span class="lnum">${streak}</span><span>${streak === 1 ? 'Monat geschafft – nächsten Monat wird’s eine Serie.' : 'Starte deine Serie mit dem Thema des Monats.'}</span>`}</div>
+    </div>
+    ${cur && okN ? `<div class="stat" id="l-team" style="font-size:15px"><b>Gemeinsam:</b> ${okN} von ${act.length} aus der Einsatzabteilung haben das ${MONL[+cur.m.split('-')[1] - 1]}-Thema schon geschafft.</div>` : ''}
+    ${vis.length > 1 ? `<h2 style="font-size:26px;margin-bottom:0">${open.length ? 'Zum Nachholen' : 'Frühere Themen'}</h2>${open.length ? `<span class="mini">${open.length === 1 ? 'Ein Thema ist' : open.length + ' Themen sind'} noch offen – jedes dauert nur ein paar Minuten.</span>` : ''}
+      <div class="lgrid" id="l-arch">${open.concat(vis.slice(1).filter(t => lState(me, t.id) === 'ok')).map(card).join('')}</div>` : ''}
     ${lNote}
-    <p class="mini">Mehr Lernstoff der Staatlichen Feuerwehrschulen: <a href="https://www.feuerwehr-lernbar.bayern/" target="_blank" rel="noopener">Feuerwehr-Lernbar Bayern</a> (externe Seite).</p>
-    ${adm}`);
+    <p class="mini">Mehr Lernstoff der Staatlichen Feuerwehrschulen: <a href="https://www.feuerwehr-lernbar.bayern/" target="_blank" rel="noopener">Feuerwehr-Lernbar Bayern</a> (externe Seite).</p>`);
 };
 
-/* Themenseite mit Test */
+/* Thema in Schritten (E-17) mit Test, eine Frage pro Bildschirm (E-18) und Ergebnis (E-19) */
 V.thema = () => {
   const t = topic(S.lt);
   if (!t || (!isKdt() && !(t.st === 'aktiv' && t.m <= curM()))) return sec('<h1>Thema nicht gefunden</h1><a class="btn o" href="#lernen" style="color:var(--ink);align-self:flex-start">← Zu „Lernen“</a>');
-  const prev = t.st !== 'aktiv' || t.m > curM(), me = S.user.name, rs = myRes(me, t.id), res = S.qres && S.qres.tid === t.id ? S.qres : null;
-  const quiz = res ? `<div class="card" id="q-result"><h2 style="font-size:26px;margin:0">${res.ok ? 'Bestanden ✓' : 'Noch nicht bestanden'}</h2>
-      <p style="margin:0" id="q-score"><b>${res.sc} von ${res.n} richtig.</b> ${res.ok ? 'Stark!' : 'Bestanden ist der Test ab ' + L_MIN + ' von ' + L_Q + ' richtigen Antworten. Lies die Erklärungen und probier es nochmal.'}${res.prev ? ' <i>Vorschau – das Ergebnis wird nicht gespeichert.</i>' : ''}</p>
-      <ol class="qrev">${t.qs.map((q, i) => { const ok = res.r[i] === q.c; return `<li class="${ok ? 'qok' : 'qno'}"><b>${esc(q.q)}</b><span>${ok ? '✓ Richtig' : '✗ Deine Antwort: ' + esc(q.o[res.r[i]] || '–')}</span>${ok ? '' : `<span>Richtig ist: <b>${esc(q.o[q.c])}</b></span>`}${q.x ? `<span class="mini">${esc(q.x)}</span>` : ''}</li>`; }).join('')}</ol>
-      <div class="row2"><button class="btn" data-act="q-retry">Nochmal versuchen</button><a class="btn o" href="#lernen" style="color:var(--ink)">Zu „Lernen“</a></div></div>`
-    : `<form class="card" id="f-quiz" novalidate><h2 style="font-size:26px;margin:0">Kurzer Test: ${t.qs.length} Fragen</h2><span class="mini">Bestanden ab ${L_MIN} von ${L_Q} richtigen Antworten. Du kannst den Test so oft machen, wie du willst.${prev ? ' <b>Vorschau:</b> Ergebnis wird nicht gespeichert.' : ''}</span>
-      ${t.qs.map((q, i) => `<fieldset class="qz"><legend>${i + 1}. ${esc(q.q)}</legend>${q.o.map((o, j) => o ? `<label class="opt"><input type="radio" name="q${i}" value="${j}"><span>${esc(o)}</span></label>` : '').join('')}</fieldset>`).join('')}
-      <p class="err" id="e-quiz"></p><button class="btn" type="submit">Auswerten</button></form>`;
-  return sec(`<a class="btn o sm" href="#lernen" style="color:var(--ink);align-self:flex-start">← Lernen</a>
-    ${t.bsp ? '<div class="stat warnbox" style="font-size:15px" id="l-bsp"><b>Beispielinhalt für die Demo.</b> Vor dem echten Einsatz prüft der Kommandant den Inhalt fachlich und gleicht ihn mit dem aktuellen Stand der Quellen ab.</div>' : ''}
+  const prev = t.st !== 'aktiv' || t.m > curM(), me = S.user.name, P = lPages(t), qa = lQuizAt(t), N = qa + Math.max(t.qs.length, 1);
+  const res = S.qres && S.qres.tid === t.id ? S.qres : null;
+  let step = res ? qa : Math.min(S.lprog[lk(t.id)] || 0, qa); if (!t.qs.length && step === qa) step = qa - 1;
+  const page = P[step];
+  if (page === 'quiz' && !res && (!S.quiz || S.quiz.tid !== t.id)) S.quiz = {tid:t.id, i:0, r:[], fb:false};
+  const pos = page === 'quiz' ? (res ? N : qa + 1 + S.quiz.i) : step + 1;
+  const nav = (next, label) => `<div class="lnav">${step > 0 ? '<button class="btn o" data-act="l-back" style="color:var(--ink)">Zurück</button>' : '<span></span>'}<button class="btn" data-act="l-next">${label || next}</button></div>`;
+  const top = `<div class="ltopbar"><a class="btn o sm" href="#lernen" style="color:var(--ink)">← Lernen</a><span class="mini" id="l-pos">${res ? 'Fertig' : 'Schritt ' + pos + ' von ' + N}</span></div>
+    <span class="lbar big" id="l-prog" role="progressbar" aria-label="Fortschritt" aria-valuemin="0" aria-valuemax="${N}" aria-valuenow="${pos}"><i style="width:${pct(pos, N)}%"></i></span>`;
+  let body = '';
+  if (page === 'intro') {
+    const rs = myRes(me, t.id);
+    body = `${t.bsp ? '<div class="stat warnbox" style="font-size:15px" id="l-bsp"><b>Beispielinhalt für die Demo.</b> Vor dem echten Einsatz prüft der Kommandant den Inhalt fachlich und gleicht ihn mit dem aktuellen Stand der Quellen ab.</div>' : ''}
     ${prev ? `<div class="stat" style="font-size:15px" id="l-prev"><b>Vorschau</b> – ${t.st === 'aktiv' ? 'erscheint am 1. ' + mLab(t.m) : 'noch nicht veröffentlicht'}. Mitglieder sehen das Thema noch nicht.</div>` : ''}
-    <span class="mini">Thema ${mLab(t.m)}</span><h1 style="font-size:36px">${esc(t.t)}</h1>
-    <p class="lead">${esc(t.intro)}</p>
-    <div class="stack" id="l-body">${t.secs.map(s => `<div class="lsec">${s.h ? `<h2 style="font-size:24px">${esc(s.h)}</h2>` : ''}${paras(s.x)}</div>`).join('')}</div>
-    ${t.keys.length ? `<div class="stat" id="l-keys"><b>Das Wichtigste</b><ul style="margin:0;padding-left:20px">${t.keys.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
-    ${t.links.length ? `<div class="stack" id="l-links" style="gap:6px"><b>Weiterlernen (externe Seiten)</b>${t.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener" class="xl">${esc(l.l)} ↗</a>`).join('')}</div>` : ''}
-    <p class="mini" id="l-src"><b>Quelle:</b> ${esc(t.src || '[Quelle angeben]')}${t.chk ? ' · Fachlich geprüft: ' + esc(t.chk.by) : ''}</p>
-    <div class="tip" style="background:#E8EEF7" id="l-safe"><span style="font-size:15px"><b>Sicherheit geht vor:</b> Diese Lerneinheit ersetzt keine Ausbildung, keine Übung und keine Unterweisung. Im Einsatz gilt, was deine Führungskraft anordnet.</span></div>
-    ${rs.length && !res ? `<p class="mini" id="l-mystat">Deine bisherigen Versuche: ${rs.length} · ${rs.some(r => r.ok) ? 'bestanden ✓' : 'noch nicht bestanden'}</p>` : ''}
-    ${t.qs.length ? quiz : ''}`);
+    <div class="lintro">${lIcon(t, true)}<span class="lkick">Thema ${mLab(t.m)}</span><h1 style="font-size:36px">${esc(t.t)}</h1><p class="lead">${esc(t.intro)}</p>
+      <span class="lmeta"><span>⏱ ca. ${lMin(t)} Min.</span><span>${t.secs.length + 1} kurze Seiten</span><span>${t.qs.length} Fragen</span></span></div>
+    ${rs.length ? `<p class="mini" id="l-mystat">Deine bisherigen Versuche: ${rs.length} · ${rs.some(r => r.ok) ? 'geschafft ✓' : 'noch nicht geschafft'}</p>` : ''}
+    <div class="stack" style="gap:10px"><button class="btn big" data-act="l-next">Los geht’s</button>${t.qs.length ? '<button class="btn o lquick2" data-act="l-quiz" style="color:var(--ink)">Kenn ich schon – direkt zum Test</button>' : ''}</div>`;
+  } else if (typeof page === 'number') {
+    const s = t.secs[page];
+    body = `<article class="lpage" id="l-body"><h1 class="lkick">${esc(t.t)}</h1>${s.h ? `<h2 style="font-size:28px">${esc(s.h)}</h2>` : ''}${paras(s.x)}</article>${nav('Weiter')}`;
+  } else if (page === 'keys') {
+    body = `<article class="lpage"><h1 class="lkick">${esc(t.t)}</h1><h2 style="font-size:28px">Das Wichtigste</h2>
+      ${t.keys.length ? `<ul class="lkeys" id="l-keys">${t.keys.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+      ${t.links.length ? `<div class="stack" id="l-links" style="gap:4px"><b>Mehr dazu (externe Seiten)</b>${t.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener" class="xl">${esc(l.l)} ↗</a>`).join('')}</div>` : ''}
+      <p class="mini" id="l-src"><b>Quelle:</b> ${esc(t.src || '[Quelle angeben]')}${t.chk ? ' · Fachlich geprüft: ' + esc(t.chk.by) : ''}</p>
+      <div class="tip" style="background:#E8EEF7" id="l-safe"><span style="font-size:15px"><b>Sicherheit geht vor:</b> Diese Lerneinheit ersetzt keine Ausbildung, keine Übung und keine Unterweisung. Im Einsatz gilt, was deine Führungskraft anordnet.</span></div></article>
+      ${t.qs.length ? nav('', `Zum Test – ${t.qs.length} Fragen`) : '<div class="lnav"><button class="btn o" data-act="l-back" style="color:var(--ink)">Zurück</button><a class="btn" href="#lernen">Fertig</a></div>'}`;
+  } else if (res) {
+    const more = lVisible().filter(x => x.id !== t.id && lState(me, x.id) !== 'ok')[0];
+    body = `<div class="card lresult${res.ok ? ' ok' : ''}" id="q-result"><span class="lbadge" aria-hidden="true">${res.ok ? '✓' : res.sc}</span>
+      <h1 style="font-size:30px;margin:0;text-align:center">${res.ok ? 'Geschafft!' : 'Knapp vorbei'}</h1>
+      <p style="margin:0;text-align:center" id="q-score"><b>${res.sc} von ${res.n} richtig.</b> ${res.ok ? (res.sc === res.n ? 'Alles richtig – stark!' : 'Gut gemacht!') : 'Bestanden ist der Test ab ' + L_MIN + ' von ' + L_Q + ' richtigen Antworten. Schau dir die Erklärungen an und probier es gleich nochmal.'}${res.prev ? ' <i>Vorschau – das Ergebnis wird nicht gespeichert.</i>' : ''}</p>
+      <details class="help"${res.ok ? '' : ' open'}><summary>Deine Antworten ansehen</summary><ol class="qrev">${t.qs.map((q, i) => { const ok = res.r[i] === q.c; return `<li class="${ok ? 'qok' : 'qno'}"><b>${esc(q.q)}</b><span>${ok ? '✓ Richtig' : '✗ Deine Antwort: ' + esc(q.o[res.r[i]] || '–')}</span>${ok ? '' : `<span>Richtig ist: <b>${esc(q.o[q.c])}</b></span>`}${q.x ? `<span class="mini">${esc(q.x)}</span>` : ''}</li>`; }).join('')}</ol></details>
+      <div class="stack" style="gap:10px">${res.ok ? (more ? `<button class="btn" data-act="l-open" data-id="${more.id}" id="q-more">Noch eins nachholen: ${esc(more.t)}</button>` : '') + '<a class="btn o" href="#lernen" style="color:var(--ink)">Zurück zu „Lernen“</a>' : '<button class="btn" data-act="q-retry">Nochmal versuchen</button><button class="btn o" data-act="l-reread" style="color:var(--ink)">Inhalt nochmal lesen</button>'}</div></div>`;
+  } else {
+    const Q = S.quiz, q = t.qs[Q.i], a = Q.r[Q.i], fb = Q.fb, right = a === q.c;
+    body = `<form class="card lq" id="f-quiz" novalidate><h1 class="lkick">${esc(t.t)}</h1><span class="lkick">Frage ${Q.i + 1} von ${t.qs.length}${prev ? ' · Vorschau' : ''}</span>
+      <fieldset class="qz" ${fb ? 'disabled' : ''}><legend>${esc(q.q)}</legend>${q.o.map((o, j) => o ? `<label class="opt${fb && j === q.c ? ' right' : ''}${fb && j === a && !right ? ' wrong' : ''}"><input type="radio" name="q" value="${j}"${a === j ? ' checked' : ''}><span>${esc(o)}</span></label>` : '').join('')}</fieldset>
+      ${fb ? `<div class="lfb ${right ? 'ok' : 'no'}" id="q-fb" role="status"><b>${right ? 'Richtig!' : 'Fast! Richtig ist: ' + esc(q.o[q.c])}</b>${q.x ? `<span>${esc(q.x)}</span>` : ''}</div>
+        <button class="btn" type="button" data-act="q-next" id="q-next">${Q.i + 1 < t.qs.length ? 'Nächste Frage' : 'Ergebnis ansehen'}</button>`
+      : `<p class="err" id="e-quiz"></p><button class="btn" type="submit">Antwort prüfen</button>`}</form>`;
+  }
+  return sec(top + body, 'lflow');
 };
 
-/* Themen anlegen und bearbeiten – nur Kommandanten */
+/* Themen anlegen und bearbeiten – nur Kommandanten (E-05, E-27) */
+const LIDEAS = [['Sprechfunk im Einsatz', 'funk'], ['Atemschutz: Grundlagen', 'atem'], ['Feuerlöscher richtig einsetzen', 'feuer'], ['Rettungsgasse und Sonderrechte', 'verkehr'], ['Wasserförderung über lange Wege', 'wasser'], ['Hydraulisches Rettungsgerät', 'technik'], ['Eigenschutz und Hygiene', 'herz'], ['Unfälle mit E-Autos', 'gefahr']];
 const blankQ = () => ({q:'', o:['', '', '', ''], c:0, x:''});
-const ltNew = () => { let m = curM(); while (S.topics.some(t => t.m === m && t.st === 'aktiv')) m = nextM(m);
-  return {id:null, t:'', m, intro:'', secs:[{h:'', x:''}], keys:'', links:[{l:'', u:''}], qs:Array.from({length:L_Q}, blankQ), src:'', mail:true, chk:false}; };
-const ltCopy = t => ({...JSON.parse(JSON.stringify(t)), keys:t.keys.join('\n'), links:t.links.length ? JSON.parse(JSON.stringify(t.links)) : [{l:'', u:''}], qs:t.qs.map(q => ({...q, o:q.o.concat(['', '', '', '']).slice(0, 4)})).concat(Array.from({length:L_Q}, blankQ)).slice(0, L_Q), chk:false, mail:t.mail !== false});
+const ltNew = m => { if (!m) { m = curM(); while (S.topics.some(t => t.m === m && t.st === 'aktiv')) m = nextM(m); }
+  return {id:null, t:'', m, ic:'buch', intro:'', secs:[{h:'', x:''}], keys:'', links:[{l:'', u:''}], qs:Array.from({length:L_Q}, blankQ), src:'', mail:true, chk:false}; };
+const ltCopy = t => ({...JSON.parse(JSON.stringify(t)), ic:t.ic || 'buch', keys:t.keys.join('\n'), links:t.links.length ? JSON.parse(JSON.stringify(t.links)) : [{l:'', u:''}], qs:t.qs.map(q => ({...q, o:q.o.concat(['', '', '', '']).slice(0, 4)})).concat(Array.from({length:L_Q}, blankQ)).slice(0, L_Q), chk:false, mail:t.mail !== false});
 function ltRead(fm) { const d = S.ted, v = n => (fm.elements[n] ? fm.elements[n].value : '').trim();
   d.t = v('t'); d.m = v('m'); d.intro = v('intro'); d.src = v('src'); d.keys = fm.elements.keys.value; d.chk = fm.elements.chk.checked; d.mail = fm.elements.mail.checked;
+  d.ic = (fm.querySelector('input[name="ic"]:checked') || {}).value || d.ic || 'buch';
   d.secs = d.secs.map((s, i) => ({h:v('sh' + i), x:fm.elements['sx' + i].value}));
   d.links = d.links.map((l, i) => ({l:v('ll' + i), u:v('lu' + i)}));
   d.qs = d.qs.map((q, i) => ({q:v('qq' + i), o:[0, 1, 2, 3].map(j => v('qo' + i + '_' + j)), c:+((fm.querySelector(`input[name="qc${i}"]:checked`) || {}).value || 0), x:v('qx' + i)})); }
+/* „Was fehlt noch?“ – alle Lücken auf einmal nennen (E-27) */
+function ltMissing(d) { const m = [];
+  if (!d.intro) m.push('Einleitung');
+  if (!d.secs.some(s => s.x.trim())) m.push('Text in einem Abschnitt');
+  const eq = d.qs.map((q, i) => q.q ? 0 : i + 1).filter(Boolean); if (eq.length) m.push('Frage ' + eq.join(', '));
+  d.qs.forEach((q, i) => { if (q.q && q.o.filter(Boolean).length < 2) m.push(`mindestens 2 Antworten bei Frage ${i + 1}`); else if (q.q && !q.o[q.c]) m.push(`richtige Antwort bei Frage ${i + 1} markieren`); });
+  if (!d.src) m.push('Quelle mit Stand');
+  return m; }
 function ltCheck(d, pub) {
   if (!d.t) return 'Bitte gib einen Titel ein.';
   if (!/^\d{4}-\d{2}$/.test(d.m)) return 'Bitte wähle den Monat.';
-  if (!pub) return '';
-  if (!d.intro) return 'Bitte schreib eine kurze Einleitung.';
-  if (!d.secs.some(s => s.x.trim())) return 'Bitte fülle mindestens einen Abschnitt mit Text.';
-  const qs = d.qs.filter(q => q.q);
-  if (qs.length < L_Q) return `Bitte fülle alle ${L_Q} Fragen aus (noch leer: ${d.qs.map((q, i) => q.q ? 0 : i + 1).filter(Boolean).join(', ')}).`;
-  for (const [i, q] of d.qs.entries()) { if (!q.q) continue;
-    if (q.o.filter(Boolean).length < 2) return `Frage ${i + 1}: Bitte gib mindestens 2 Antworten an.`;
-    if (!q.o[q.c]) return `Frage ${i + 1}: Die als richtig markierte Antwort ist leer.`; }
   if (d.links.some(l => l.u && !/^https:\/\/[^\s]+$/.test(l.u))) return 'Links müssen mit https:// beginnen.';
-  if (!d.src) return 'Bitte gib die Quelle an (z. B. Merkblatt der Feuerwehrschule mit Stand).';
+  if (!pub) return '';
+  const m = ltMissing(d); if (m.length) return 'Zum Veröffentlichen fehlt noch: ' + m.join(' · ') + '.';
   const dup = S.topics.find(t => t.m === d.m && t.st === 'aktiv' && t.id !== d.id);
   if (dup) return `Für ${mLab(d.m)} gibt es schon ein Thema: „${dup.t}“. Blende es erst aus oder wähle einen anderen Monat.`;
   if (!d.chk) return 'Bitte bestätige, dass du den Inhalt fachlich geprüft hast.';
   return ''; }
 V.lthema = () => {
   if (!S.ted) S.ted = ltNew();
-  const d = S.ted, n = d.id ? S.results.filter(r => r.tid === d.id).length : 0;
-  return sec(`<button class="btn o sm" data-act="lt-cancel" style="align-self:flex-start;color:var(--ink)">← Abbrechen</button>
-    <h1 style="font-size:36px">${d.id ? 'Thema bearbeiten' : 'Neues Thema'}</h1>
-    <details class="help"><summary>Tipps für ein gutes Thema</summary><ul><li>Ein Thema pro Monat, in 10 Minuten zu schaffen.</li><li>Schreib in eigenen Worten und verlinke Merkblätter und die Lernbar, statt Texte oder Bilder zu kopieren.</li><li>Gib die Quelle mit Stand an und prüfe, ob es eine neuere Fassung gibt.</li><li>Genau 5 Fragen, jede mit einer kurzen Erklärung. Bestanden ist ab 4 richtigen Antworten.</li><li>Keine Fotos von Einsätzen, Personen oder Kennzeichen.</li></ul></details>
+  const d = S.ted, n = d.id ? S.results.filter(r => r.tid === d.id).length : 0, miss = ltMissing(d);
+  return sec(`<button class="btn o sm" data-act="lt-cancel" style="align-self:flex-start;color:var(--ink)">← Zum Themenplan</button>
+    <h1 style="font-size:36px">${d.id ? 'Thema bearbeiten' : d.from ? 'Kopie von „' + esc(d.from) + '“' : 'Neues Thema'}</h1>
+    ${!d.id && !d.t ? `<div class="card" id="lt-ideas"><b>Ideen – antippen, um zu starten</b><div class="chips">${LIDEAS.map(([x, ic], i) => `<button type="button" class="chip" data-act="lt-idea" data-i="${i}">${esc(x)}</button>`).join('')}</div><span class="mini">Mehr Anregungen: Lexikon der <a href="https://www.feuerwehr-lernbar.bayern/" target="_blank" rel="noopener">Feuerwehr-Lernbar</a>.</span></div>` : ''}
+    <details class="help"><summary>Tipps für ein gutes Thema</summary><ul><li>Ein Thema, das in 10 Minuten zu schaffen ist: 2 bis 4 kurze Abschnitte, jeder passt auf einen Handybildschirm.</li><li>Schreib in eigenen Worten und verlinke Merkblätter und die Lernbar, statt Texte oder Bilder zu kopieren.</li><li>Gib die Quelle mit Stand an und prüfe, ob es eine neuere Fassung gibt.</li><li>Genau 5 Fragen aus dem Alltag („Was machst du, wenn …?“), jede mit einer kurzen Erklärung. Bestanden ist ab 4 richtigen.</li><li>Keine Fotos von Einsätzen, Personen oder Kennzeichen.</li></ul></details>
     ${n ? `<div class="stat warnbox" style="font-size:15px"><b>Schon ${n} Testergebnisse.</b> Ändere Fragen nur, wenn ein Fehler drin ist – sonst passen die Ergebnisse nicht mehr zusammen.</div>` : ''}
+    <div class="stat" id="lt-status" style="font-size:15px">${miss.length ? `<b>Noch offen zum Veröffentlichen:</b> ${esc(miss.join(' · '))}` : '<b>✓ Alles da.</b> Häkchen „fachlich geprüft“ setzen und veröffentlichen.'}<span class="mini">Lesezeit für Mitglieder: ca. ${lMin({intro:d.intro, secs:d.secs, keys:d.keys.split('\n')})} Min.</span></div>
     <form class="card" id="f-lthema" novalidate>
       ${f('Titel', `<input name="t" maxlength="80" value="${esc(d.t)}">`)}
       ${f('Monat', `<input name="m" type="month" value="${esc(d.m)}">`)}
-      ${f('Einleitung (1–2 Sätze)', `<textarea name="intro" rows="2" maxlength="300">${esc(d.intro)}</textarea>`)}
-      <h2 style="font-size:22px;margin:8px 0 0">Inhalt</h2>
+      <fieldset class="f"><legend>Symbol</legend><div class="licpick">${Object.entries(LIC).map(([k, c]) => `<label class="licp"><input type="radio" name="ic" value="${k}"${(d.ic || 'buch') === k ? ' checked' : ''}><span class="lic" style="background:${c[1]}">${c[2]}</span><span>${c[0]}</span></label>`).join('')}</div></fieldset>
+      ${f('Einleitung (1–2 Sätze, macht Lust aufs Thema)', `<textarea name="intro" rows="2" maxlength="300">${esc(d.intro)}</textarea>`)}
+      <h2 style="font-size:22px;margin:8px 0 0">Inhalt</h2><span class="mini">Jeder Abschnitt wird eine eigene Seite am Handy.</span>
       ${d.secs.map((s, i) => `<fieldset class="ltf"><legend>Abschnitt ${i + 1}</legend>${f('Überschrift', `<input name="sh${i}" maxlength="80" value="${esc(s.h)}">`)}${f('Text (Leerzeile = neuer Absatz)', `<textarea name="sx${i}" rows="4">${esc(s.x)}</textarea>`)}${d.secs.length > 1 ? `<button type="button" class="btn o sm" data-act="lt-del" data-w="secs" data-i="${i}" style="color:var(--ink);align-self:flex-start">Abschnitt entfernen</button>` : ''}</fieldset>`).join('')}
       <button type="button" class="btn o sm" data-act="lt-add" data-w="secs" style="color:var(--ink);align-self:flex-start">+ Abschnitt</button>
       ${f('Das Wichtigste (eine Zeile pro Merksatz)', `<textarea name="keys" rows="3">${esc(d.keys)}</textarea>`)}
@@ -1492,13 +1603,32 @@ V.lthema = () => {
       <h2 style="font-size:22px;margin:8px 0 0">Testfragen</h2><span class="mini">Genau ${L_Q} Fragen. Markiere bei jeder Frage die richtige Antwort. Bestanden ist ab ${L_MIN} richtigen.</span>
       ${d.qs.map((q, i) => `<fieldset class="ltf" data-q="${i}"><legend>Frage ${i + 1}</legend>${f('Frage', `<input name="qq${i}" maxlength="200" value="${esc(q.q)}">`)}
         ${q.o.map((o, j) => `<div class="ltopt"><label class="opt rad"><input type="radio" name="qc${i}" value="${j}"${q.c === j ? ' checked' : ''}><span class="sr">Antwort ${j + 1} ist richtig</span></label><input name="qo${i}_${j}" maxlength="150" aria-label="Frage ${i + 1}, Antwort ${j + 1}" placeholder="Antwort ${j + 1}${j > 1 ? ' (optional)' : ''}" value="${esc(o)}"></div>`).join('')}
-        ${f('Erklärung (wird nach dem Test gezeigt)', `<input name="qx${i}" maxlength="300" value="${esc(q.x)}">`)}
+        ${f('Erklärung (wird gleich nach der Antwort gezeigt)', `<input name="qx${i}" maxlength="300" value="${esc(q.x)}">`)}
         </fieldset>`).join('')}
       ${f('Quelle mit Stand', `<input name="src" maxlength="250" value="${esc(d.src)}" placeholder="z. B. Merkblatt 6.003, SFS Würzburg, Stand 05/2023">`)}
       <label class="chk"><input type="checkbox" name="mail"${d.mail ? ' checked' : ''}><span class="ct">Am Monatsersten alle Mitglieder per E-Mail auf das neue Thema hinweisen (nur Hinweis mit Link)</span></label>
       <label class="chk"><input type="checkbox" name="chk"${d.chk ? ' checked' : ''}><span class="ct">Ich habe den Inhalt fachlich geprüft. Quellen sind angegeben, fremde Texte und Bilder sind nicht ohne Erlaubnis kopiert.</span></label>
       <p class="err" id="e-lthema"></p>
       <div class="row2"><button class="btn" type="submit" value="pub">Veröffentlichen</button><button class="btn o" type="submit" value="draft" style="color:var(--ink)">Als Entwurf speichern</button></div></form>`);
+};
+
+/* Themenplan – nur Kommandanten (E-26): 12 Monate auf einen Blick */
+V.lplan = () => {
+  const start = prevM(prevM(curM())), months = [];
+  let m = start; for (let i = 0; i < 12; i++) { months.push(m); m = nextM(m); }
+  const older = S.topics.filter(t => t.m < start).sort((a, b) => b.m.localeCompare(a.m)), miss = lMiss();
+  const tcard = t => `<div class="card lpc" data-tid="${t.id}"><div class="lpch">${lIcon(t)}<span class="stack" style="gap:4px;min-width:0;flex:1"><b>${esc(t.t || '[ohne Titel]')}</b><span>${lTag(t)}</span><span class="mini">${t.qs.length} Fragen · ${new Set(S.results.filter(r => r.tid === t.id).map(r => r.u)).size} haben teilgenommen</span></span></div>
+    <div class="row2"><button class="btn o sm" data-act="lt-edit" data-id="${t.id}" style="color:var(--ink)">Bearbeiten</button><button class="btn o sm" data-act="l-open" data-id="${t.id}" style="color:var(--ink)">Ansehen</button><button class="btn o sm" data-act="lt-copy" data-id="${t.id}" style="color:var(--ink)">Kopieren</button>${t.st === 'aus' ? `<button class="btn o sm" data-act="lt-show" data-id="${t.id}" style="color:var(--ink)">Einblenden</button>` : t.st === 'aktiv' ? `<button class="btn o sm" data-act="lt-hide" data-id="${t.id}" style="color:var(--ink)">Ausblenden</button>` : ''}</div></div>`;
+  return sec(`<a class="btn o sm" href="#lernen" style="color:var(--ink);align-self:flex-start">← Lernen</a>
+    <h1 style="font-size:40px">Themenplan</h1>
+    <p>Ein Thema pro Monat. Plane am besten zwei, drei Monate im Voraus – geplante Themen erscheinen am Monatsersten von selbst.</p>
+    ${miss.length ? `<div class="stat warnbox" id="l-miss" style="font-size:15px"><b>Für ${miss.map(mLab).join(' und ')} ist noch kein Thema veröffentlicht.</b></div>` : ''}
+    <div class="row2"><button class="btn" data-act="lt-new">+ Neues Thema</button><a class="btn o" href="#lernstand" style="color:var(--ink)">Lernstand ansehen</a></div>
+    <div class="lplan" id="l-admin">${months.map(k => { const ts = S.topics.filter(t => t.m === k).sort((a, b) => (a.st === 'aktiv' ? -1 : 1) - (b.st === 'aktiv' ? -1 : 1));
+      return `<section class="lpm${k === curM() ? ' now' : ''}" id="lpm-${k}"><h2>${mLab(k)}${k === curM() ? ' <span class="tag t-ok">jetzt</span>' : ''}</h2>
+        ${ts.length ? ts.map(tcard).join('') : `<div class="lpempty"><span>Noch kein Thema</span><button class="btn o sm" data-act="lt-new" data-m="${k}" style="color:var(--ink)">+ Thema für ${MONL[+k.split('-')[1] - 1]}</button></div>`}</section>`; }).join('')}</div>
+    ${older.length ? `<details class="help"><summary>Ältere Themen (${older.length})</summary><div class="stack" style="margin-top:10px">${older.map(tcard).join('')}</div></details>` : ''}
+    <p class="mini">Löschen können nur Admins (mit Papierkorb). Ein Thema, das niemand mehr sehen soll, blendest du aus – die Ergebnisse bleiben.</p>`);
 };
 
 /* Lernstand – nur Kommandanten (E-08 bis E-10) */
@@ -1526,10 +1656,11 @@ V.lernstand = () => {
     <p class="mini">✓ bestanden · ✗ versucht, noch nicht bestanden · – offen. Gezählt werden alle ${n} Konten der Einsatzabteilung (Häkchen unter „Mitglieder“).</p>`);
 };
 
+
 /* ---------- Rendering ---------- */
-const BACKR = ['redaktion','beitraege','editor','seiten','fotos','planung','mitglieder','system','lernen','thema','lthema','lernstand'];
+const BACKR = ['redaktion','beitraege','editor','seiten','fotos','planung','mitglieder','system','lernen','thema','lthema','lernstand','lplan'];
 /* Lernstand und Themen anlegen: nur Kommandanten (E-05, E-08) – auch Admins sehen keine Ergebnisse anderer */
-const mayRoute = r => ROLES[S.user.role].tabs.includes(TABOF[r] || r) && (r !== 'fotos' || isAdm()) && (r !== 'editor' || !!S.ed) && (!['lthema','lernstand'].includes(r) || isKdt());
+const mayRoute = r => ROLES[S.user.role].tabs.includes(TABOF[r] || r) && (r !== 'fotos' || isAdm()) && (r !== 'editor' || !!S.ed) && (!['lthema','lernstand','lplan'].includes(r) || isKdt());
 /* Beispiel-Verlauf für „Dorffest“ (erste Fassung von Jonas, vom Kommandanten freigegeben) */
 function seedHist() { const a2 = getC('n', 'a2'); if (!a2) return; const b = pick('n', a2);
   S.hist['n:a2'] = [{ts:S.t0, by:'Jonas Beispiel', act:'Erstellt', n:1, note:'', ok:'Max Mustermann', snap:JSON.stringify({...b, t:'Dorffest 2026', body:a2.body.slice(0, 1)})},
@@ -1741,11 +1872,23 @@ document.addEventListener('click', e => {
     case 'quick-login': { const r = b.dataset.role || 'Freigeber'; loginAs(r); S.ed = null; toast('Angemeldet als ' + S.user.name + ' · ' + ROLES[r].label + ' (Demo)'); sheet(false);
       const nx = S.next && mayRoute(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break; }
     /* Lernen */
-    case 'l-open': S.lt = id; S.qres = null; go('thema'); break;
-    case 'q-retry': S.qres = null; render({keep:true}); setTimeout(() => { const q = $('#f-quiz'); if (q) q.scrollIntoView({block:'start'}); }, 30); break;
-    case 'lt-new': S.ted = ltNew(); go('lthema'); break;
+    case 'l-open': S.lt = id; S.qres = null; S.quiz = null; lastRoute = null; go('thema'); break;
+    case 'l-next': case 'l-back': { const t = topic(S.lt); if (!t) break; S.lprog[lk(t.id)] = Math.max(0, (S.lprog[lk(t.id)] || 0) + (act === 'l-next' ? 1 : -1)); S.quiz = null; render(); window.scrollTo(0, 0); break; }
+    case 'l-quiz': { if (id) S.lt = id; const t = topic(S.lt); if (!t) break; S.lprog[lk(t.id)] = lQuizAt(t); S.qres = null; S.quiz = null; lastRoute = null; if (location.hash === '#thema') { render(); window.scrollTo(0, 0); } else go('thema'); break; }
+    case 'l-reread': { const t = topic(S.lt); S.qres = null; S.quiz = null; S.lprog[lk(t.id)] = 1; render(); window.scrollTo(0, 0); break; }
+    case 'q-retry': S.qres = null; S.quiz = {tid: S.lt, i: 0, r: [], fb: false}; render(); window.scrollTo(0, 0); break;
+    case 'q-next': { const t = topic(S.lt), Q = S.quiz; if (!t || !Q) break;
+      if (Q.i + 1 < t.qs.length) { Q.i++; Q.fb = false; render(); window.scrollTo(0, 0); break; }
+      const r = Q.r, sc = r.filter((a, i) => a === t.qs[i].c).length, ok = sc >= L_MIN, prev = t.st !== 'aktiv' || t.m > curM();
+      if (!prev) S.results.push({u: S.user.name, tid: t.id, at: Date.now(), r, sc, n: t.qs.length, ok});
+      S.qres = {tid: t.id, r, sc, n: t.qs.length, ok, prev}; S.quiz = null; S.lprog[lk(t.id)] = ok ? 0 : lQuizAt(t);
+      toast(ok ? 'Geschafft – ' + sc + ' von ' + t.qs.length + ' richtig' : sc + ' von ' + t.qs.length + ' richtig – gleich nochmal?'); render(); window.scrollTo(0, 0); break; }
+    case 'lt-new': S.ted = ltNew(b.dataset.m); go('lthema'); break;
     case 'lt-edit': S.ted = ltCopy(topic(id)); go('lthema'); break;
-    case 'lt-cancel': S.ted = null; go('lernen'); break;
+    case 'lt-copy': { const t = topic(id); let m = curM(); while (S.topics.some(x => x.m === m && x.st === 'aktiv')) m = nextM(m);
+      S.ted = {...ltCopy(t), id: null, m, from: t.t}; toast('Kopie angelegt – Monat und Inhalt prüfen, dann speichern'); go('lthema'); break; }
+    case 'lt-idea': { ltRead($('#f-lthema')); const [x, ic] = LIDEAS[+b.dataset.i]; S.ted.t = x; S.ted.ic = ic; render({keep:true}); break; }
+    case 'lt-cancel': S.ted = null; go('lplan'); break;
     case 'lt-add': case 'lt-del': { ltRead($('#f-lthema')); const w = b.dataset.w, L = S.ted[w];
       if (act === 'lt-add') L.push(w === 'qs' ? blankQ() : w === 'secs' ? {h:'', x:''} : {l:'', u:''}); else L.splice(+b.dataset.i, 1);
       render({keep:true}); break; }
@@ -1754,7 +1897,7 @@ document.addEventListener('click', e => {
       const u = snapAll(); t.st = on ? 'aktiv' : 'aus'; done(on ? 'Wieder eingeblendet' : 'Ausgeblendet – Mitglieder sehen das Thema nicht mehr, Ergebnisse bleiben', u); render({keep:true}); break; }
     case 'ls-sel': S.lsel = id; render({keep:true}); break;
     case 'demo-lern': loginAs(b.dataset.v === 'm' ? 'Mitglied' : 'Freigeber'); sheet(false); toast('Angemeldet als ' + S.user.name + ' · ' + ROLES[S.user.role].label + ' (Demo)'); go(b.dataset.v === 'm' ? 'lernen' : 'lernstand'); break;
-    case 'logout': UNDO = null; S.user = null; S.ted = null; S.qres = null; S.rch = null; S.draft = []; S.ed = null; S.cdel = null; S.sed = null; S.sdel = null; S.keyForm = null; toast('Abgemeldet'); go('start'); break;
+    case 'logout': UNDO = null; S.user = null; S.ted = null; S.qres = null; S.rch = null; S.quiz = null; S.draft = []; S.ed = null; S.cdel = null; S.sed = null; S.sdel = null; S.keyForm = null; toast('Abgemeldet'); go('start'); break;
     case 'undo': undo(); break;
     /* Freigabe */
     case 'publish': publish(id); break;
@@ -1977,20 +2120,16 @@ document.addEventListener('submit', e => {
       const u = snapAll(), d = new Date(val(fm,'d') + 'T12:00'); S.plan.push({d:`${p2(d.getDate())}.${p2(d.getMonth()+1)}.`, t: val(fm,'t'), w: val(fm,'w'), s:'Idee'});
       done('Eingeplant – Erinnerung 3 Tage vorher', u); render({keep:true}); break;
     }
-    case 'f-quiz': { const t = topic(S.lt); if (!t) return;
-      const r = t.qs.map((q, i) => { const c = fm.querySelector(`input[name="q${i}"]:checked`); return c ? +c.value : -1; }), miss = r.map((a, i) => a < 0 ? i + 1 : 0).filter(Boolean);
-      if (miss.length) { $('#e-quiz').textContent = 'Bitte beantworte alle Fragen. Noch offen: ' + miss.join(', ') + '.'; return; }
-      const sc = r.filter((a, i) => a === t.qs[i].c).length, ok = sc >= L_MIN, prev = t.st !== 'aktiv' || t.m > curM();
-      if (!prev) S.results.push({u: S.user.name, tid: t.id, at: Date.now(), r, sc, n: t.qs.length, ok});
-      S.qres = {tid: t.id, r, sc, n: t.qs.length, ok, prev}; toast(ok ? 'Bestanden – ' + sc + ' von ' + t.qs.length + ' richtig' : sc + ' von ' + t.qs.length + ' richtig – noch nicht bestanden');
-      render({keep:true}); setTimeout(() => { const q = $('#q-result'); if (q) q.scrollIntoView({block:'start'}); }, 30); break; }
+    case 'f-quiz': { const Q = S.quiz; if (!Q) return; const v = fm.querySelector('input[name="q"]:checked');
+      if (!v) { $('#e-quiz').textContent = 'Bitte wähle eine Antwort.'; return; }
+      Q.r[Q.i] = +v.value; Q.fb = true; render({keep:true}); setTimeout(() => { const x = $('#q-next'); if (x) x.focus({preventScroll:true}); const fbx = $('#q-fb'); if (fbx) fbx.scrollIntoView({block:'nearest'}); }, 30); break; }
     case 'f-lthema': { ltRead(fm); const d = S.ted, pub = !!(e.submitter && e.submitter.value === 'pub'), err = ltCheck(d, pub);
       if (err) { $('#e-lthema').textContent = err; return; }
       const u = snapAll(), o = {id: d.id || 'l' + (S.nid++), m: d.m, t: d.t, intro: d.intro, secs: d.secs.filter(x => x.h || x.x.trim()), keys: d.keys.split('\n').map(x => x.trim()).filter(Boolean),
-        links: d.links.filter(l => l.u), src: d.src, mail: d.mail, qs: d.qs.filter(q => q.q).map(q => ({q: q.q, o: q.o.filter(Boolean), c: q.o.filter(Boolean).indexOf(q.o[q.c]), x: q.x})),
+        links: d.links.filter(l => l.u), src: d.src, mail: d.mail, ic: d.ic || 'buch', qs: d.qs.filter(q => q.q).map(q => ({q: q.q, o: q.o.filter(Boolean), c: q.o.filter(Boolean).indexOf(q.o[q.c]), x: q.x})),
         st: pub ? 'aktiv' : 'entwurf', chk: pub ? {by: S.user.name, at: Date.now()} : null, bsp: false};
       const i = S.topics.findIndex(x => x.id === o.id); if (i >= 0) S.topics[i] = o; else S.topics.push(o);
-      S.ted = null; done(!pub ? 'Als Entwurf gespeichert – Mitglieder sehen es noch nicht' : o.m > curM() ? 'Geplant – erscheint am 1. ' + mLab(o.m) : 'Veröffentlicht – alle Mitglieder sehen das Thema', u); go('lernen'); break; }
+      S.ted = null; done(!pub ? 'Als Entwurf gespeichert – Mitglieder sehen es noch nicht' : o.m > curM() ? 'Geplant – erscheint am 1. ' + mLab(o.m) : 'Veröffentlicht – alle Mitglieder sehen das Thema', u); go('lplan'); break; }
     case 'f-role': { const m = S.members[S.rch]; if (!m) return; const r = val(fm, 'r'), akt = fm.elements.akt.checked;
       if (m.r === 'Administrator' && r !== 'Administrator' && cntR('Administrator') <= 2) { $('#e-role').textContent = 'Es muss immer mindestens zwei Admins geben. Lade zuerst eine weitere Person als Admin ein.'; return; }
       if (r === m.r && akt === (m.akt !== false)) { S.rch = null; render({keep:true}); break; }

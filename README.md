@@ -4,7 +4,7 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 
 [![Demo-Tests](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml/badge.svg)](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml)
 
-### ▶ [Demo ausprobieren](https://kwildwasser.github.io/feuerwehr-piflas-website/demo/) · [Projektseite](https://kwildwasser.github.io/feuerwehr-piflas-website/) · [Lastenheft (PDF)](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.12.pdf) · [Handbuch (PDF)](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf)
+### ▶ [Demo ausprobieren](https://kwildwasser.github.io/feuerwehr-piflas-website/demo/) · [Projektseite](https://kwildwasser.github.io/feuerwehr-piflas-website/) · [Lastenheft (PDF)](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.13.pdf) · [Handbuch (PDF)](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf)
 
 <p>
 <img src="docs/assets/screens/start.jpg" width="180" alt="Startseite">
@@ -27,8 +27,8 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 | Ordner | Was |
 |---|---|
 | [`docs/demo/`](docs/demo/) | Referenz-Demo (eine HTML-Datei, statisch) mit Testsuite – [README](docs/demo/README.md) |
-| [`docs/lastenheft/`](docs/lastenheft/) | Lastenheft v1.12 als [Text](docs/lastenheft/lastenheft-v1.12.md) und [PDF](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.12.pdf), Vorlagen für Claude Code |
-| [`docs/handbuch/`](docs/handbuch/) | [Handbuch Mitgliederbereich 1.10](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf) mit Quellen |
+| [`docs/lastenheft/`](docs/lastenheft/) | Lastenheft v1.13 als [Text](docs/lastenheft/lastenheft-v1.13.md) und [PDF](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.13.pdf), Vorlagen für Claude Code |
+| [`docs/handbuch/`](docs/handbuch/) | [Handbuch Mitgliederbereich 1.11](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf) mit Quellen |
 | [`docs/design/`](docs/design/) | [Corporate Design](docs/design/corporate-design.md), frühe Entwürfe |
 | [`docs/assets/`](docs/assets/) | Logo, Schrift (Roboto, OFL), Fotos, Briefpapier |
 | [`docs/uebergangsseite/`](docs/uebergangsseite/) | Übergangsseite zum Hochladen |
@@ -40,7 +40,7 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 pip install playwright pillow markdown pypdf && python -m playwright install chromium
 cd docs/demo
 python build.py        # baut index.html aus app-src.html und ../assets
-python test_app.py     # 655 Prüfungen, Exit-Code 1 bei Fehlern
+python test_app.py     # 686 Prüfungen, Exit-Code 1 bei Fehlern
 ```
 
 Bei jedem Push prüft GitHub Actions die Demo automatisch ([Workflow](.github/workflows/demo-tests.yml)). Reihenfolge bei Änderungen: Lastenheft (ID) → Demo → Prüfung → Handbuch → PDFs.

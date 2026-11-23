@@ -1,17 +1,17 @@
 # Lastenheft & Umsetzungsplan – Webpräsenz Feuerwehr Piflas
 
-23.11.2026 · Korbinian · Version 1.12 (WordPress) · Referenz: Demo v11 und Handbuch 1.10
+23.11.2026 · Korbinian · Version 1.13 (WordPress) · Referenz: Demo v12 und Handbuch 1.11
 
 ## 0. Auf einen Blick
 
 - **Was:** Neue Website für www.feuerwehr-piflas.de. Ausgewählte Mitglieder pflegen sie mit eigenen Konten.
 - **Automatisch:** Einsätze und nicht-private Termine kommen aus DIVERA 24/7. Freigegebene Beiträge gehen auf Wunsch auf Instagram.
-- **Lernen:** Jeden Monat ein Thema mit kurzem Test für alle Aktiven. Die Kommandanten sehen den Lernstand (2.12).
+- **Lernen:** Jeden Monat ein Thema mit kurzem Test für alle Aktiven – so einfach und einladend gestaltet, dass man es gern macht (2.13). Die Kommandanten planen die Themen und sehen den Lernstand (2.12).
 - **Technik:** WordPress auf dem bestehenden Hosting, ein eigenes Theme und ein eigenes Plugin. Beides baut Claude Code nach diesem Lastenheft.
 - **Leitprinzip:** Ehrenamtliche ohne IT-Kenntnisse können die Seite auch in Jahren noch betreuen (2.11).
 - **Vorhanden:**
   - Übergangsseite
-  - Klickbare Demo v11 mit Testsuite (655 Prüfungen), öffentlich auf GitHub Pages
+  - Klickbare Demo v12 mit Testsuite (686 Prüfungen), öffentlich auf GitHub Pages
   - Anleitung „Schnittstellen reparieren“ für die Technik (A-12)
   - Handbuch für den Mitgliederbereich
   - Backup-Paket
@@ -212,7 +212,7 @@ Im Zweifel gewinnt die einfachere, verbreitetere Lösung.
 | A-03 | Zustands-Ampel im System-Bereich für Erreichbarkeit, Updates, Backup, DIVERA, Instagram und Zertifikat, mit Klartext und, wo möglich, einem Knopf zur Lösung. | Muss |
 | A-04 | Automatische Updates und Backups, das Zertifikat erneuert sich selbst. Richtwert: 30–60 Minuten Admin-Arbeit pro Monat. | Muss |
 | A-05 | WordPress-Standard und wenige bekannte, kostenlose Plugins statt Eigenbau. | Muss |
-| A-06 | Das Handbuch (PDF, bebildert, Du-Form) ist Teil der Lieferung. Es enthält Rollen, Anmelden, Inhalte (schreiben, finden, bearbeiten, ausblenden, löschen, Rückgängig und Verlauf), Redaktionsplan, Freigeben (auch Änderungen mit Vergleich, Einsatz von Hand und E-Mail-Hinweis), Seiten pflegen, Lernen (Thema und Test, Themen anlegen, Lernstand), Mitglieder- und Fotoverwaltung, System mit Schnittstellen-Diagnose und Notbetrieb, regelmäßige Aufgaben, die Checkliste „Admin-Wechsel“, Notfallkontakte und häufige Fragen. Die Bildschirmfotos zeigen die echte Website, nach Phase 2 aus der Staging-Seite neu erstellt. Jede neue Funktion bekommt einen Abschnitt im Handbuch. | Muss |
+| A-06 | Das Handbuch (PDF, bebildert, Du-Form) ist Teil der Lieferung. Es enthält Rollen, Anmelden, Inhalte (schreiben, finden, bearbeiten, ausblenden, löschen, Rückgängig und Verlauf), Redaktionsplan, Freigeben (auch Änderungen mit Vergleich, Einsatz von Hand und E-Mail-Hinweis), Seiten pflegen, Lernen (Thema und Test), Lernthemen verwalten (Themenplan, anlegen, bearbeiten, kopieren, ausblenden, Lernstand), Mitglieder- und Fotoverwaltung, System mit Schnittstellen-Diagnose und Notbetrieb, regelmäßige Aufgaben, die Checkliste „Admin-Wechsel“, Notfallkontakte und häufige Fragen. Die Bildschirmfotos zeigen die echte Website, nach Phase 2 aus der Staging-Seite neu erstellt. Jede neue Funktion bekommt einen Abschnitt im Handbuch. | Muss |
 | A-07 | Konten und Verträge laufen auf den Verein (Domain, Hosting, DIVERA, Meta, GitHub). Die Zugangsdaten liegen im Passwort-Tresor des Vereins, mit Notfallzugang für den Vorstand. | Muss |
 | A-08 | Immer mindestens zwei Admins. Jährlich eine Übergabe-Übung mit Test der Wiederherstellung. | Muss |
 | A-09 | Laientest als Abnahme: Ein Mitglied ohne IT-Kenntnisse erledigt zehn typische Aufgaben nur mit dem Handbuch. | Muss |
@@ -227,11 +227,11 @@ Anforderung des 1. Kommandanten (23.11.2026): Die Website dient zusätzlich als 
 | ID | Anforderung | Prio |
 | --- | --- | --- |
 | E-01 | Rolle „Mitglied“: nur lesen und lernen. Die untere Leiste zeigt nur „Lernen“. Keine Schreib- oder Bearbeitungsrechte, keine Freigabe, kein Zugriff auf andere Bereiche – serverseitig geprüft. Einladung wie bei B-01 durch einen Admin, mit dem Häkchen „Gehört zur Einsatzabteilung“ (E-10). Alle anderen Rollen sehen „Lernen“ ebenfalls und können mitlernen. | Muss |
-| E-02 | Themenseite: Titel, Monat, Einleitung, Abschnitte (Überschrift und Text), „Das Wichtigste“ als Merksätze, Links zum Weiterlernen, Quelle mit Stand, „Fachlich geprüft: Name“ und ein Sicherheitshinweis (E-12). Darunter der Test (E-06). Fotos nur eigene, ohne erkennbare Einsatzbetroffene und Kennzeichen (Kann). | Muss |
+| E-02 | Themenseite (in Schritten, E-17): Titel, Monat, Einleitung, Abschnitte (Überschrift und Text), „Das Wichtigste“ als Merksätze, Links zum Weiterlernen, Quelle mit Stand, „Fachlich geprüft: Name“ und ein Sicherheitshinweis (E-12). Darunter der Test (E-06). Fotos nur eigene, ohne erkennbare Einsatzbetroffene und Kennzeichen (Kann). | Muss |
 | E-03 | Ein Thema je Monat. Am Monatsersten wird das geplante Thema automatisch „Thema des Monats“, vorher ist es für Mitglieder unsichtbar. Frühere Themen bleiben mit Test abrufbar. Fehlt für den laufenden oder nächsten Monat ein veröffentlichtes Thema, sehen die Kommandanten einen Hinweis. | Muss |
 | E-04 | Material der Staatlichen Feuerwehrschulen Bayern (Feuerwehr-Lernbar, Merkblätter der Feuerwehrschulen), der DGUV und anderer Stellen wird in eigenen Worten zusammengefasst und verlinkt, nicht kopiert und nicht eingebettet (N-01, L-14). Links nur mit https://, sie öffnen sich in einem neuen Fenster. Die Quelle mit Stand ist Pflicht. | Muss |
-| E-05 | Themen anlegen, bearbeiten und ausblenden: nur Kommandanten, ohne Programmieren (A-01). Formular mit „+ Abschnitt“ und „+ Link“ und genau fünf Fragen; Eingaben bleiben beim Hinzufügen erhalten. „Als Entwurf speichern“ oder „Veröffentlichen“ (für einen späteren Monat: geplant). Veröffentlichen nur mit vollständigen Pflichtangaben und dem Pflicht-Häkchen „Ich habe den Inhalt fachlich geprüft. Quellen sind angegeben, fremde Texte und Bilder sind nicht ohne Erlaubnis kopiert.“ Je Monat ein veröffentlichtes Thema. Ausblenden statt Löschen, die Ergebnisse bleiben bis zur Löschfrist (E-11); Löschen nur durch Admins (B-16). Verlauf (B-07) und Rückgängig (B-17). Admins und Redaktion legen keine Themen an. | Muss |
-| E-06 | Test: genau 5 Fragen mit je 2 bis 4 Antworten, genau eine richtig, jede mit kurzer Erklärung. Auswertung erst, wenn alle Fragen beantwortet sind. Bestanden ab 4 von 5 richtigen Antworten. Danach je Frage: richtig oder falsch, die richtige Antwort und die Erklärung. Beliebig oft wiederholbar, ohne Zeitlimit. Die Vorschau eines Entwurfs speichert kein Ergebnis. | Muss |
+| E-05 | Themen anlegen, bearbeiten, kopieren und ausblenden: nur Kommandanten, im Themenplan (E-26), ohne Programmieren (A-01). Formular mit „+ Abschnitt“ und „+ Link“ und genau fünf Fragen; Eingaben bleiben beim Hinzufügen erhalten. „Als Entwurf speichern“ oder „Veröffentlichen“ (für einen späteren Monat: geplant). Veröffentlichen nur mit vollständigen Pflichtangaben und dem Pflicht-Häkchen „Ich habe den Inhalt fachlich geprüft. Quellen sind angegeben, fremde Texte und Bilder sind nicht ohne Erlaubnis kopiert.“ Je Monat ein veröffentlichtes Thema. Ausblenden statt Löschen, die Ergebnisse bleiben bis zur Löschfrist (E-11); Löschen nur durch Admins (B-16). Verlauf (B-07) und Rückgängig (B-17). Admins und Redaktion legen keine Themen an. | Muss |
+| E-06 | Test: genau 5 Fragen mit je 2 bis 4 Antworten, genau eine richtig, jede mit kurzer Erklärung. Eine Frage pro Bildschirm mit sofortiger Rückmeldung (E-18); ausgewertet wird, wenn alle Fragen beantwortet sind. Bestanden ab 4 von 5 richtigen Antworten. Danach je Frage: richtig oder falsch, die richtige Antwort und die Erklärung. Beliebig oft wiederholbar, ohne Zeitlimit. Die Vorschau eines Entwurfs speichert kein Ergebnis. | Muss |
 | E-07 | Eigener Lernstand: Jede Person sieht nur ihre eigenen Ergebnisse – je Thema „bestanden“, „noch nicht bestanden“ oder „offen“ und „x von y Themen bestanden“. Ein Testversuch lässt sich nicht rückgängig machen (Ausnahme von B-17). | Muss |
 | E-08 | Lernstand (nur Kommandanten): je Thema Teilnahme (x von y, in %), Zahl der Bestandenen, Durchschnitt im ersten Versuch, „Welche Fragen waren schwer?“ (Anteil falscher Antworten im ersten Versuch), Verlauf der Teilnahme über die Monate und eine Übersicht pro Person für die letzten vier Themen (✓ bestanden, ✗ versucht, – offen). Jedes frühere Thema ist auswählbar. Ein Export für die Ausbildungsplanung ist Kann und erst nach Klärung von L-15 erlaubt. | Muss |
 | E-09 | Sichtbarkeit: Einzelergebnisse sehen nur die Person selbst und die Kommandanten – keine Admins, keine Redaktion, niemand öffentlich, auch nicht über Monatsbericht, Diagnosebericht oder Exporte. Keine Rangliste, keine Veröffentlichung, keine Weitergabe. Technisch: eigene Tabelle, Zugriff nur über eine Rechteprüfung „Lernstand sehen“, die nur die Rolle Kommandant · Freigabe hat. Hinweis im Lernstand: zur Planung von Übungen, nicht zur Bewertung Einzelner. | Muss |
@@ -244,6 +244,35 @@ Anforderung des 1. Kommandanten (23.11.2026): Die Website dient zusätzlich als 
 **Beispielthemen in der Demo** (Beispielinhalt, vom Kommandanten fachlich zu prüfen und mit dem aktuellen Stand der Quellen abzugleichen): Verkehrsabsicherung nach dem Merkblatt 6.003 der Staatlichen Feuerwehrschule Würzburg (Version 5.0, Stand 05/2023), Wiederbelebung nach den Leitlinien des ERC in der deutschen Fassung des German Resuscitation Council, Gefahren an der Einsatzstelle nach dem Schema AAAA-C-EEEE. Für Dezember liegt ein unfertiger Entwurf „Feuerlöscher richtig einsetzen“ bereit.
 
 **Quellen:** [Feuerwehr-Lernbar Bayern](https://www.feuerwehr-lernbar.bayern/) · [Staatliche Feuerwehrschule Würzburg](https://www.sfs-w.de/) · [DGUV Vorschrift 49 Feuerwehren](https://publikationen.dguv.de/) · [DGUV FBFHB-037 (2024)](https://publikationen.dguv.de/regelwerk/publikationen-nach-fachbereich/feuerwehren-hilfeleistungen-brandschutz/feuerwehren-und-hilfeleistungsorganisationen/5074/fbfhb-037-absicherung-von-einsatzstellen-im-oeffentlichen-verkehrsraum-unter-beruecksichtigung-der-zu) · [German Resuscitation Council](https://www.grc-org.de/)
+
+### 2.13 Gern und leicht lernen (Gestaltung und Ablauf)
+
+Es ist davon auszugehen, dass nicht alle Mitglieder gern Weiterbildungen machen und sich nicht von selbst zum Lernen anmelden. Deshalb sind einfache Bedienung und Freude am Lernen zentraler Teil des Bereichs „Lernen“ – gleichrangig mit dem Inhalt. Der Ablauf ist am Handy in einer kurzen Pause zu schaffen, lädt freundlich ein und belohnt, ohne Druck aufzubauen oder Einzelne vorzuführen (L-16).
+
+**Leitlinien**
+
+- **Ein Schritt, ein Knopf:** Jeder Bildschirm hat genau eine Hauptaktion („Los geht’s“, „Weiter“, „Antwort prüfen“).
+- **Kurz:** ein Thema in höchstens 10 Minuten, ein Abschnitt passt auf einen Handybildschirm.
+- **Freundlich:** Du-Form, ermutigende Sprache („Fast!“, „Knapp vorbei“), nie „falsch“ in Rot ohne Erklärung.
+- **Sichtbarer Fortschritt:** Fortschrittsbalken, „Weiterlernen“, Serie und Jahresstand – nur für die Person selbst.
+- **Kein Druck:** keine Rangliste, keine Namen anderer, keine Zeitlimits, beliebig oft wiederholbar.
+
+| ID | Anforderung | Prio |
+| --- | --- | --- |
+| E-15 | Messbare Ziele: vom Login bis zum ersten Lerninhalt höchstens 2 Tipps; ein Thema samt Test in höchstens 10 Minuten; alles mit einer Hand am Handy ab 360 px bedienbar; Tippflächen im Test mindestens 56 px hoch. | Muss |
+| E-16 | Startseite „Lernen“: persönliche Begrüßung („Servus, Anna!“) und ein Satz je nach Stand (offen, mittendrin, geschafft); das Thema des Monats als große farbige Karte mit Symbol, Titel, Einleitung, Dauer („ca. 8 Min.“), Fragenzahl, Status und einem Hauptknopf („Los geht’s“, „Weiterlernen“ oder „Nochmal ansehen“); daneben „Kenn ich schon – direkt zum Test“. | Muss |
+| E-17 | Lernen in Schritten: Start mit Überblick, dann je Abschnitt eine Seite, dann „Das Wichtigste“ mit Links, Quelle und Sicherheitshinweis, dann der Test. Oben ein Fortschrittsbalken („Schritt 2 von 11“), unten „Zurück“ und „Weiter“ gut erreichbar. Der Fortschritt wird je Person gespeichert; „Weiterlernen“ springt an die richtige Stelle. Nach dem Bestehen beginnt das Thema wieder vorn. | Muss |
+| E-18 | Test: eine Frage pro Bildschirm mit großen Antwortflächen. Nach „Antwort prüfen“ sofort die Rückmeldung – „Richtig!“ oder „Fast! Richtig ist: …“ – mit der Erklärung, richtige Antwort grün, gewählte falsche Antwort markiert. Dann „Nächste Frage“. | Muss |
+| E-19 | Ergebnis: „Geschafft!“ mit kurzer Erfolgs-Animation (entfällt bei der Systemeinstellung „Bewegung reduzieren“) bzw. „Knapp vorbei“ mit Ermutigung, „Nochmal versuchen“ und „Inhalt nochmal lesen“. Die eigenen Antworten mit Lösung sind aufklappbar. Ist noch ein früheres Thema offen, folgt der Vorschlag „Noch eins nachholen“. | Muss |
+| E-20 | Persönlicher Fortschritt: „x von y Themen geschafft“ mit Balken und die Serie „n Monate in Folge dabei“. Nur für die Person selbst sichtbar. | Muss |
+| E-21 | Gemeinsames Ziel: „x von y aus der Einsatzabteilung haben das Thema schon geschafft“ – nur als Zahl, ohne Namen. Von den Kommandanten abschaltbar (Annahme; mit L-16 prüfen). | Soll |
+| E-22 | Nachholen: offene frühere Themen stehen oben als Karten „Zum Nachholen“ mit Symbol und Status, geschaffte darunter. | Muss |
+| E-23 | Jedes Thema hat ein Symbol mit Farbe (Auswahl: Verkehr, Erste Hilfe, Gefahren, Brand, Funk, Technik, Wasser, Atemschutz, Allgemein; eigene Zeichnungen, keine fremden Grafiken). Die Lesezeit wird automatisch berechnet (etwa 150 Wörter pro Minute plus 2 Minuten für die Fragen). | Muss |
+| E-24 | Erinnern ohne zu nerven: E-Mail am Monatsersten (E-13) und höchstens eine freundliche Erinnerung zur Monatsmitte, nur an Konten, die das Thema noch nicht geschafft haben – ohne Ergebnisse im Text, abbestellbar. Dazu die rote Zahl am Bereich „Lernen“ (B-22). | Soll |
+| E-25 | Leichter Zugang: Der Link in der Mail führt nach dem Login direkt zum Thema. Mit „Auf diesem Gerät angemeldet bleiben“ bleibt ein Konto mit der Rolle Mitglied bis zu 90 Tage angemeldet (Annahme, Sicherheit prüfen; die Rolle hat keine Schreibrechte). 2-Faktor-Anmeldung ist für Mitglieder empfohlen, nicht Pflicht (B-04). | Soll |
+| E-26 | Themenplan für Kommandanten: 12 Monate auf einen Blick (2 zurück, 9 voraus, der aktuelle hervorgehoben), je Monat Thema mit Symbol, Status (Entwurf, geplant, veröffentlicht, ausgeblendet) und Teilnahme oder „Noch kein Thema · + Thema für …“. Je Thema: Bearbeiten, Ansehen (Vorschau wie bei Mitgliedern, speichert keine Ergebnisse), Kopieren (z. B. ein Thema aus dem Vorjahr, landet im nächsten freien Monat), Ausblenden bzw. Einblenden. Ältere Themen aufklappbar. Löschen nur durch Admins (B-16). | Muss |
+| E-27 | Hilfen beim Anlegen: Themenideen zum Antippen (setzen Titel und Symbol; Liste im Backend pflegbar, A-01), Symbolwahl, Tipps für gute Themen und Fragen, Anzeige der Lesezeit und „Noch offen zum Veröffentlichen: …“, das alle fehlenden Angaben auf einmal nennt. | Muss |
+| E-28 | Abnahme mit Laien (wie A-09): Drei Mitglieder ohne Einweisung schaffen ein Thema am eigenen Handy in höchstens 10 Minuten und würden es „gern wieder“ machen; ein Kommandant legt nur mit dem Handbuch ein Thema an und plant es für den nächsten Monat. | Muss |
 
 ## 3. Nicht-funktionale Anforderungen
 
@@ -329,10 +358,10 @@ Bei Widersprüchen gilt das Lastenheft. Demo und Handbuch werden dann angepasst.
 | Dokument | Wofür | Wo |
 | --- | --- | --- |
 | Lastenheft (dieses Dokument) | Was gebaut wird | Online-Dokument, Claude-Projekt, PDF |
-| Demo v11 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
-| Testsuite (655 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
+| Demo v12 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
+| Testsuite (686 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
 | Anleitung „Schnittstellen reparieren“ | Reparatur von DIVERA und Instagram durch die Technik (A-12) | GitHub, Backup (`betrieb/schnittstellen.md`) |
-| Handbuch Mitgliederbereich 1.10 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
+| Handbuch Mitgliederbereich 1.11 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
 | Corporate Design | Logo, Farben, Schrift | Claude-Projekt |
 | Backup-Paket mit WEITERMACHEN.md | Alles, um später weiterzuarbeiten | ZIP |
 
@@ -360,7 +389,9 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 - [ ] Ist ein Online-Antrag für Fördermitglieder laut Satzung zulässig?
 - [ ] An welche E-Mail-Adresse gehen Mitmach-Anfragen (F-06)?
 - [ ] Lernen: Verantwortlicher und Rechtsgrundlage für Lernergebnisse (Verein oder Markt, L-15) – Fachperson Datenschutz, ggf. Markt Ergolding
-- [ ] Lernen: Löschfrist (Annahme 3 Jahre) und Mail am Monatsersten (E-13) bestätigen
+- [ ] Lernen: Löschfrist (Annahme 3 Jahre), Mail am Monatsersten und Erinnerung zur Monatsmitte (E-13, E-24) bestätigen
+- [ ] Lernen: „Angemeldet bleiben“ bis 90 Tage für die Rolle Mitglied (E-25) und anonyme Teilnahmezahl (E-21) bestätigen
+- [ ] Lernen: Dürfen Kommandanten eigene, nie veröffentlichte Entwürfe löschen? Bisher feste Entscheidung: Löschen nur durch Admins
 - [ ] Lernen: Wer zählt zur Einsatzabteilung (E-10)? Sollen auch Jugendliche der Jugendfeuerwehr teilnehmen? Dann Einwilligung der Eltern klären
 
 **Zugänge (Phase 0)**
@@ -401,9 +432,9 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 | Ergebnis | Stand |
 | --- | --- |
 | Übergangsseite | Fertig zum Hochladen |
-| Demo v11 + Testsuite (655 Prüfungen) | Fertig, auf GitHub Pages |
-| Handbuch | Version 1.10 fertig |
-| Lastenheft | Version 1.12 |
+| Demo v12 + Testsuite (686 Prüfungen) | Fertig, auf GitHub Pages |
+| Handbuch | Version 1.11 fertig |
+| Lastenheft | Version 1.13 |
 | Backup-Paket | Wird mit jeder Version aktualisiert |
 
 **Sofort:** Übergangsseite hochladen. Vorher Joomla komplett sichern und die Speicherdauer der Logfiles in datenschutz.html eintragen.
@@ -433,7 +464,7 @@ Jede Phase endet mit einer Abnahme durch den Verein. Claude Code arbeitet in ein
    - Handbuch mit Bildschirmfotos der echten Seite aktualisieren (A-06)
 5. **Phase 4 – DIVERA und Freigabe** (D-, W-): Abnahme, wenn ein Testalarm in 15 Minuten einen korrekten, datensparsamen Entwurf erzeugt.
 6. **Phase 5 – Instagram** (I-): Abnahme, wenn der Testpost und die Vorschau funktionieren.
-7. **Phase 6 – Lernen** (E-): Themen, Test, eigener Lernstand und Lernstand für Kommandanten. Abnahme: Ein Mitglied macht den Test am Handy, ein Kommandant legt ein Thema an und sieht den Lernstand, ein Admin sieht keine Ergebnisse; L-15 ist geklärt.
+7. **Phase 6 – Lernen** (E-): Themen in Schritten, Test, eigener Lernstand, Themenplan und Lernstand für Kommandanten. Abnahme: Laientest nach E-28, ein Admin sieht keine Ergebnisse, L-15 ist geklärt.
 8. **Phase 7 – Go-live:**
    - Rechtstexte final
    - Überwachung und Monatsbericht (M-)
@@ -516,3 +547,4 @@ Checkliste der IDs.
 | 1.10 | 23.11.2026 | B-17 ergänzt: Rückgängig auch beim Veröffentlichen gut erreichbar – die letzte Aktion bleibt 5 Minuten oben sichtbar („Zuletzt: … · Rückgängig“), auch auf der Seite des gerade veröffentlichten Beitrags; gilt für alle Eingaben (auch Einplanen). Demo v9, Testsuite (573 Prüfungen), Handbuch 1.8. |
 | 1.11 | 23.11.2026 | Neu 2.12 „Lernen“ (E-01 bis E-14, Anforderung des 1. Kommandanten): Rolle „Mitglied“ ohne Schreib- und Bearbeitungsrechte, Monatsthema mit Inhalt, Merksätzen, Links zu den Feuerwehrschulen und Multiple-Choice-Test, eigener Lernstand, Lernstand nur für Kommandanten, Datensparsamkeit und Löschfrist. Neu L-14 bis L-17 (Urheberrecht, Datenschutz der Lernergebnisse, keine Leistungskontrolle, DGUV-Unterweisung bleibt). Geändert: B-06 und R-01 (Redaktionsplan unter „Inhalte“, höchstens sechs Bereiche in der Leiste), B-17 (Ausnahme Testversuche), Rollentabelle, Ziele, A-06, N-13, 0, 4.2, 5, 6 (neue Phase 6), CLAUDE.md-Vorlage (Präfix E-). Annahmen: bestanden ab 80 %, Löschfrist 3 Jahre, freiwillige Teilnahme. Demo v10, Testsuite (643 Prüfungen), Handbuch 1.9. |
 | 1.12 | 23.11.2026 | Neu B-22: rote Zähler an den Bereichen, wenn etwas zu tun ist (Freigabe, Inhalte, Lernen, System). Geändert: E-06 (genau 5 Fragen, bestanden ab 4 richtigen Antworten), E-05, B-02 (Admins ändern Rollen am Konto: nicht die eigene, immer mindestens zwei Admins, Hinweis auf 2FA, rückgängig machbar), 0, 4.2, 5, 6. Demo v11, Testsuite (655 Prüfungen), Handbuch 1.10. |
+| 1.13 | 23.11.2026 | Neu 2.13 „Gern und leicht lernen“ (E-15 bis E-28): Leitlinien und messbare Ziele, Startseite mit Begrüßung und großer Themenkarte, Lernen in Schritten mit Fortschritt und „Weiterlernen“, eine Frage pro Bildschirm mit sofortiger Rückmeldung, Ergebnis mit Erfolgsmoment, persönlicher Fortschritt und Serie, anonymes gemeinsames Ziel, Nachholen, Symbole und Lesezeit, Erinnerungen, leichter Zugang, Themenplan für Kommandanten (12 Monate, anlegen, bearbeiten, kopieren, ausblenden), Hilfen beim Anlegen, Laientest als Abnahme. Geändert: E-02, E-05, E-06, A-06, 0, 4.2, 5, 6. Demo v12, Testsuite (686 Prüfungen), Handbuch 1.11. |

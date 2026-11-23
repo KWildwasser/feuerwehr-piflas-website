@@ -32,6 +32,7 @@ CHROME=/pfad/zu/chrome python test_app.py    # optional eigener Browser
 | Ansprache | Du-Form überall, keine rein männlichen Formen (Ausnahmen Kommandant, Admin, FwDV) | N-09, N-13 |
 | Navigation | Menügruppen, Partnerseite, Zurück-Taste, unbekannte Adressen, Tastatur | F-09, F-11, N-02 |
 | Formulare | Pflichtfelder, Datenschutz-Häkchen, Fehlermeldungen | F-06, W-04 |
+| Gern und leicht lernen | Begrüßung, Themenkarte mit Dauer und Symbol, Schritte mit Fortschritt, Weiterlernen, direkt zum Test, eine Frage pro Bildschirm, Rückmeldung mit Erklärung, Ergebnis mit Erfolgsmoment, Serie, anonymes gemeinsames Ziel, Themenplan (12 Monate, + Thema für Monat, kopieren), Ideen, „Was fehlt noch?“ | E-15 bis E-27 |
 | Zähler und Rollen ändern | rote Zahl an Lernen, Freigabe und System, verschwindet nach Erledigen; Rolle ändern mit Datum und Person, eigene Rolle gesperrt, mindestens zwei Admins, 2FA-Hinweis, Rückgängig | B-22, B-02, A-08, B-04 |
 | Login und Rollen | keine Rollenauswahl (Rolle aus dem Konto), unbekannte E-Mail, 2FA, Schnell-Login, Bereiche je Rolle, 3/2/mehrere Konten | B-01 bis B-06 |
 | Beiträge und Fotos | Fotos verkleinern, GPS entfernen, nur Bilder, Titelbild wählen, Vorschau, Sprung zum Beitrag | B-09 bis B-11, B-19 |
