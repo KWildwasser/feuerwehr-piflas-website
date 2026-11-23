@@ -65,7 +65,7 @@ dl.faq dt{{font-weight:700;margin-top:3mm}} dl.faq dd{{margin:1mm 0 0 0}}
 cover = f'''<section class="cover"><div class="bar"></div><img src="data:image/svg+xml;base64,{logo}" alt="Feuerwehr Piflas">
 <h1>Handbuch<br>Mitgliederbereich</h1><p class="sub">So pflegst du die Website der Feuerwehr Piflas –<br>Schritt für Schritt, am Handy, ohne IT-Kenntnisse.</p>
 <div class="rollen"><span class="r a">Alle</span><span class="r f">Kommandant</span><span class="r ad">Admin</span></div>
-<table><tr><td>Version</td><td><b>1.16</b></td></tr><tr><td>Stand</td><td>23.11.2026 (auf Basis der Demo v16)</td></tr><tr><td>Grundlage</td><td>Lastenheft v1.17, F-11, E-29, B-10, B-23, E-15 bis E-28, B-02, B-22, u. a. A-06, A-10 bis A-12, B-01, B-07, B-13 bis B-21, D-09, W-09, E-01 bis E-14</td></tr><tr><td>Pflege</td><td>Admins – bei jeder neuen Funktion ergänzen</td></tr></table>
+<table><tr><td>Version</td><td><b>1.17</b></td></tr><tr><td>Stand</td><td>23.11.2026 (auf Basis der Demo v16)</td></tr><tr><td>Grundlage</td><td>Lastenheft v1.18, F-11, E-17, E-29, B-10, B-23, E-15 bis E-28, B-02, B-22, u. a. A-06, A-10 bis A-12, B-01, B-07, B-13 bis B-21, D-09, W-09, E-01 bis E-14</td></tr><tr><td>Pflege</td><td>Admins – bei jeder neuen Funktion ergänzen</td></tr></table>
 <div class="foot">Feuerwehr Piflas e.V. · Gartenstraße 2 · 84030 Ergolding / Piflas · Nur für Mitglieder mit Zugang</div></section>'''
 head = f'<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><title>Handbuch Mitgliederbereich – Website Feuerwehr Piflas</title><style>{css}</style></head><body>'
 (H/'cover.html').write_text(head.replace('</style>','@page{margin:0}</style>') + cover + '</body></html>')
@@ -76,7 +76,7 @@ async def run():
         await pg.goto((H/'cover.html').as_uri()); await pg.wait_for_timeout(300)
         await pg.pdf(path=str(H/'cover.pdf'), format='A4', print_background=True, prefer_css_page_size=True)
         await pg.goto((H/'body.html').as_uri()); await pg.wait_for_timeout(600)
-        hdr = '<div style="font-family:sans-serif;font-size:7.5pt;color:#8a8d91;width:100%;padding:0 17mm;display:flex;justify-content:space-between"><span>Handbuch Mitgliederbereich · Website Feuerwehr Piflas</span><span>Version 1.16 · 23.11.2026</span></div>'
+        hdr = '<div style="font-family:sans-serif;font-size:7.5pt;color:#8a8d91;width:100%;padding:0 17mm;display:flex;justify-content:space-between"><span>Handbuch Mitgliederbereich · Website Feuerwehr Piflas</span><span>Version 1.17 · 23.11.2026</span></div>'
         ftr = '<div style="font-family:sans-serif;font-size:7.5pt;color:#8a8d91;width:100%;padding:0 17mm;display:flex;justify-content:space-between"><span>Feuerwehr Piflas e.V. · nur für Mitglieder mit Zugang</span><span>Seite <span class="pageNumber"></span> von <span class="totalPages"></span></span></div>'
         await pg.pdf(path=str(H/'body.pdf'), format='A4', print_background=True, display_header_footer=True, header_template=hdr, footer_template=ftr, prefer_css_page_size=True, tagged=True, outline=True)
         await b.close()

@@ -73,7 +73,7 @@ body.mopen .scrim{opacity:1;pointer-events:auto}
 body.mopen .drawer{transform:none}
 .drawer .dh{display:flex;justify-content:space-between;align-items:center;padding:0 16px 8px}
 /* Menü (F-11): Login ganz oben, Gruppen mit dunkler Überschrift auf hellem Band, Seiten eingerückt mit Linie */
-.drawer .dlogin{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--linie)}.drawer .dlogin .btn{width:100%;min-height:52px;font-size:18px;background:var(--hell);color:var(--ink);box-shadow:inset 0 0 0 1px #D9D6CF}.drawer .dlogin .btn:hover{background:#ECEAE5;color:var(--ink)}.drawer .dlogin svg{width:20px;height:20px}
+.drawer .dlogin{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--linie)}.drawer .dlogin .btn{width:100%;min-height:52px;font-size:18px;background:#3A3F45;color:#fff;box-shadow:0 1px 2px rgba(31,35,40,.2)}.drawer .dlogin .btn:hover{background:var(--ink);color:#fff}.drawer .dlogin svg{width:20px;height:20px}
 .drawer nav a{display:flex;align-items:center;min-height:50px;padding:0 22px;color:var(--ink);text-decoration:none;font-weight:600;font-size:19px}
 .drawer nav .mtop a{font-weight:800;border-bottom:1px solid var(--linie)}
 .drawer nav .mgr{border-bottom:1px solid var(--linie)}
@@ -1568,9 +1568,9 @@ V.lernen = () => {
     hero = `<div class="lhero${st === 'ok' ? ' done' : ''}" id="l-cur">${lIcon(cur, true)}<div class="stack" style="gap:6px;min-width:0">
       <span class="lkick">${esc(lab)}</span><h2>${esc(cur.t)}</h2><p>${esc(cur.intro)}</p>
       <span class="lmeta"><span>⏱ ca. ${lMin(cur)} Min.</span><span>${cur.qs.length} Fragen</span>${lic(cur)[0] !== 'Allgemein' ? `<span>${esc(lic(cur)[0])}</span>` : ''}</span>
-      <span id="l-curst" class="lcst">${st === 'ok' ? '<b>✓ Geschafft</b>' : st === 'nein' ? '<b>Knapp – probier es nochmal</b>' : pg ? `<b>Weiter bei Schritt ${pg + 1} von ${n}</b>` : '<b>Noch offen</b>'}</span>
+      <span id="l-curst" class="lcst">${st === 'ok' ? '<b>✓ Geschafft</b>' : st === 'nein' ? '<b>Knapp – probier es nochmal</b>' : pg ? `<b>Weiter bei Schritt ${pg} von ${n - 1}</b>` : '<b>Noch offen</b>'}</span>
       ${pg && st !== 'ok' ? `<span class="lbar" aria-hidden="true"><i style="width:${pct(pg, n)}%"></i></span>` : ''}
-      <div class="row2"><button class="btn wb" data-act="l-open" data-id="${cur.id}">${st === 'ok' ? 'Nochmal ansehen' : pg ? 'Weiterlernen' : 'Los geht’s'}</button>${st !== 'ok' && cur.qs.length ? `<button class="btn o sm lquick" data-act="l-quiz" data-id="${cur.id}">Kenn ich schon – direkt zum Test</button>` : ''}</div></div></div>`;
+      <div class="row2"><button class="btn wb" data-act="l-open" data-skip="1" data-id="${cur.id}">${st === 'ok' ? 'Nochmal ansehen' : pg ? 'Weiterlernen' : 'Los geht’s'}</button>${st !== 'ok' && cur.qs.length ? `<button class="btn o sm lquick" data-act="l-quiz" data-id="${cur.id}">Kenn ich schon – direkt zum Test</button>` : ''}</div></div></div>`;
   }
   const streak = lStreak(me), act = lActive(), okN = cur ? act.filter(m => lState(m.n, cur.id) === 'ok').length : 0;
   const card = t => `<button class="lcard" data-act="l-open" data-id="${t.id}">${lIcon(t)}<span class="stack" style="gap:2px;min-width:0;flex:1;text-align:left"><span class="mini">${mLab(t.m)}</span><b>${esc(t.t)}</b></span>${stIcon(lState(me, t.id))}</button>`;
@@ -1597,14 +1597,14 @@ V.lernen = () => {
 V.thema = () => {
   const t = topic(S.lt);
   if (!t || (!isKdt() && !(t.st === 'aktiv' && t.m <= curM()))) return sec('<h1>Thema nicht gefunden</h1><a class="btn o" href="#lernen" style="color:var(--ink);align-self:flex-start">← Zu „Lernen“</a>');
-  const prev = t.st !== 'aktiv' || t.m > curM(), me = S.user.name, P = lPages(t), qa = lQuizAt(t), N = qa + Math.max(t.qs.length, 1);
+  const prev = t.st !== 'aktiv' || t.m > curM(), me = S.user.name, P = lPages(t), qa = lQuizAt(t), N = qa - 1 + Math.max(t.qs.length, 1);
   const res = S.qres && S.qres.tid === t.id ? S.qres : null;
   let step = res ? qa : Math.min(S.lprog[lk(t.id)] || 0, qa); if (!t.qs.length && step === qa) step = qa - 1;
   const page = P[step];
   if (page === 'quiz' && !res && (!S.quiz || S.quiz.tid !== t.id)) S.quiz = {tid:t.id, i:0, r:[], fb:false};
-  const pos = page === 'quiz' ? (res ? N : qa + 1 + S.quiz.i) : step + 1;
+  const pos = page === 'quiz' ? (res ? N : qa + S.quiz.i) : step;
   const nav = (next, label) => `<div class="lnav">${step > 0 ? '<button class="btn o" data-act="l-back" style="color:var(--ink)">Zurück</button>' : '<span></span>'}<button class="btn" data-act="l-next">${label || next}</button></div>`;
-  const top = `<div class="ltopbar"><a class="btn o sm" href="#lernen" style="color:var(--ink)">← Lernen</a><span class="mini" id="l-pos">${res ? 'Fertig' : 'Schritt ' + pos + ' von ' + N}</span></div>
+  const top = `<div class="ltopbar"><a class="btn o sm" href="#lernen" style="color:var(--ink)">← Lernen</a><span class="mini" id="l-pos">${res ? 'Fertig' : page === 'intro' ? 'Überblick' : 'Schritt ' + pos + ' von ' + N}</span></div>
     <span class="lbar big" id="l-prog" role="progressbar" aria-label="Fortschritt" aria-valuemin="0" aria-valuemax="${N}" aria-valuenow="${pos}"><i style="width:${pct(pos, N)}%"></i></span>`;
   let body = '';
   if (page === 'intro') {
@@ -1617,7 +1617,7 @@ V.thema = () => {
     <div class="stack" style="gap:10px"><button class="btn big" data-act="l-next">Los geht’s</button>${t.qs.length ? '<button class="btn o lquick2" data-act="l-quiz" style="color:var(--ink)">Kenn ich schon – direkt zum Test</button>' : ''}</div>`;
   } else if (typeof page === 'number') {
     const s = t.secs[page];
-    body = `<article class="lpage" id="l-body"><h1 class="lkick">${esc(t.t)}</h1>${s.h ? `<h2 style="font-size:28px">${esc(s.h)}</h2>` : ''}${lFig(s)}${paras(s.x)}</article>${nav('Weiter')}`;
+    body = `${page === 0 && t.bsp ? '<div class="stat warnbox" style="font-size:15px" id="l-bsp"><b>Beispielinhalt für die Demo.</b> Vor dem echten Einsatz prüft der Kommandant den Inhalt fachlich und gleicht ihn mit dem aktuellen Stand der Quellen ab.</div>' : ''}<article class="lpage" id="l-body"><h1 class="lkick">${esc(t.t)}</h1>${s.h ? `<h2 style="font-size:28px">${esc(s.h)}</h2>` : ''}${lFig(s)}${paras(s.x)}</article>${nav('Weiter')}`;
   } else if (page === 'keys') {
     body = `<article class="lpage"><h1 class="lkick">${esc(t.t)}</h1><h2 style="font-size:28px">Das Wichtigste</h2>
       ${t.keys.length ? `<ul class="lkeys" id="l-keys">${t.keys.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
@@ -1973,7 +1973,7 @@ document.addEventListener('click', e => {
     case 'quick-login': { const r = b.dataset.role || 'Freigeber'; loginAs(r); S.ed = null; toast('Angemeldet als ' + S.user.name + ' · ' + ROLES[r].label + ' (Demo)'); sheet(false);
       const nx = S.next && mayRoute(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break; }
     /* Lernen */
-    case 'l-open': S.lt = id; S.qres = null; S.quiz = null; lastRoute = null; go('thema'); break;
+    case 'l-open': S.lt = id; S.qres = null; S.quiz = null; lastRoute = null; if (b.dataset.skip && !S.lprog[lk(id)]) S.lprog[lk(id)] = 1; go('thema'); break; // Karte „Thema des Monats“ ist schon der Überblick (E-16) → direkt zur ersten Seite
     case 'l-next': case 'l-back': { const t = topic(S.lt); if (!t) break; S.lprog[lk(t.id)] = Math.max(0, (S.lprog[lk(t.id)] || 0) + (act === 'l-next' ? 1 : -1)); S.quiz = null; render(); window.scrollTo(0, 0); break; }
     case 'l-quiz': { if (id) S.lt = id; const t = topic(S.lt); if (!t) break; S.lprog[lk(t.id)] = lQuizAt(t); S.qres = null; S.quiz = null; lastRoute = null; if (location.hash === '#thema') { render(); window.scrollTo(0, 0); } else go('thema'); break; }
     case 'l-reread': { const t = topic(S.lt); S.qres = null; S.quiz = null; S.lprog[lk(t.id)] = 1; render(); window.scrollTo(0, 0); break; }

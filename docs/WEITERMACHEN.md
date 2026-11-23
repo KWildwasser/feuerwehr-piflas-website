@@ -1,6 +1,6 @@
 # Webpräsenz Feuerwehr Piflas – Backup & Anleitung zum Weitermachen
 
-Stand: **23.11.2026** · Lastenheft **v1.17** · Demo **v16** · Handbuch **1.16** · Testsuite **700/700 bestanden**
+Stand: **23.11.2026** · Lastenheft **v1.18** · Demo **v16** · Handbuch **1.17** · Testsuite **700/700 bestanden**
 
 Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte, Bilder und Vorlagen. Damit kannst du (oder jemand aus dem Verein, oder eine neue Claude-Sitzung) jederzeit nahtlos weitermachen. Es enthält keine Zugangsdaten.
 
@@ -11,11 +11,11 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | Ordner / Datei | Inhalt |
 |---|---|
 | `PROJEKT-ANWEISUNGEN.md` | Benutzerdefinierte Anweisungen für das Claude-Projekt (zum Einfügen) |
-| `lastenheft/lastenheft-v1.17.md` | Das Lastenheft als Text – verbindliche Grundlage |
-| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.17.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
+| `lastenheft/lastenheft-v1.18.md` | Das Lastenheft als Text – verbindliche Grundlage |
+| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.18.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
 | `lastenheft/make_pdf.py` | Erzeugt das PDF aus der neuesten `lastenheft-vX.Y.md` |
 | `lastenheft/CLAUDE.md`, `start-prompt-phase1.txt` | Vorlagen für das Code-Repository und die erste Claude-Code-Sitzung |
-| `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.16 (alle Rollen) |
+| `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.17 (alle Rollen) |
 | `handbuch/inhalt.html`, `shots.py`, `make.py`, `img/` | Quellen: Text, Bildschirmfotos aus der Demo, PDF-Erzeugung |
 | `demo/README.md` | Aufbau der Demo und Zuordnung der Prüfungen zu den Lastenheft-IDs |
 | `demo/app-src.html` | Quelltext der Demo – **hier wird geändert** |
@@ -84,9 +84,9 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 
 Dieses ZIP hochladen und z. B. schreiben:
 
-> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.17.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
+> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.18.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
 
-Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.17.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
+Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.18.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
 
 ## 6. Wichtige Entscheidungen (Kurzfassung)
 
@@ -113,7 +113,7 @@ Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `laste
 - Ergebnisse nur für die Person selbst und die Kommandanten, keine Rangliste, Löschfrist 3 Jahre (Annahme). Lehrmaterial der Feuerwehrschulen nur verlinken. Offen: Verantwortlicher und Rechtsgrundlage (L-15).
 
 **Inhalte**
-- Kopf ohne Notruf-Knopf (112 auf der Startseite); im Menü ganz oben ein dezenter Knopf „Login“, Gruppen Aktuell, Mitmachen, Ratgeber, Über uns; Partnerfeuerwehren eigene Seite; **Jubiläum 2027** zeitgesteuert.
+- Kopf ohne Notruf-Knopf (112 auf der Startseite); im Menü ganz oben ein dunkelgrauer Knopf „Login“, Gruppen Aktuell, Mitmachen, Ratgeber, Über uns; Partnerfeuerwehren eigene Seite; **Jubiläum 2027** zeitgesteuert.
 - **Seiten pflegen** (Verein, Chronik, Fahrzeuge, Ausrüstung) durch alle Rollen, Redaktion über die Freigabe (B-21). Bildnachweis „Fotos: Feuerwehr Piflas“.
 
 ## 7. Datenschutz-Hinweis zu diesem Paket

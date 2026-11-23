@@ -86,7 +86,7 @@ async def main():
         await go('lernen'); await pg.add_style_tag(content='#fab{display:none!important}.toast,#toast{opacity:0!important}*{animation:none!important;transition:none!important}'); await pg.wait_for_timeout(100)
         await pg.screenshot(path=str(O/'22-lernen.png'))
         await pg.evaluate("document.querySelector('#l-cur [data-act=l-open]').click()"); await pg.wait_for_timeout(300)
-        for _ in range(2): await pg.evaluate("document.querySelector('main [data-act=l-next]').click()"); await pg.wait_for_timeout(300)
+        for _ in range(1): await pg.evaluate("document.querySelector('main [data-act=l-next]').click()"); await pg.wait_for_timeout(300)
         await pg.evaluate('window.scrollTo(0,0)'); await pg.screenshot(path=str(O/'23-seite.png'))
         await pg.evaluate("(() => { const d = window.__demo, S = d.state(); S.lprog[S.user.name + '|lv'] = 6; S.quiz = null; d.render(); })()"); await pg.wait_for_timeout(200)
         # Frage 1 richtig, Frage 2 falsch beantworten und die Rückmeldung zeigen
