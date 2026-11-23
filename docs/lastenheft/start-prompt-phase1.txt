@@ -1,7 +1,9 @@
-Lies CLAUDE.md, docs/lastenheft.md und docs/referenz-demo/. Setze Phase 1
-um: wp-env, Plugin ff-piflas-connect mit den Rollen aus 2.5, Einladungen
-per E-Mail (48 Std., erneut senden, zurückziehen), keine
-Selbstregistrierung (B-01 bis B-08), PHPUnit-Tests je Rolle, PHPCS und
-eine GitHub Action, die auf Staging deployt. Stelle vorher deinen Plan,
-offene Fragen und die geplanten Fremd-Plugins vor. Am Ende: PR mit
-Checkliste der IDs.
+Lies CLAUDE.md, docs/lastenheft.md, docs/start/ARBEITSPAKETE.md und
+docs/referenz-demo/ (Demo, Tests, ABDECKUNG.md). Setze Arbeitspaket 1 um:
+wp-env, Plugin ff-piflas-connect mit den fünf Rollen aus 2.5 und je einer
+Capability pro Aktion, Einladungen per E-Mail (48 Std., erneut senden,
+zurückziehen), keine Selbstregistrierung, Login-Drosselung, Austritt
+(B-01 bis B-08, E-01, E-10, N-05), PHPUnit-Tests je Rolle, PHPCS mit
+WordPress-Sicherheitsregeln und eine GitHub Action, die auf die Testseite
+deployt. Stelle vorher deinen Plan, offene Fragen und die geplanten
+Fremd-Plugins vor. Am Ende: PR mit Checkliste der IDs.

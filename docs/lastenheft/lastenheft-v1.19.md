@@ -1,6 +1,6 @@
 # Lastenheft & Umsetzungsplan – Webpräsenz Feuerwehr Piflas
 
-23.11.2026 · Korbinian · Version 1.18 (WordPress) · Referenz: Demo v16 und Handbuch 1.17
+23.11.2026 · Korbinian · Version 1.19 (WordPress) · Referenz: Demo v17 und Handbuch 1.18
 
 ## 0. Auf einen Blick
 
@@ -11,7 +11,7 @@
 - **Leitprinzip:** Ehrenamtliche ohne IT-Kenntnisse können die Seite auch in Jahren noch betreuen (2.11).
 - **Vorhanden:**
   - Übergangsseite
-  - Klickbare Demo v16 mit Testsuite (700 Prüfungen), öffentlich auf GitHub Pages
+  - Klickbare Demo v17 mit Testsuite (700 Prüfungen) und Sicherheitstests (68 Prüfungen), öffentlich auf GitHub Pages
   - Anleitung „Schnittstellen reparieren“ für die Technik (A-12)
   - Handbuch für den Mitgliederbereich
   - Backup-Paket
@@ -52,7 +52,7 @@ Priorität: **Muss** = zum Go-live, **Soll** = kurz danach, **Kann** = später. 
 | F-01 | Startseite | Von oben nach unten: (1) Bühne mit Foto und den Buttons „Mitmachen“ und „Fördermitglied werden“. (2) Notruf 112, darunter 14 Tage vor Warntag oder Probealarm ein Hinweis (C-07). (3) Jubiläumsbereich, nur im Festjahr (J-02). (4) Nächste 3 Termine und letzte 3 Einsätze. (5) „Aus dem Vereinsleben“: 3 Foto-Kacheln mit Link zum Beitrag. (6) Mitmach-Bereich (F-06). (7) Bürgertipp oder Sonderhinweis (C-04). (8) Instagram-Vorschau (I-01). Keine Fahrzeugdaten. | Muss |
 | F-02 | Aktuelles | Beiträge als Liste mit Foto, filterbar nach Kategorie; zuerst die neuesten 6, weitere mit „Weitere Berichte laden“. Beitragsseite mit Titelbild, Text und Galerie. | Muss |
 | F-03 | Einsätze | Liste der neuesten drei Jahre als Knöpfe, ältere Jahre über eine Auswahl; filterbar nach Einsatzart; je 20 Einsätze, weitere mit „Weitere Einsätze anzeigen“. Detail mit Einsatzart, Ort (Ortsteil bzw. bei überörtlichen Einsätzen die Gemeinde), gerundeter Uhrzeit, Fahrzeugen, Kurzbericht und Fotos. Jahresstatistik (D-07). | Muss |
-| F-04 | Termine | Nicht-private DIVERA-Termine (D-05) mit Kategorien. Jubiläumstermine gekennzeichnet. „Vormerken“ als Kalenderdatei (.ics). | Muss |
+| F-04 | Termine | Nicht-private DIVERA-Termine (D-05) mit Kategorien. Jubiläumstermine gekennzeichnet. „Vormerken“ je Termin als Kalenderdatei (.ics) und Kalender-Abo. | Muss |
 | F-05 | Fahrzeuge & Technik | Neuestes Fahrzeug hervorgehoben. Je Fahrzeug eine Karte mit Foto, Funkrufname, Typ und Kurzbeschreibung. Dazu Geräte mit Fotos. Alle Angaben und Fotos im Backend pflegbar (B-21). | Muss |
 | F-06 | Mitmachen | Formular ganz oben (Name, Telefon oder E-Mail, Interesse, Datenschutz-Häkchen) mit Hinweis für unter 16-Jährige. Kurzform des Formulars auf der Startseite. Dazu der nächste Übungsabend und Wege zu Jugendfeuerwehr und Fördermitgliedschaft. Anfragen gehen per E-Mail an eine im System-Bereich hinterlegte Adresse. Die Website speichert sie nicht dauerhaft. Spamschutz ohne Drittanbieter (kein reCAPTCHA). | Muss |
 | F-07 | Jugendfeuerwehr | Vorstellung, Gruppenstunde, Ansprechperson, Button „Schnuppern kommen“. Fotos nur mit Einwilligung der Eltern. | Muss |
@@ -112,10 +112,10 @@ Voraussetzung: @feuerwehrpiflas ist ein professionelles Konto (Business). Eine F
 | B-02 | Admins sehen den Status jedes Kontos, senden Einladungen erneut oder ziehen sie zurück und ändern Rollen: bei jedem Konto „Rolle ändern“, neue Rolle wählen (Mitglied, Redaktion, Bereichsredaktion, Kommandant · Freigabe, Admin) und das Häkchen „Einsatzabteilung“ (E-10) setzen, „Speichern“. Die Änderung gilt sofort, das Konto zeigt „Rolle geändert am … von …“, sie steht im Protokoll (B-07) und lässt sich rückgängig machen (B-17). Die eigene Rolle ändert immer ein anderer Admin. Wer zum letzten zweiten Admin würde, kann nicht herabgestuft werden (A-08). Wird ein Konto zum Admin oder Kommandanten, ist beim nächsten Login die 2-Faktor-Anmeldung Pflicht (B-04). Lernergebnisse und Beiträge bleiben erhalten. | Muss |
 | B-03 | Die Rechte sind laut Rollentabelle fest im eigenen Plugin hinterlegt. | Muss |
 | B-04 | 2-Faktor-Anmeldung ist Pflicht für Admins und den Kommandanten, für alle anderen empfohlen. | Muss |
-| B-05 | „Passwort vergessen“ per Mail. Nach mehreren Fehlversuchen wird das Konto vorübergehend gesperrt. | Muss |
+| B-05 | „Passwort vergessen“ per Mail, Link einmalig 1 Stunde gültig. Die Antwort ist immer gleich, egal ob es die Adresse gibt. Nach 5 Fehlversuchen (Passwort oder 2-Faktor-Code) ist die Anmeldung 15 Minuten gesperrt (Annahme, Werte im System-Bereich änderbar). | Muss |
 | B-06 | Der Mitgliederbereich ist voll am Handy bedienbar. Die untere Leiste zeigt nur die Bereiche der eigenen Rolle, höchstens sechs; der Redaktionsplan liegt deshalb unter „Inhalte“. Im Kopf stehen Logo, Handbuch und „Abmelden“ in einer Zeile, Name und Rolle darunter in einer eigenen Zeile – ab 360 px ohne Überlappung. | Muss |
 | B-07 | Verlauf: Jeder Beitrag, Einsatzbericht, jedes Fahrzeug und Gerät und die Seite „Verein & Chronik“ hat einen Verlauf mit Zeit, Person, Aktion (erstellt, bearbeitet, ausgeblendet, gelöscht, wiederhergestellt, rückgängig gemacht), Freigabe durch, optionaler Notiz und geänderten Feldern. Jede frühere Fassung lässt sich wiederherstellen (Redaktion: als Änderung zur Freigabe). Sicher: Einträge werden nur angehängt, niemand kann sie ändern oder löschen; die Person kommt aus der Anmeldung, nicht aus dem Formular; der Verlauf ist nur im Mitgliederbereich sichtbar. Darstellung: neueste Änderung oben, aktuelle Fassung markiert; je Eintrag Aktion, Zeit, Person, Freigabe und Notiz, darunter „Was wurde geändert?“ mit demselben Vergleich wie in der Freigabe (W-08). Schutz vor Spam: Speichern ohne Änderung erzeugt keinen Eintrag; Änderungen derselben Person am selben Inhalt innerhalb von 10 Minuten werden zusammengefasst; Begrenzung nach N-05; höchstens 50 Fassungen je Inhalt, ältere Zwischenstände werden ausgedünnt (die erste Fassung bleibt). Zusätzlich protokolliert die Website Anmeldungen und Rechteänderungen. | Muss |
-| B-08 | Bei Austritt wird das Konto deaktiviert, nicht gelöscht. Die Beiträge bleiben erhalten. | Muss |
+| B-08 | Bei Austritt deaktiviert ein Admin das Konto nach Nachfrage, statt es zu löschen. Anmelden geht dann nicht mehr (gleiche Meldung wie bei unbekannter Adresse), Beiträge und Verlauf bleiben, Lernergebnisse werden sofort gelöscht (E-11). Wieder aktivieren ist möglich. Das eigene Konto und der zweite Admin (A-08) lassen sich nicht deaktivieren. | Muss |
 | B-09 | Ein Beitrag besteht aus Titel, Kategorie (Verein, Übung, Jugendfeuerwehr, Bürgertipp), Text, Fotos, optionaler Bildbeschreibung, dem Instagram-Häkchen und der Pflicht-Bestätigung (W-04). Kommandant und Admins veröffentlichen direkt, die Redaktion reicht zur Freigabe ein. | Muss |
 | B-10 | Nach dem Speichern oder Veröffentlichen bleibt man angemeldet in der bisherigen Ansicht (z. B. „Inhalte“, „Freigabe“). Eine Meldung bestätigt es und bietet „Beitrag ansehen“ bzw. „Bericht ansehen“ – in der Rolle Redaktion „Vorschau ansehen“ mit dem Hinweis „Vorschau – noch nicht öffentlich“, bis freigegeben ist – sowie „Rückgängig“ (B-17). Beide Knöpfe stehen 5 Minuten lang auch oben in „Zuletzt“. | Muss |
 | B-11 | Fotos (alle Rollen): mehrere aus Kamera oder Galerie, vor dem Absenden einzeln entfernbar. Das erste ist das Titelbild. Beim Hochladen werden sie auf max. 1600 px verkleinert, Standort- und Kameradaten werden auch im Original entfernt. Nur Bilddateien sind erlaubt. | Muss |
@@ -127,7 +127,7 @@ Voraussetzung: @feuerwehrpiflas ist ein professionelles Konto (Business). Eine F
 | B-17 | Rückgängig: Nach jeder Änderung (speichern, ausblenden, löschen, entfernen, freigeben, verwerfen, zurückgeben, Einstellungen, Fotos, Einladungen, Notbetrieb) zeigt die Meldung einige Sekunden lang den Knopf „Rückgängig“, der den Stand davor wiederherstellt. Zusätzlich bleibt die letzte Aktion 5 Minuten lang oben auf jeder Seite des Mitgliederbereichs und – für Angemeldete – auch auf der öffentlichen Seite sichtbar („Zuletzt: … · Rückgängig“), damit z. B. ein gerade veröffentlichter Beitrag oder Einsatzbericht direkt auf seiner Seite zurückgenommen werden kann. Das gilt für alle Eingaben, auch Veröffentlichen, Einplanen und Einladen. Danach helfen Verlauf (B-07), Papierkorb (B-16) und die Liste „Verworfen und zurückgegeben“ (W-07). Das Rückgängigmachen steht selbst im Verlauf. Ein Instagram-Post bleibt bestehen; darauf weist die Website hin. Ausnahme: Testversuche im Bereich „Lernen“ lassen sich nicht rückgängig machen (E-07). | Muss |
 | B-18 | Übersicht „Inhalte“ für Beiträge und Einsatzberichte, ausgelegt auf mehrere hundert Einträge: Suche beim Tippen (Titel, Text, Ort, Fahrzeug, Name), Filter nach Art (Einsätze, Übungen, Berichte), Jahr und Status (online, ausgeblendet, Änderung wartet, geplant), kombinierbar, mit Trefferzahl; die neuesten 20 zuerst, weitere mit „Weitere 20 anzeigen“; „Filter zurücksetzen“. Oben die Knöpfe „Neuer Beitrag“ und (Kommandant, Admin) „Einsatz von Hand“. Die Redaktion sieht nur eigene Beiträge und darüber „Zurück an dich“. Papierkorb für Admins unten. | Muss |
 | B-19 | Editor: Ein Eintrag öffnet sich auf einer eigenen Seite mit Formular, „Weitere Aktionen“ (ansehen, ausblenden, löschen) und Verlauf (B-07). Fotos: hinzufügen, einzeln entfernen und per „Titelbild“ nach vorn holen, ohne dass Eingaben verloren gehen; gilt auch für Einsätze in der Freigabe (W-03). Zurück zur Übersicht mit „← Zur Übersicht“ oder der Zurück-Taste. | Muss |
-| B-20 | Grenzen gegen Missbrauch: Höchstlängen für alle Felder (z. B. Titel 120, Text 8.000 Zeichen), Fotos laut B-11. | Muss |
+| B-20 | Grenzen gegen Missbrauch: Höchstlängen für alle Textfelder ohne Ausnahme (z. B. Titel 120, Text 8.000 Zeichen), Fotos laut B-11. Ein doppelt abgeschicktes Formular (Doppeltipp, langsames Netz) erzeugt nichts doppelt. | Muss |
 | B-21 | Seiten pflegen (Bereich „Seiten“): Verein (Einleitung, Vorstandschaft als Zeilen Amt – Name), Chronik (Jahr, Titel, Text; automatisch nach Jahr sortiert), Fahrzeuge (Name, Kurzname für Einsatzberichte, Beschreibung, Foto, Bildbeschreibung, Hervorhebung „Neu im Fuhrpark“ mit Vorstellungstext) und Ausrüstung (Bezeichnung, Foto, Bildbeschreibung). Alle Rollen bearbeiten und legen neue Fahrzeuge und Geräte an; die Redaktion über die Freigabe (W-08). Entfernen dürfen Kommandant und Admins (Nachfrage, 30 Tage wiederherstellbar). Neue Fahrzeuge stehen sofort im Formular „Einsatz von Hand“ zur Auswahl. Die zentrale Fotoverwaltung (B-12) ist von hier aus verlinkt. | Muss |
 | B-22 | Zähler an den Bereichen: Ist etwas zu tun, zeigt das Symbol in der unteren Leiste eine rote Zahl – Freigabe: offene Einreichungen; Inhalte (Redaktion): „Zurück an dich“; Lernen: das Thema des Monats ist noch nicht bestanden, für Kommandanten zusätzlich je fehlendem Thema für diesen oder nächsten Monat; System: Hinweise der Schnittstellen. Ist alles erledigt, verschwindet die Zahl. Vorlesesoftware liest die Zahl mit Klartext vor (z. B. „Freigabe, 4 warten auf Freigabe“). | Muss |
 | B-23 | Angemeldet bleiben auf der öffentlichen Seite: Wer angemeldet ist, sieht auch die öffentlichen Seiten mit dem Kopf des Mitgliederbereichs (Logo, Menü der öffentlichen Seiten, Handbuch, „Abmelden“, Name und Rolle) und der unteren Leiste mit den eigenen Bereichen und Zählern (B-22). Im Menü steht statt „Login“ „Zum Mitgliederbereich“. Niemand fällt beim Ansehen eines Beitrags aus dem Mitgliederbereich heraus. | Muss |
@@ -284,13 +284,13 @@ Es ist davon auszugehen, dass nicht alle Mitglieder gern Weiterbildungen machen 
 | N-02 | Barrierefreiheit | WCAG 2.2 AA als Ziel: Kontraste, Alt-Texte, Tastaturbedienung mit Sprunglink „Zum Inhalt“, Tippziele mindestens 44 px. |
 | N-03 | Mobile first | Voll bedienbar ab 360 px Breite, ohne seitliches Scrollen, auch bei langen Wörtern und Adressen. |
 | N-04 | Performance | Lighthouse ≥ 90 mobil, Bilder als WebP/AVIF in mehreren Größen, Seiten-Cache. |
-| N-05 | Sicherheit | 2FA, Login-Drosselung, Zugangsschlüssel in wp-config.php, HTTPS, Security-Header. Eingaben werden immer als Text ausgegeben, nie als HTML oder Skript. Begrenzung von Änderungen: höchstens 30 Speichervorgänge je Person in 10 Minuten, danach Hinweis „Bitte warte ein paar Minuten“; Höchstlängen der Felder (B-20). |
+| N-05 | Sicherheit | 2FA, Login-Drosselung, Zugangsschlüssel in wp-config.php, HTTPS, Security-Header. Eingaben werden immer als Text ausgegeben, nie als HTML oder Skript. Jede schreibende Aktion prüft Rolle und Nonce auf dem Server, auch wenn kein Knopf dafür sichtbar ist (B-03). Externe Links nur mit https://, geprüft beim Speichern und bei der Ausgabe. Begrenzung von Änderungen: höchstens 30 Speichervorgänge je Person in 10 Minuten, danach Hinweis „Bitte warte ein paar Minuten“; Höchstlängen der Felder (B-20). |
 | N-06 | Betrieb | Tägliches Backup auf externen Speicher, Wiederherstellung regelmäßig getestet. |
 | N-07 | Kosten | Keine laufenden Kosten über das Hosting hinaus, ggf. wenige Euro für Backup-Speicher. Ausnahme: Variante B (4.3). |
 | N-08 | Design | Rot #CD1719, Logo aus dem Briefpapier, Roboto bzw. Roboto Condensed. Die Demo ist freigegebene Grundlage (Projektdokument „Corporate Design“). |
 | N-09 | Ansprache | Durchgehend Du-Form, auch im Mitgliederbereich, in Mails, Rechtstexten und im Handbuch. |
 | N-10 | Bildrechte | Standardnachweis „Fotos: Feuerwehr Piflas“. Fremde Fotos nur mit schriftlicher Erlaubnis. |
-| N-11 | Tests | Die Prüfungen der Demo-Testsuite sind die Abnahmeliste: Rollen, Anonymisierung, Freigabe-Sperre, keine externen Anfragen, Darstellung ab 360 px, Robustheit gegen fehlerhafte Eingaben. Die Zuordnung der Prüfungen zu den IDs steht in demo/README.md. |
+| N-11 | Tests | Die Prüfungen der Demo-Testsuite sind die Abnahmeliste: Rollen, Anonymisierung, Freigabe-Sperre, keine externen Anfragen, Darstellung ab 360 px, Robustheit gegen fehlerhafte Eingaben. Dazu Sicherheits- und Ausfalltests (test_security.py): Rechte je Rolle und Aktion, Schadcode in allen Formularen, Anmelde-Sperre, gestörte Schnittstellen, Doppelklicks. Welche ID welche Prüfung hat, steht in demo/ABDECKUNG.md; dort ist für jede ID auch die Prüfung in der echten Website festgelegt. |
 | N-12 | SEO | Saubere Adressen, Sitemap, strukturierte Daten für Organisation und Termine. |
 | N-13 | Frauen und Männer | Frauen werden genauso angesprochen wie Männer – selbstverständlich, nicht aufdringlich. Wo die Wahl besteht: (1) neutrale Formen zuerst (Mitglieder, Team, Redaktion, Ansprechperson, alle, die helfen). (2) Sonst beide Formen ausgeschrieben (Bürgerinnen und Bürger), in knappen Beschriftungen mit Schrägstrich (Webmaster/in). (3) Keine Sternchen oder Doppelpunkte – besser lesbar und für Vorleseprogramme. Ausnahmen: „Kommandant“ statt „Kommando“, weil ein Kommandant die Feuerwehr leitet, und „Admin“ statt „Administration“. Feuerwehrfunktionen heißen wie in den Feuerwehr-Dienstvorschriften (FwDV) und den bayerischen Vorschriften, z. B. Gruppenführer, Maschinist, Atemschutzgeräteträger, Jugendwart. Rollen auf der Website: Admin, Kommandant · Freigabe, Redaktion, Bereichsredaktion, Mitglied. Fotos und Bildbeschreibungen zeigen, wo möglich, Frauen und Männer. Auf „Mitmachen“ steht ausdrücklich, dass Frauen und Männer gleichermaßen willkommen sind. Gilt auch für Mails, Handbuch und Textvorlagen; die Demo-Testsuite prüft auf rein männliche Formen außerhalb dieser Ausnahmen. |
 
@@ -360,10 +360,10 @@ Bei Widersprüchen gilt das Lastenheft. Demo und Handbuch werden dann angepasst.
 | Dokument | Wofür | Wo |
 | --- | --- | --- |
 | Lastenheft (dieses Dokument) | Was gebaut wird | Online-Dokument, Claude-Projekt, PDF |
-| Demo v16 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
-| Testsuite (700 Prüfungen) | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`) |
+| Demo v17 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
+| Testsuite (700 + 68 Prüfungen) und Abdeckungsliste | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`, `demo/test_security.py`, `demo/ABDECKUNG.md`) |
 | Anleitung „Schnittstellen reparieren“ | Reparatur von DIVERA und Instagram durch die Technik (A-12) | GitHub, Backup (`betrieb/schnittstellen.md`) |
-| Handbuch Mitgliederbereich 1.17 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
+| Handbuch Mitgliederbereich 1.18 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
 | Corporate Design | Logo, Farben, Schrift | Claude-Projekt |
 | Backup-Paket mit WEITERMACHEN.md | Alles, um später weiterzuarbeiten | ZIP |
 
@@ -437,9 +437,9 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 | Ergebnis | Stand |
 | --- | --- |
 | Übergangsseite | Fertig zum Hochladen |
-| Demo v16 + Testsuite (700 Prüfungen) | Fertig, auf GitHub Pages |
-| Handbuch | Version 1.17 fertig |
-| Lastenheft | Version 1.18 |
+| Demo v17 + Testsuite (700 + 68 Prüfungen) | Fertig, auf GitHub Pages |
+| Handbuch | Version 1.18 fertig |
+| Lastenheft | Version 1.19 |
 | Backup-Paket | Wird mit jeder Version aktualisiert |
 
 **Sofort:** Übergangsseite hochladen. Vorher Joomla komplett sichern und die Speicherdauer der Logfiles in datenschutz.html eintragen.
@@ -481,7 +481,7 @@ Jede Phase endet mit einer Abnahme durch den Verein. Claude Code arbeitet in ein
 
 ## 7. Vorlagen für Claude Code
 
-Ins Repository gehören diese Vorlage als `CLAUDE.md`, das Lastenheft als `docs/lastenheft.md`, die Demo mit Testsuite nach `docs/referenz-demo/` und das Handbuch nach `docs/handbuch/`.
+Ins Repository gehören diese Vorlage als `CLAUDE.md`, das Lastenheft als `docs/lastenheft.md`, die Demo mit beiden Testsuiten und `ABDECKUNG.md` nach `docs/referenz-demo/`, die Arbeitspakete (`start/ARBEITSPAKETE.md`) nach `docs/start/` und das Handbuch nach `docs/handbuch/`.
 
 ```markdown
 # Website Feuerwehr Piflas e.V. (WordPress)
@@ -492,8 +492,9 @@ Nur eigener Code:
 - wp-content/plugins/ff-piflas-connect/  Rollen, Einladungen, DIVERA, Freigabe,
                                          Fotos, Instagram, Lernen, System-Bereich
 Anforderungen: docs/lastenheft.md (IDs F-, D-, W-, I-, B-, M-, C-, S-, R-, J-,
-E-, A-, N-, L-). Vorlage: docs/referenz-demo/ (Abnahme: test_app.py).
-Handbuch: docs/handbuch/ (A-06).
+E-, A-, N-, L-). Vorlage: docs/referenz-demo/ (Abnahme: test_app.py und
+test_security.py; welche ID wie geprüft wird: ABDECKUNG.md).
+Arbeitspakete: docs/start/ARBEITSPAKETE.md. Handbuch: docs/handbuch/ (A-06).
 
 ## Regeln
 - Oberfläche, Commits und Handbuch auf Deutsch in Du-Form, Frauen und Männer
@@ -501,10 +502,17 @@ Handbuch: docs/handbuch/ (A-06).
 - WordPress Coding Standards, PHP >= 8.2, kein Page-Builder.
 - Inhalte in die Datenbank, nie ins Repo. Alles Veränderliche als
   Einstellung im Backend (A-01).
-- Rollen nur in src/Roles.php, DIVERA-Daten nur über src/Divera/Anonymizer.php,
+- Rollen (Admin, Kommandant · Freigabe, Redaktion, Bereichsredaktion, Mitglied)
+  nur in src/Roles.php, DIVERA-Daten nur über src/Divera/Anonymizer.php,
   jeweils mit Tests.
+- Jede schreibende Aktion: Nonce prüfen und current_user_can() mit eigener
+  Capability – auch wenn die Oberfläche den Knopf nicht zeigt (B-03, N-05).
+- Formulare idempotent: doppelt abgeschickt erzeugt nichts doppelt (B-20).
+- Login: Drosselung nach 5 Fehlversuchen inkl. 2FA, Meldungen verraten nie,
+  ob es ein Konto gibt (B-01, B-05). Austritt = deaktivieren (B-08).
 - Schnittstellen nur in src/Divera/ und src/Instagram/ (Client, Mapping,
   Contract, README) mit Vertragstests gegen tests/fixtures/ (A-10 bis A-12).
+  Bei jeder Änderung docs/betrieb/schnittstellen.md mitpflegen.
 - Jede Änderung an Inhalten über den Verlauf-Dienst (B-07), nur anhängen.
 - Veröffentlichen nur mit Pflicht-Bestätigung, serverseitig geprüft (W-04).
 - Löschen nur durch Admins, nach Nachfrage, über den Papierkorb (B-16).
@@ -512,11 +520,17 @@ Handbuch: docs/handbuch/ (A-06).
 - Lernergebnisse nur in src/Learning/, eigene Tabelle, lesen nur mit der
   Rechteprüfung „Lernstand sehen“ (nur Kommandant), Löschfrist per Cron (E-09, E-11).
 - Zugangsdaten nur in wp-config.php.
-- Ausgaben immer escapen (esc_html, esc_attr, wp_kses_post), Eingaben prüfen (N-05).
+- Ausgaben immer escapen (esc_html, esc_attr, esc_url, wp_kses_post), Eingaben
+  prüfen, Höchstlänge an jedem Textfeld (N-05, B-20). Externe Links nur https://.
 - Keine externen Requests im Frontend; externe Links mit rel="noopener".
 - Fremd-Plugins nur nach Rücksprache (docs/plugins.md).
 - Jede neue Funktion: Handbuch-Abschnitt in einfacher Sprache.
-- Je Phase ein Branch und ein PR mit Checkliste der erfüllten IDs.
+- Demo-Prüfungen (test_app.py, test_security.py) als Playwright-Tests gegen die
+  Testseite übertragen; jede ID aus ABDECKUNG.md braucht einen Test oder eine
+  Abnahme.
+- Neue Funktionen bekommen einen Schalter im System-Bereich, wenn sie von einer
+  Klärung abhängen (DIVERA, Instagram, Lernen).
+- Je Arbeitspaket ein Branch und ein PR mit Checkliste der erfüllten IDs.
 
 ## Entwicklung
 npx @wordpress/env start | composer test | composer lint | npm run build
@@ -525,13 +539,15 @@ npx @wordpress/env start | composer test | composer lint | npm run build
 **Start-Prompt für Phase 1**
 
 ```text
-Lies CLAUDE.md, docs/lastenheft.md und docs/referenz-demo/. Setze Phase 1
-um: wp-env, Plugin ff-piflas-connect mit den Rollen aus 2.5, Einladungen
-per E-Mail (48 Std., erneut senden, zurückziehen), keine
-Selbstregistrierung (B-01 bis B-08), PHPUnit-Tests je Rolle, PHPCS und
-eine GitHub Action, die auf Staging deployt. Stelle vorher deinen Plan,
-offene Fragen und die geplanten Fremd-Plugins vor. Am Ende: PR mit
-Checkliste der IDs.
+Lies CLAUDE.md, docs/lastenheft.md, docs/start/ARBEITSPAKETE.md und
+docs/referenz-demo/ (Demo, Tests, ABDECKUNG.md). Setze Arbeitspaket 1 um:
+wp-env, Plugin ff-piflas-connect mit den fünf Rollen aus 2.5 und je einer
+Capability pro Aktion, Einladungen per E-Mail (48 Std., erneut senden,
+zurückziehen), keine Selbstregistrierung, Login-Drosselung, Austritt
+(B-01 bis B-08, E-01, E-10, N-05), PHPUnit-Tests je Rolle, PHPCS mit
+WordPress-Sicherheitsregeln und eine GitHub Action, die auf die Testseite
+deployt. Stelle vorher deinen Plan, offene Fragen und die geplanten
+Fremd-Plugins vor. Am Ende: PR mit Checkliste der IDs.
 ```
 
 ## 8. Änderungsverlauf
@@ -558,3 +574,4 @@ Checkliste der IDs.
 | 1.16 | 23.11.2026 | F-11: kein Notruf-Button im Kopf, „Login für Mitglieder“ ganz oben im Menü, Menü klarer gegliedert. Neu E-29: Bilder und Skizzen je Abschnitt mit Bildbeschreibung; fünf eigene Beispielskizzen. Geändert: E-02. Demo v15, Testsuite (700 Prüfungen), Handbuch 1.14. |
 | 1.17 | 23.11.2026 | F-11: Menü-Knopf heißt nur „Login“, hell statt rot und senkrecht mittig; Gruppen-Überschriften grau, Rot nur für die aktuelle Seite. Demo v16 (ganze Website optisch überarbeitet), 700 Prüfungen, Handbuch 1.16. |
 | 1.18 | 23.11.2026 | E-17: „Los geht’s“ auf der Karte führt direkt zur ersten Seite, kein doppeltes „Los geht’s“; Überblick zählt nicht als Schritt. F-11: Login-Knopf dunkelgrau. Demo v16, 700 Prüfungen, Handbuch 1.17. |
+| 1.19 | 23.11.2026 | Prüfung der Testabdeckung, Sicherheits- und Ausfalltests. Präzisiert: B-05 (Sperre nach 5 Fehlversuchen, Passwort-Link), B-08 (Austritt), B-20 (keine Doppel-Einträge), N-05 (Rechte je Aktion, nur https-Links), N-11 (test_security.py, ABDECKUNG.md), F-04 (Vormerken je Termin). Demo v17, 700 + 68 Prüfungen, Handbuch 1.18. |

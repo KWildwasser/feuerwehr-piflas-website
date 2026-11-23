@@ -11,13 +11,15 @@ Die Demo zeigt, wie die Website aussehen und funktionieren soll. Sie ist eine ei
 | `index.html` | Fertige Demo, läuft offline im Browser |
 | `handbuch.pdf` | Handbuch, nach dem Login in der Demo verlinkt |
 | `test_app.py` | Testsuite (Playwright), Ergebnis in `test_results.json`, Bilder in `shots/` |
+| `test_security.py` | Sicherheits- und Ausfalltests (Rechte je Aktion, Schadcode, Anmelde-Sperre, Störungen), Ergebnis in `security_results.json` |
+| `ABDECKUNG.md` | Jede Lastenheft-ID mit ihrer Prüfung in der Demo und in der echten Website – erzeugt mit `python ../tools/abdeckung.py` (aus `docs/`) |
 | `testimg/` | Testbilder (u. a. Foto mit GPS-Daten, Nicht-Bild-Datei) |
 
 ## Ausführen
 
 ```bash
 pip install playwright pillow && python -m playwright install chromium
-python build.py && python test_app.py        # Exit-Code 1 bei Fehlern
+python build.py && python test_app.py && python test_security.py   # Exit-Code 1 bei Fehlern
 CHROME=/pfad/zu/chrome python test_app.py    # optional eigener Browser
 ```
 
@@ -55,5 +57,8 @@ CHROME=/pfad/zu/chrome python test_app.py    # optional eigener Browser
 | Jubiläum | Ankündigung, Festjahr, Aufräumen 2028 | J-01 bis J-06 |
 | System | Ampel, Einstellungen, Handbuch-Link, Checkliste Admin-Wechsel | A-01, A-03, B-13 |
 | Robustheit | HTML in Eingaben wird nicht ausgeführt, lange Wörter brechen um | N-05, N-03 |
+| Sicherheit (`test_security.py`) | Rechte-Matrix Rolle × Bereich, jede schreibende Aktion und jedes Formular ohne Knopf, Schadcode in allen Formularen und in der Adresse, Höchstlängen, nur https-Links, Anmelde-Sperre nach 5 Fehlversuchen, „Passwort vergessen“ ohne Konto-Verrat, Austritt, Abmelden | B-01 bis B-05, B-08, B-20, N-05, E-09 |
+| Ausfallsicherheit (`test_security.py`) | beide Schnittstellen gestört, geänderte DIVERA-Antwort, Doppelklick, doppeltes Absenden, wilde Adressen, 1.000 Beiträge | D-08, A-10, A-11, I-01 |
+| Inhalte (`test_security.py`) | Vormerken je Termin, Jugend, Fußzeile, Bürgerinfos, Fördermitglied-Wege, Warnhinweis THL, Instagram-Häkchen, Farben und Schrift | F-04, F-07, F-12, C-01 bis C-03, S-01, W-05, W-06, N-08, N-10 |
 
-Neue Funktion → zuerst Lastenheft-ID, dann Demo, dann eine Prüfung hier und ein Abschnitt im Handbuch (A-06).
+Neue Funktion → zuerst Lastenheft-ID, dann Demo, dann eine Prüfung hier, `ABDECKUNG.md` neu erzeugen und ein Abschnitt im Handbuch (A-06).

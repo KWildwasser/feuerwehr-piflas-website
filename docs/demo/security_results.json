@@ -1,0 +1,342 @@
+[
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #redaktion (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #beitraege (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #seiten (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #fotos (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #planung (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #mitglieder (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #system (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #lernen (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #lthema (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #lernstand (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: ohne Anmeldung kein Zugriff auf #lplan (weiter zum Login)",
+  "login"
+ ],
+ [
+  true,
+  "B-03: Mitglied kommt genau in die erlaubten Bereiche (1)",
+  ""
+ ],
+ [
+  true,
+  "B-03/N-05: Mitglied – verbotene Aktionen ändern nichts, auch ohne Knopf",
+  ""
+ ],
+ [
+  true,
+  "B-03: verbotene Aktion meldet „Dafür fehlen dir die Rechte“",
+  ""
+ ],
+ [
+  true,
+  "B-03: Autor kommt genau in die erlaubten Bereiche (4)",
+  ""
+ ],
+ [
+  true,
+  "B-03/N-05: Autor – verbotene Aktionen ändern nichts, auch ohne Knopf",
+  ""
+ ],
+ [
+  true,
+  "B-03: Freigeber kommt genau in die erlaubten Bereiche (8)",
+  ""
+ ],
+ [
+  true,
+  "B-03/N-05: Freigeber – verbotene Aktionen ändern nichts, auch ohne Knopf",
+  ""
+ ],
+ [
+  true,
+  "B-03: Administrator kommt genau in die erlaubten Bereiche (8)",
+  ""
+ ],
+ [
+  true,
+  "B-03/N-05: Administrator – verbotene Aktionen ändern nichts, auch ohne Knopf",
+  ""
+ ],
+ [
+  true,
+  "E-09: Admin sieht nirgends Lernergebnisse",
+  ""
+ ],
+ [
+  true,
+  "Abmelden: „Zurück“ führt nicht wieder in den Mitgliederbereich",
+  "login"
+ ],
+ [
+  true,
+  "N-05: Eingabe „<img src=x onerror=\"window._…“ in allen Formularen wird nirgends ausgeführt",
+  ""
+ ],
+ [
+  true,
+  "N-05: Eingabe „\"><svg onload=\"window.__x=1\"…“ in allen Formularen wird nirgends ausgeführt",
+  ""
+ ],
+ [
+  true,
+  "N-05: Eingabe „'><script>window.__x=1</scri…“ in allen Formularen wird nirgends ausgeführt",
+  ""
+ ],
+ [
+  true,
+  "N-05: Eingabe „{{constructor.constructor(\"w…“ in allen Formularen wird nirgends ausgeführt",
+  ""
+ ],
+ [
+  true,
+  "N-05: Formulare aller Rollen wurden mit Schadcode befüllt",
+  "12"
+ ],
+ [
+  true,
+  "B-20: jedes Textfeld hat eine Höchstlänge",
+  ""
+ ],
+ [
+  true,
+  "N-05: Schadcode in der Adresse wird ignoriert, Startseite erscheint",
+  "Für Piflas im Einsatz. Ehrenamtlich, run"
+ ],
+ [
+  true,
+  "E-04/N-05: „javascript:“-Link im Lernthema wird abgewiesen",
+  ""
+ ],
+ [
+  true,
+  "N-05: System-Bereich weist „javascript:“-Link ab",
+  ""
+ ],
+ [
+  true,
+  "N-05: Partner-Links bleiben https, „javascript:“ wird nicht übernommen",
+  "['https://www.ff-ergolding.de/', 'https://oberglaim.feuerwehren.bayern/']"
+ ],
+ [
+  true,
+  "B-01: Fehlermeldung verrät nicht, ob es das Konto gibt",
+  "E-Mail oder Passwort stimmt nicht. Demo: Nutze eine der Beispiel-Adressen unten."
+ ],
+ [
+  true,
+  "B-05: nach 5 Fehlversuchen ist die Anmeldung gesperrt",
+  "Zu viele Fehlversuche. Aus Sicherheitsgründen ist die Anmeldung für 15 Minuten g"
+ ],
+ [
+  true,
+  "B-05: auch ein echtes Konto kommt während der Sperre nicht hinein",
+  ""
+ ],
+ [
+  true,
+  "B-05: falsche 2-Faktor-Codes zählen als Fehlversuche",
+  ""
+ ],
+ [
+  true,
+  "B-05: „Passwort vergessen“ antwortet immer gleich (kein Konto-Verrat)",
+  "Wenn es ein Konto mit dieser Adresse gibt, bekommst du gleich eine E-M"
+ ],
+ [
+  true,
+  "B-08: Deaktivieren fragt nach und sagt, dass Beiträge bleiben",
+  ""
+ ],
+ [
+  true,
+  "B-08: Konto deaktiviert, nicht gelöscht, wieder aktivierbar",
+  ""
+ ],
+ [
+  true,
+  "B-08/E-11: beim Austritt werden die Lernergebnisse sofort gelöscht",
+  ""
+ ],
+ [
+  true,
+  "B-08: Beiträge der ausgetretenen Person bleiben erhalten",
+  "2"
+ ],
+ [
+  true,
+  "B-08: deaktiviertes Konto kann sich nicht anmelden (gleiche Meldung wie unbekannt)",
+  ""
+ ],
+ [
+  true,
+  "B-08: eigenes Konto nicht deaktivierbar",
+  ""
+ ],
+ [
+  true,
+  "A-08: der zweite Admin kann nicht deaktiviert werden",
+  ""
+ ],
+ [
+  true,
+  "B-02: die eigene Rolle lässt sich auch ohne Knopf nicht ändern",
+  ""
+ ],
+ [
+  true,
+  "D-08/A-11: beide Schnittstellen gestört – alle öffentlichen Seiten laufen, Besucher sehen keine Fehlermeldung",
+  ""
+ ],
+ [
+  true,
+  "I-01/A-11: Instagram gestört – statt Vorschau nur ein Link zum Profil",
+  ""
+ ],
+ [
+  true,
+  "A-10: DIV-FMT – bei geänderter Antwort wird nichts übernommen",
+  ""
+ ],
+ [
+  true,
+  "D-08: Freigabe zeigt bei Störung „Einsatz von Hand anlegen“",
+  ""
+ ],
+ [
+  true,
+  "D-08: bei DIVERA-Störung bleiben die bisherigen Termine sichtbar",
+  ""
+ ],
+ [
+  true,
+  "Robustheit: Doppelklick auf „Veröffentlichen“ veröffentlicht höchstens einmal",
+  "4→4"
+ ],
+ [
+  true,
+  "Robustheit: doppelt abgeschickter Beitrag entsteht nur einmal",
+  "1"
+ ],
+ [
+  true,
+  "Robustheit: 60 schnelle, teils unsinnige Adressen – Seite bleibt bedienbar",
+  ""
+ ],
+ [
+  true,
+  "Robustheit: 1000 Beiträge – Aktuelles zeigt seitenweise, nicht alles auf einmal",
+  "6"
+ ],
+ [
+  true,
+  "F-04: Termine mit „Vormerken“ und Kalender-Abo",
+  ""
+ ],
+ [
+  true,
+  "F-07/L-11: Jugendfeuerwehr mit „Schnuppern“, Fotos nur mit Einwilligung der Eltern",
+  ""
+ ],
+ [
+  true,
+  "F-12/N-10: Fußzeile mit Rechtstexten, Instagram, Partnern, Login und Bildnachweis",
+  "Feuerwehr Piflas e.V.\nGartenstraße 2, 84030 Ergolding / Piflas\ninfo@feuerwehr-piflas.de · 0871 1433372 (nicht ständig be"
+ ],
+ [
+  true,
+  "F-12: Telefon mit Hinweis „nicht ständig besetzt“",
+  ""
+ ],
+ [
+  true,
+  "C-01: Notruf (W-Fragen) und Rettungsgasse",
+  ""
+ ],
+ [
+  true,
+  "C-02: Warn-App, Sirenensignale, Pegel-Link",
+  ""
+ ],
+ [
+  true,
+  "C-03: Rauchmelderpflicht",
+  ""
+ ],
+ [
+  true,
+  "S-01: „Fördermitglied werden“ von Startseite, Mitmachen und Jubiläum verlinkt",
+  "[2, 1, 1]"
+ ],
+ [
+  true,
+  "S-01: Höhe des Jahresbeitrags genannt oder als Platzhalter markiert",
+  ""
+ ],
+ [
+  true,
+  "W-05/L-04: Warnhinweis bei technischer Hilfe",
+  ""
+ ],
+ [
+  true,
+  "W-06: eigenes Häkchen „Auch auf Instagram“ je Einreichung",
+  ""
+ ],
+ [
+  true,
+  "N-08: Rot #CD1719 und selbst gehostete Roboto",
+  "['#CD1719', 'FwText, system-ui, -apple-system, sans-serif']"
+ ],
+ [
+  true,
+  "N-01/L-09: während aller Sicherheitstests keine Anfrage an fremde Server",
+  ""
+ ],
+ [
+  true,
+  "Keine JS-Fehler während der Sicherheits- und Ausfalltests",
+  ""
+ ]
+]

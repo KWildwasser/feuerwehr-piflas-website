@@ -25,6 +25,9 @@ jobs:
       - name: Testsuite
         working-directory: docs/demo
         run: python test_app.py
+      - name: Sicherheits- und Ausfalltests
+        working-directory: docs/demo
+        run: python test_security.py
       - name: Bildschirmfotos aufheben
         if: always()
         uses: actions/upload-artifact@v4

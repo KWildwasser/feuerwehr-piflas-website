@@ -6,8 +6,9 @@ Nur eigener Code:
 - wp-content/plugins/ff-piflas-connect/  Rollen, Einladungen, DIVERA, Freigabe,
                                          Fotos, Instagram, Lernen, System-Bereich
 Anforderungen: docs/lastenheft.md (IDs F-, D-, W-, I-, B-, M-, C-, S-, R-, J-,
-E-, A-, N-, L-). Vorlage: docs/referenz-demo/ (Abnahme: test_app.py).
-Handbuch: docs/handbuch/ (A-06).
+E-, A-, N-, L-). Vorlage: docs/referenz-demo/ (Abnahme: test_app.py und
+test_security.py; welche ID wie geprüft wird: ABDECKUNG.md).
+Arbeitspakete: docs/start/ARBEITSPAKETE.md. Handbuch: docs/handbuch/ (A-06).
 
 ## Regeln
 - Oberfläche, Commits und Handbuch auf Deutsch in Du-Form, Frauen und Männer
@@ -15,8 +16,14 @@ Handbuch: docs/handbuch/ (A-06).
 - WordPress Coding Standards, PHP >= 8.2, kein Page-Builder.
 - Inhalte in die Datenbank, nie ins Repo. Alles Veränderliche als
   Einstellung im Backend (A-01).
-- Rollen nur in src/Roles.php, DIVERA-Daten nur über src/Divera/Anonymizer.php,
+- Rollen (Admin, Kommandant · Freigabe, Redaktion, Bereichsredaktion, Mitglied)
+  nur in src/Roles.php, DIVERA-Daten nur über src/Divera/Anonymizer.php,
   jeweils mit Tests.
+- Jede schreibende Aktion: Nonce prüfen und current_user_can() mit eigener
+  Capability – auch wenn die Oberfläche den Knopf nicht zeigt (B-03, N-05).
+- Formulare idempotent: doppelt abgeschickt erzeugt nichts doppelt (B-20).
+- Login: Drosselung nach 5 Fehlversuchen inkl. 2FA, Meldungen verraten nie,
+  ob es ein Konto gibt (B-01, B-05). Austritt = deaktivieren (B-08).
 - Schnittstellen nur in src/Divera/ und src/Instagram/ (Client, Mapping,
   Contract, README) mit Vertragstests gegen tests/fixtures/ (A-10 bis A-12).
   Bei jeder Änderung docs/betrieb/schnittstellen.md mitpflegen.
@@ -27,11 +34,17 @@ Handbuch: docs/handbuch/ (A-06).
 - Lernergebnisse nur in src/Learning/, eigene Tabelle, lesen nur mit der
   Rechteprüfung „Lernstand sehen“ (nur Kommandant), Löschfrist per Cron (E-09, E-11).
 - Zugangsdaten nur in wp-config.php.
-- Ausgaben immer escapen (esc_html, esc_attr, wp_kses_post), Eingaben prüfen (N-05).
+- Ausgaben immer escapen (esc_html, esc_attr, esc_url, wp_kses_post), Eingaben
+  prüfen, Höchstlänge an jedem Textfeld (N-05, B-20). Externe Links nur https://.
 - Keine externen Requests im Frontend; externe Links mit rel="noopener".
 - Fremd-Plugins nur nach Rücksprache (docs/plugins.md).
 - Jede neue Funktion: Handbuch-Abschnitt in einfacher Sprache.
-- Je Phase ein Branch und ein PR mit Checkliste der erfüllten IDs.
+- Demo-Prüfungen (test_app.py, test_security.py) als Playwright-Tests gegen die
+  Testseite übertragen; jede ID aus ABDECKUNG.md braucht einen Test oder eine
+  Abnahme.
+- Neue Funktionen bekommen einen Schalter im System-Bereich, wenn sie von einer
+  Klärung abhängen (DIVERA, Instagram, Lernen).
+- Je Arbeitspaket ein Branch und ein PR mit Checkliste der erfüllten IDs.
 
 ## Entwicklung
 npx @wordpress/env start | composer test | composer lint | npm run build

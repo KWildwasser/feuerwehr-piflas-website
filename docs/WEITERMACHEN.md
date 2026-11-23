@@ -1,6 +1,6 @@
 # Webpräsenz Feuerwehr Piflas – Backup & Anleitung zum Weitermachen
 
-Stand: **23.11.2026** · Lastenheft **v1.18** · Demo **v16** · Handbuch **1.17** · Testsuite **700/700 bestanden**
+Stand: **23.11.2026** · Lastenheft **v1.19** · Demo **v17** · Handbuch **1.18** · Testsuite **700/700 + 68/68 Sicherheit bestanden**
 
 Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte, Bilder und Vorlagen. Damit kannst du (oder jemand aus dem Verein, oder eine neue Claude-Sitzung) jederzeit nahtlos weitermachen. Es enthält keine Zugangsdaten.
 
@@ -11,16 +11,20 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | Ordner / Datei | Inhalt |
 |---|---|
 | `PROJEKT-ANWEISUNGEN.md` | Benutzerdefinierte Anweisungen für das Claude-Projekt (zum Einfügen) |
-| `lastenheft/lastenheft-v1.18.md` | Das Lastenheft als Text – verbindliche Grundlage |
-| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.18.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
+| `lastenheft/lastenheft-v1.19.md` | Das Lastenheft als Text – verbindliche Grundlage |
+| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.19.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
 | `lastenheft/make_pdf.py` | Erzeugt das PDF aus der neuesten `lastenheft-vX.Y.md` |
 | `lastenheft/CLAUDE.md`, `start-prompt-phase1.txt` | Vorlagen für das Code-Repository und die erste Claude-Code-Sitzung |
-| `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.17 (alle Rollen) |
+| `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.18 (alle Rollen) |
 | `handbuch/inhalt.html`, `shots.py`, `make.py`, `img/` | Quellen: Text, Bildschirmfotos aus der Demo, PDF-Erzeugung |
 | `demo/README.md` | Aufbau der Demo und Zuordnung der Prüfungen zu den Lastenheft-IDs |
 | `demo/app-src.html` | Quelltext der Demo – **hier wird geändert** |
 | `demo/build.py` → `demo/index.html` | Baut die fertige Demo (eine Datei, läuft offline) |
 | `demo/test_app.py`, `demo/testimg/` | Testsuite (700 Prüfungen) = Abnahmeliste für die echte Website |
+| `demo/test_security.py` | Sicherheits- und Ausfalltests (68 Prüfungen) |
+| `demo/ABDECKUNG.md`, `../tools/abdeckung.py` | Jede Lastenheft-ID mit ihrer Prüfung (Demo und echte Website) |
+| `start/ARBEITSPAKETE.md` | 10 Arbeitspakete für Claude Code mit IDs und Abnahme |
+| `pitch/` | Pitch-Leitfaden für das Treffen am 26.11. (PDF und Text) |
 | `plan/Umsetzungsplan-bis-Weihnachten-2026.pdf`, `plan/umsetzungsplan-bis-weihnachten-2026.md` | Umsetzungsplan bis Weihnachten 2026 (PDF und Text; Online-Fassung siehe Links) |
 | `betrieb/schnittstellen.md` | Anleitung „Schnittstellen reparieren“ (DIVERA, Instagram) für die Technik – A-12 |
 | `index.html`, `assets/screens/`, `assets/qr-projektseite.svg` | Projektseite auf GitHub Pages (mit QR-Code für den Pitch) |
@@ -43,7 +47,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 - **GitHub (alles, öffentlich):** https://github.com/KWildwasser/feuerwehr-piflas-website
 - **Demo öffentlich (GitHub Pages):** https://kwildwasser.github.io/feuerwehr-piflas-website/demo/
 - **Projektseite (für den Pitch, mit QR-Code):** https://kwildwasser.github.io/feuerwehr-piflas-website/
-- **Demo v16 (Claude-Artefakt, gleicher Link wie zuvor):** https://claude.ai/artifact/JDBEcotDJPXWSgDe7dBzhn
+- **Demo v17 (Claude-Artefakt, gleicher Link wie zuvor):** https://claude.ai/artifact/JDBEcotDJPXWSgDe7dBzhn
 - Ältere, öffentlich geteilte Stände: v4 https://claude.ai/artifact/3zpe9uaMATpMUXYjNNLvS4 · v3 https://claude.ai/artifact/PPtQ5Y7QVMb5PSzn52DTCA (nicht mehr aktuell)
 - Partnerfeuerwehren: https://www.ff-ergolding.de/ · https://oberglaim.feuerwehren.bayern/
 - Instagram: https://www.instagram.com/feuerwehrpiflas/
@@ -61,6 +65,7 @@ python -m playwright install chromium
 cd demo
 python build.py          # erzeugt index.html (ca. 2,3 MB)
 python test_app.py       # 2–4 Minuten, Ergebnis: "700 von 700 Prüfungen bestanden", Exit-Code 1 bei Fehlern
+python test_security.py  # 1–2 Minuten, "68 von 68 Sicherheits- und Ausfallprüfungen bestanden"
 
 cd ../handbuch
 python shots.py          # neue Bildschirmfotos aus der Demo
@@ -77,7 +82,7 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 ## 4. Nächste Schritte (Reihenfolge)
 
 1. **Übergangsseite online stellen** – `uebergangsseite/LIESMICH.txt`. Vorher Joomla komplett sichern, Logfile-Dauer des Hosters in `datenschutz.html` eintragen.
-2. **Pitch** beim Kommandanten, im Gemeinderat und beim Bürgermeister mit der Projektseite und Demo v16 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Lernen, Störung simulieren).
+2. **Pitch** beim Kommandanten, im Gemeinderat und beim Bürgermeister mit der Projektseite und Demo v17 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Lernen, Störung simulieren).
 3. **Betriebsvariante entscheiden** (Lastenheft 4.3): Wer betreut die Seite? Ohne zwei Admins → Wartung durch Dienstleister.
 4. **Offene Punkte** aus Lastenheft Abschnitt 5 einsammeln (Kommandant, Ortsteile, Pflege der Vereinsseite laut Satzung, Jubiläumstermine, Fahrzeugtypen, Namen der Fotografinnen und Fotografen, PDFs, Förderbeitrag …).
 5. **Phase 0** (Zugänge, Hosting-Prüfung, DIVERA-API, Instagram-Business-Konto), dann **Phase 1** mit Claude Code und dem Start-Prompt.
@@ -86,9 +91,9 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 
 Dieses ZIP hochladen und z. B. schreiben:
 
-> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.18.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
+> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.19.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
 
-Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.18.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
+Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.19.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
 
 ## 6. Wichtige Entscheidungen (Kurzfassung)
 
@@ -98,7 +103,7 @@ Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `laste
 - **Du-Form**, Frauen und Männer gleichermaßen ansprechen (N-13); Ausnahmen „Kommandant“, „Admin“ und FwDV-Funktionen.
 
 **Gestaltung**
-- Ruhig und hochwertig: weiße Karten mit weichem Schatten statt Rahmen, helle Filter-Knöpfe, dünne Kopflinie mit rotem Akzent, leichtere Platzhalter und Jubiläumsband (Demo v16). Rot #CD1719 und Roboto bleiben; Kontrast und 44-px-Tippziele werden in der Testsuite geprüft. Im Theme als zentrale Stil-Datei umsetzen, nicht je Seite.
+- Ruhig und hochwertig: weiße Karten mit weichem Schatten statt Rahmen, helle Filter-Knöpfe, dünne Kopflinie mit rotem Akzent, leichtere Platzhalter und Jubiläumsband (Demo v17). Rot #CD1719 und Roboto bleiben; Kontrast und 44-px-Tippziele werden in der Testsuite geprüft. Im Theme als zentrale Stil-Datei umsetzen, nicht je Seite.
 
 **Konten und Rechte**
 - Nur per **Einladung**, **eine Rolle je Konto**, immer **zwei Admins**. Rollen: Admin, Kommandant · Freigabe, Redaktion, Bereichsredaktion, Mitglied (nur Lernen). Admins ändern Rollen am Konto (B-02).

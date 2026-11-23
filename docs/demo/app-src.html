@@ -627,7 +627,9 @@ const today = () => S.today || new Date();
 const jubEnd = () => (S.settings && S.settings.jubEnd) ? new Date(S.settings.jubEnd + 'T23:59:59') : JUB.end;
 const jubActive = () => (!S.settings || S.settings.jubOn) && today() >= JUB.start && today() <= jubEnd();
 const jubOver = () => today() > jubEnd();
-const PARTNER = () => [['Freiwillige Feuerwehr Ergolding', S.settings.pE], ['Freiwillige Feuerwehr Oberglaim', S.settings.pO]];
+/* Externe Links nur mit https:// – beim Speichern und noch einmal bei der Ausgabe (N-05) */
+const SAFE_URL = /^https:\/\/[^\s"'<>]+$/;
+const PARTNER = () => [['Freiwillige Feuerwehr Ergolding', SAFE_URL.test(S.settings.pE || '') ? S.settings.pE : ''], ['Freiwillige Feuerwehr Oberglaim', SAFE_URL.test(S.settings.pO || '') ? S.settings.pO : '']];
 const jubNext = () => JUB.events.find(e => tDate(e) >= today());
 const daysTo = t => Math.max(0, Math.ceil((new Date(t.y, t.m, t.d) - new Date(today().getFullYear(), today().getMonth(), today().getDate())) / 864e5));
 const dmy = t => `${String(t.d).padStart(2,'0')}.${String(t.m+1).padStart(2,'0')}.${t.y}`;
@@ -817,7 +819,7 @@ const TITLE = {editor:'Bearbeiten', fotos:'Fotos', thema:'Thema', lthema:'Thema 
 const route = () => (location.hash || '#start').slice(1);
 const tag = typ => `<span class="tag t-${typ}">${ART[typ][0]}</span>`;
 const eRow = (e, i) => `<button class="li${S.neu === e.id ? ' neu' : ''}" data-act="detail" data-id="${e.id}"><span class="dt">${e.d}</span><span>${tag(e.typ)}<b>${esc(e.t)}</b></span></button>`;
-const tRow = t => `<div class="li${t.neu && S.neu === 'termin' ? ' neu' : ''}${t.jub ? ' jubrow' : ''}"><span class="cal"><b>${String(t.d).padStart(2,'0')}</b><span>${MON[t.m]}</span></span><span>${t.jub ? '<span class="tag t-jub">125 Jahre</span> ' : ''}<b>${esc(t.t)}</b><span class="mini" style="font-size:15px">${esc(t.o)}</span></span></div>`;
+const tRow = (t, vm) => `<div class="li${t.neu && S.neu === 'termin' ? ' neu' : ''}${t.jub ? ' jubrow' : ''}"><span class="cal"><b>${String(t.d).padStart(2,'0')}</b><span>${MON[t.m]}</span></span><span style="flex:1">${t.jub ? '<span class="tag t-jub">125 Jahre</span> ' : ''}<b>${esc(t.t)}</b><span class="mini" style="font-size:15px">${esc(t.o)}</span></span>${vm ? `<button class="ib" data-act="vormerken" data-t="${esc(t.t)}" aria-label="${esc(t.t)} vormerken (Kalenderdatei)" title="Vormerken">${I.cal}</button>` : ''}</div>`;
 const f = (label, inner) => `<label class="f">${label}${inner}</label>`;
 const pubHead = r => `<header class="top"><div class="wrap"><a href="#start" aria-label="Feuerwehr Piflas – Startseite"><span class="logo" role="img" aria-label="Feuerwehr Piflas"></span></a>
   <nav class="dnav" aria-label="Hauptmenü">${pubList().slice(1,6).map(([k,l]) => `<a href="#${k}"${r===k?' aria-current="page"':''}${k==='jubilaeum'?' class="jubnav"':''}>${l}</a>`).join('')}<a href="#login">Login</a></nav>
@@ -890,8 +892,8 @@ ${sec(`<div class="sh"><h2>Aus dem Vereinsleben</h2><a href="#aktuelles">Alle Be
     <a href="#foerdern"><b>Fördermitglied</b><span>Unterstützen ohne Einsatzdienst – Beitrittserklärung als PDF</span></a>
   </div>
   <form class="card" id="f-quick" novalidate style="max-width:640px"><h3>In 30 Sekunden melden – wir rufen dich an</h3>
-    ${f('Dein Name', '<input name="name" required autocomplete="name">')}
-    ${f('Telefon oder E-Mail', '<input name="kontakt" required autocomplete="tel">')}
+    ${f('Dein Name', '<input name="name" required autocomplete="name" maxlength="80">')}
+    ${f('Telefon oder E-Mail', '<input name="kontakt" required autocomplete="tel" maxlength="120">')}
     ${f('Interesse', '<select name="int"><option>Aktiv mitmachen</option><option>Jugendfeuerwehr</option><option>Fördermitglied</option><option>Erst mal reinschnuppern</option></select>')}
     <label class="chk"><input type="checkbox" name="ds" required><span class="ct">Ich habe die <a href="#datenschutz">Datenschutzhinweise</a> gelesen.</span></label>
     <p class="err" id="e-quick"></p><button class="btn" type="submit">Ich bin interessiert</button></form>
@@ -961,7 +963,7 @@ V.termine = () => {
   const list = pubT().filter(t => S.tf === 'Alle' || t.k === S.tf);
   return sec(`<h1>Termine</h1><p>Alle nicht-privaten Termine kommen automatisch aus DIVERA 24/7. Private Termine werden nicht übernommen.</p>
     <div class="chips" role="group" aria-label="Kategorie">${ks.map(k => `<button class="chip" data-act="tf" data-k="${k}" aria-pressed="${S.tf===k}">${k}</button>`).join('')}</div>
-    <div class="list">${list.map(tRow).join('')}</div>
+    <div class="list">${list.map(t => tRow(t, true)).join('')}</div>
     <button class="btn o sm" data-act="ical" style="align-self:flex-start">Kalender abonnieren</button><span class="mini">Beispieltermine</span>`);
 };
 
@@ -994,8 +996,8 @@ ${sec(`<h2>Danke an alle, die uns unterstützen</h2><div class="ig" style="grid-
 V.mitmachen = () => { const u = nextUebung(); return sec(`<h1>Mach mit!</h1>
   <p style="font-size:18px">Keine Vorkenntnisse nötig – wir bilden dich aus. Frauen und Männer sind bei uns gleichermaßen willkommen. Melde dich in 30 Sekunden, wir rufen dich an.</p>
   <form class="card" id="f-kontakt" novalidate style="max-width:640px">
-  ${f('Dein Name', '<input name="name" required autocomplete="name">')}
-  ${f('Telefon oder E-Mail', '<input name="kontakt" required autocomplete="tel">')}
+  ${f('Dein Name', '<input name="name" required autocomplete="name" maxlength="80">')}
+  ${f('Telefon oder E-Mail', '<input name="kontakt" required autocomplete="tel" maxlength="120">')}
   ${f('Interesse', '<select name="thema"><option>Aktiv im Einsatzdienst</option><option>Jugendfeuerwehr</option><option>Fördermitglied</option><option>Erst mal reinschnuppern</option><option>Brandschutzerziehung anfragen</option></select>')}
   <p class="mini" style="font-size:14px">Du bist unter 16? Dann melde dich bitte gemeinsam mit einem Elternteil.</p>
   <label class="chk"><input type="checkbox" name="ds" required><span class="ct">Ich habe die <a href="#datenschutz">Datenschutzhinweise</a> gelesen.</span></label>
@@ -1051,10 +1053,12 @@ V.login = () => {
   return sec(`<div class="login stack"><h1>Login für Mitglieder</h1><p>Nur für eingeladene Mitglieder des Feuerwehr Piflas e.V. Deine Rolle ist in deinem Konto hinterlegt – du musst nichts auswählen.</p>
     <form class="card" id="f-login" novalidate>
       ${f('E-Mail', '<input name="mail" type="email" required autocomplete="username" maxlength="120">')}
-      ${f('Passwort', '<input name="pw" type="password" required autocomplete="current-password">')}
+      ${f('Passwort', '<input name="pw" type="password" required autocomplete="current-password" maxlength="200">')}
       <label class="chk"><input type="checkbox" name="stay"><span class="ct">Auf diesem Gerät angemeldet bleiben</span></label><span class="mini" style="margin-top:-6px">Gilt nur für die Rolle „Mitglied“, bis zu 90 Tage (E-25). Auf fremden Geräten nicht anhaken.</span>
       <p class="err" id="e-login"></p><button class="btn" type="submit">Anmelden</button>
+      <button type="button" class="lnk" data-act="pw-forgot" aria-expanded="${!!S.pwf}">Passwort vergessen?</button>
       <span class="mini" id="demo-konten">Demo-Konten, Passwort beliebig: max@beispiel.de (Kommandant), erika@beispiel.de (Admin), jonas@beispiel.de (Redaktion), anna@beispiel.de (Mitglied)</span></form>
+    ${S.pwf ? `<form class="card" id="f-pw" novalidate><b>Passwort zurücksetzen</b>${f('Deine E-Mail', '<input name="m" type="email" required autocomplete="username" maxlength="120">')}<p class="err" id="e-pw"></p><button class="btn" type="submit">Link schicken</button><span class="mini">Der Link gilt einmalig 1 Stunde. Danach legst du ein neues Passwort fest.</span></form>` : ''}
     <div class="card stack" id="quick"><b>Schnell-Login für die Demo</b><span class="mini">Ohne E-Mail und Code – einfach ein Beispielkonto wählen:</span><div class="row2 ql"><button class="btn o sm" type="button" data-act="quick-login" data-role="Freigeber" style="color:var(--ink)">Kommandant</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Administrator" style="color:var(--ink)">Admin</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Autor" style="color:var(--ink)">Redaktion</button><button class="btn o sm" type="button" data-act="quick-login" data-role="Mitglied" style="color:var(--ink)">Mitglied</button></div>
     </div><span class="mini">Kein Konto? Konten werden nur per Einladung durch die Admins vergeben.</span></div>`);
 };
@@ -1397,7 +1401,7 @@ V.fotos = () => sec(`<h1 style="font-size:40px">Fotos</h1><p style="color:var(--
       : `<div class="row2">${gi === 3 ? '' : `<label class="btn o sm upl" style="color:var(--ink)">Ersetzen<input class="vh" type="file" accept="image/*" data-up="rep" data-k="${m.k}" aria-label="Foto ersetzen: ${esc(m.w[0])}"></label>`}${S.gone[m.k] ? '' : `<button class="btn o sm" data-act="m-del" data-k="${m.k}" style="color:var(--rot-d)">Entfernen</button>`}</div>`}</div></div>`).join('')}</div>`).join('')}`);
 V.planung = () => sec(`<a class="btn o sm" href="#beitraege" style="color:var(--ink);align-self:flex-start">← Inhalte</a><h1 style="font-size:40px">Redaktionsplan</h1><div class="stat" style="font-size:15px"><b>Ziel: 1 Beitrag pro Woche.</b> Erinnerung geht 3 Tage vor dem Termin an die zuständige Person.</div>
   <div class="list">${S.plan.map(p => `<div class="li"><span class="dt">${p.d}</span><span><b>${esc(p.t)}</b><span class="mini" style="font-size:15px">${esc(p.w)} · ${esc(p.s)}</span></span></div>`).join('')}</div>
-  <form class="card" id="f-plan" novalidate><h2 style="font-size:24px">Thema einplanen</h2>${f('Thema', '<input name="t" required>')}${f('Datum', '<input name="d" type="date" required>')}${f('Zuständig', `<select name="w">${S.members.filter(m => !m.inv).map(m => `<option>${esc(m.n)}</option>`).join('')}</select>`)}<p class="err" id="e-plan"></p><button class="btn" type="submit">Einplanen</button></form>`);
+  <form class="card" id="f-plan" novalidate><h2 style="font-size:24px">Thema einplanen</h2>${f('Thema', '<input name="t" required maxlength="120">')}${f('Datum', '<input name="d" type="date" required>')}${f('Zuständig', `<select name="w">${S.members.filter(m => !m.inv).map(m => `<option>${esc(m.n)}</option>`).join('')}</select>`)}<p class="err" id="e-plan"></p><button class="btn" type="submit">Einplanen</button></form>`);
 /* ---------- System: Zustand, Schnittstellen-Diagnose (A-10 bis A-12), Einstellungen ---------- */
 /* Fehlerkatalog: Code → [Stufe, Klartext, Ursache, Schritte ohne IT-Kenntnisse, Hinweis für die Technik].
    Dieselben Codes stehen im Protokoll der echten Website und in docs/betrieb/schnittstellen.md. */
@@ -1448,8 +1452,8 @@ V.system = () => {
     ${f('Jubiläum automatisch ausblenden ab', `<input name="jubEnd" type="date" required value="${S.settings.jubEnd}">`)}
     <label class="chk"><input type="checkbox" name="mailOn" ${S.settings.mailOn ? 'checked' : ''}><span class="ct">Tägliche E-Mail-Erinnerung an die Kommandanten, solange etwas auf Freigabe wartet</span></label>
     ${f('Uhrzeit der Erinnerung', `<input name="mailT" type="time" value="${esc(S.settings.mailT)}">`)}
-    ${f('Link Partnerfeuerwehr Ergolding', `<input name="pE" type="url" placeholder="https://…" value="${esc(S.settings.pE)}">`)}
-    ${f('Link Partnerfeuerwehr Oberglaim', `<input name="pO" type="url" placeholder="https://…" value="${esc(S.settings.pO)}">`)}
+    ${f('Link Partnerfeuerwehr Ergolding', `<input name="pE" type="url" maxlength="200" placeholder="https://…" value="${esc(S.settings.pE)}">`)}
+    ${f('Link Partnerfeuerwehr Oberglaim', `<input name="pO" type="url" maxlength="200" placeholder="https://…" value="${esc(S.settings.pO)}">`)}
     <p class="err" id="e-settings"></p><button class="btn" type="submit">Speichern</button>
     <span class="mini">Änderungen sind sofort online. Texte von Verein, Chronik, Fahrzeugen und Ausrüstung pflegst du unter „Seiten“ – Layout und Farben bleiben dabei geschützt.</span></form>
   <h2 style="font-size:26px">Hilfe</h2>
@@ -1458,7 +1462,7 @@ V.system = () => {
   <details class="help"><summary>Monatlich und jährlich zu tun</summary><ul><li><b>Monatlich (10 Min.):</b> Monatsbericht lesen, gelbe und rote Punkte abarbeiten</li><li><b>Jährlich:</b> Rechtstexte, Bürgerinfos und Konten prüfen, alte Fotos aussortieren, einmal „Verbindung testen“ bei beiden Schnittstellen</li></ul></details>
   <details class="help"><summary>Notfall: Wen anrufen?</summary><ul><li>Webhoster-Support: [Telefon]</li><li>Technische Ansprechperson: [Name, Telefon]</li><li>Zweite Person als Admin: [Name]</li><li>Code der Website: öffentliches Archiv auf GitHub, Anleitung „Schnittstellen reparieren“</li></ul></details>`);
 };
-const cntR = r => S.members.filter(m => m.r === r && !m.inv).length;
+const cntR = r => S.members.filter(m => m.r === r && !m.inv && !m.off).length;
 V.mitglieder = () => sec(`<h1 style="font-size:40px">Mitglieder</h1>
   <div class="stat" style="font-size:15px" id="rollen"><b>Jedes Konto hat genau eine Rolle.</b> Aktiv: ${cntR('Freigeber')} Kommandanten · ${cntR('Administrator')} Admins · ${cntR('Autor') + cntR('Bereich Jugend')} Redaktion · ${cntR('Mitglied')} Mitglieder (nur Lernen). Es gibt immer mindestens zwei Admins.</div>
   <form class="card" id="f-invite" novalidate><h2 style="font-size:26px">Neues Mitglied einladen</h2>
@@ -1467,7 +1471,10 @@ V.mitglieder = () => sec(`<h1 style="font-size:40px">Mitglieder</h1>
     <label class="chk"><input type="checkbox" name="akt" checked><span class="ct">Gehört zur Einsatzabteilung – zählt im Lernstand</span></label>
     <p class="err" id="e-invite"></p><button class="btn" type="submit">Einladung senden</button><span class="mini">Link 48 Std. gültig; das Mitglied legt sein Passwort selbst fest.</span></form>
   <h2 style="font-size:26px">Alle Konten <span class="mini">(Beispiel)</span></h2>
-  <div class="stack" id="mlist">${S.members.map((m, i) => `<div class="card" style="gap:6px${m.inv ? ';border-style:dashed' : ''}"><div class="sh"><b>${esc(m.n)}</b><span class="tag t-bma">${esc(RL[m.r] || m.r)}</span></div><span class="${m.inv ? 'st-wait' : 'st-ok'}" style="font-size:15px">${esc(m.s)}</span>${m.akt === false ? '<span class="mini">Nicht in der Einsatzabteilung – zählt nicht im Lernstand</span>' : ''}${m.inv ? `<div class="row2"><button class="btn o sm" data-act="resend" data-i="${i}" style="color:var(--ink)">Erneut senden</button><button class="btn o sm" data-act="revoke" data-i="${i}" style="color:var(--ink)">Zurückziehen</button></div>` : roleEd(m, i)}</div>`).join('')}</div>`);
+  <div class="stack" id="mlist">${S.members.map((m, i) => `<div class="card" style="gap:6px${m.inv ? ';border-style:dashed' : ''}"><div class="sh"><b>${esc(m.n)}</b><span class="tag t-bma">${esc(RL[m.r] || m.r)}</span></div><span class="${m.inv ? 'st-wait' : 'st-ok'}" style="font-size:15px">${esc(m.s)}</span>${m.akt === false ? '<span class="mini">Nicht in der Einsatzabteilung – zählt nicht im Lernstand</span>' : ''}${m.inv ? `<div class="row2"><button class="btn o sm" data-act="resend" data-i="${i}" style="color:var(--ink)">Erneut senden</button><button class="btn o sm" data-act="revoke" data-i="${i}" style="color:var(--ink)">Zurückziehen</button></div>` : m.off ? `<div class="row2"><button class="btn o sm" data-act="m-on" data-i="${i}" style="color:var(--ink)">Wieder aktivieren</button></div>` : roleEd(m, i) + offEd(m, i)}</div>`).join('')}</div>`);
+/* Austritt (B-08): Konto deaktivieren statt löschen – Beiträge bleiben, Anmelden geht nicht mehr; nie unter zwei Admins (A-08) */
+const offEd = (m, i) => m.n === S.user.name || S.rch === i ? '' : S.moff !== i ? `<div class="row2"><button class="btn o sm" data-act="m-off" data-i="${i}" style="color:var(--ink)">Deaktivieren (Austritt)</button></div>`
+  : `<div class="stat warnbox stack" style="gap:8px;font-size:15px" id="moff-ask"><span><b>${esc(m.n)} deaktivieren?</b> Anmelden geht dann nicht mehr. Beiträge und Verlauf bleiben erhalten, Lernergebnisse werden gelöscht (E-11). Du kannst das Konto später wieder aktivieren.</span><div class="row2"><button class="btn sm" data-act="m-off-ok" data-i="${i}">Ja, deaktivieren</button><button class="btn o sm" data-act="m-off-no" style="color:var(--ink)">Abbrechen</button></div></div>`;
 /* Rolle ändern (B-02): nur Admins, nie die eigene Rolle, immer mindestens zwei Admins (A-08) */
 const ROPT = [['Mitglied','Mitglied · nur Lernen'],['Autor','Redaktion'],['Bereich Jugend','Redaktion Jugend'],['Freigeber','Kommandant · Freigabe'],['Administrator','Admin']];
 const roleEd = (m, i) => m.n === S.user.name ? '<span class="mini">Deine eigene Rolle ändert ein anderer Admin.</span>'
@@ -1621,7 +1628,7 @@ V.thema = () => {
   } else if (page === 'keys') {
     body = `<article class="lpage"><h1 class="lkick">${esc(t.t)}</h1><h2 style="font-size:28px">Das Wichtigste</h2>
       ${t.keys.length ? `<ul class="lkeys" id="l-keys">${t.keys.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
-      ${t.links.length ? `<div class="stack" id="l-links" style="gap:4px"><b>Mehr dazu (externe Seiten)</b>${t.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener" class="xl">${esc(l.l)} ↗</a>`).join('')}</div>` : ''}
+      ${t.links.length ? `<div class="stack" id="l-links" style="gap:4px"><b>Mehr dazu (externe Seiten)</b>${t.links.filter(l => SAFE_URL.test(l.u)).map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener" class="xl">${esc(l.l)} ↗</a>`).join('')}</div>` : ''}
       <p class="mini" id="l-src"><b>Quelle:</b> ${esc(t.src || '[Quelle angeben]')}${t.chk ? ' · Fachlich geprüft: ' + esc(t.chk.by) : ''}</p>
       <div class="tip" style="background:#E8EEF7" id="l-safe"><span style="font-size:15px"><b>Sicherheit geht vor:</b> Diese Lerneinheit ersetzt keine Ausbildung, keine Übung und keine Unterweisung. Im Einsatz gilt, was deine Führungskraft anordnet.</span></div></article>
       ${t.qs.length ? nav('', `Zum Test – ${t.qs.length} Fragen`) : '<div class="lnav"><button class="btn o" data-act="l-back" style="color:var(--ink)">Zurück</button><a class="btn" href="#lernen">Fertig</a></div>'}`;
@@ -1689,15 +1696,15 @@ V.lthema = () => {
       <fieldset class="f"><legend>Symbol</legend><div class="licpick">${Object.entries(LIC).map(([k, c]) => `<label class="licp"><input type="radio" name="ic" value="${k}"${(d.ic || 'buch') === k ? ' checked' : ''}><span class="lic" style="background:${c[1]}">${c[2]}</span><span>${c[0]}</span></label>`).join('')}</div></fieldset>
       ${f('Einleitung (1–2 Sätze, macht Lust aufs Thema)', `<textarea name="intro" rows="2" maxlength="300">${esc(d.intro)}</textarea>`)}
       <h2 style="font-size:22px;margin:8px 0 0">Inhalt</h2><span class="mini">Jeder Abschnitt wird eine eigene Seite am Handy.</span>
-      ${d.secs.map((s, i) => `<fieldset class="ltf"><legend>Abschnitt ${i + 1}</legend>${f('Überschrift', `<input name="sh${i}" maxlength="80" value="${esc(s.h)}">`)}${f('Text (Leerzeile = neuer Absatz)', `<textarea name="sx${i}" rows="4">${esc(s.x)}</textarea>`)}
+      ${d.secs.map((s, i) => `<fieldset class="ltf"><legend>Abschnitt ${i + 1}</legend>${f('Überschrift', `<input name="sh${i}" maxlength="80" value="${esc(s.h)}">`)}${f('Text (Leerzeile = neuer Absatz)', `<textarea name="sx${i}" rows="4" maxlength="3000">${esc(s.x)}</textarea>`)}
         <div class="f">Bild oder Skizze (optional)<div class="thumbs">${s.img && IMG[s.img] ? `<span class="th"><img src="${IMG[s.img]}" alt="Bild zu Abschnitt ${i + 1}"><button type="button" class="ib sm" data-act="lt-img-rm" data-i="${i}" aria-label="Bild entfernen">×</button></span>` : ''}</div>
           <label class="btn o sm upl" style="color:var(--ink);align-self:flex-start">${I.img}${s.img ? 'Bild ersetzen' : 'Bild hinzufügen'}<input class="vh" type="file" accept="image/*" data-up="lsec" data-i="${i}"></label></div>
         ${s.img ? f('Bildbeschreibung (für Vorlesesoftware, Pflicht)', `<input name="sa${i}" maxlength="250" value="${esc(lAlt(s))}">`) : ''}
         ${d.secs.length > 1 ? `<button type="button" class="btn o sm" data-act="lt-del" data-w="secs" data-i="${i}" style="color:var(--ink);align-self:flex-start">Abschnitt entfernen</button>` : ''}</fieldset>`).join('')}
       <button type="button" class="btn o sm" data-act="lt-add" data-w="secs" style="color:var(--ink);align-self:flex-start">+ Abschnitt</button>
-      ${f('Das Wichtigste (eine Zeile pro Merksatz)', `<textarea name="keys" rows="3">${esc(d.keys)}</textarea>`)}
+      ${f('Das Wichtigste (eine Zeile pro Merksatz)', `<textarea name="keys" rows="3" maxlength="1000">${esc(d.keys)}</textarea>`)}
       <h2 style="font-size:22px;margin:8px 0 0">Links zum Weiterlernen</h2>
-      ${d.links.map((l, i) => `<fieldset class="ltf"><legend>Link ${i + 1}</legend>${f('Text', `<input name="ll${i}" maxlength="100" value="${esc(l.l)}">`)}${f('Adresse', `<input name="lu${i}" type="url" inputmode="url" placeholder="https://" value="${esc(l.u)}">`)}${d.links.length > 1 ? `<button type="button" class="btn o sm" data-act="lt-del" data-w="links" data-i="${i}" style="color:var(--ink);align-self:flex-start">Link entfernen</button>` : ''}</fieldset>`).join('')}
+      ${d.links.map((l, i) => `<fieldset class="ltf"><legend>Link ${i + 1}</legend>${f('Text', `<input name="ll${i}" maxlength="100" value="${esc(l.l)}">`)}${f('Adresse', `<input name="lu${i}" type="url" inputmode="url" maxlength="300" placeholder="https://" value="${esc(l.u)}">`)}${d.links.length > 1 ? `<button type="button" class="btn o sm" data-act="lt-del" data-w="links" data-i="${i}" style="color:var(--ink);align-self:flex-start">Link entfernen</button>` : ''}</fieldset>`).join('')}
       <button type="button" class="btn o sm" data-act="lt-add" data-w="links" style="color:var(--ink);align-self:flex-start">+ Link</button>
       <h2 style="font-size:22px;margin:8px 0 0">Testfragen</h2><span class="mini">Genau ${L_Q} Fragen. Markiere bei jeder Frage die richtige Antwort. Bestanden ist ab ${L_MIN} richtigen.</span>
       ${d.qs.map((q, i) => `<fieldset class="ltf" data-q="${i}"><legend>Frage ${i + 1}</legend>${f('Frage', `<input name="qq${i}" maxlength="200" value="${esc(q.q)}">`)}
@@ -1939,6 +1946,18 @@ function saveOrSubmit(k, o, vals, note) {
   done('Gespeichert – sofort online', u, [k, o.id]); return true;
 }
 
+/* Rechte je Aktion (B-03, N-05): Jede schreibende Aktion prüft die Rolle selbst – nicht nur, ob der Knopf sichtbar ist.
+   Die echte Website prüft genauso auf dem Server (Capability je Aktion); die Demo-Steuerung meldet sich selbst passend an. */
+const PERM = {adm: () => isAdm(), kdt: () => isKdt(), frei: () => isAdm() || isKdt(), schreib: () => !!S.user && S.user.role !== 'Mitglied'};
+const NEED = {publish:'frei', drop:'frei', 'q-restore':'frei', 'q-img-rm':'frei',
+  'm-del':'adm', 'm-del-ok':'adm', resend:'adm', revoke:'adm', 'r-edit':'adm', 'm-off':'adm', 'm-off-ok':'adm', 'm-on':'adm',
+  'if-key':'adm', 'if-man':'adm', 'if-test':'adm', 'if-copy':'adm', 'ig-reconnect':'adm', 'c-del':'adm', 'c-del-ok':'adm',
+  'lt-new':'kdt', 'lt-edit':'kdt', 'lt-copy':'kdt', 'lt-hide':'kdt', 'lt-show':'kdt', 'lt-add':'kdt', 'lt-del':'kdt', 'lt-idea':'kdt', 'lt-img-rm':'kdt', 'ls-sel':'kdt',
+  edit:'schreib', new:'schreib', 're-edit':'schreib', hide:'schreib', 'h-restore':'schreib', 's-edit':'schreib', 's-new':'schreib', 's-del':'frei', 's-del-ok':'frei'};
+const NEEDF = {'f-einsatz':'frei', 'f-invite':'adm', 'f-role':'adm', 'f-settings':'adm', 'f-key':'adm', 'f-lthema':'kdt',
+  'f-post':'schreib', 'f-item':'schreib', 'f-verein':'schreib', 'f-chronik':'schreib', 'f-plan':'schreib'};
+const LASTSUB = {}, ONCE = ['f-post', 'f-einsatz', 'f-item', 'f-chronik', 'f-invite', 'f-plan', 'f-lthema', 'f-kontakt', 'f-quick', 'f-role', 'f-verein', 'f-settings'];
+const denied = need => { if (!need || PERM[need]()) return false; toast('Dafür fehlen dir die Rechte.'); return true; };
 document.addEventListener('click', e => {
   const a = e.target.closest('a[href^="#"]');
   if (a && a.id === 'skip') { e.preventDefault(); const m = $('#main'); m.focus(); m.scrollIntoView(); return; }
@@ -1946,6 +1965,7 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   const act = b.dataset.act, id = b.dataset.id;
   if (b.tagName === 'A' && act !== 'sheet-close') e.preventDefault();
+  if (denied(NEED[act])) return;
   switch (act) {
     /* öffentliche Website */
     case 'menu-open': menu(true); break;
@@ -2070,6 +2090,14 @@ document.addEventListener('click', e => {
     /* Mitglieder */
     case 'r-edit': S.rch = +b.dataset.i; render({keep:true}); setTimeout(() => { const x = document.querySelector('#f-role select'); if (x) x.focus(); }, 30); break;
     case 'r-no': S.rch = null; render({keep:true}); break;
+    case 'm-off': S.moff = +b.dataset.i; render({keep:true}); break;
+    case 'm-off-no': S.moff = null; render({keep:true}); break;
+    case 'm-off-ok': { const m = S.members[+b.dataset.i]; S.moff = null; if (!m || m.n === S.user.name) { render({keep:true}); break; }
+      if (m.r === 'Administrator' && cntR('Administrator') <= 2) { toast('Es muss immer mindestens zwei Admins geben.'); render({keep:true}); break; }
+      const u = snapAll(), d = today(); m.off = true; m.s0 = m.s; S.results = S.results.filter(r => r.u !== m.n); m.s = 'Deaktiviert am ' + p2(d.getDate()) + '.' + p2(d.getMonth() + 1) + '.' + d.getFullYear() + ' von ' + S.user.name + ' · Beiträge bleiben erhalten';
+      done(m.n + ' deaktiviert', u); render({keep:true}); break; }
+    case 'm-on': { const m = S.members[+b.dataset.i]; if (!m) break; const u = snapAll(); m.off = false; m.s = m.s0 || 'Aktiv'; done(m.n + ' wieder aktiv', u); render({keep:true}); break; }
+    case 'pw-forgot': S.pwf = !S.pwf; render({keep:true}); break;
     case 'resend': S.members[+b.dataset.i].s = 'Eingeladen · Link 48 Std. gültig'; toast('Einladung erneut gesendet (Demo)'); render({keep:true}); break;
     case 'revoke': { S.rch = null; const u = snapAll(), m = S.members.splice(+b.dataset.i, 1)[0]; done('Einladung an ' + m.n + ' zurückgezogen', u); render({keep:true}); break; }
     /* Schnittstellen (A-10 bis A-12) */
@@ -2119,19 +2147,29 @@ const check = (form, errId) => {
   }
   err.textContent = ''; return true;
 };
+/* Anmelde-Sperre (B-05): nach 5 Fehlversuchen 15 Minuten gesperrt; die Meldung verrät nicht, ob es das Konto gibt */
+const L_FAILS = 5, L_LOCK = 15 * 60000;
+const locked = (eid = 'e-login') => { if (S.lockUntil && Date.now() < S.lockUntil) { const e = $('#' + eid); if (e) e.textContent = 'Zu viele Fehlversuche. Aus Sicherheitsgründen ist die Anmeldung für 15 Minuten gesperrt. Passwort vergessen? Nutze den Link unten.'; return true; } return false; };
+const failed = (eid = 'e-login') => { S.fails = (S.fails || 0) + 1; if (S.fails >= L_FAILS) { S.lockUntil = Date.now() + L_LOCK; S.fails = 0; S.pending2fa = null; render({keep:true}); locked('e-login'); return true; } return false; };
 document.addEventListener('submit', e => {
   e.preventDefault();
   const fm = e.target;
+  if (denied(NEEDF[fm.id])) return;
+  /* Doppelt abgeschickt (Doppeltipp, langsames Netz)? Dasselbe Formular mit gleichen Eingaben innerhalb 1,5 s zählt nur einmal. Echte Website: Nonce je Formular. */
+  if (ONCE.includes(fm.id)) { const now = Date.now(), sig = JSON.stringify([...new FormData(fm)].filter(([, v]) => typeof v === 'string')) + JSON.stringify(S.draft || []), l = LASTSUB[fm.id]; if (l && l.sig === sig && now - l.at < 1500) return; LASTSUB[fm.id] = {sig, at: now}; }
   switch (fm.id) {
-    case 'f-login': { if (!check(fm, 'e-login')) return; const m = S.members.find(x => x.m.toLowerCase() === val(fm, 'mail').toLowerCase() && !x.inv);
-      if (!m || !ROLES[m.r]) { $('#e-login').textContent = 'E-Mail oder Passwort stimmt nicht. Demo: Nutze eine der Beispiel-Adressen unten.'; return; }
+    case 'f-login': { if (locked()) return; if (!check(fm, 'e-login')) return; const m = S.members.find(x => x.m.toLowerCase() === val(fm, 'mail').toLowerCase() && !x.inv && !x.off);
+      if (!m || !ROLES[m.r]) { if (failed()) return; $('#e-login').textContent = 'E-Mail oder Passwort stimmt nicht. Demo: Nutze eine der Beispiel-Adressen unten.'; return; }
       S.pending2fa = {name: m.n, role: m.r}; render(); setTimeout(() => { const c = document.querySelector('#f-2fa input'); if (c) c.focus(); }, 30); break; }
     case 'f-2fa': {
-      if (!check(fm, 'e-2fa')) return;
+      if (locked('e-2fa')) return;
+      if (!/^[0-9]{6}$/.test(val(fm, 'code'))) { if (!failed('e-2fa')) $('#e-2fa').textContent = 'Bitte gib den 6-stelligen Code ein.'; return; }
+      S.fails = 0;
       const {name, role: r} = S.pending2fa;
       S.user = {name, role:r}; S.pending2fa = null; toast('Angemeldet als ' + name + ' · ' + ROLES[r].label);
       const nx = S.next && mayRoute(S.next) ? S.next : ROLES[r].tabs[0]; S.next = null; go(nx); break;
     }
+    case 'f-pw': if (!check(fm, 'e-pw')) return; S.pwf = false; render({keep:true}); toast('Wenn es ein Konto mit dieser Adresse gibt, bekommst du gleich eine E-Mail mit einem Link (Demo).'); break;
     case 'f-kontakt': if (!check(fm, 'e-kontakt')) return; fm.reset(); toast('Danke! Wir melden uns bei dir (Demo)'); break;
     case 'f-quick': if (!check(fm, 'e-quick')) return; fm.reset(); toast('Super! Wir melden uns in den nächsten Tagen bei dir (Demo)'); break;
     case 'f-post': {
@@ -2215,7 +2253,9 @@ document.addEventListener('submit', e => {
       render({keep:true}); break;
     }
     case 'f-settings': {
-      if (!check(fm, 'e-settings')) return; const u = snapAll();
+      if (!check(fm, 'e-settings')) return;
+      if (['pE', 'pO'].some(k => val(fm, k) && !SAFE_URL.test(val(fm, k)))) { $('#e-settings').textContent = 'Links müssen mit https:// beginnen.'; return; }
+      const u = snapAll();
       S.settings = {mailOn: fm.elements.mailOn.checked, mailT: val(fm,'mailT') || '07:00', sonderOn: fm.elements.sonderOn.checked, sonderT: val(fm,'sonderT'), sonderX: val(fm,'sonderX'), sonderBis: val(fm,'sonderBis'), warnOn: fm.elements.warnOn.checked, jubOn: fm.elements.jubOn.checked, jubEnd: val(fm,'jubEnd'), pE: val(fm,'pE'), pO: val(fm,'pO')};
       done('Gespeichert – sofort online', u); render({keep:true}); break;
     }
@@ -2234,7 +2274,7 @@ document.addEventListener('submit', e => {
         st: pub ? 'aktiv' : 'entwurf', chk: pub ? {by: S.user.name, at: Date.now()} : null, bsp: false};
       const i = S.topics.findIndex(x => x.id === o.id); if (i >= 0) S.topics[i] = o; else S.topics.push(o);
       S.ted = null; done(!pub ? 'Als Entwurf gespeichert – Mitglieder sehen es noch nicht' : o.m > curM() ? 'Geplant – erscheint am 1. ' + mLab(o.m) : 'Veröffentlicht – alle Mitglieder sehen das Thema', u); go('lplan'); break; }
-    case 'f-role': { const m = S.members[S.rch]; if (!m) return; const r = val(fm, 'r'), akt = fm.elements.akt.checked;
+    case 'f-role': { const m = S.members[S.rch]; if (!m || m.n === S.user.name || m.off) return; const r = val(fm, 'r'), akt = fm.elements.akt.checked;
       if (m.r === 'Administrator' && r !== 'Administrator' && cntR('Administrator') <= 2) { $('#e-role').textContent = 'Es muss immer mindestens zwei Admins geben. Lade zuerst eine weitere Person als Admin ein.'; return; }
       if (r === m.r && akt === (m.akt !== false)) { S.rch = null; render({keep:true}); break; }
       const u = snapAll(), was = RL[m.r]; m.r = r; m.akt = akt; const d = today();
