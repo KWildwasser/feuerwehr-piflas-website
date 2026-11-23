@@ -452,6 +452,12 @@ async def main():
             for r in ['start', 'beitraege']:
                 await pg.evaluate(f"location.hash='{r}'"); await pg.wait_for_timeout(150); sw.append(await pg.evaluate('document.documentElement.scrollWidth'))
             rec(max(sw) <= 390, 'Robustheit: sehr lange Wörter brechen um, kein seitliches Scrollen', str(sw))
+            bad_btn = []
+            for r in ['redaktion', 'beitraege', 'einsaetze', 'start']:
+                await pg.evaluate(f"location.hash='{r}'"); await pg.wait_for_timeout(150)
+                bad_btn += await pg.evaluate("""[...document.querySelectorAll('main .btn, main .chip, .bars span')].filter(b => b.offsetParent && getComputedStyle(b).hyphens !== 'auto' && !/\\s/.test(b.innerText.trim()) && b.innerText.trim().length > 3 && b.getClientRects().length && (() => { const rg = document.createRange(); rg.selectNodeContents(b); return rg.getClientRects().length > 1 && !b.innerText.includes('-'); })()).map(b => b.innerText.trim())""")
+            rec(not bad_btn, 'Robustheit: Knöpfe brechen kein Wort mitten durch', ', '.join(bad_btn)[:200])
+            await pg.evaluate("location.hash='beitraege'"); await pg.wait_for_timeout(120)
             await lo()
             # Demo-Ablauf
             await pg.evaluate('window.scrollTo(0,0)'); await pg.wait_for_timeout(250); await pg.click('#fab'); await pg.wait_for_timeout(300)

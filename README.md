@@ -2,10 +2,18 @@
 
 Planung, klickbare Demo und Dokumentation für die neue Website des Feuerwehr Piflas e.V. (www.feuerwehr-piflas.de). Die Feuerwehr Piflas ist eine Ortsfeuerwehr des Marktes Ergolding.
 
-**▶ Demo ausprobieren: https://KWildwasser.github.io/feuerwehr-piflas-website/demo/**
-Übersicht mit allen Dokumenten: https://KWildwasser.github.io/feuerwehr-piflas-website/
-
 [![Demo-Tests](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml/badge.svg)](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml)
+
+### ▶ [Demo ausprobieren](https://kwildwasser.github.io/feuerwehr-piflas-website/demo/) · [Projektseite](https://kwildwasser.github.io/feuerwehr-piflas-website/) · [Lastenheft (PDF)](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.6.pdf) · [Handbuch (PDF)](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf)
+
+<p>
+<img src="docs/assets/screens/start.jpg" width="180" alt="Startseite">
+<img src="docs/assets/screens/einsaetze.jpg" width="180" alt="Einsätze mit Jahresstatistik">
+<img src="docs/assets/screens/buerger.jpg" width="180" alt="Bürgerinfos">
+<img src="docs/assets/screens/freigabe.jpg" width="180" alt="Freigabe im Mitgliederbereich">
+</p>
+
+*Bildschirmfotos aus der Demo – alle Inhalte sind Beispiele.*
 
 ## Worum es geht
 
@@ -32,7 +40,7 @@ Planung, klickbare Demo und Dokumentation für die neue Website des Feuerwehr Pi
 pip install playwright pillow markdown pypdf && python -m playwright install chromium
 cd docs/demo
 python build.py        # baut index.html aus app-src.html und ../assets
-python test_app.py     # 429 Prüfungen, Exit-Code 1 bei Fehlern
+python test_app.py     # 430 Prüfungen, Exit-Code 1 bei Fehlern
 ```
 
 Bei jedem Push prüft GitHub Actions die Demo automatisch ([Workflow](.github/workflows/demo-tests.yml)). Reihenfolge bei Änderungen: Lastenheft (ID) → Demo → Prüfung → Handbuch → PDFs.

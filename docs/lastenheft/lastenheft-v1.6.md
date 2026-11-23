@@ -10,7 +10,7 @@
 - **Leitprinzip:** Ehrenamtliche ohne IT-Kenntnisse können die Seite auch in Jahren noch betreuen (2.11).
 - **Vorhanden:**
   - Übergangsseite
-  - Klickbare Demo v5 mit Testsuite (429 Prüfungen)
+  - Klickbare Demo v5 mit Testsuite (430 Prüfungen)
   - Handbuch für den Mitgliederbereich
   - Backup-Paket
 - **Wichtigste offene Entscheidung:** Wer betreut die Seite, und in welcher Betriebsvariante (4.3)?
@@ -283,7 +283,7 @@ Bei Widersprüchen gilt das Lastenheft. Demo und Handbuch werden dann angepasst.
 | --- | --- | --- |
 | Lastenheft (dieses Dokument) | Was gebaut wird | Online-Dokument, Claude-Projekt, PDF |
 | Demo v5 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Login gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
-| Testsuite (429 Prüfungen) | Abnahmeliste für die echte Website | Backup (`demo/test_app.py`) |
+| Testsuite (430 Prüfungen) | Abnahmeliste für die echte Website | Backup (`demo/test_app.py`) |
 | Handbuch Mitgliederbereich 1.4 | Anleitung für alle Rollen (A-06), in der Demo nach dem Login verlinkt | PDF, Backup |
 | Corporate Design | Logo, Farben, Schrift | Claude-Projekt |
 | Backup-Paket mit WEITERMACHEN.md | Alles, um später weiterzuarbeiten | ZIP |
@@ -442,4 +442,4 @@ Checkliste der IDs.
 | 1.3 | 23.11.2026 | Neu N-13: Frauen und Männer gleichermaßen ansprechen. Rollen umbenannt (Administration, Kommando · Freigabe, Redaktion, Bereichsredaktion), Menügruppe „Für Bürger“ heißt jetzt „Ratgeber“, „Zurück an Autor“ heißt „Zurück zur Überarbeitung“. Text des Lastenhefts, Demo und Handbuch 1.1 entsprechend angepasst; Testsuite 401 Prüfungen. |
 | 1.4 | 23.11.2026 | Neu B-14 bis B-16: Beiträge und Einsätze gemäß Rolle bearbeiten und ausblenden, Löschen nur durch die Administration nach Nachfrage, mit Papierkorb (30 Tage). Rollentabelle, W-01, A-06, Phase 2 und CLAUDE.md-Vorlage ergänzt. Demo, Handbuch 1.2 und Testsuite (424 Prüfungen) angepasst. |
 | 1.5 | 23.11.2026 | Ausnahmen von N-13: „Kommandant“ statt „Kommando“, „Admin“ statt „Administration“; Feuerwehrfunktionen nach FwDV (z. B. Gruppenführer, Jugendwart). Rollen umbenannt in Admin und Kommandant · Freigabe, Freigabegruppe: Kommandant und stellvertretender Kommandant. Texte in Lastenheft, Demo und Handbuch 1.3 angepasst; Demo-Personen getauscht (Kommandant: Max Mustermann, Admin: Erika Musterfrau). |
-| 1.6 | 23.11.2026 | Gesamtprüfung von Testsuite, Demo, Lastenheft und Handbuch. Präzisiert: W-01 (Freigabegruppe = Rolle Kommandant · Freigabe), Rollentabelle, N-02 (Sprunglink), N-03 (lange Wörter), N-05 (Eingaben nie als HTML), N-11 (Robustheit, ID-Zuordnung in demo/README.md), 4.2, CLAUDE.md-Vorlage. Demo: Sprungleiste unter „Beiträge“, Sprunglink repariert, Umbruch langer Wörter. Testsuite 429 Prüfungen mit Exit-Code, Handbuch 1.4. |
+| 1.6 | 23.11.2026 | Gesamtprüfung von Testsuite, Demo, Lastenheft und Handbuch. Präzisiert: W-01 (Freigabegruppe = Rolle Kommandant · Freigabe), Rollentabelle, N-02 (Sprunglink), N-03 (lange Wörter), N-05 (Eingaben nie als HTML), N-11 (Robustheit, ID-Zuordnung in demo/README.md), 4.2, CLAUDE.md-Vorlage. Demo: Sprungleiste unter „Beiträge“, Sprunglink repariert, Umbruch langer Wörter. Testsuite 430 Prüfungen mit Exit-Code, Handbuch 1.4. |

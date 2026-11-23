@@ -1,6 +1,6 @@
 # Webpräsenz Feuerwehr Piflas – Backup & Anleitung zum Weitermachen
 
-Stand: **23.11.2026** · Lastenheft **v1.6** · Demo **v5** · Handbuch **1.4** · Testsuite **429/429 bestanden**
+Stand: **23.11.2026** · Lastenheft **v1.6** · Demo **v5** · Handbuch **1.4** · Testsuite **430/430 bestanden**
 
 Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte, Bilder und Vorlagen. Damit kannst du (oder jemand aus dem Verein, oder eine neue Claude-Sitzung) jederzeit nahtlos weitermachen. Es enthält keine Zugangsdaten.
 
@@ -20,7 +20,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | `demo/README.md` | Aufbau der Demo und Zuordnung der Prüfungen zu den Lastenheft-IDs |
 | `demo/app-src.html` | Quelltext der Demo – **hier wird geändert** |
 | `demo/build.py` → `demo/index.html` | Baut die fertige Demo (eine Datei, läuft offline) |
-| `demo/test_app.py`, `demo/testimg/` | Testsuite (429 Prüfungen) = Abnahmeliste für die echte Website |
+| `demo/test_app.py`, `demo/testimg/` | Testsuite (430 Prüfungen) = Abnahmeliste für die echte Website |
 | `demo/handbuch.pdf` | Handbuch, wie es in der Demo nach dem Login verlinkt ist |
 | `design/corporate-design.md` | Logo, Farben, Schrift, Gestaltungsprinzipien |
 | `design/mockups/` | Frühe Entwürfe (Bürgerinfo, Einsätze, Freigabe) – überholt durch die Demo |
@@ -53,7 +53,7 @@ python -m playwright install chromium
 
 cd demo
 python build.py          # erzeugt index.html (ca. 2,3 MB)
-python test_app.py       # 2–4 Minuten, Ergebnis: "429 von 429 Prüfungen bestanden", Exit-Code 1 bei Fehlern
+python test_app.py       # 2–4 Minuten, Ergebnis: "429 von 430 Prüfungen bestanden", Exit-Code 1 bei Fehlern
 
 cd ../handbuch
 python shots.py          # neue Bildschirmfotos aus der Demo
