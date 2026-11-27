@@ -11,6 +11,7 @@ Testschnittstelle: window.__demo (nur Lesen des Zustands und Neuzeichnen, z. B. 
 Exit-Code 1, sobald eine Prüfung fehlschlägt.
 """
 import asyncio, json, os, sys
+from datetime import datetime, timedelta
 from playwright.async_api import async_playwright
 
 from pathlib import Path
@@ -19,6 +20,9 @@ SHOTS = HERE / 'shots'; SHOTS.mkdir(exist_ok=True)
 URL = (HERE / 'index.html').as_uri()
 ROUTES = ['start','jubilaeum','aktuelles','einsaetze','termine','buerger','foerdern','mitmachen','fahrzeuge','jugend','verein','partner','impressum','datenschutz','login','postfach']
 VIEWS = [('360', dict(width=360, height=780), True), ('390', dict(width=390, height=844), True), ('430', dict(width=430, height=932), True), ('1280', dict(width=1280, height=900), False)]
+# Feste Uhr für alle Prüfungen: Die Demo rechnet mit dem heutigen Datum (Termine, Lernthema des Monats,
+# Warntag, Jubiläum). Damit die Prüfungen an jedem Tag gleich laufen, startet die Uhr im Browser immer hier.
+TESTZEIT = datetime(2026, 11, 23, 12, 0)
 results = []
 def rec(ok, name, detail=''):
     results.append((ok, name, detail))
@@ -48,6 +52,7 @@ async def main():
         br = await p.chromium.launch(executable_path=exe, args=['--no-sandbox']) if exe else await p.chromium.launch()
         for vname, vp, mobile in VIEWS:
             ctx = await br.new_context(viewport=vp, is_mobile=mobile, has_touch=mobile, device_scale_factor=2 if mobile else 1, locale='de-DE')
+            await ctx.clock.install(time=TESTZEIT)
             pg = await ctx.new_page()
             errs = []
             pg.on('pageerror', lambda e: errs.append('pageerror: ' + str(e)))
@@ -180,7 +185,16 @@ async def main():
                 rec('unter 16' in await pg.inner_text('main'), 'Recht: Hinweis für Minderjährige im Mitmach-Formular')
                 await pg.evaluate("location.hash='foerdern'"); await pg.wait_for_timeout(80)
                 ft = await pg.inner_text('main')
-                rec('nicht über diese Website' in ft and 'IBAN' not in ft, 'Satzung: keine Spendenannahme über die Website')
+                rec('nicht über diese Website' in ft and 'IBAN' not in ft, 'L-10: keine Spendenannahme über die Website')
+                satz = ['schriftlich bestätigt','Mitgliederversammlung','bis 12 Jahre','deine Eltern']
+                rec(all(k in ft for k in satz), 'S-04: Beitritt laut Satzung – Bestätigung, Beitrag, Kinder, Eltern')
+                await pg.evaluate("location.hash='impressum'"); await pg.wait_for_timeout(80)
+                vt = await pg.inner_text('#vertretung')
+                rec('Vorsitz' in vt and 'stellvertretender Vorsitz' in vt and 'weiteren Mitglied der Vorstandschaft' in vt, 'L-07: Impressum nennt die Vertretung laut Satzung § 9')
+                await pg.evaluate("location.hash='verein'"); await pg.wait_for_timeout(80)
+                vs = await pg.inner_text('#vorstand')
+                aemter = ['Vorsitz','Stellvertretender Vorsitz','Kommandant','Stellvertretende Kommandanten','Schriftführung','Kasse','Jugendwart','Vertretung der Mannschaft','Vertretung der Löschmeister']
+                rec(all(k in vs for k in aemter), 'F-08: Vorstandschaft mit allen Ämtern laut Satzung § 8')
             # Unbekannte Route
             await pg.evaluate("location.hash='gibtsnicht'"); await pg.wait_for_timeout(100)
             rec('Für Piflas im Einsatz' in await pg.inner_text('main'), f'[{vname}] unbekannte Adresse zeigt Startseite')
@@ -608,8 +622,8 @@ async def main():
             await ql('Freigeber')
             await pg.click('[data-act=new][data-k=e]'); await pg.wait_for_timeout(150)
             rec(await hash() == '#editor' and await pg.locator('#f-einsatz').count() == 1, 'Kommandant: Einsatz von Hand anlegen')
-            from datetime import datetime, timedelta
-            yd = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+            jetzt = lambda ms: datetime.fromtimestamp(ms / 1000)  # Uhrzeit des Browsers (feste Testuhr)
+            yd = (jetzt(await pg.evaluate('Date.now()')) - timedelta(days=1)).strftime('%Y-%m-%d')
             await pg.fill('#f-einsatz [name=sw]', 'Ölspur'); await pg.fill('#f-einsatz [name=ort]', 'Hauptstraße 5'); await pg.fill('#f-einsatz [name=dt]', yd); await pg.fill('#f-einsatz [name=zt]', '10:07')
             await pg.check('#f-einsatz [name=ok]'); await pg.click('#f-einsatz button[type=submit]'); await pg.wait_for_timeout(100)
             rec('Fahrzeug' in await pg.inner_text('#e-einsatz'), 'Einsatz von Hand: mindestens ein Fahrzeug nötig')
@@ -624,7 +638,7 @@ async def main():
             rec(await hash() == '#einsaetze' and 'Ölspur, Landshut' in await pg.inner_text('main h1') and '10:00 Uhr' in mt and await pg.locator('main img.pic').count() == 1, 'Einsatz von Hand: überörtlich (Gemeinde), online, Uhrzeit gerundet, mit Foto')
             await pg.evaluate("location.hash='beitraege'"); await pg.wait_for_timeout(100)
             await pg.click('[data-act=new][data-k=e]'); await pg.wait_for_timeout(150)
-            now = datetime.now()
+            now = jetzt(await pg.evaluate('Date.now()'))
             await pg.fill('#f-einsatz [name=sw]', 'Tierrettung'); await pg.fill('#f-einsatz [name=ort]', 'Piflas'); await pg.fill('#f-einsatz [name=dt]', now.strftime('%Y-%m-%d')); await pg.fill('#f-einsatz [name=zt]', (now - timedelta(minutes=20)).strftime('%H:%M'))
             await pg.check('#f-einsatz [name=fz] >> nth=0'); await pg.check('#f-einsatz [name=ok]'); await pg.click('#f-einsatz button[type=submit]'); await pg.wait_for_timeout(200)
             rec('erscheint automatisch' in await toast() and await hash() == '#beitraege', 'Einsatz von Hand: 2-Stunden-Regel, wird automatisch später veröffentlicht')
@@ -643,9 +657,10 @@ async def main():
             await ql('Freigeber')
             await pg.click('.btabs a[href="#seiten"]'); await pg.wait_for_timeout(120); await pg.click('[data-act=sp][data-v=verein]'); await pg.wait_for_timeout(100)
             await pg.fill('#f-verein [name=intro]', 'Wir sind der Feuerwehr Piflas e.V. – Testtext.')
+            nv = await pg.locator('#f-verein .vrow').count()
             await pg.click('#f-verein [data-act=row-add]'); await pg.wait_for_timeout(80)
-            rec(await pg.input_value('#f-verein [name=intro]') == 'Wir sind der Feuerwehr Piflas e.V. – Testtext.' and await pg.locator('#f-verein .vrow').count() == 3, 'Verein: Zeile hinzufügen behält Eingaben')
-            await pg.fill('#f-verein [name=ra] >> nth=2', 'Kassenverwaltung'); await pg.fill('#f-verein [name=rn] >> nth=2', 'Test Person')
+            rec(await pg.input_value('#f-verein [name=intro]') == 'Wir sind der Feuerwehr Piflas e.V. – Testtext.' and await pg.locator('#f-verein .vrow').count() == nv + 1, 'Verein: Zeile hinzufügen behält Eingaben')
+            await pg.fill(f'#f-verein [name=ra] >> nth={nv}', 'Kassenverwaltung'); await pg.fill(f'#f-verein [name=rn] >> nth={nv}', 'Test Person')
             await pg.click('#f-verein button[type=submit]'); await pg.wait_for_timeout(120)
             t = await pubtext('verein')
             rec('Testtext' in t and 'Kassenverwaltung: Test Person' in t, 'Verein: Text und Vorstandschaft ohne Programmieren geändert')

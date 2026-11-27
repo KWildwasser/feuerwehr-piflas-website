@@ -14,6 +14,7 @@ Aufbau:  1. Rechte je Rolle: Seitenzugriff (Matrix) und jede schreibende Aktion 
 Exit-Code 1, sobald eine Prüfung fehlschlägt.
 """
 import asyncio, json, os, sys
+from datetime import datetime
 from pathlib import Path
 from playwright.async_api import async_playwright
 
@@ -64,6 +65,7 @@ async def main():
         exe = os.environ.get('CHROME') or ('/usr/bin/google-chrome' if os.path.exists('/usr/bin/google-chrome') else None)
         br = await p.chromium.launch(executable_path=exe, args=['--no-sandbox']) if exe else await p.chromium.launch()
         ctx = await br.new_context(viewport={'width':390,'height':844}, is_mobile=True, has_touch=True, locale='de-DE')
+        await ctx.clock.install(time=datetime(2026, 11, 23, 12, 0))  # feste Uhr wie in test_app.py (TESTZEIT)
         pg = await ctx.new_page()
         errs = []
         pg.on('pageerror', lambda e: errs.append('pageerror: ' + str(e)))

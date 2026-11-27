@@ -4,7 +4,7 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 
 [![Demo-Tests](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml/badge.svg)](https://github.com/KWildwasser/feuerwehr-piflas-website/actions/workflows/demo-tests.yml)
 
-### ▶ [Demo ausprobieren](https://kwildwasser.github.io/feuerwehr-piflas-website/demo/) · [Projektseite](https://kwildwasser.github.io/feuerwehr-piflas-website/) · [Lastenheft (PDF)](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.20.pdf) · [Handbuch (PDF)](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf)
+### ▶ [Demo ausprobieren](https://kwildwasser.github.io/feuerwehr-piflas-website/demo/) · [Projektseite](https://kwildwasser.github.io/feuerwehr-piflas-website/) · [Lastenheft (PDF)](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.21.pdf) · [Handbuch (PDF)](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf)
 
 <p>
 <img src="docs/assets/screens/start.jpg" width="180" alt="Startseite">
@@ -27,7 +27,7 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 | Ordner | Was |
 |---|---|
 | [`docs/demo/`](docs/demo/) | Referenz-Demo (eine HTML-Datei, statisch) mit Testsuite – [README](docs/demo/README.md) |
-| [`docs/lastenheft/`](docs/lastenheft/) | Lastenheft v1.20 als [Text](docs/lastenheft/lastenheft-v1.20.md) und [PDF](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.20.pdf), Vorlagen für Claude Code |
+| [`docs/lastenheft/`](docs/lastenheft/) | Lastenheft v1.21 als [Text](docs/lastenheft/lastenheft-v1.21.md) und [PDF](docs/lastenheft/Lastenheft-Feuerwehr-Piflas-v1.21.pdf), Vorlagen für Claude Code |
 | [`docs/plan/`](docs/plan/) | [Umsetzungsplan bis Weihnachten 2026](docs/plan/Umsetzungsplan-bis-Weihnachten-2026.pdf) (PDF und Text) |
 | [`docs/handbuch/`](docs/handbuch/) | [Handbuch Mitgliederbereich 1.19](docs/handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf) mit Quellen |
 | [`docs/design/`](docs/design/) | [Corporate Design](docs/design/corporate-design.md), frühe Entwürfe |
@@ -41,7 +41,7 @@ Planung, klickbare Demo und Dokumentation für die neue Website der Feuerwehr Pi
 pip install playwright pillow markdown pypdf && python -m playwright install chromium
 cd docs/demo
 python build.py        # baut index.html aus app-src.html und ../assets
-python test_app.py     # 700 Prüfungen, Exit-Code 1 bei Fehlern
+python test_app.py     # 703 Prüfungen, Exit-Code 1 bei Fehlern
 python test_security.py  # 68 Sicherheits- und Ausfallprüfungen
 ```
 

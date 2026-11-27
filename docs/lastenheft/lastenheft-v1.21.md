@@ -1,6 +1,6 @@
 # Lastenheft & Umsetzungsplan – Webpräsenz Feuerwehr Piflas
 
-23.11.2026 · Korbinian · Version 1.20 (WordPress) · Referenz: Demo v17 und Handbuch 1.19
+27.11.2026 · Korbinian · Version 1.21 (WordPress) · Referenz: Demo v17 und Handbuch 1.19
 
 ## 0. Auf einen Blick
 
@@ -11,7 +11,7 @@
 - **Leitprinzip:** Ehrenamtliche ohne IT-Kenntnisse können die Seite auch in Jahren noch betreuen (2.11).
 - **Vorhanden:**
   - Übergangsseite
-  - Klickbare Demo v17 mit Testsuite (700 Prüfungen) und Sicherheitstests (68 Prüfungen), öffentlich auf GitHub Pages
+  - Klickbare Demo v17 mit Testsuite (703 Prüfungen) und Sicherheitstests (68 Prüfungen), öffentlich auf GitHub Pages
   - Anleitung „Schnittstellen reparieren“ für die Technik (A-12)
   - Handbuch für den Mitgliederbereich
   - Backup-Paket
@@ -22,7 +22,8 @@
 **Ist-Zustand (November 2026)**
 
 - feuerwehr-piflas.de zeigt nur noch „Homepage wird neu gestaltet“. Alte Joomla-Seiten sind teils noch erreichbar.
-- Betreiber ist der Feuerwehr Piflas e.V. (VR 1115, AG Landshut).
+- Betreiber ist der Feuerwehr Piflas e.V. (VR 1115, AG Landshut). Die Satzung (Fassung „final“, § 18 noch ohne Datum) nennt den Verein „Freiwillige Feuerwehr Piflas e.V.“ (§ 1). Welcher Name im Vereinsregister steht, ist offen (Abschnitt 5).
+- Grundlage für Verein, Mitgliedschaft und Vorstandschaft ist die Satzung. Sie steht nicht im Repository; dieses Lastenheft nennt die Paragrafen.
 - Die Freiwillige Feuerwehr Piflas ist eine Ortsfeuerwehr des Marktes Ergolding. Partnerfeuerwehren sind Ergolding (www.ff-ergolding.de) und Oberglaim (oberglaim.feuerwehren.bayern).
 - Etwa 70 Mitglieder, davon gut 50 aktiv.
 - Fuhrpark: Wechsellader mit Kran (36/1), zwei Löschfahrzeuge, 56/1, Mannschaftstransporter 11/1 und Anhänger.
@@ -56,7 +57,7 @@ Priorität: **Muss** = zum Go-live, **Soll** = kurz danach, **Kann** = später. 
 | F-05 | Fahrzeuge & Technik | Neuestes Fahrzeug hervorgehoben. Je Fahrzeug eine Karte mit Foto, Funkrufname, Typ und Kurzbeschreibung. Dazu Geräte mit Fotos. Alle Angaben und Fotos im Backend pflegbar (B-21). | Muss |
 | F-06 | Mitmachen | Formular ganz oben (Name, Telefon oder E-Mail, Interesse, Datenschutz-Häkchen) mit Hinweis für unter 16-Jährige. Kurzform des Formulars auf der Startseite. Dazu der nächste Übungsabend und Wege zu Jugendfeuerwehr und Fördermitgliedschaft. Anfragen gehen per E-Mail an eine im System-Bereich hinterlegte Adresse. Die Website speichert sie nicht dauerhaft. Spamschutz ohne Drittanbieter (kein reCAPTCHA). | Muss |
 | F-07 | Jugendfeuerwehr | Vorstellung, Gruppenstunde, Ansprechperson, Button „Schnuppern kommen“. Fotos nur mit Einwilligung der Eltern. | Muss |
-| F-08 | Verein & Chronik | Vorstandschaft, Mitgliedschaft und Chronik ab Gründung. Das Festjahr 2027 bleibt nach dem Jubiläum in der Chronik (J-06). Verweis auf die Partnerfeuerwehren. Einleitung, Vorstandschaft und Chronik im Backend pflegbar (B-21). | Muss |
+| F-08 | Verein & Chronik | Vorstandschaft, Mitgliedschaft und Chronik ab Gründung. Das Festjahr 2027 bleibt nach dem Jubiläum in der Chronik (J-06). Verweis auf die Partnerfeuerwehren. Einleitung, Vorstandschaft und Chronik im Backend pflegbar (B-21). Die Vorstandschaft zeigt die Ämter laut Satzung § 8: Vorsitz, stellvertretender Vorsitz, Kommandant, stellvertretende Kommandanten, Schriftführung, Kasse; als Beisitz Jugendwart, zwei Vertretungen der Mannschaft und zwei Vertretungen der Löschmeister. Namen nur nach Freigabe durch die Gewählten, bis dahin [Name]. | Muss |
 | F-09 | Partnerfeuerwehren | Eigene Seite. Je Wehr (Ergolding, Oberglaim) eine Karte mit Kurzbeschreibung und Button „Zur Website“. Reine Links mit neuem Tab und rel=noopener, nichts eingebettet. Die Adressen pflegen die Admins im System-Bereich. | Muss |
 | F-10 | Bürgerinfos, Fördermitglied, Impressum/Datenschutz | Siehe 2.7, 2.8 und 3.1. | Muss |
 | F-11 | Navigation | Kopf mit Logo und Menü, ohne Notruf-Button (Notruf 112 steht auf der Startseite, F-01, und in den Bürgerinfos, C-01). Im Menü ganz oben ein großer Knopf „Anmelden“ (dunkelgrau als Kontrast zum hellen Menü, nicht rot, senkrecht mittig; angemeldet: „Zum Mitgliederbereich“). Die Gruppen haben eine graue Überschrift auf hellem Band, ihre Seiten stehen eingerückt mit Linie darunter; nur die aktuelle Seite trägt eine rote Linie. Menü: Start · 125 Jahre (nur im Festjahr) · **Aktuell:** Aktuelles, Einsätze, Termine · **Mitmachen:** Aktiv mitmachen, Jugendfeuerwehr, Fördermitglied werden · **Ratgeber:** Bürgerinfos · **Über uns:** Verein & Chronik, Fahrzeuge & Technik, Partnerfeuerwehren. Neue Seiten kommen in eine bestehende Gruppe. Keine eigene Seite für den Gemeinderat. | Muss |
@@ -167,13 +168,20 @@ Bürgerinfos werden jährlich geprüft. Die Erinnerung kommt über den Monatsber
 
 ### 2.8 Fördermitglieder
 
-Laut Satzung nimmt die Website **keine Spenden** an: kein Konto, keine IBAN, keine Zahlungsfunktion.
+Die Website nimmt **keine Spenden online** an: kein Konto, keine IBAN, keine Zahlungsfunktion. Spenden laufen über das Spendenformular (S-02). Das ist eine Festlegung des Projekts und muss noch vom Vorstand bestätigt werden (Abschnitt 5). Die Satzung verbietet Online-Spenden nicht, sie nennt Beiträge und Spenden als Mittel des Vereins (§ 12 Abs. 1).
+
+Laut Satzung gilt für Fördermitglieder:
+
+- Den Jahresbeitrag zahlen nur fördernde Mitglieder, die Höhe legt die Mitgliederversammlung fest. Kinder bis zum zwölften Lebensjahr und Ehrenmitglieder sind beitragsfrei (§ 6, § 13 Abs. 1).
+- Fördernde Mitglieder haben kein Stimmrecht (§ 3).
+- Der Aufnahmeantrag geht schriftlich an den Vorstand. Minderjährige brauchen die Zustimmung ihrer gesetzlichen Vertretung. Mitglied ist man mit der schriftlichen Bestätigung des Vorstands (§ 4 Abs. 2 und 3).
 
 | ID | Anforderung | Prio |
 | --- | --- | --- |
 | S-01 | Seite „Fördermitglied werden“: warum, was der Beitrag bewirkt, Höhe des Jahresbeitrags. Verlinkt von Startseite, Mitmachen und Jubiläum. | Muss |
 | S-02 | Downloads: „Beitrittserklärung Fördermitglied“ und „Spendenformular“ als PDF, mit Hinweis, wo sie abgegeben werden. Austauschbar im Backend, mit Datum des Stands. | Muss |
 | S-03 | Dank an alle, die uns unterstützen, Sponsoren mit Logo, nur mit deren Zustimmung. | Soll |
+| S-04 | Beitritt nur mit der unterschriebenen Beitrittserklärung (PDF), kein Online-Beitrittsformular, weil die Satzung einen schriftlichen Antrag verlangt (§ 4 Abs. 2). Die Seite nennt: Höhe des Beitrags laut Mitgliederversammlung, beitragsfrei bis 12 Jahre, Unterschrift der Eltern bei Minderjährigen, Mitgliedschaft ab der Bestätigung durch den Vorstand. Ob ein Online-Antrag genügen würde, prüft eine Fachperson. | Muss |
 
 ### 2.9 Redaktionsplan
 
@@ -306,10 +314,10 @@ Die Freiwillige Feuerwehr ist eine Einrichtung des Marktes Ergolding (Art. 4 Bay
 | L-04 | Pietät | Bei Verletzten oder Toten erst nach Information von Polizei und Angehörigen | W-05 |
 | L-05 | DSGVO Art. 6, 13, 21; KUG | Fotos von Festen und Übungen: vorher informieren, Widerspruch beachten, Kinder nur mit Einwilligung der Eltern | Foto-Hinweis, Pflicht-Häkchen, Fotoverwaltung |
 | L-06 | Urheberrecht | Nur Fotos mit geklärten Rechten | Bildnachweis, N-10 |
-| L-07 | § 5 DDG, § 18 MStV | Vollständiges Impressum | Name des Kommandanten offen |
+| L-07 | § 5 DDG, § 18 MStV; Satzung § 9 Abs. 2 | Vollständiges Impressum. „Vertreten durch“ nennt den Vorsitz und die Stellvertretung; laut Satzung vertritt jeweils eine dieser Personen den Verein zusammen mit einem weiteren Mitglied der Vorstandschaft (§ 8 Abs. 1 Nr. 1–6) | Namen offen |
 | L-08 | DSGVO Art. 13, 26, 28 | Datenschutzerklärung (Hosting, Formulare, Konten, Einsätze, Fotos, Instagram-Insights); Verträge zur Auftragsverarbeitung mit Hoster und DIVERA | Text in der Demo; Verträge offen |
 | L-09 | TDDDG § 25 | Keine Cookies beim Besuch, keine Drittanbieter | N-01; Test „keine externen Anfragen“ |
-| L-10 | Satzung, AO | Keine Spenden online | 2.8; Test „keine IBAN“ |
+| L-10 | Festlegung des Projekts (Satzung § 12 lässt Spenden zu), AO | Keine Spenden online | 2.8; Test „keine IBAN“ |
 | L-11 | Jugendschutz | Hinweis für unter 16-Jährige, Jugendfotos nur mit Einwilligung der Eltern | F-06, F-07 |
 | L-12 | BFSG / BayBITV | Vermutlich nicht verpflichtend; Ziel trotzdem WCAG 2.2 AA | N-02 |
 | L-13 | Haftung für Links | Externe Links erkennbar, Hinweis im Impressum | F-09 |
@@ -361,7 +369,7 @@ Bei Widersprüchen gilt das Lastenheft. Demo und Handbuch werden dann angepasst.
 | --- | --- | --- |
 | Lastenheft (dieses Dokument) | Was gebaut wird | Online-Dokument, Claude-Projekt, PDF |
 | Demo v17 | Verbindliche Vorlage für Aufbau, Texte und Abläufe. Statisch, ohne Datenbank; Demo-Steuerung und Schnell-Anmeldung gibt es nur dort; die Bereichsredaktion ist in der Demo nur bei der Einladung wählbar. | Artefakt-Link, Backup |
-| Testsuite (700 + 68 Prüfungen) und Abdeckungsliste | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`, `demo/test_security.py`, `demo/ABDECKUNG.md`) |
+| Testsuite (703 + 68 Prüfungen) und Abdeckungsliste | Abnahmeliste für die echte Website | GitHub, Backup (`demo/test_app.py`, `demo/test_security.py`, `demo/ABDECKUNG.md`) |
 | Anleitung „Schnittstellen reparieren“ | Reparatur von DIVERA und Instagram durch die Technik (A-12) | GitHub, Backup (`betrieb/schnittstellen.md`) |
 | Handbuch Mitgliederbereich 1.19 | Anleitung für alle Rollen (A-06), in der Demo nach dem Anmelden verlinkt | PDF, Backup |
 | Corporate Design | Logo, Farben, Schrift | Claude-Projekt |
@@ -385,10 +393,12 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 
 - [ ] Betriebsvariante (4.3) und zwei Admins
 - [ ] Erstbesetzung der Rollen (geplant: 3 Kommandanten, 2 Admins, mehrere Personen in der Redaktion, alle übrigen Aktiven als Mitglied)
-- [ ] Wer pflegt Vorstandschaft und Vereinstexte (Vorstand oder Kommandant)? Bisher Annahme: wie alle Inhalte – Redaktion reicht ein, Kommandant oder Admin gibt frei (B-21). Laut Satzung prüfen.
+- [ ] Wer pflegt Vorstandschaft und Vereinstexte? Die Satzung regelt die Website nicht. Nach § 9 Abs. 1 ist der Vorstand zuständig, also entscheidet er. Bis dahin gilt die Annahme: wie alle Inhalte – Redaktion reicht ein, Kommandant oder Admin gibt frei (B-21).
+- [ ] Vorstand bestätigt: keine Spenden online (2.8, L-10). Die Satzung lässt Spenden zu (§ 12 Abs. 1).
+- [ ] Vereinsname: Satzung § 1 „Freiwillige Feuerwehr Piflas e.V.“, Website bisher „Feuerwehr Piflas e.V.“. Mit dem Vereinsregister (VR 1115) abgleichen, dann Impressum und Texte angleichen.
 - [ ] Fahrzeuge entfernen auch durch Kommandanten (Ausnahme von B-16) bestätigen
 - [ ] Abstimmung mit dem Markt Ergolding (L-01), dabei auch klären, ob die Sirenen bei Probealarm und Warntag mitmachen (C-07)
-- [ ] Ist ein Online-Antrag für Fördermitglieder laut Satzung zulässig?
+- [ ] Online-Antrag für Fördermitglieder: Satzung § 4 Abs. 2 verlangt einen schriftlichen Antrag. Bis eine Fachperson prüft, ob ein Online-Formular genügt, nur PDF (S-04).
 - [ ] An welche E-Mail-Adresse gehen Mitmach-Anfragen (F-06)?
 
 **Zugänge (Phase 0)**
@@ -401,7 +411,7 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 
 **Inhalte**
 
-- [ ] Kommandant (Impressum), Vorstandschaft, Jugendwart und Gruppenstunde
+- [ ] Kommandant (Impressum), Vorstandschaft mit allen Ämtern laut Satzung § 8 (F-08), Vertretung im Impressum (L-07), Jugendwart und Gruppenstunde
 - [ ] Gründungsjahr und Meilensteine der Chronik; Jubiläumstermine 2027 und Jubiläumslogo
 - [ ] Liste der Ortsteile und häufigen Nachbargemeinden für Einsatzberichte (D-09)
 - [ ] Name für „Verantwortlich nach § 18 Abs. 2 MStV“ im Impressum
@@ -427,19 +437,19 @@ Empfehlung: A, oder B, wenn sich keine zwei Admins finden.
 - [ ] Dürfen Kommandanten eigene, nie veröffentlichte Entwürfe löschen? Bisher feste Entscheidung: Löschen nur durch Admins
 - [ ] Wer zählt zur Einsatzabteilung (E-10)? Sollen auch Jugendliche der Jugendfeuerwehr teilnehmen? Dann Einwilligung der Eltern klären
 - [ ] Themenplan für 12 Monate und fachliche Prüfung der drei Beispielthemen durch den Kommandanten
-- [ ] Datenschutzhinweis um „Lernen“ ergänzen (L-15)
+- [ ] Datenschutzhinweis um „Lernen“ ergänzen (L-15). Dabei prüfen, ob Lernergebnisse unter die Mitgliederdaten der Satzung fallen (§ 16 Abs. 3 nennt „Untersuchungen und Prüfungen“) oder eine eigene Grundlage brauchen.
 - [ ] Optional: Erlaubnis der Feuerwehrschulen, Grafiken aus Merkblättern zu übernehmen (L-14)
 
 ## 6. Umsetzungsplan
 
-**Stand 23.11.2026:**
+**Stand 27.11.2026:**
 
 | Ergebnis | Stand |
 | --- | --- |
 | Übergangsseite | Fertig zum Hochladen |
-| Demo v17 + Testsuite (700 + 68 Prüfungen) | Fertig, auf GitHub Pages |
+| Demo v17 + Testsuite (703 + 68 Prüfungen) | Fertig, auf GitHub Pages |
 | Handbuch | Version 1.19 fertig |
-| Lastenheft | Version 1.20 |
+| Lastenheft | Version 1.21 |
 | Backup-Paket | Wird mit jeder Version aktualisiert |
 
 **Sofort:** Übergangsseite hochladen. Vorher Joomla komplett sichern und die Speicherdauer der Logfiles in datenschutz.html eintragen.
@@ -571,8 +581,9 @@ Fremd-Plugins vor. Am Ende: PR mit Checkliste der IDs.
 | 1.13 | 23.11.2026 | Neu 2.13 Lernen gern und leicht (E-15 bis E-28) mit Themenplan für Kommandanten. Demo v12, 686 Prüfungen, Handbuch 1.11. |
 | 1.14 | 23.11.2026 | B-10: nach dem Speichern in der Ansicht bleiben; neu B-23: öffentliche Seiten angemeldet mit Kopf und Leiste. Demo v13, 693 Prüfungen, Handbuch 1.12. |
 | 1.15 | 23.11.2026 | Aufgeräumt, ohne neue Anforderungen: Doppelungen in 2.12 und 2.13 entfernt (E-02, E-05, E-06, E-07, E-13, E-14, E-24; Widerspruch 44/56 px aufgelöst), A-06 gekürzt, offene Punkte „Lernen“ gebündelt, Änderungsverlauf gekürzt. Demo ohne ungenutzten Code. Demo v14, Testsuite (693 Prüfungen), Handbuch 1.13. |
-| 1.16 | 23.11.2026 | F-11: kein Notruf-Button im Kopf, „Login für Mitglieder“ ganz oben im Menü, Menü klarer gegliedert. Neu E-29: Bilder und Skizzen je Abschnitt mit Bildbeschreibung; fünf eigene Beispielskizzen. Geändert: E-02. Demo v15, Testsuite (700 Prüfungen), Handbuch 1.14. |
+| 1.16 | 23.11.2026 | F-11: kein Notruf-Button im Kopf, „Login für Mitglieder“ ganz oben im Menü, Menü klarer gegliedert. Neu E-29: Bilder und Skizzen je Abschnitt mit Bildbeschreibung; fünf eigene Beispielskizzen. Geändert: E-02. Demo v15, Testsuite (703 Prüfungen), Handbuch 1.14. |
 | 1.17 | 23.11.2026 | F-11: Menü-Knopf heißt nur „Login“, hell statt rot und senkrecht mittig; Gruppen-Überschriften grau, Rot nur für die aktuelle Seite. Demo v16 (ganze Website optisch überarbeitet), 700 Prüfungen, Handbuch 1.16. |
 | 1.18 | 23.11.2026 | E-17: „Los geht’s“ auf der Karte führt direkt zur ersten Seite, kein doppeltes „Los geht’s“; Überblick zählt nicht als Schritt. F-11: Login-Knopf dunkelgrau. Demo v16, 700 Prüfungen, Handbuch 1.17. |
 | 1.19 | 23.11.2026 | Prüfung der Testabdeckung, Sicherheits- und Ausfalltests. Präzisiert: B-05 (Sperre nach 5 Fehlversuchen, Passwort-Link), B-08 (Austritt), B-20 (keine Doppel-Einträge), N-05 (Rechte je Aktion, nur https-Links), N-11 (test_security.py, ABDECKUNG.md), F-04 (Vormerken je Termin). Demo v17, 700 + 68 Prüfungen, Handbuch 1.18. |
 | 1.20 | 23.11.2026 | F-11, F-12, B-23: Auf der Website heißt es überall „Anmelden“ statt „Login“ (Menü, Kopf, Fußzeile, Anmeldeseite); Texte in B-01, B-02, B-13, E-15, E-25 angeglichen. Demo v17, 700 + 68 Prüfungen, Handbuch 1.19. |
+| 1.21 | 27.11.2026 | Satzung eingearbeitet: 2.8 „keine Spenden online“ ist eine Festlegung des Projekts, keine Vorgabe der Satzung (§ 12), L-10 angepasst; Satzungsregeln für Fördermitglieder (§§ 3, 4, 6); neu S-04 (Beitritt nur schriftlich per PDF); F-08 Ämter der Vorstandschaft laut § 8; L-07 Vertretung im Impressum laut § 9 Abs. 2; offene Punkte zu Vereinsname, Pflege der Vereinsseite und Lernergebnissen (§ 16). Demo: Beispieltermine relativ zum heutigen Datum; Testsuite mit fester Uhr (23.11.2026), damit sie an jedem Tag gleich läuft. Demo v17, 703 + 68 Prüfungen, Handbuch 1.19. |

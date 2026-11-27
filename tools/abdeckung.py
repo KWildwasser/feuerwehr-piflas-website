@@ -45,7 +45,7 @@ server={'F':'Playwright gegen die Testseite (übertragene Demo-Prüfungen)','D':
 special={'A-09':'Laientest mit drei Mitgliedern (Phase 7)','A-08':'Übergabe-Übung mit Wiederherstellung','A-12':'Reparatur-Probe nach der Anleitung (unter 2 Stunden)','A-07':'Checkliste: Verträge und Tresor','A-05':'Plugin-Liste in docs/plugins.md prüfen','A-02':'Redaktion versucht Farben oder Layout zu ändern – gesperrt','A-04':'Auto-Update und Backup im Monatsbericht sichtbar','N-04':'Lighthouse mobil ≥ 90','N-06':'Wiederherstellung auf der Testseite proben','N-07':'Kostenaufstellung beim Go-live','N-12':'Sitemap und strukturierte Daten prüfen','D-06':'Code-Suche: Schlüssel nur in wp-config.php; Diagnosebericht ohne Schlüssel','E-28':'Laientest mit drei Mitgliedern und einem Kommandanten'}
 
 out=['# Testabdeckung: Lastenheft-IDs → Prüfungen','',
-'Stand 23.11.2026 · Lastenheft 1.20 · Demo v17 · `test_app.py` (700 Prüfungen) und `test_security.py` (68 Prüfungen)','',
+'Stand 27.11.2026 · Lastenheft 1.21 · Demo v17 · `test_app.py` (703 Prüfungen) und `test_security.py` (68 Prüfungen)','',
 'So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testname oder Bereich der Testsuite). „Echte Website“ sagt, wie sie in WordPress zusätzlich geprüft wird. „–“ heißt: in der Demo nicht prüfbar (Server, Mail, Menschen, Verträge). Diese Liste ist die Abnahmeliste für Claude Code: Jede Zeile braucht vor dem Go-live einen grünen Test oder eine abgehakte Abnahme.','',
 '| ID | Prio | Anforderung | Demo | Echte Website |','| --- | --- | --- | --- | --- |']
 cnt=[0,0]

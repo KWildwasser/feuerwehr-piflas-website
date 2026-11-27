@@ -600,17 +600,19 @@ const NEWS = [
    body:['[Text zum Steckerlfisch-Grillen folgt: Datum, Anzahl Fische, Dank an das Grillteam und alle, die geholfen haben.]']},
   {id:'a4', y:2026, by:'Erika Musterfrau', cat:'Ausbildung', d:'02.09.', t:'Neue Atemschutzgeräteträger ausgebildet', ph:'Foto vom Lehrgang folgt', txt:'Drei Mitglieder unserer Wehr haben den Lehrgang erfolgreich abgeschlossen.', body:['Drei Mitglieder unserer Wehr haben den Atemschutz-Lehrgang erfolgreich abgeschlossen. Herzlichen Glückwunsch!']}
 ];
+/* Beispieltermine relativ zum Aufruf der Demo (heute + n Tage), damit immer kommende Termine zu sehen sind */
+const relT = n => { const x = new Date(); x.setDate(x.getDate() + n); return {d:x.getDate(), m:x.getMonth(), y:x.getFullYear()}; };
 const TERMINE = [
-  {d:25,m:10,y:2026,t:'Übung Technische Hilfeleistung',o:'19:30 Uhr · Gerätehaus',k:'Übung',priv:false},
-  {d:27,m:10,y:2026,t:'Besprechung Führungskräfte',o:'19:00 Uhr',k:'Intern',priv:true},
-  {d:28,m:10,y:2026,t:'Jugendfeuerwehr: Gruppenstunde',o:'18:00 Uhr · Gerätehaus',k:'Jugend',priv:false},
-  {d:6,m:11,y:2026,t:'Christbaumversteigerung',o:'Uhrzeit folgt · Gerätehaus',k:'Verein',priv:false},
-  {d:9,m:11,y:2026,t:'Übung Atemschutz',o:'19:30 Uhr · Gerätehaus',k:'Übung',priv:false},
-  {d:17,m:0,y:2027,t:'Jahreshauptversammlung',o:'Ort und Uhrzeit folgen',k:'Verein',priv:false}
+  {...relT(2),t:'Übung Technische Hilfeleistung',o:'19:30 Uhr · Gerätehaus',k:'Übung',priv:false},
+  {...relT(4),t:'Besprechung Führungskräfte',o:'19:00 Uhr',k:'Intern',priv:true},
+  {...relT(5),t:'Jugendfeuerwehr: Gruppenstunde',o:'18:00 Uhr · Gerätehaus',k:'Jugend',priv:false},
+  {...relT(13),t:'Vereinsabend',o:'Uhrzeit folgt · Gerätehaus',k:'Verein',priv:false},
+  {...relT(16),t:'Übung Atemschutz',o:'19:30 Uhr · Gerätehaus',k:'Übung',priv:false},
+  {...relT(55),t:'Jahreshauptversammlung',o:'Ort und Uhrzeit folgen',k:'Verein',priv:false}
 ];
 const SYNC = [
-  {d:29,m:10,y:2026,t:'Glühweinstand zum 1. Advent',o:'ab 16:00 Uhr · Gerätehaus',k:'Verein',priv:false,neu:true},
-  {d:15,m:11,y:2026,t:'Dienstplan-Abstimmung Maschinisten',o:'20:00 Uhr',k:'Intern',priv:true}
+  {...relT(6),t:'Glühweinstand am Gerätehaus',o:'ab 16:00 Uhr · Gerätehaus',k:'Verein',priv:false,neu:true},
+  {...relT(22),t:'Dienstplan-Abstimmung Maschinisten',o:'20:00 Uhr',k:'Intern',priv:true}
 ];
 const tKey = t => t.y * 10000 + t.m * 100 + t.d;
 const JUB = {
@@ -768,7 +770,7 @@ const fresh = () => { const t0 = Date.now() - 30 * 864e5; const st = {
   einsaetze: BASE_E.map(e => ({...e, imgs: []})).concat(ARCH.E.map(e => ({...e, imgs: []}))),
   news: NEWS.map(n => ({...n})).concat(ARCH.N.map(n => ({...n}))),
   fz: FZ.map(z => ({id: z.id || z.img, ...z})), ger: GER.map(([img, n, alt]) => ({id: img, img, n, alt})),
-  verein: {id:'verein', intro:'Der Feuerwehr Piflas e.V. stellt die Einsatzkräfte der Ortsfeuerwehr und pflegt Kameradschaft und Dorfleben.', vorstand:[['1. Vorstand','Matthias Jeschke'], ['[Weitere Ämter laut Satzung]','[Name]']], chronik:[{y:String(JUB.founded), t:'Gründung der Freiwilligen Feuerwehr Piflas', x:''}, {y:'[Jahr]', t:'[Weitere Meilensteine folgen: Fahrzeuge, Gerätehaus, Jubiläen]', x:''}]},
+  verein: {id:'verein', intro:'Der Feuerwehr Piflas e.V. stellt die Einsatzkräfte der Ortsfeuerwehr und pflegt Kameradschaft und Dorfleben.', vorstand:[['Vorsitz','Matthias Jeschke'], ['Stellvertretender Vorsitz','[Name]'], ['Kommandant','[Name]'], ['Stellvertretende Kommandanten','[Namen]'], ['Schriftführung','[Name]'], ['Kasse','[Name]'], ['Jugendwart (Beisitz)','[Name]'], ['Vertretung der Mannschaft (Beisitz)','[2 Namen]'], ['Vertretung der Löschmeister (Beisitz)','[2 Namen]']], chronik:[{y:String(JUB.founded), t:'Gründung der Freiwilligen Feuerwehr Piflas', x:''}, {y:'[Jahr]', t:'[Weitere Meilensteine folgen: Fahrzeuge, Gerätehaus, Jubiläen]', x:''}]},
   posts: [], termine: TERMINE.map(t => ({...t})).concat(JUB.events.map(e => ({...e, k:'Jubiläum', priv:false, jub:true}))), synced: false, today: null, settings: {sonderOn:false, sonderT:'Hohe Waldbrandgefahr', sonderX:'Kein Feuer im Freien, nicht rauchen im Wald und Zufahrten für die Feuerwehr freihalten.', sonderBis:'', warnOn:true, jubOn:true, jubEnd:'2027-12-31', pE:'https://www.ff-ergolding.de/', pO:'https://oberglaim.feuerwehren.bayern/', mailOn:true, mailT:'07:00'},
   /* Schnittstellen (A-10 bis A-12): st ok|warn|bad, code aus ERR, man = Notbetrieb */
   iface: {div:{st:'ok', code:'', man:false}, ig:{st:'warn', code:'IG-EXP', man:false}},
@@ -985,7 +987,8 @@ V.foerdern = () => `
 <section class="hero"><div class="wrap"><div class="stack"><h1>Werde Fördermitglied</h1><p class="l">Fördernde Mitglieder sind das Rückgrat unseres Vereins. Dein Jahresbeitrag unterstützt Kameradschaft, Ausbildung und Jugendarbeit der Feuerwehr Piflas. Der Feuerwehr Piflas e.V. ist gemeinnützig.</p></div></div></section>
 ${sec(`<div class="grid">
   <div class="card"><h2 style="font-size:30px">So einfach geht's</h2>
-    <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px"><li>Beitrittserklärung herunterladen</li><li>Ausfüllen und unterschreiben</li><li>Im Gerätehaus, beim Vorstand oder per Post abgeben: Feuerwehr Piflas e.V., Gartenstraße 2, 84030 Ergolding</li></ol>
+    <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px"><li>Beitrittserklärung herunterladen</li><li>Ausfüllen und unterschreiben – bist du unter 18, unterschreiben auch deine Eltern</li><li>Im Gerätehaus, beim Vorstand oder per Post abgeben: Feuerwehr Piflas e.V., Gartenstraße 2, 84030 Ergolding</li></ol>
+    <p id="satzung-hinweis">Mitglied bist du, sobald der Vorstand deinen Beitritt schriftlich bestätigt. Den Jahresbeitrag legt die Mitgliederversammlung fest. Kinder bis 12 Jahre zahlen keinen Beitrag.</p>
     <div class="kv"><span>Jahresbeitrag</span><b>[Betrag] €</b></div>
     <button class="btn" data-act="pdf" data-doc="Beitrittserklärung">Beitrittserklärung (PDF)</button><span class="mini">Stand: [Datum]</span></div>
   <div class="card"><h2 style="font-size:30px">Spenden</h2><p>Spenden nimmt der Verein nicht über diese Website entgegen. Alle Angaben findest du im Spendenformular.</p>
@@ -1030,7 +1033,7 @@ V.verein = () => {
 };
 V.impressum = () => sec(`<h1>Impressum</h1><p class="mini">Entwurf – vor Veröffentlichung rechtlich prüfen lassen</p>
   <h3>Angaben gemäß § 5 DDG</h3><p>Feuerwehr Piflas e.V.<br>Gartenstraße 2, 84030 Ergolding / Piflas<br>Telefon 0871 1433372 · info@feuerwehr-piflas.de</p>
-  <h3>Vertreten durch</h3><p>1. Vorstand Matthias Jeschke</p>
+  <h3>Vertreten durch</h3><p id="vertretung">Matthias Jeschke (Vorsitz) und [Name] (stellvertretender Vorsitz). Laut Satzung vertritt jeweils eine dieser Personen den Verein zusammen mit einem weiteren Mitglied der Vorstandschaft.</p>
   <h3>Registereintrag</h3><p>Vereinsregister Amtsgericht Landshut, VR 1115</p>
   <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3><p>[Name], c/o Feuerwehr Piflas e.V., Anschrift wie oben</p>
   <h3>Hinweis zur Feuerwehr</h3><p>Die Freiwillige Feuerwehr Piflas ist eine öffentliche Einrichtung des Marktes Ergolding (Art. 4 Abs. 1 Bayerisches Feuerwehrgesetz). Der Feuerwehr Piflas e.V. unterstützt sie personell (Art. 5 BayFwG) und betreibt diese Website. Einsatzberichte werden vom Kommandanten der Freiwilligen Feuerwehr Piflas ([Name]) freigegeben.</p>
@@ -1038,7 +1041,7 @@ V.impressum = () => sec(`<h1>Impressum</h1><p class="mini">Entwurf – vor Verö
   <h3>Externe Links</h3><p>Für Inhalte verlinkter Seiten, etwa unserer Partnerfeuerwehren, sind deren Betreiber verantwortlich. Bei Kenntnis von Rechtsverstößen entfernen wir den Link umgehend.</p>`);
 V.datenschutz = () => sec(`<h1>Datenschutz</h1><p class="mini">Entwurf – vor Veröffentlichung rechtlich prüfen lassen</p>
   <p>Diese Website setzt beim Besuch keine Cookies, nutzt kein Tracking und lädt keine Inhalte von Drittanbietern (auch keine Schriften, Karten oder Social-Media-Plugins).</p>
-  <h3>1. Verantwortlicher</h3><p>Feuerwehr Piflas e.V., vertreten durch den 1. Vorstand, Gartenstraße 2, 84030 Ergolding, info@feuerwehr-piflas.de</p>
+  <h3>1. Verantwortlicher</h3><p>Feuerwehr Piflas e.V., vertreten durch den Vorstand, Gartenstraße 2, 84030 Ergolding, info@feuerwehr-piflas.de</p>
   <h3>2. Aufruf der Website</h3><p>Der Hoster verarbeitet technisch notwendige Server-Logfiles (u. a. IP-Adresse, Zeitpunkt, abgerufene Seite) zur sicheren Auslieferung (Art. 6 Abs. 1 lit. f DSGVO) und löscht sie nach [X] Tagen. Mit dem Hoster besteht ein Vertrag zur Auftragsverarbeitung. Besucherstatistiken werden ohne Cookies und ohne Weitergabe an Dritte erstellt.</p>
   <h3>3. Kontakt- und Mitmach-Formular</h3><p>Deine Angaben (Name, Telefon oder E-Mail, Interesse) nutzen wir nur, um dich zu kontaktieren (Art. 6 Abs. 1 lit. b und f DSGVO). Wir löschen sie spätestens sechs Monate nach Abschluss, sofern daraus keine Mitgliedschaft entsteht.</p>
   <h3>4. Einsatzberichte und Termine</h3><p>Einsatzberichte enthalten nur Einsatzart, Ortsteil, auf die Viertelstunde gerundete Uhrzeit und eingesetzte Fahrzeuge – keine Namen, Adressen, Kennzeichen oder Angaben zu Betroffenen. Sie werden vom Kommandanten freigegeben. Termine stammen aus dem Alarmierungssystem DIVERA 24/7; übernommen werden nur öffentliche Termine.</p>

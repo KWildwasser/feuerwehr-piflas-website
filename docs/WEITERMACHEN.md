@@ -1,6 +1,6 @@
 # Webpräsenz Feuerwehr Piflas – Backup & Anleitung zum Weitermachen
 
-Stand: **23.11.2026** · Lastenheft **v1.20** · Demo **v17** · Handbuch **1.19** · Testsuite **700/700 + 68/68 Sicherheit bestanden**
+Stand: **27.11.2026** · Lastenheft **v1.21** · Demo **v17** · Handbuch **1.19** · Testsuite **703/703 + 68/68 Sicherheit bestanden**
 
 Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte, Bilder und Vorlagen. Damit kannst du (oder jemand aus dem Verein, oder eine neue Claude-Sitzung) jederzeit nahtlos weitermachen. Es enthält keine Zugangsdaten.
 
@@ -11,8 +11,8 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | Ordner / Datei | Inhalt |
 |---|---|
 | `PROJEKT-ANWEISUNGEN.md` | Benutzerdefinierte Anweisungen für das Claude-Projekt (zum Einfügen) |
-| `lastenheft/lastenheft-v1.20.md` | Das Lastenheft als Text – verbindliche Grundlage |
-| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.20.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
+| `lastenheft/lastenheft-v1.21.md` | Das Lastenheft als Text – verbindliche Grundlage |
+| `lastenheft/Lastenheft-Feuerwehr-Piflas-v1.21.pdf` | Dieselbe Fassung zum Drucken, mit Diagramm |
 | `lastenheft/make_pdf.py` | Erzeugt das PDF aus der neuesten `lastenheft-vX.Y.md` |
 | `lastenheft/CLAUDE.md`, `start-prompt-phase1.txt` | Vorlagen für das Code-Repository und die erste Claude-Code-Sitzung |
 | `handbuch/Handbuch-Website-Feuerwehr-Piflas.pdf` | Handbuch Mitgliederbereich 1.19 (alle Rollen) |
@@ -20,7 +20,7 @@ Dieses Paket enthält alles, was bisher entstanden ist: Dokumente, Code, Skripte
 | `demo/README.md` | Aufbau der Demo und Zuordnung der Prüfungen zu den Lastenheft-IDs |
 | `demo/app-src.html` | Quelltext der Demo – **hier wird geändert** |
 | `demo/build.py` → `demo/index.html` | Baut die fertige Demo (eine Datei, läuft offline) |
-| `demo/test_app.py`, `demo/testimg/` | Testsuite (700 Prüfungen) = Abnahmeliste für die echte Website |
+| `demo/test_app.py`, `demo/testimg/` | Testsuite (703 Prüfungen) = Abnahmeliste für die echte Website |
 | `demo/test_security.py` | Sicherheits- und Ausfalltests (68 Prüfungen) |
 | `demo/ABDECKUNG.md`, `../tools/abdeckung.py` | Jede Lastenheft-ID mit ihrer Prüfung (Demo und echte Website) |
 | `start/ARBEITSPAKETE.md` | 10 Arbeitspakete für Claude Code mit IDs und Abnahme |
@@ -65,7 +65,7 @@ python -m playwright install chromium
 
 cd demo
 python build.py          # erzeugt index.html (ca. 2,3 MB)
-python test_app.py       # 2–4 Minuten, Ergebnis: "700 von 700 Prüfungen bestanden", Exit-Code 1 bei Fehlern
+python test_app.py       # 2–4 Minuten, Ergebnis: "703 von 703 Prüfungen bestanden", Exit-Code 1 bei Fehlern
 python test_security.py  # 1–2 Minuten, "68 von 68 Sicherheits- und Ausfallprüfungen bestanden"
 
 cd ../handbuch
@@ -78,6 +78,8 @@ python make_pdf.py       # PDF aus der neuesten lastenheft-vX.Y.md
 
 Reihenfolge bei jeder Änderung: **Lastenheft (ID) → Demo → Prüfung in test_app.py bzw. test_security.py → `python ../tools/abdeckung.py` (aus `docs/`) → Handbuch-Abschnitt → PDFs → Backup.**
 
+Feste Uhr: Beide Testsuiten starten die Uhr im Browser am 23.11.2026, 12 Uhr (`TESTZEIT` in test_app.py), damit sie an jedem Tag gleich laufen. Die Beispieltermine der Demo liegen relativ zum heutigen Tag.
+
 Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neutrale Formen zuerst, sonst beide Formen, keine Sternchen; Ausnahmen Kommandant, Admin und FwDV-Funktionen – N-13); jede Eingabe mit `esc()` ausgeben; keine externen Anfragen. Der Aufbau des Quelltexts steht als Kommentar am Anfang des Skripts in `app-src.html`.
 
 ## 4. Nächste Schritte (Reihenfolge)
@@ -85,22 +87,22 @@ Regeln für die Demo: Du-Form; Frauen und Männer gleichermaßen ansprechen (neu
 1. **Übergangsseite online stellen** – `uebergangsseite/LIESMICH.txt`. Vorher Joomla komplett sichern, Logfile-Dauer des Hosters in `datenschutz.html` eintragen.
 2. **Pitch am 26.11.** nach dem Pitch-Leitfaden (`pitch/`), danach Entscheidungen laut Umsetzungsplan (`plan/`), Start mit Arbeitspaket 1 (`start/ARBEITSPAKETE.md`). Weitere Vorstellungen beim Gemeinderat und Bürgermeister mit der Projektseite und Demo v17 (QR-Code oben auf der Projektseite – alle testen am eigenen Handy; unten rechts „Demo“ mit Szenarien: Einsatz aus DIVERA, Freigabe-Beispiele, Redaktion reicht ein, Einsatz von Hand, E-Mail an die Kommandanten, Verlauf und Rückgängig, Lernen, Störung simulieren).
 3. **Betriebsvariante entscheiden** (Lastenheft 4.3): Wer betreut die Seite? Ohne zwei Admins → Wartung durch Dienstleister.
-4. **Offene Punkte** aus Lastenheft Abschnitt 5 einsammeln (Kommandant, Ortsteile, Pflege der Vereinsseite laut Satzung, Jubiläumstermine, Fahrzeugtypen, Namen der Fotografinnen und Fotografen, PDFs, Förderbeitrag …).
+4. **Offene Punkte** aus Lastenheft Abschnitt 5 einsammeln (Kommandant, Ortsteile, Pflege der Vereinsseite durch den Vorstand (Satzung § 9), Vereinsname laut Satzung § 1, Namen der Vorstandschaft, Jubiläumstermine, Fahrzeugtypen, Namen der Fotografinnen und Fotografen, PDFs, Förderbeitrag …).
 5. **Phase 0** (Zugänge, Hosting-Prüfung, DIVERA-API, Instagram-Business-Konto), dann **Phase 1** mit Claude Code und dem Start-Prompt.
 
 ## 5. So geht es in einer neuen Claude-Sitzung weiter
 
 Dieses ZIP hochladen und z. B. schreiben:
 
-> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 23.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.20.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
+> Hier ist das Backup unserer Website-Planung für die Feuerwehr Piflas (Stand 27.11.2026). Lies zuerst WEITERMACHEN.md und lastenheft/lastenheft-v1.21.md. Baue die Demo mit demo/build.py und prüfe sie mit demo/test_app.py. Danach möchte ich: …
 
-Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.20.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
+Für die eigentliche Umsetzung mit Claude Code: neues Repository anlegen, `lastenheft/CLAUDE.md` ins Wurzelverzeichnis, `lastenheft/lastenheft-v1.21.md` nach `docs/lastenheft.md`, das Handbuch nach `docs/handbuch/`, `betrieb/` nach `docs/betrieb/`, den Ordner `demo/` nach `docs/referenz-demo/`, dann `start-prompt-phase1.txt` verwenden.
 
 ## 6. Wichtige Entscheidungen (Kurzfassung)
 
 **Grundlagen**
 - **WordPress** auf dem Vereins-Hosting, weil Mitglieder mit eigenen Konten pflegen. **Wartbarkeit** durch Ehrenamtliche ist Leitprinzip (A-01 bis A-12).
-- **Keine Spenden online** (Satzung), **keine Cookies, keine Drittanbieter** (N-01).
+- **Keine Spenden online** (Festlegung des Projekts, Vorstand bestätigt noch; die Satzung erlaubt Spenden, § 12), **Beitritt nur schriftlich** per PDF (Satzung § 4, S-04), **keine Cookies, keine Drittanbieter** (N-01).
 - **Du-Form**, Frauen und Männer gleichermaßen ansprechen (N-13); Ausnahmen „Kommandant“, „Admin“ und FwDV-Funktionen.
 
 **Sicherheit und Tests**

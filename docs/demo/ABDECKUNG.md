@@ -1,6 +1,6 @@
 # Testabdeckung: Lastenheft-IDs → Prüfungen
 
-Stand 23.11.2026 · Lastenheft 1.20 · Demo v17 · `test_app.py` (700 Prüfungen) und `test_security.py` (68 Prüfungen)
+Stand 27.11.2026 · Lastenheft 1.21 · Demo v17 · `test_app.py` (703 Prüfungen) und `test_security.py` (68 Prüfungen)
 
 So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testname oder Bereich der Testsuite). „Echte Website“ sagt, wie sie in WordPress zusätzlich geprüft wird. „–“ heißt: in der Demo nicht prüfbar (Server, Mail, Menschen, Verträge). Diese Liste ist die Abnahmeliste für Claude Code: Jede Zeile braucht vor dem Go-live einen grünen Test oder eine abgehakte Abnahme.
 
@@ -93,7 +93,7 @@ So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testnam
 | F-05 | Muss | Fahrzeuge & Technik: Neuestes Fahrzeug hervorgehoben. Je Fahrzeug eine… | „Fahrzeugseite zeigt alle Fotos inkl. Wechsellader“ | Playwright gegen die Testseite (übertragene Demo-Prüfungen) |
 | F-06 | Muss | Mitmachen: Formular ganz oben (Name, Telefon oder E-Mail, Interesse, D… | Bereich „Formulare“ | Playwright gegen die Testseite (übertragene Demo-Prüfungen) |
 | F-07 | Muss | Jugendfeuerwehr: Vorstellung, Gruppenstunde, Ansprechperson, Button „S… | 1× direkt, z. B. „F-07/L-11: Jugendfeuerwehr mit „Schnuppern“, Fotos nur “ | Playwright gegen die Testseite (übertragene Demo-Prüfungen) |
-| F-08 | Muss | Verein & Chronik: Vorstandschaft, Mitgliedschaft und Chronik ab Gründu… | „Chronik: sofort auf der Website“, „Partner: Verweis von der Verein-Seite“ | Playwright gegen die Testseite (übertragene Demo-Prüfungen) |
+| F-08 | Muss | Verein & Chronik: Vorstandschaft, Mitgliedschaft und Chronik ab Gründu… | 1× direkt, z. B. „F-08: Vorstandschaft mit allen Ämtern laut Satzung § 8“ | Playwright gegen die Testseite (übertragene Demo-Prüfungen) |
 | F-09 | Muss | Partnerfeuerwehren: Eigene Seite. Je Wehr (Ergolding, Oberglaim) eine … | Bereich „Navigation“ | Playwright gegen die Testseite (übertragene Demo-Prüfungen) |
 | F-10 | Muss | Bürgerinfos, Fördermitglied, Impressum/Datenschutz: Siehe 2.7, 2.8 und… | „Recht/Impressum enthält …“, „Recht/Datenschutz enthält …“ | Playwright gegen die Testseite (übertragene Demo-Prüfungen) |
 | F-11 | Muss | Navigation: Kopf mit Logo und Menü, ohne Notruf-Button (Notruf 112 ste… | 3× direkt, z. B. „F-11: kein Notruf-Knopf im Kopf, Notruf 112 bleibt auf “ | Playwright gegen die Testseite (übertragene Demo-Prüfungen) |
@@ -118,10 +118,10 @@ So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testnam
 | L-04 | Muss | Pietät: Bei Verletzten oder Toten erst nach Information von Polizei un… | 1× direkt, z. B. „W-05/L-04: Warnhinweis bei technischer Hilfe“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
 | L-05 | Muss | DSGVO Art. 6, 13, 21; KUG: Fotos von Festen und Übungen: vorher inform… | Bereich „Recht“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
 | L-06 | Muss | Urheberrecht: Nur Fotos mit geklärten Rechten | Bereich „Recht“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
-| L-07 | Muss | § 5 DDG, § 18 MStV: Vollständiges Impressum | Bereich „Recht“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
+| L-07 | Muss | § 5 DDG, § 18 MStV; Satzung § 9 Abs. 2: Vollständiges Impressum. „Vert… | 1× direkt, z. B. „L-07: Impressum nennt die Vertretung laut Satzung § 9“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
 | L-08 | Muss | DSGVO Art. 13, 26, 28: Datenschutzerklärung (Hosting, Formulare, Konte… | Bereich „Recht“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
 | L-09 | Muss | TDDDG § 25: Keine Cookies beim Besuch, keine Drittanbieter | 1× direkt, z. B. „N-01/L-09: während aller Sicherheitstests keine Anfrage“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
-| L-10 | Muss | Satzung, AO: Keine Spenden online | Bereich „Recht“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
+| L-10 | Muss | Festlegung des Projekts (Satzung § 12 lässt Spenden zu), AO: Keine Spe… | 1× direkt, z. B. „L-10: keine Spendenannahme über die Website“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
 | L-11 | Muss | Jugendschutz: Hinweis für unter 16-Jährige, Jugendfotos nur mit Einwil… | 1× direkt, z. B. „F-07/L-11: Jugendfeuerwehr mit „Schnuppern“, Fotos nur “ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
 | L-12 | Muss | BFSG / BayBITV: Vermutlich nicht verpflichtend; Ziel trotzdem WCAG 2.2… | Seitenrundgang „Barrierefreiheit-Basics“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
 | L-13 | Muss | Haftung für Links: Externe Links erkennbar, Hinweis im Impressum | „Recht/Impressum: Hinweis zu externen Links“ | Prüfung durch Fachperson bzw. Markt; technische Teile per Test |
@@ -153,6 +153,7 @@ So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testnam
 | S-01 | Muss | Seite „Fördermitglied werden“: warum, was der Beitrag bewirkt, Höhe de… | 2× direkt, z. B. „S-01: „Fördermitglied werden“ von Startseite, Mitmachen“ | Playwright |
 | S-02 | Muss | Downloads: „Beitrittserklärung Fördermitglied“ und „Spendenformular“ a… | „Beitrittserklärung-PDF verlinkt“ | Playwright |
 | S-03 | Soll | Dank an alle, die uns unterstützen, Sponsoren mit Logo, nur mit deren … | – (Soll) | Playwright |
+| S-04 | Muss | Beitritt nur mit der unterschriebenen Beitrittserklärung (PDF), kein O… | 1× direkt, z. B. „S-04: Beitritt laut Satzung – Bestätigung, Beitrag, Kin“ | Playwright |
 | W-01 | Muss | Für jeden Einsatz-Entwurf und jeden eingereichten Beitrag oder jede ei… | Bereich „Freigabe und DIVERA“ | PHPUnit: Rechte und Pflicht-Häkchen auf dem Server; Playwright: Ablauf |
 | W-02 | Muss | Freigabe am Handy im Bereich „Freigabe“, mit Zähler der offenen Einträ… | Bereich „Freigabe und DIVERA“ | PHPUnit: Rechte und Pflicht-Häkchen auf dem Server; Playwright: Ablauf |
 | W-03 | Muss | Vor der Freigabe lassen sich Kurztext und Fotos ergänzen (Regeln wie B… | Bereich „Freigabe und DIVERA“ | PHPUnit: Rechte und Pflicht-Häkchen auf dem Server; Playwright: Ablauf |
@@ -163,7 +164,7 @@ So lesen: „Demo“ nennt, wo die Referenz-Demo die Anforderung prüft (Testnam
 | W-08 | Muss | Änderungen der Redaktion an Beiträgen, Seiten, Fahrzeugen, Ausrüstung … | Bereich „Seiten pflegen“ | PHPUnit: Rechte und Pflicht-Häkchen auf dem Server; Playwright: Ablauf |
 | W-09 | Muss | E-Mail an die Kommandanten: Bei jeder neuen Einreichung (Einsatz-Entwu… | Bereich „Freigabe und DIVERA“ | PHPUnit: Rechte und Pflicht-Häkchen auf dem Server; Playwright: Ablauf |
 
-**Summe:** 156 Anforderungen. 133 prüft die Demo, 23 lassen sich nur in der echten Website oder von Hand prüfen.
+**Summe:** 157 Anforderungen. 134 prüft die Demo, 23 lassen sich nur in der echten Website oder von Hand prüfen.
 
 ## Sicherheit und Ausfallsicherheit (`test_security.py`)
 
