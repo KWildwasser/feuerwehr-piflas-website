@@ -14,7 +14,9 @@ Vor dem Hochladen ausfüllen
   1. datenschutz.html: [Name und Anschrift des Hosters] und [XX] Tage (Speicherdauer
      der Logfiles, steht in den Unterlagen bzw. im Kundenmenü des Hosters).
   2. Prüfen, ob info@feuerwehr-piflas.de wirklich ankommt.
-  3. Impressum: Vorstand und Verantwortlichen (M. Jeschke / S. Windele) bestätigen.
+  3. Impressum: Namen für Vorsitz, stellvertretenden Vorsitz und den
+     Verantwortlichen nach § 18 MStV eintragen (im öffentlichen Repository
+     stehen nur Platzhalter).
 
 Hochladen (per FTP/SFTP, z. B. mit FileZilla)
   1. SICHERUNG: Den kompletten Inhalt des Webspace-Ordners herunterladen und
